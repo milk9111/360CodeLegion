@@ -39,7 +39,7 @@ public class Author {
 		myConference = theConference;
 	}
 	
-	public void getConference() {
+	public Conference getConference() {
 		return myConference;
 	}
 }
