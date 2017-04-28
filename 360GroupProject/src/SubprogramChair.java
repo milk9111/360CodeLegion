@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -14,6 +15,7 @@ public class SubprogramChair {
 
     // list of conferences assigned to the subprogram chair by the program chair
     private List<Conference> myAssignedConferences;
+
     // TODO: move this into the user <interface> later and have subprogram chair extend or implement that user interface
     private String myUsername;
 
@@ -22,6 +24,8 @@ public class SubprogramChair {
      */
     public SubprogramChair(String theUsername) {
         this.myUsername = theUsername;
+        this.myAssignedManuscripts = new ArrayList<Manuscript>();
+        this.myAssignedConferences = new ArrayList<Conference>();
     }
 
     /**
