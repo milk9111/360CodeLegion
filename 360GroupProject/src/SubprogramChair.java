@@ -12,6 +12,7 @@ import java.util.List;
  */
 public class SubprogramChair extends User {
 
+	// test comment
     // List of manuscripts assigned to the subprogram chair
     private List<Manuscript> myAssignedManuscripts;
 
