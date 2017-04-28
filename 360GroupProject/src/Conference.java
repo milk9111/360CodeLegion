@@ -46,7 +46,6 @@ public class Conference {
     }
 
     private boolean isWithinSubmissionDeadline(){
-
         return mySubmissionDeadline.after(new Calendar().getTime());
     }
 
