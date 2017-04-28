@@ -7,7 +7,7 @@ import org.junit.Test;
 import group3project.Reviewer;
 
 public class ReviewerTest {
-
+//comment for change
 	Reviewer testReviewer = new Reviewer();
 	
 	public void setup(){
