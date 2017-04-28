@@ -1,6 +1,8 @@
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,8 +17,6 @@ public class Author extends User{
 	
 	private List<File> myReviewList;
 	
-	private Conference myConference;	
-	
 	private Map<Conference,List<Manuscript>> myManuscriptList;
 	
 	public Author(String theName, List<Conference> theConferenceList) {
@@ -27,16 +27,12 @@ public class Author extends User{
 		myReviewList = theReviewList;
 	}
 	
+	public Manuscript createManuscript(String theTitle, Date theSubmittedDate, HashMap<Reviewer, String> theReviews, ArrayList<Author> theAuthors) {
+		return new Manuscript(theTitle, theSubmittedDate, theReviews, theAuthors) ;
+	}
+	
 	public List<File> getReview() {
 		return myReviewList;
-	}
-	
-	public void setConference(Conference theConference) {
-		myConference = theConference;
-	}
-	
-	public Conference getConference() {
-		return myConference;
 	}
 	
 	public void addManuscript(Conference theConference, Manuscript theManuscript) {
