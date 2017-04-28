@@ -1,5 +1,3 @@
-
-
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
@@ -18,12 +16,13 @@ public class ManuscriptTest {
 		
 		myPaper = new Manuscript(reviews, authors);
 	}
+	
 
 	@Test
 	public void testGetReviews () {
 		assert (myPaper.getReviews() != null);
 		for (String str : myPaper.getReviews()) 
-			assert (str != null);
+			assertEquals (str instanceof String, true);
 	}
 	
 	
@@ -31,8 +30,9 @@ public class ManuscriptTest {
 	public void testGetAuthors () {
 		assert (myPaper.getAuthors() != null);
 		for (Author au : myPaper.getAuthors()) 
-			assert (au != null);
+			assertEquals (au instanceof Author, true);
 	}
+	
 	
 	
 	@Test
@@ -43,7 +43,7 @@ public class ManuscriptTest {
 		
 		assert (testPaper.getReviewers() != null);
 		for (Reviewer rev : testPaper.getReviewers()) 
-			assert (rev != null);
+			assertEquals (rev instanceof Reviewer, true);
 	}
 	
 	
@@ -51,8 +51,10 @@ public class ManuscriptTest {
 	public void testSubmitManuscript () {
 		Manuscript testPaper = new Manuscript ();
 		
-		assert (testPaper.submitManuscript() instanceof Manuscript);
+		assertEquals (testPaper.submitManuscript() instanceof Manuscript, true);
+		assertEquals (testPaper.submitManuscript(), myPaper);
 	}
+	
 
 }
 
