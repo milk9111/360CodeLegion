@@ -1,5 +1,6 @@
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -11,27 +12,15 @@ import java.util.Map;
  *
  */
 public class Author extends User{
-	private int myManuscriptCount;
 	
 	private List<File> myReviewList;
 	
-	private Conference myConference;
-	
-	
+	private Conference myConference;	
 	
 	private Map<Conference,List<Manuscript>> myManuscriptList;
 	
-	public Author(String theName, List<Conference> theConferenceList, int theManusriptCount) {
+	public Author(String theName, List<Conference> theConferenceList) {
 		super(theName, theConferenceList);
-		myManuscriptCount = theManusriptCount;
-	}
-	
-	public void setManuscriptCount(int theManusriptCount) {
-		myManuscriptCount = theManusriptCount;
-	}
-	
-	public int getManuscriptCount() {
-		return myManuscriptCount;
 	}
 	
 	public void setReview(List<File> theReviewList) {
@@ -50,11 +39,18 @@ public class Author extends User{
 		return myConference;
 	}
 	
-	public void addManuscript(Conference theConference, List<Manuscript> theManuscript) {
-		if (myManuscriptList.containsKey(theConference)) {
-			
+	public void addManuscript(Conference theConference, Manuscript theManuscript) {
+		if (getNumberOfManuscriptsSubmitted(theConference) <= 5) {
+			if (myManuscriptList.containsKey(theConference)) {
+				myManuscriptList.get(theConference).add(theManuscript);
+			} else {
+				List<Manuscript> ManuscriptList = new ArrayList<Manuscript>();
+				ManuscriptList.add(theManuscript);
+				myManuscriptList.put(theConference, ManuscriptList);
+			}
+		} else {
+			System.out.println("Already have 5 Manuscript submitted!");
 		}
-		myManuscriptList.put(theConference, theManuscript);
 	}
 	
 	public int getNumberOfManuscriptsSubmitted(Conference theConference) {
