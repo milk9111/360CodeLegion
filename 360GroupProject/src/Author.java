@@ -1,5 +1,6 @@
 
 import java.io.File;
+import java.util.List;
 
 /**
  * This class is representing an Author.
@@ -8,14 +9,15 @@ import java.io.File;
  * @version 1 
  *
  */
-public class Author {
+public class Author extends User{
 	private int myManuscriptCount;
 	
-	private File myReview;
+	private List<File> myReviewList;
 	
 	private Conference myConference;
 	
-	public Author(int theManusriptCount) {
+	public Author(String theName, List<Conference> theConferenceList, int theManusriptCount) {
+		super(theName, theConferenceList);
 		myManuscriptCount = theManusriptCount;
 	}
 	
@@ -27,12 +29,12 @@ public class Author {
 		return myManuscriptCount;
 	}
 	
-	public void setReview(File theReview) {
-		myReview = theReview;
+	public void setReview(List<File> theReviewList) {
+		myReviewList = theReviewList;
 	}
 	
-	public File getReview() {
-		return myReview;
+	public List<File> getReview() {
+		return myReviewList;
 	}
 	
 	public void setConference(Conference theConference) {
