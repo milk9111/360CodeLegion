@@ -1,4 +1,6 @@
+import javax.sound.midi.SysexMessage;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -12,22 +14,22 @@ public class Conference {
     private List<Reviewer> myPastReviewers;
 
     public Conference(Date theSubmissionDeadline, Date theReviewDeadline,
-                        List<Reviewer> thePastReviewers){
+                      List<Reviewer> thePastReviewers) {
         this.myManuscripts = new ArrayList<Manuscript>();
         this.myPastReviewers = thePastReviewers;
         this.myReviewDeadline = theReviewDeadline;
         this.mySubmissionDeadline = theSubmissionDeadline;
     }
 
-    public List<Manuscript> getManuscripts(){
+    public List<Manuscript> getManuscripts() {
         return myManuscripts;
     }
 
-    public Date getSubmissionDeadline(){
+    public Date getSubmissionDeadline() {
         return mySubmissionDeadline;
     }
 
-    public Date getReviewDeadline(){
+    public Date getReviewDeadline() {
         return myReviewDeadline;
     }
 
@@ -35,7 +37,20 @@ public class Conference {
         return myPastReviewers;
     }
 
-    public void submitManuscript(Manuscript theManuscript){
-        myManuscripts.add(theManuscript);
+    public void submitManuscript(Manuscript theManuscript) {
+        if(isWithinSubmissionDeadline()) {
+            myManuscripts.add(theManuscript);
+        } else{
+            System.out.println("You're past the date bro.");
+        }
+    }
+
+    private boolean isWithinSubmissionDeadline(){
+
+        return mySubmissionDeadline.after(new Calendar().getTime());
+    }
+
+    private boolean isWithinReviewDeadline(){
+        return myReviewDeadline.after(new Calendar().getTime());
     }
 }
