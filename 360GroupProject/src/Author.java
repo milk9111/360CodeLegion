@@ -13,7 +13,7 @@ public class Author {
 	
 	private File myReview;
 	
-	private Conference myConference;
+	//private Conference myConference;
 	
 	public Author(int theManusriptCount) {
 		myManuscriptCount = theManusriptCount;
@@ -35,11 +35,11 @@ public class Author {
 		return myReview;
 	}
 	
-	public void setConference(Conference theConference) {
+	/*public void setConference(Conference theConference) {
 		myConference = theConference;
 	}
 	
 	public Conference getConference() {
 		return myConference;
-	}
+	}*/
 }
