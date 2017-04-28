@@ -6,7 +6,7 @@ import java.util.HashMap;
 /**
  * 
  * @author Connor Lundberg
- * @version 4/27/2017
+ * @version 4/28/2017
  * 
  * This is the Manuscript class. It contains information about the
  * individual manuscript including author(s) and reviews.
