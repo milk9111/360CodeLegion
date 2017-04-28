@@ -1,4 +1,6 @@
 
+
+
 import static org.junit.Assert.*;
 
 import java.io.File;
@@ -24,7 +26,7 @@ public class AuthorTest {
 	@Before
 	public void setUp() throws Exception {
 		
-		myAuthor = new Author(John Doe, 0);
+		myAuthor = new Author("John Doe", 0);
 	}
 
 	/**
@@ -33,17 +35,8 @@ public class AuthorTest {
 	@Test
 	public void testAuthor() {
 		assertNotNull("myAuthor was not instantiated!", myAuthor);
-        assertEquals("myAuthor Manuscripts should be zero!", 0, myAuthor.getManuscriptCount());
 	}
 
-	/**
-	 * Test method for {@link Author#setManuscriptCount(int)}.
-	 */
-	@Test
-	public void testSetManuscriptCount() {
-		myAuthor.setManuscriptCount(2);
-		assertEquals("myAuthor Manuscripts should be two!", 2, myAuthor.getManuscriptCount());
-	}
 
 	/**
 	 * Test method for {@link Author#setReview(java.io.File)}.
