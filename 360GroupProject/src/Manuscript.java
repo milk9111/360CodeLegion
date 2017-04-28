@@ -25,6 +25,7 @@ public class Manuscript {
 	public Manuscript (HashMap<Reviewer, String> theReviews, ArrayList<Author> theAuthors) {
 		myReviews = (HashMap<Reviewer, String>) theReviews.clone();
 		myAuthors = (ArrayList<Author>) theAuthors.clone();
+		//comment
 	}
 	
 	
