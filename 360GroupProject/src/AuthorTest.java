@@ -1,3 +1,4 @@
+
 import static org.junit.Assert.*;
 
 import java.io.File;
@@ -22,7 +23,8 @@ public class AuthorTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		myAuthor = new Author(0);
+		
+		myAuthor = new Author(John Doe, 0);
 	}
 
 	/**
