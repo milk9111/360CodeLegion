@@ -24,7 +24,7 @@ public class AuthorTest {
 	@Before
 	public void setUp() throws Exception {
 		
-		myAuthor = new Author(John Doe, 0);
+		myAuthor = new Author("John Doe", 0);
 	}
 
 	/**

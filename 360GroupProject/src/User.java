@@ -10,9 +10,7 @@ public abstract class User {
 	public void setConferences(List<Conference> theConferences) {
 		myConferences = theConferences;
 	}
-	public List<Conference> getConfernces() {
-		return myConferences;
-	}
+	abstract public List<Conference> getConfernces();
 	public void setName(String theName) {
 		myName = theName;
 	}
