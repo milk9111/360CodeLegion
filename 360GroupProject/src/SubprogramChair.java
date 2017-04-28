@@ -8,24 +8,17 @@ import java.util.Date;
  * @author Ryan Tran
  * @version 1.0
  */
-public class SubprogramChair {
+public class SubprogramChair extends User {
 
     // List of manuscripts assigned to the subprogram chair
     private List<Manuscript> myAssignedManuscripts;
 
-    // list of conferences assigned to the subprogram chair by the program chair
-    private List<Conference> myAssignedConferences;
-
-    // TODO: move this into the user <interface> later and have subprogram chair extend or implement that user interface
-    private String myUsername;
-
     /**
      * Constructor for the subprogram chair
      */
-    public SubprogramChair(String theUsername) {
-        this.myUsername = theUsername;
+    public SubprogramChair(String theUsername, List<Conference> theConferenceList) {
+    	super(theUsername, theConferenceList);
         this.myAssignedManuscripts = new ArrayList<Manuscript>();
-        this.myAssignedConferences = new ArrayList<Conference>();
     }
 
     /**
