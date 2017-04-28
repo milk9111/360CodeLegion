@@ -1,6 +1,7 @@
 
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -14,18 +15,22 @@ import java.util.HashMap;
 public class Manuscript {
 	private HashMap<Reviewer, String> myReviews;
 	private ArrayList<Author> myAuthors;
+	private Date mySubmittedDate;
+	private String myTitle;
 	
 	
 	/**
 	 * Simple constructor used for testing purposes.
 	 * 
+	 * @param theSubmittedDate The date submitted
 	 * @param theReviews The reviews to assign
 	 * @param theAuthors The authors for the manuscript
 	 */
-	public Manuscript (HashMap<Reviewer, String> theReviews, ArrayList<Author> theAuthors) {
+	public Manuscript (String theTitle, Date theSubmittedDate, HashMap<Reviewer, String> theReviews, ArrayList<Author> theAuthors) {
 		myReviews = (HashMap<Reviewer, String>) theReviews.clone();
 		myAuthors = (ArrayList<Author>) theAuthors.clone();
-		//comment
+		mySubmittedDate = theSubmittedDate;
+		myTitle = theTitle;
 	}
 	
 	
@@ -35,7 +40,9 @@ public class Manuscript {
 	public Manuscript () {
 		myReviews = new HashMap<Reviewer, String> ();
 		myAuthors = new ArrayList<Author> ();
+		mySubmittedDate = new Date ();
 	}
+	
 	
 	/**
 	 * Returns an ArrayList of all the reviews attached to this
@@ -65,6 +72,26 @@ public class Manuscript {
 	
 	
 	/**
+	 * Returns the date this manuscript was submitted.
+	 * 
+	 * @return The submitted date
+	 */
+	public Date getSubmittedDate () {
+		return (Date) mySubmittedDate.clone();
+	}
+	
+	
+	/**
+	 * Returns the title of this manuscript.
+	 * 
+	 * @return The manuscript title
+	 */
+	public String getTitle () {
+		return myTitle;
+	}
+	
+	
+	/**
 	 * Adds a reviewer to this manuscript. This simply uses the
 	 * put() method with theReviewer as the key and a default 
 	 * empty string as the value.
@@ -82,7 +109,7 @@ public class Manuscript {
 	 * @return A copy of the manuscript
 	 */
 	public Manuscript submitManuscript () {
-		return new Manuscript (this.myReviews, this.myAuthors);
+		return new Manuscript (this.mySubmittedDate, this.myReviews, this.myAuthors);
 	}
 }
 
