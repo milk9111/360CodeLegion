@@ -2,7 +2,7 @@ import java.util.List;
 
 public abstract class User {
 	public String myName;
-	public List<Conference> myConferences;
+	public List<Conference> myConferenceList;
 	public User(String theName, List<Conference> theConferences) {
 		myName = theName;
 		myConferences = theConferences;
@@ -10,7 +10,7 @@ public abstract class User {
 	public void setConferences(List<Conference> theConferences) {
 		myConferences = theConferences;
 	}
-	abstract public List<Conference> getConfernces();
+	abstract public List<Conference> getConfernceList();
 	public void setName(String theName) {
 		myName = theName;
 	}

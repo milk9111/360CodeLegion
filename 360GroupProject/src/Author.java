@@ -1,6 +1,7 @@
 
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 
 /**
  * This class is representing an Author.
@@ -15,6 +16,10 @@ public class Author extends User{
 	private List<File> myReviewList;
 	
 	private Conference myConference;
+	
+	
+	
+	private Map<Conference,List<Manuscript>> myManuscriptList;
 	
 	public Author(String theName, List<Conference> theConferenceList, int theManusriptCount) {
 		super(theName, theConferenceList);
@@ -44,4 +49,22 @@ public class Author extends User{
 	public Conference getConference() {
 		return myConference;
 	}
+	
+	public void addManuscript(Conference theConference, List<Manuscript> theManuscript) {
+		if (myManuscriptList.containsKey(theConference)) {
+			
+		}
+		myManuscriptList.put(theConference, theManuscript);
+	}
+	
+	public int getNumberOfManuscriptsSubmitted(Conference theConference) {
+		return myManuscriptList.get(theConference).size();
+	}
+
+	@Override
+	public List<Conference> getConfernceList() {
+		
+		return super.myConferenceList;
+	}
+	
 }
