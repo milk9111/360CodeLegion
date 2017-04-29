@@ -39,7 +39,32 @@ public class SubprogramChairTest {
     }
 
     @Test
-    public void testGetReviewers() throws Exception {
+    public void testGetReviewers() {
+    	// initialize a temporary list of Reviewers
+    	Reviewer tempReviewerA = new Reviewer("John Doe", new ArrayList<Conference>());
+    	Reviewer tempReviewerB = new Reviewer("Jane Doe", new ArrayList<Conference>());
+    	Reviewer tempReviewerC = new Reviewer("Jack Doe", new ArrayList<Conference>());
+    	
+    	List<Reviewer> tempReviewerList = new ArrayList<Reviewer>();
+    	tempReviewerList.add(tempReviewerA);
+    	tempReviewerList.add(tempReviewerB);
+    	tempReviewerList.add(tempReviewerC);
+    	
+    	// Add same temp Reviewers to database
+    	Database.addReviewerToReviewerList(tempReviewerA);
+    	Database.addReviewerToReviewerList(tempReviewerB);
+    	Database.addReviewerToReviewerList(tempReviewerC);
+    	
+    	// Call SubprogramChair#getReviewers() and test for equality between temp list of reviewers
+    	List<Reviewer> listToBeTested = mySubprogramChair.getReviewers();
+    	
+    	for(int i = 0; i < Database.getReviewerListSize(); i++) {
+    		// Using == to test Reviewer objects by reference rather than field values
+    		assertTrue(listToBeTested.get(i) == tempReviewerList.get(i));
+    	}
+    	
+    	// testing size of both lists
+    	assertEquals(listToBeTested.size(), Database.getReviewerListSize());
     }
 
     @Test
