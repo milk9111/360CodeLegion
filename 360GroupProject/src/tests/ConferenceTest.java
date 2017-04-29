@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Josiah on 4/27/2017.
@@ -17,7 +18,7 @@ import static org.junit.Assert.assertEquals;
 public class ConferenceTest {
 
     @Test
-    void testGetSubmissionDeadline() {
+    public void testGetSubmissionDeadline() {
         Date submissionDeadline = new Date();
         Date reviewDeadline = new Date();
         Conference tester = new Conference(submissionDeadline, reviewDeadline, new ArrayList<Reviewer>());
@@ -32,7 +33,7 @@ public class ConferenceTest {
     }
 
     @Test
-    void testGetReviewDeadline() {
+    public void testGetReviewDeadline() {
 
         Date submissionDeadline = new Date();
         Date reviewDeadline = new Date();
@@ -49,7 +50,7 @@ public class ConferenceTest {
     }
 
     @Test
-    void getPastReviewers() {
+    public void getPastReviewers() {
 
         Date submissionDeadline = Calendar.getInstance().getTime();
         Date reviewDeadline = Calendar.getInstance().getTime();
@@ -59,7 +60,7 @@ public class ConferenceTest {
 
 
     @Test
-    void testForSubmitManuscriptAndGetManuscripts() {
+    public void testForSubmitManuscriptAndGetManuscripts() {
         Calendar c = Calendar.getInstance();
         c.add(Calendar.DATE, 1);
         Conference tester = new Conference(c.getTime(), Calendar.getInstance().getTime(),
@@ -68,15 +69,16 @@ public class ConferenceTest {
         List<Manuscript> theManuscripts = new ArrayList<Manuscript>();
         theManuscripts.add(testManuscript);
         tester.submitManuscript(testManuscript);
-        assertEquals(tester.getManuscripts(), theManuscripts);
+        assertEquals("First failure", tester.getManuscripts(), theManuscripts);
 
         Manuscript secondManuscript = new Manuscript();
         theManuscripts.add(secondManuscript);
-        assertEquals(tester.getManuscripts(), theManuscripts);
+        tester.submitManuscript(secondManuscript);
+        assertTrue("Second failure", tester.getManuscripts().containsAll(theManuscripts));
     }
 
     @Test
-    void testForSubmitManuscriptDeadlineVerification() {
+    public void testForSubmitManuscriptDeadlineVerification() {
         Calendar c = Calendar.getInstance();
         c.add(Calendar.DATE, -1);
         Conference tester = new Conference(c.getTime(), Calendar.getInstance().getTime(),
