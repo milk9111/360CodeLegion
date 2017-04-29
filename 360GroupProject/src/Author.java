@@ -1,6 +1,5 @@
 
 import java.io.File;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
@@ -8,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * This class is representing an Author.
+ * This class is representing an Author user type with all the functionality they are entitled.
  * 
  * @author Casey Anderson
  * @version 1 
@@ -35,10 +34,10 @@ public class Author extends User {
 	 * Constructor for Author class.
 	 * @param theUserName The Username of the Author.
 	 */
-	public Author(String theUserName) {
-		// TODO: Resolve this constructor as calling super and manually setting a value does not seem correct.
+	public Author(String theUserName) {		
 		super(theUserName);
 		this.myReviewList = new ArrayList<File>();
+		myManuscriptList = new HashMap<Conference,ArrayList<Manuscript>>();
 	}
 	
 	
@@ -143,8 +142,10 @@ public class Author extends User {
 	private boolean isAuthorAtManuscriptLimit(Conference theConference, Manuscript theManuscript) {
 		boolean auhorAlreadyHas5Manuscripts = false;
 		for (int i = 0; i < theManuscript.getAuthors().size(); i++) {
-			if (theManuscript.getAuthors().get(i).getNumberOfManuscriptsSubmitted(theConference) > 5) {
-				auhorAlreadyHas5Manuscripts = true;
+			if (theManuscript.getAuthors().get(i).getManuscriptMap().containsKey(theConference)) {
+				if (theManuscript.getAuthors().get(i).getNumberOfManuscriptsSubmitted(theConference) >= 5) {
+					auhorAlreadyHas5Manuscripts = true;
+				}
 			}
 		}
 		return auhorAlreadyHas5Manuscripts;
