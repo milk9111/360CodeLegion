@@ -19,7 +19,7 @@ public class SubprogramChairTest {
 
     @Before
     public void setUp() throws Exception {
-        myReviewerList = new List<Reviewer>();
+        myReviewerList = new ArrayList<Reviewer>();
         mySubprogramChair = new SubprogramChair("Marauder");
     }
 
@@ -45,9 +45,9 @@ public class SubprogramChairTest {
     @Test
     public void testGetConfernceList() {
         List<Conference> conferenceListWithMoreThanOne = new ArrayList<Conference>();
-        Conference tempConfA = new Conference(new Date(), new Date(), new List<Reviewer>());
-        Conference tempConfB = new Conference(new Date(), new Date(), new List<Reviewer>());
-        Conference tempConfC = new Conference(new Date(), new Date(), new List<Reviewer>());
+        Conference tempConfA = new Conference(new Date(), new Date(), new ArrayList<Reviewer>());
+        Conference tempConfB = new Conference(new Date(), new Date(), new ArrayList<Reviewer>());
+        Conference tempConfC = new Conference(new Date(), new Date(), new ArrayList<Reviewer>());
 
         // initialize conference list to have multiple items
         conferenceListWithMoreThanOne.add(tempConfA);

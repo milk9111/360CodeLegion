@@ -49,7 +49,7 @@ public class SubprogramChair extends User {
     }
 
     /**
-	 * Subprogramchair specific method to return a list of conferences its been assigned
+	 * Subprogram chair specific method to return a list of conferences its been assigned
 	 * @return The conference list appropriate to the user type.
 	 */
     @Override
