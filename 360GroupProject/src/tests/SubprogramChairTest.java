@@ -33,9 +33,25 @@ public class SubprogramChairTest {
 
         assertEquals(simpleChairObj.getName(), testUsername);
     }
+
+    /**
+     * Test method for {@link SubprogramChair#getMyAssignedConferences()}
+     */
     @Test
     public void testGetMyAssignedConferences() {
+    	// add a single conference to subprogram chair's assigned conferences
+    	Date submissionDeadline = new Date();
+    	Date reviewDeadline = new Date();
+    	List<Reviewer> pastReviewerList = new ArrayList<Reviewer>();
+    	Conference tempConference = new Conference(submissionDeadline, reviewDeadline, pastReviewerList);
 
+    	mySubprogramChair.getMyAssignedConferences().add(tempConference);
+    	
+    	List<Conference> theAssignedConferences = mySubprogramChair.getMyAssignedConferences();
+    	
+    	// assert if the added conference is equivalent to the one in the current subprogram chair
+    	assertTrue(theAssignedConferences.get(0) == tempConference);
+    	assertEquals(theAssignedConferences.size(), 1);
     }
 
     @Test
