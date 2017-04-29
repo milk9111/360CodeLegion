@@ -12,21 +12,29 @@ public abstract class User {
 	/**
 	 * The User name for the system to recognize the current user.
 	 */
-	public String MyUserName;
+	private String MyUserName;
 	
 	/**
 	 * The list of all current conferences the user has access to.
 	 */
-	public List<Conference> myConferenceList;
+	protected List<Conference> myConferenceList;
 	
 	/**
 	 * Contructor for the User. 
-	 * @param theName The chosen user name.
+	 * @param theUserName The chosen user name.
 	 * @param theConferenceList List of all current conferences.
 	 */
 	public User(String theUserName, List<Conference> theConferenceList) {
 		MyUserName = theUserName;
 		myConferenceList = theConferenceList;
+	}
+
+		/**
+	 * Contructor for the User. Only supplying the username.
+	 * @param theUserName The chosen user name.
+	 */
+	public User(String theUserName) {
+		MyUserName = theUserName;
 	}
 	
 	/**
@@ -41,7 +49,7 @@ public abstract class User {
 	 * Abstract method to return a custom List of conferences to each user type.
 	 * @return The conference list appropriate to the user type.
 	 */
-	abstract public List<Conference> getConfernceList();
+	abstract public List<Conference> getConferenceList();
 	
 	/**
 	 * Method to change the Users username.
@@ -49,6 +57,15 @@ public abstract class User {
 	 */
 	public void setName(String theName) {
 		MyUserName = theName;
+	}
+
+
+	/**
+	 * Method to change the Users username.
+     * @return returns the user's username as a string
+	 */
+	public String getUserName() {
+		return this.MyUserName;
 	}
 	
 	/**
