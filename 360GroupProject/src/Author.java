@@ -26,8 +26,6 @@ public class Author extends User {
 	 */
 	private Map<Conference,ArrayList<Manuscript>> myManuscriptList;
 
-	private List<Conference> myConferenceList;
-	
 	/**
 	 * The user name for the Author.
 	 */
@@ -158,7 +156,7 @@ public class Author extends User {
 	 */
 	@Override
 	public List<Conference> getConferenceList() {
-		return this.myConferenceList;
+		return super.myConferenceList;
 	}
 	
 }
