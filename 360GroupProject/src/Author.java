@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * This class is representing an Author.
+ * This class is representing an Author user type with all the functionality they are entitled.
  * 
  * @author Casey Anderson
  * @version 1 
@@ -37,6 +37,7 @@ public class Author {
 	public Author(String theUserName) {
 		myUserName = theUserName;
 		myReviewList = new ArrayList<File>();
+		myManuscriptList = new HashMap<Conference,ArrayList<Manuscript>>();
 	}
 	
 	
@@ -140,8 +141,10 @@ public class Author {
 	private boolean isAuthorAtManuscriptLimit(Conference theConference, Manuscript theManuscript) {
 		boolean auhorAlreadyHas5Manuscripts = false;
 		for (int i = 0; i < theManuscript.getAuthors().size(); i++) {
-			if (theManuscript.getAuthors().get(i).getNumberOfManuscriptsSubmitted(theConference) > 5) {
-				auhorAlreadyHas5Manuscripts = true;
+			if (theManuscript.getAuthors().get(i).getManuscriptMap().containsKey(theConference)) {
+				if (theManuscript.getAuthors().get(i).getNumberOfManuscriptsSubmitted(theConference) >= 5) {
+					auhorAlreadyHas5Manuscripts = true;
+				}
 			}
 		}
 		return auhorAlreadyHas5Manuscripts;
