@@ -42,20 +42,20 @@ public class Reviewer extends User {
 	 * 
 	 * @param theMan The Manuscript to be assigned
 	 * 
-	 * @return boolean true is assigned successfully
+	 * @return boolean true if assigned successfully
 	 */
 	public boolean assignManuscript(Manuscript theManuscript){
 		boolean wasAssigned = true;
-		//Condition 1: check if Reviewer is a coauthor on this manuscript 
-		if (isReviewerAnAuthor(theManuscript) == true) {
-			wasAssigned = false;			
-		}
 		
-		//Condition 2: check if Reviewer is over review limit
-		else if (isOverReviewLimit() == true) {
-			wasAssigned = false;
-		}
-		else {
+		//Condition 1: check if Reviewer is a coauthor on this manuscript 
+		if ((isReviewerAnAuthor(theManuscript) == true) || (isOverReviewLimit() == true) ) {
+			wasAssigned = false;			
+//		}
+		
+//		//Condition 2: check if Reviewer is over review limit
+//		else if (isOverReviewLimit() == true) {
+//			wasAssigned = false;
+		} else {
 		myAssignedManuscriptList.add(theManuscript);
 		}
 		
@@ -84,14 +84,15 @@ public class Reviewer extends User {
 	private boolean isReviewerAnAuthor(Manuscript theManuscript) {
 		boolean isAuthor = false;
 
-		String reviwerName = getName();
+		String reviewerName = getName();
 		List<Author> authorlist = theManuscript.getAuthors();
 		
-		for (Author coauthor : authorlist){ 
-			if (coauthor.equals(reviwerName));
+	
+		for (int i = 0; i < authorlist.size(); i++) {
+			if (authorlist.get(i).getName().equals(reviewerName)) {
 				isAuthor = true;
+			}
 		}
-		
 		return isAuthor;
 		
 	}
