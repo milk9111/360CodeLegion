@@ -56,7 +56,7 @@ public class SubprogramChairTest {
 
         mySubprogramChair.setConferences(conferenceListWithMoreThanOne);
 
-        assertEquals(mySubprogramChair.getConfernceList(), conferenceListWithMoreThanOne);
+        assertEquals(mySubprogramChair.getConferenceList(), conferenceListWithMoreThanOne);
     }
 
 }
