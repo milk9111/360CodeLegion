@@ -17,7 +17,7 @@ public abstract class User {
 	/**
 	 * The list of all current conferences the user has access to.
 	 */
-	private List<Conference> myConferenceList;
+	protected List<Conference> myConferenceList;
 	
 	/**
 	 * Contructor for the User. 

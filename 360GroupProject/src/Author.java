@@ -13,7 +13,7 @@ import java.util.Map;
  * @version 1 
  *
  */
-public class Author {
+public class Author extends User {
 	
 	/**
 	 * List of the current Reviews returned to the Author.
@@ -113,12 +113,11 @@ public class Author {
 	}
 	
 	/**
-	 * Method to return COnference list for Author.
+	 * Method to return Conference list for Author.
 	 * @return The available Conference list.
 	 */
 	@Override
 	public List<Conference> getConferenceList() {
-		
 		return super.myConferenceList;
 	}
 	
