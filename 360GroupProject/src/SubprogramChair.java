@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -12,16 +11,24 @@ import java.util.List;
  */
 public class SubprogramChair extends User {
 
-	// test comment
-    // List of manuscripts assigned to the subprogram chair
+    /**
+     * List manuscripts assigned to the subprogram chair
+     */
     private List<Manuscript> myAssignedManuscripts;
+
+    private List<Conference> myConferences;
+
+    private List<Conference> myAssignedConferences;
 
     /**
      * Constructor for the subprogram chair
+     * @param theUsername Username of the subprogram chair
      */
-    public SubprogramChair(String theUsername, List<Conference> theConferenceList) {
-    	super(theUsername, theConferenceList);
+    public SubprogramChair(String theUsername) {
+    	super(theUsername);
         this.myAssignedManuscripts = new ArrayList<Manuscript>();
+        this.myConferences = new ArrayList<Conference>();
+        this.myAssignedConferences = new ArrayList<Conference>();
     }
 
     /**
@@ -29,7 +36,7 @@ public class SubprogramChair extends User {
      * @return list of conference objects
      */
     public List<Conference> getMyAssignedConferences() {
-        return this.myConferences;
+        return this.myAssignedConferences;
     }
 
     /**
@@ -39,6 +46,15 @@ public class SubprogramChair extends User {
     public List<Reviewer> getReviewers() {
     	// This method currently relies on persistent data to get the global list of reviewers
         return null;
+    }
+
+    /**
+	 * Subprogramchair specific method to return a list of conferences its been assigned
+	 * @return The conference list appropriate to the user type.
+	 */
+    @Override
+    public List<Conference> getConferenceList() {
+        return super.myConferenceList;
     }
     
 }
