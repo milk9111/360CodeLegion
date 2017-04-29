@@ -14,9 +14,9 @@ public class ReviewerTest {
 	@Before
 	public void setup() throws Exception{
 		
-		List<Conference> myDummyConferenceList = new ArrayList();
+		List<Conference> myDummyConferenceList = new ArrayList<>();
 		
-		List<Author> myAuthorList = new ArrayList();
+		List<Author> myAuthorList = new ArrayList<>();
 		//having trouble making dummy list so that I can test this.  
 		Author testAuthor = new Author("Steinbeck", myDummyConferenceList);
 		myAuthorList.add();
