@@ -69,6 +69,60 @@ public class AuthorTest {
 		assertEquals("Manusripts title should be Old Yeller!", "OldYeller", manuscript.getTitle());
 		assertEquals("Manusripts Author should be John Doe!", "John Doe", manuscript.getAuthors().get(0));
 	}
+	
+	
+	@Test
+	public void testAddManuscript() {
+		Date date = new Date();
+		HashMap<Reviewer, String> mapOfReviewers = new HashMap<Reviewer, String>();
+		ArrayList<Author> listOfAuthors = new ArrayList<Author>();
+		listOfAuthors.add(myAuthor);
+		Manuscript manuscript = new Manuscript("Old Yeller", date, mapOfReviewers, listOfAuthors);
+		ArrayList<Reviewer> reviewerList = new ArrayList<Reviewer>();
+		Conference conference = new Conference(date, date, reviewerList);
+		myAuthor.addManuscript(conference, manuscript);
+		assertEquals("ManuScript was not added to list properly", manuscript, myAuthor.getManuscript(conference).get(0));
+		
+	}
+	
+	@Test
+	public void testAddManuscriptWithCurrentManuscriptCountAt4() {
+		Date date = new Date();
+		HashMap<Reviewer, String> mapOfReviewers = new HashMap<Reviewer, String>();
+		ArrayList<Author> listOfAuthors = new ArrayList<Author>();
+		listOfAuthors.add(myAuthor);
+		Manuscript manuscript = new Manuscript("Old Yeller", date, mapOfReviewers, listOfAuthors);
+		ArrayList<Reviewer> reviewerList = new ArrayList<Reviewer>();
+		Conference conference = new Conference(date, date, reviewerList);
+		myAuthor.addManuscript(conference, manuscript);
+		myAuthor.addManuscript(conference, manuscript);
+		myAuthor.addManuscript(conference, manuscript);
+		myAuthor.addManuscript(conference, manuscript);
+		listOfAuthors.add(myAuthor);
+		Manuscript fithManuscript = new Manuscript("Nano Tech", date, mapOfReviewers, listOfAuthors);
+		myAuthor.addManuscript(conference, fithManuscript);
+		assertEquals("ManuScript was not added to list properly", fithManuscript, myAuthor.getManuscript(conference).get(4));		
+	}
+	
+	@Test
+	public void testAddManuscriptWithCurrentManuscriptCountAt5ShouldFail() {
+		Date date = new Date();
+		HashMap<Reviewer, String> mapOfReviewers = new HashMap<Reviewer, String>();
+		ArrayList<Author> listOfAuthors = new ArrayList<Author>();
+		listOfAuthors.add(myAuthor);
+		Manuscript manuscript = new Manuscript("Old Yeller", date, mapOfReviewers, listOfAuthors);
+		ArrayList<Reviewer> reviewerList = new ArrayList<Reviewer>();
+		Conference conference = new Conference(date, date, reviewerList);
+		myAuthor.addManuscript(conference, manuscript);
+		myAuthor.addManuscript(conference, manuscript);
+		myAuthor.addManuscript(conference, manuscript);
+		myAuthor.addManuscript(conference, manuscript);
+		myAuthor.addManuscript(conference, manuscript);
+		listOfAuthors.add(myAuthor);
+		Manuscript sixthManuscript = new Manuscript("Nano Tech", date, mapOfReviewers, listOfAuthors);
+		myAuthor.addManuscript(conference, sixthManuscript);
+		assertFalse(myAuthor.getManuscript(conference).contains(sixthManuscript));	
+	}
 
 	/**"
 	 * Test method for {@link Author#setConference(Conference)}.

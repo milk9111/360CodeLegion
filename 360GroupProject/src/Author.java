@@ -3,7 +3,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,12 +17,12 @@ public class Author {
 	/**
 	 * List of the current Reviews returned to the Author.
 	 */
-	private List<File> myReviewList;
+	private ArrayList<File> myReviewList;
 	
 	/**
 	 * Map of the Manuscripts already submitted to each conference.
 	 */
-	private Map<Conference,List<Manuscript>> myManuscriptList;
+	private Map<Conference,ArrayList<Manuscript>> myManuscriptList;
 	
 	/**
 	 * The user name for the Author.
@@ -81,8 +80,17 @@ public class Author {
 	 * Method to return Review list of Authors Manuscripts.
 	 * @return A list of files containing Authors Reviews.
 	 */
-	public List<File> getReviewList() {
+	public ArrayList<File> getReviewList() {
 		return myReviewList;
+	}
+	
+	/**
+	 * Method to return a list of Manuscripts for this Author.
+	 * @param theConference The Conference to get the list of Manuscripts from.
+	 * @return A ArrayList of Manuscripts the Author has already submitted.
+	 */
+	public ArrayList<Manuscript> getManuscript(Conference theConference) {
+		return myManuscriptList.get(theConference);
 	}
 	
 	/**
@@ -90,14 +98,16 @@ public class Author {
 	 * @param theConference The conference that the manuscript is to be added to.
 	 * @param theManuscript The manuscript to be added to Conference.
 	 */
-	public void addManuscript(Conference theConference, Manuscript theManuscript) {
-		if (getNumberOfManuscriptsSubmitted(theConference) <= 5) {
-			if (myManuscriptList.containsKey(theConference)) {
-				myManuscriptList.get(theConference).add(theManuscript);
-			} else {
-				List<Manuscript> ManuscriptList = new ArrayList<Manuscript>();
-				ManuscriptList.add(theManuscript);
-				myManuscriptList.put(theConference, ManuscriptList);
+	public void addManuscript(Conference theConference, Manuscript theManuscript) {	
+		if (!isAuthorAtManuscriptLimit(theConference, theManuscript)) {
+			for (int i = 0; i < theManuscript.getAuthors().size(); i++) {			
+				if (theManuscript.getAuthors().get(i).getManuscriptMap().containsKey(theConference)) {
+					theManuscript.getAuthors().get(i).getManuscriptMap().get(theConference).add(theManuscript);
+				} else {
+					ArrayList<Manuscript> ManuscriptList = new ArrayList<Manuscript>();
+					ManuscriptList.add(theManuscript);
+					theManuscript.getAuthors().get(i).getManuscriptMap().put(theConference, ManuscriptList);
+				}
 			}
 		} else {
 			System.out.println("Already have 5 Manuscript submitted!");
@@ -114,13 +124,27 @@ public class Author {
 	}
 	
 	/**
-	 * Method to return COnference list for Author.
-	 * @return The available Conference list.
+	 * Private helper method to return the internal map of Manuscripts and Conferences they are submitted to.
+	 * @return A Map with the value of A List of Manuscripts and the key the Conference they are submitted to.
 	 */
-	@Override
-	public List<Conference> getConfernceList() {
-		
-		return super.myConferenceList;
+	private Map<Conference,ArrayList<Manuscript>> getManuscriptMap() {
+		return myManuscriptList;
+	}
+	
+	/**
+	 * A helper method to determine if any Author that is attached to the Manuscript has already submitted 5 Manuscripts.
+	 * @param theConference The Conference that the Manuscript is being submitted to.
+	 * @param theManuscript The Manuscript which is trying to be submitted.
+	 * @return A boolean Value indicating if the any Author has Already submitted their limit of Manuscripts.
+	 */
+	private boolean isAuthorAtManuscriptLimit(Conference theConference, Manuscript theManuscript) {
+		boolean auhorAlreadyHas5Manuscripts = false;
+		for (int i = 0; i < theManuscript.getAuthors().size(); i++) {
+			if (theManuscript.getAuthors().get(i).getNumberOfManuscriptsSubmitted(theConference) > 5) {
+				auhorAlreadyHas5Manuscripts = true;
+			}
+		}
+		return auhorAlreadyHas5Manuscripts;
 	}
 	
 }
