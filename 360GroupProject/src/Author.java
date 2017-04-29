@@ -24,11 +24,6 @@ public class Author extends User {
 	 * Map of the Manuscripts already submitted to each conference.
 	 */
 	private Map<Conference,ArrayList<Manuscript>> myManuscriptList;
-
-	/**
-	 * The user name for the Author.
-	 */
-	private String myUserName;
 	
 	/**
 	 * Constructor for Author class.
@@ -47,23 +42,6 @@ public class Author extends User {
 	 */
 	public void addReview(File theReview) {
 		myReviewList.add(theReview);
-	}
-	
-	/**
-	 * Method to change the Authors username.
-	 * @param theName The new username desired.
-	 */
-	public void setUserName(String theName) {
-		myUserName = theName;
-	}
-	
-	/**
-	 * Method to return the current username.
-	 * @return The user name associated with current Author.
-	 */
-	@Override
-	public String getUserName() {
-		return myUserName;
 	}
 	
 	/**
