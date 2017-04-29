@@ -137,5 +137,8 @@ public class Author extends User {
 	public List<Conference> getConferenceList() {
 		return super.myConferenceList;
 	}
+
+
+
 	
 }
