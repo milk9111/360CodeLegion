@@ -1,32 +1,27 @@
-import static org.junit.Assert.*;
-
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
+
+import static org.junit.Assert.*;
 
 /**
- * 
- * @author Ryan Tran.
- * @version 1.0
- * @date 4/28/17
+ * @author Ryan Tran
+ * @date 4/29/17
  */
 public class SubprogramChairTest {
-    
-	// fixtures
+
+    // fixtures
 	private List<Reviewer> myReviewerList;
 	private SubprogramChair mySubprogramChair;
 
-    /**
-     * Initialize the test fixture before each test.
-     */
     @Before
-    public void setUp() {
-    	myReviewerList = new List<Reviewer>();
+    public void setUp() throws Exception {
+        myReviewerList = new List<Reviewer>();
         mySubprogramChair = new SubprogramChair("Marauder");
     }
-
 
     /**
      * Test method for SubprogramChair constructor
@@ -36,14 +31,19 @@ public class SubprogramChairTest {
         String testUsername = "Scion";
         SubprogramChair simpleChairObj = new SubprogramChair(testUsername);
 
-        AssertEquals(simpleChairObj.getName(), testUsername);
+        assertEquals(simpleChairObj.getName(), testUsername);
+    }
+    @Test
+    public void testGetMyAssignedConferences() {
+
     }
 
-    /**
-     * Test method for SubprogramChair#getConferenceList
-     */
     @Test
-    public void testGetConferenceList() {
+    public void testGetReviewers() throws Exception {
+    }
+
+    @Test
+    public void testGetConfernceList() {
         List<Conference> conferenceListWithMoreThanOne = new ArrayList<Conference>();
         Conference tempConfA = new Conference(new Date(), new Date(), new List<Reviewer>());
         Conference tempConfB = new Conference(new Date(), new Date(), new List<Reviewer>());
@@ -56,13 +56,7 @@ public class SubprogramChairTest {
 
         mySubprogramChair.setConferences(conferenceListWithMoreThanOne);
 
-        AssertEquals(mySubprogramChair.getConfernceList(), conferenceListWithMoreThanOne);
+        assertEquals(mySubprogramChair.getConfernceList(), conferenceListWithMoreThanOne);
     }
-    /**
-     * Test method for SubprogramChair#getReviewers()
-     */
-    @Test
-    public void testGetReviewers() {}
-
 
 }
