@@ -160,10 +160,6 @@ public class Author extends User {
 	}
 
 
-	@Override
-	public List<Conference> getConfernceList() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 	
 }
