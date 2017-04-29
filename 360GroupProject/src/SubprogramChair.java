@@ -1,40 +1,34 @@
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.List;
 
 /**
  * Subprogram chair class to handle all fields/methods of a subprogram chair.
  * Primary responsibilities of a subprogram chair is to assign manuscripts to reviewers to review
  * and to submit their recommendation for a manuscript to the program chair
  * @author Ryan Tran
+ * @date 4/28/17
  * @version 1.0
  */
-public class SubprogramChair {
+public class SubprogramChair extends User {
 
-    // List of manuscripts assigned to the subprogram chair
+    /**
+     * List manuscripts assigned to the subprogram chair
+     */
     private List<Manuscript> myAssignedManuscripts;
 
-    // list of conferences assigned to the subprogram chair by the program chair
-    private List<Conference> myAssignedConferences;
+    private List<Conference> myConferences;
 
-    // TODO: move this into the user <interface> later and have subprogram chair extend or implement that user interface
-    private String myUsername;
+    private List<Conference> myAssignedConferences;
 
     /**
      * Constructor for the subprogram chair
+     * @param theUsername Username of the subprogram chair
      */
     public SubprogramChair(String theUsername) {
-        this.myUsername = theUsername;
+    	super(theUsername);
         this.myAssignedManuscripts = new ArrayList<Manuscript>();
+        this.myConferences = new ArrayList<Conference>();
         this.myAssignedConferences = new ArrayList<Conference>();
-    }
-
-    /**
-     * This method should return a single conference object
-     * @return
-     */
-    public Conference getConference() {
-        // TODO: verify what this method should do within the context of the subprogram chair
-        return null;
     }
 
     /**
@@ -46,11 +40,21 @@ public class SubprogramChair {
     }
 
     /**
-     * This method should return a list of all reviewers to the subprogram chair
+     * This method should return a list of all reviewers in the system
      * @return a list of Reviewer objects
      */
     public List<Reviewer> getReviewers() {
-        // TODO: finish getReviewers method(may need to get list of persistent reviewers
+    	// This method currently relies on persistent data to get the global list of reviewers
         return null;
     }
+
+    /**
+	 * Subprogramchair specific method to return a list of conferences its been assigned
+	 * @return The conference list appropriate to the user type.
+	 */
+    @Override
+    public List<Conference> getConferenceList() {
+        return super.myConferenceList;
+    }
+    
 }

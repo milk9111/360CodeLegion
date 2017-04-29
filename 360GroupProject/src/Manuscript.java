@@ -104,12 +104,12 @@ public class Manuscript {
 	
 	
 	/**
-	 * Returns a copy of the manuscript.
-	 * 
+	 * Submits a manuscript then returns it upon success
+	 * @param
 	 * @return A copy of the manuscript
 	 */
 	public Manuscript submitManuscript () {
-		return new Manuscript (this.mySubmittedDate, this.myReviews, this.myAuthors);
+		return new Manuscript(this.myTitle, this.mySubmittedDate, this.myReviews, this.myAuthors);
 	}
 }
 

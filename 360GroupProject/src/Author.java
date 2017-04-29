@@ -1,6 +1,8 @@
 
 import java.io.File;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +14,7 @@ import java.util.Map;
  * @version 1 
  *
  */
-public class Author {
+public class Author extends User {
 	
 	/**
 	 * List of the current Reviews returned to the Author.
@@ -23,7 +25,7 @@ public class Author {
 	 * Map of the Manuscripts already submitted to each conference.
 	 */
 	private Map<Conference,ArrayList<Manuscript>> myManuscriptList;
-	
+
 	/**
 	 * The user name for the Author.
 	 */
@@ -31,12 +33,12 @@ public class Author {
 	
 	/**
 	 * Constructor for Author class.
-	 * @param theName The Username of the Author.
-	 * @param theConferenceList The list of conferences available to the Author.
+	 * @param theUserName The Username of the Author.
 	 */
 	public Author(String theUserName) {
-		myUserName = theUserName;
-		myReviewList = new ArrayList<File>();
+		// TODO: Resolve this constructor as calling super and manually setting a value does not seem correct.
+		super(theUserName);
+		this.myReviewList = new ArrayList<File>();
 	}
 	
 	
@@ -60,6 +62,7 @@ public class Author {
 	 * Method to return the current username.
 	 * @return The user name associated with current Author.
 	 */
+	@Override
 	public String getUserName() {
 		return myUserName;
 	}
@@ -145,6 +148,15 @@ public class Author {
 			}
 		}
 		return auhorAlreadyHas5Manuscripts;
+	}
+
+	/**
+	 * This will return a list of conferences the author can view/take actions upon
+	 * @return a list of viewable/actionable conferences relevant to the author
+	 */
+	@Override
+	public List<Conference> getConferenceList() {
+		return super.myConferenceList;
 	}
 	
 }
