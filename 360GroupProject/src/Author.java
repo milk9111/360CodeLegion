@@ -35,8 +35,8 @@ public class Author extends User {
 	 * @param theUserName The Username of the Author.
 	 */
 	public Author(String theUserName) {
-		myUserName = theUserName;
-		myReviewList = new ArrayList<File>();
+		super(theUserName);
+		this.myReviewList = new ArrayList<File>();
 	}
 	
 	

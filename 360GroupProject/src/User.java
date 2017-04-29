@@ -28,6 +28,14 @@ public abstract class User {
 		MyUserName = theUserName;
 		myConferenceList = theConferenceList;
 	}
+
+		/**
+	 * Contructor for the User. Only supplying the username.
+	 * @param theUserName The chosen user name.
+	 */
+	public User(String theUserName) {
+		MyUserName = theUserName;
+	}
 	
 	/**
 	 * Method to set the Conference List to the desired list of conferences.
