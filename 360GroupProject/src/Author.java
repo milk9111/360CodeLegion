@@ -32,8 +32,7 @@ public class Author {
 	
 	/**
 	 * Constructor for Author class.
-	 * @param theName The Username of the Author.
-	 * @param theConferenceList The list of conferences available to the Author.
+	 * @param theUserName The Username of the Author.
 	 */
 	public Author(String theUserName) {
 		myUserName = theUserName;
@@ -118,7 +117,7 @@ public class Author {
 	 * @return The available Conference list.
 	 */
 	@Override
-	public List<Conference> getConfernceList() {
+	public List<Conference> getConferenceList() {
 		
 		return super.myConferenceList;
 	}
