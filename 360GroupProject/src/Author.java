@@ -35,6 +35,7 @@ public class Author extends User {
 	 * @param theUserName The Username of the Author.
 	 */
 	public Author(String theUserName) {
+		// TODO: Resolve this constructor as calling super and manually setting a value does not seem correct.
 		super(theUserName);
 		this.myReviewList = new ArrayList<File>();
 	}
