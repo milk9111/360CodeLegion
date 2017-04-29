@@ -1,14 +1,15 @@
-//import org.junit.jupiter.api.BeforeAll;
+package tests;//import org.junit.jupiter.api.BeforeAll;
 //import org.junit.jupiter.api.Test;
 
 
+import org.junit.*;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import org.junit.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Josiah on 4/27/2017.
@@ -20,14 +21,14 @@ public class ConferenceTest {
         Date submissionDeadline = new Date();
         Date reviewDeadline = new Date();
         Conference tester = new Conference(submissionDeadline, reviewDeadline, new ArrayList<Reviewer>());
-        assertEquals(DateUtils.truncate(submissionDeadline, Calendar.DAY), DateUtils.truncate(tester.getSubmissionDeadline(), Calendar.DAY));
+        assertEquals(submissionDeadline, tester.getSubmissionDeadline());
 
 
         Date submissionDeadline2 = new Date();
         Date reviewDeadline2 = new Date();
         tester = new Conference(submissionDeadline2, reviewDeadline2, new ArrayList<Reviewer>()
         );
-        assertEquals(DateUtils.truncate(submissionDeadline2, Calendar.DAY), DateUtils.truncate(tester.getSubmissionDeadline()), Calendar.DAY);
+        assertEquals(submissionDeadline2, tester.getSubmissionDeadline());
     }
 
     @Test
@@ -38,12 +39,12 @@ public class ConferenceTest {
         Conference tester = new Conference(submissionDeadline, reviewDeadline, new ArrayList<Reviewer>()
         );
 
-        assertEquals(DateUtils.truncate(reviewDeadline, Calendar.DAY), DateUtils.truncate(tester.getReviewDeadline(), Calendar.DAY);
+        assertEquals(reviewDeadline, tester.getReviewDeadline());
 
         Date submissionDeadline2 = new Date();
         Date reviewDeadline2 = new Date();
         tester = new Conference(submissionDeadline2, reviewDeadline2, new ArrayList<Reviewer>());
-        assertEquals(DateUtils.truncate(reviewDeadline2, Calendar.DAY), DateUtils.truncate(tester.getReviewDeadline(), Calendar.DAY);
+        assertEquals(reviewDeadline2, tester.getReviewDeadline());
 
     }
 
@@ -56,9 +57,12 @@ public class ConferenceTest {
         assertEquals(tester.getPastReviewers(), new ArrayList<Reviewer>());
     }
 
+
     @Test
     void testForSubmitManuscriptAndGetManuscripts() {
-        Conference tester = new Conference(Calendar.getInstance().addDays(CalendarDate, 1).getTime(), Calendar.getInstance().getTime(),
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.DATE, 1);
+        Conference tester = new Conference(c.getTime(), Calendar.getInstance().getTime(),
                 new ArrayList<Reviewer>());
         Manuscript testManuscript = new Manuscript();
         List<Manuscript> theManuscripts = new ArrayList<Manuscript>();
@@ -73,7 +77,9 @@ public class ConferenceTest {
 
     @Test
     void testForSubmitManuscriptDeadlineVerification() {
-        Conference tester = new Conference(Calendar.getInstance().addDays(CalendarDate, -1).getTime(), Calendar.getInstance().getTime(),
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.DATE, -1);
+        Conference tester = new Conference(c.getTime(), Calendar.getInstance().getTime(),
                 new ArrayList<Reviewer>());
         Manuscript testManuscript = new Manuscript();
         List<Manuscript> theManuscripts = new ArrayList<Manuscript>();
@@ -83,7 +89,6 @@ public class ConferenceTest {
         Manuscript secondManuscript = new Manuscript();
         assertEquals(tester.getManuscripts(), theManuscripts);
     }
-
 
 }
 
