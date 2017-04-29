@@ -53,10 +53,10 @@ public abstract class User {
 	
 	/**
 	 * Method to change the Users username.
-	 * @param theName The new username desired.
+	 * @param theUserName The new username desired.
 	 */
-	public void setName(String theName) {
-		MyUserName = theName;
+	public void setUserName(String theUserName) {
+		MyUserName = theUserName;
 	}
 
 
