@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -18,8 +17,9 @@ public class SubprogramChair extends User {
 
     /**
      * Constructor for the subprogram chair
+     * @param theUsername Username of the subprogram chair
      */
-    public SubprogramChair(String theUsername, List<Conference> theConferenceList) {
+    public SubprogramChair(String theUsername) {
     	super(theUsername, theConferenceList);
         this.myAssignedManuscripts = new ArrayList<Manuscript>();
     }
@@ -39,6 +39,15 @@ public class SubprogramChair extends User {
     public List<Reviewer> getReviewers() {
     	// This method currently relies on persistent data to get the global list of reviewers
         return null;
+    }
+
+    /**
+	 * Abstract method to return a custom List of conferences to each user type.
+	 * @return The conference list appropriate to the user type.
+	 */
+    @Override
+    public List<Conference> getConfernceList() {
+        return super.myConferenceList;
     }
     
 }
