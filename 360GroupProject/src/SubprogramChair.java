@@ -44,12 +44,12 @@ public class SubprogramChair extends User {
      * @return a list of Reviewer objects
      */
     public List<Reviewer> getReviewers() {
-    	// This method currently relies on persistent data to get the global list of reviewers
-        return null;
+    	// Queries the system wide database for a list of all reviewers
+        return Database.getReviewersList();
     }
 
     /**
-	 * Subprogramchair specific method to return a list of conferences its been assigned
+	 * Subprogram chair specific method to return a list of conferences its been assigned
 	 * @return The conference list appropriate to the user type.
 	 */
     @Override

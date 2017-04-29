@@ -47,10 +47,10 @@ public class Conference {
     }
 
     private boolean isWithinSubmissionDeadline(){
-        return mySubmissionDeadline.after(new Calendar().getTime());
+        return mySubmissionDeadline.after(Calendar.getInstance().getTime());
     }
 
     private boolean isWithinReviewDeadline(){
-        return myReviewDeadline.after(new Calendar().getTime());
+        return myReviewDeadline.after(Calendar.getInstance().getTime());
     }
 }
