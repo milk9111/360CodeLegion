@@ -9,17 +9,21 @@ import org.junit.Test;
 
 public class ReviewerTest {
 
-	private Reviewer myTestReviewer; 
+	private Reviewer myTestReviewer;
+	private Manuscript testManuscript;
+	private List<Author> authorList;
 	
 	@Before
 	public void setup() throws Exception{
 		
 		List<Conference> myDummyConferenceList = new ArrayList<>();
 		
-		List<Author> myAuthorList = new ArrayList<>();
-		//having trouble making dummy list so that I can test this.  
-		Author testAuthor = new Author("Steinbeck", myDummyConferenceList);
-		myAuthorList.add();
+		authorList = new ArrayList<Author>();
+		authorList.add(new Author("Steinbeck"));
+		authorList.add(new Author("Hemmingway"));
+		
+		testManuscript = new Manuscript();
+		testManuscript.setAuthors(authorList);
 		
 		
 		myTestReviewer = new Reviewer("Roger Ebert", myDummyConferenceList);
@@ -37,12 +41,18 @@ public class ReviewerTest {
 
 
 	/**
-	 * Tests Biz Rule 2a1: Reviewer is not a coauthor, should pass test.
+	 * Tests Biz Rule 2a1: Reviewer is not a coauthor, should successfully add manuscript to Reviewers
+	 * assigned manuscript list.
+	 * Reviewer name = Roger Ebert
+	 * Author names = Steinbeck, Hemmingway
 	 */
 	@Test
 	public void testAssignManuscriptReviewerNotAnAuthor() {
 		
-		fail("Not yet implemented");
+		assertTrue(myTestReviewer.assignManuscript(testManuscript));
+		
+//		assertEquals(myTestReviewer.getAssignedManuscriptList().get(1), testManuscript);
+
 	}
 	
 	/**
@@ -50,6 +60,13 @@ public class ReviewerTest {
 	 */
 	@Test
 	public void testAssignManuscriptReviewerAuthor() {
+		
+		authorList.add(new Author("Roger Ebert"));
+		
+		myTestReviewer.assignManuscript(testManuscript);
+		
+		assertEquals(myTestReviewer.assignManuscript(testManuscript), "Reviewer is a coauthor on this manuscript");
+		
 		fail("Not yet implemented");
 	}
 	

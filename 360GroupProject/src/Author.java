@@ -158,5 +158,12 @@ public class Author extends User {
 	public List<Conference> getConferenceList() {
 		return super.myConferenceList;
 	}
+
+
+	@Override
+	public List<Conference> getConfernceList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

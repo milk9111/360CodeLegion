@@ -3,6 +3,7 @@
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * 
@@ -68,6 +69,13 @@ public class Manuscript {
 	 */
 	public ArrayList<Author> getAuthors () {
 		return (ArrayList<Author>) myAuthors.clone();
+	}
+	
+	/**
+	 * Sets myAuthors list.  Allows tester to use default constructor and add authors later.
+	 */
+	public void setAuthors(List<Author> theAuthors) {
+		myAuthors = (ArrayList<Author>) theAuthors;
 	}
 	
 	

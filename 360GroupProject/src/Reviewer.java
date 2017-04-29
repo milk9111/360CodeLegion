@@ -26,7 +26,7 @@ public class Reviewer extends User {
 	}
 	
 	/**
-	 * Constructor for Reviewer with assigned manustripts list.
+	 * Constructor for Reviewer with assigned manuscripts list.
 	 */
 	public Reviewer(String theName, List<Conference> theConferenceList, List<Manuscript> theManuscripts){
 		super(theName, theConferenceList);
@@ -41,19 +41,25 @@ public class Reviewer extends User {
 	 * Adds the manuscript to this reviewer's list.
 	 * 
 	 * @param theMan The Manuscript to be assigned
+	 * 
+	 * @return boolean true is assigned successfully
 	 */
-	public void assignManuscript(Manuscript theManuscript){
-		//Condition 1: check if Reviewer is over review limit
-		if (isOverReviewLimit() == false) {
-			//Condition 2: check if Reviewer is a coauthor on this manuscript 
-			if (isReviewerAnAuthor(theManuscript) == false) {
-				
-				myAssignedManuscriptList.add(theManuscript);
-			
-			}
-		} else {
-			//return some error message
+	public boolean assignManuscript(Manuscript theManuscript){
+		boolean wasAssigned = true;
+		//Condition 1: check if Reviewer is a coauthor on this manuscript 
+		if (isReviewerAnAuthor(theManuscript) == true) {
+			wasAssigned = false;			
 		}
+		
+		//Condition 2: check if Reviewer is over review limit
+		else if (isOverReviewLimit() == true) {
+			wasAssigned = false;
+		}
+		else {
+		myAssignedManuscriptList.add(theManuscript);
+		}
+		
+		return wasAssigned;
 	}
 	
 	/**
@@ -103,7 +109,7 @@ public class Reviewer extends User {
 
 
 	@Override
-	public List<Conference> getConfernceList() {
+	public List<Conference> getConferenceList() {
 
 		return super.myConferenceList;
 	}
