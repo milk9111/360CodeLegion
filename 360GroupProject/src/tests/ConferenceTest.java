@@ -1,11 +1,16 @@
-//import org.junit.jupiter.api.BeforeAll;
+package tests;//import org.junit.jupiter.api.BeforeAll;
 //import org.junit.jupiter.api.Test;
 
+
+import org.junit.*;
+
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import junit.framework.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Josiah on 4/27/2017.
@@ -13,75 +18,79 @@ import junit.framework.*;
 public class ConferenceTest {
 
     @Test
-    void testGetSubmissionDeadline() {
-        Date submissionDeadline = new Date().;
+    public void testGetSubmissionDeadline() {
+        Date submissionDeadline = new Date();
         Date reviewDeadline = new Date();
-        Conference tester = new Conference(submissionDeadline, reviewDeadline, new List<Reviewer>());
-        assertEquals(DateUtils.truncate(submissionDeadline, Calendar.DAY), DateUtils.truncate(tester.getSubmissionDeadline(), Calendar.DAY));
+        Conference tester = new Conference(submissionDeadline, reviewDeadline, new ArrayList<Reviewer>());
+        assertEquals(submissionDeadline, tester.getSubmissionDeadline());
 
 
         Date submissionDeadline2 = new Date();
         Date reviewDeadline2 = new Date();
-        tester = new Conference(submissionDeadline2, reviewDeadline2, new List<Reviewer>()
+        tester = new Conference(submissionDeadline2, reviewDeadline2, new ArrayList<Reviewer>()
         );
-        assertEquals(DateUtils.truncate(submissionDeadline2, Calendar.DAY), DateUtils.truncate(tester.getSubmissionDeadline()), Calendar.DAY);
+        assertEquals(submissionDeadline2, tester.getSubmissionDeadline());
     }
 
     @Test
-    void testGetReviewDeadline() {
+    public void testGetReviewDeadline() {
 
         Date submissionDeadline = new Date();
         Date reviewDeadline = new Date();
-        Conference tester = new Conference(submissionDeadline, reviewDeadline, new List<Reviewer>()
+        Conference tester = new Conference(submissionDeadline, reviewDeadline, new ArrayList<Reviewer>()
         );
 
-        assertEquals(DateUtils.truncate(reviewDeadline, Calendar.DAY), DateUtils.truncate(tester.getReviewDeadline, Calendar.DAY);
+        assertEquals(reviewDeadline, tester.getReviewDeadline());
 
-        Date submissionDeadline = new Date();
+        Date submissionDeadline2 = new Date();
         Date reviewDeadline2 = new Date();
-        tester = new Conference(submissionDeadline, reviewDeadline2,
-                );
-        assertEquals(DateUtils.truncate(reviewDeadline2, Calendar.DAY), DateUtils.truncate(tester.getReviewDeadline, Calendar.DAY);
+        tester = new Conference(submissionDeadline2, reviewDeadline2, new ArrayList<Reviewer>());
+        assertEquals(reviewDeadline2, tester.getReviewDeadline());
 
     }
 
     @Test
-    void getPastReviewers() {
+    public void getPastReviewers() {
 
         Date submissionDeadline = Calendar.getInstance().getTime();
         Date reviewDeadline = Calendar.getInstance().getTime();
         Conference tester = new Conference(submissionDeadline, reviewDeadline, new ArrayList<Reviewer>());
-        assertEquals(tester.getPastReviewers(), new ArrayList<Reviewer>())
+        assertEquals(tester.getPastReviewers(), new ArrayList<Reviewer>());
     }
 
+
     @Test
-    void testForSubmitManuscriptAndGetManuscripts() {
-        Conference tester = new Conference(Calendar.getInstance().addDays(CalendarDate, 1).getTime(), Calendar.getInstance().getTime(),
-                new List<Reviewer>());
+    public void testForSubmitManuscriptAndGetManuscripts() {
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.DATE, 1);
+        Conference tester = new Conference(c.getTime(), Calendar.getInstance().getTime(),
+                new ArrayList<Reviewer>());
         Manuscript testManuscript = new Manuscript();
         List<Manuscript> theManuscripts = new ArrayList<Manuscript>();
         theManuscripts.add(testManuscript);
         tester.submitManuscript(testManuscript);
-        assertEquals(tester.getManuscripts, theManuscripts);
+        assertEquals("First failure", tester.getManuscripts(), theManuscripts);
 
         Manuscript secondManuscript = new Manuscript();
         theManuscripts.add(secondManuscript);
-        assertEquals(tester.getManuscripts, theManuscripts);
+        tester.submitManuscript(secondManuscript);
+        assertTrue("Second failure", tester.getManuscripts().containsAll(theManuscripts));
     }
 
     @Test
-    void testForSubmitManuscriptDeadlineVerification() {
-        Conference tester = new Conference(Calendar.getInstance().addDays(CalendarDate, -1).getTime(), Calendar.getInstance().getTime(),
-                new List<Reviewer>());
+    public void testForSubmitManuscriptDeadlineVerification() {
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.DATE, -1);
+        Conference tester = new Conference(c.getTime(), Calendar.getInstance().getTime(),
+                new ArrayList<Reviewer>());
         Manuscript testManuscript = new Manuscript();
         List<Manuscript> theManuscripts = new ArrayList<Manuscript>();
         tester.submitManuscript(testManuscript);
-        assertEquals(tester.getManuscripts, theManuscripts);
+        assertEquals(tester.getManuscripts(), theManuscripts);
 
         Manuscript secondManuscript = new Manuscript();
-        assertEquals(tester.getManuscripts, theManuscripts);
+        assertEquals(tester.getManuscripts(), theManuscripts);
     }
-
 
 }
 
