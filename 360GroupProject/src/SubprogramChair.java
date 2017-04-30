@@ -16,8 +16,14 @@ public class SubprogramChair extends User {
      */
     private List<Manuscript> myAssignedManuscripts;
 
+    /**
+     * List of conferences viewable to the subprogram chair
+     */
     private List<Conference> myConferences;
 
+    /**
+     * List of conferences assigned to the subprogram chair by a program chair
+     */
     private List<Conference> myAssignedConferences;
 
     /**

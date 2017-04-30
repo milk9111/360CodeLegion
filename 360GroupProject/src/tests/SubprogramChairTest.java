@@ -14,17 +14,19 @@ import static org.junit.Assert.*;
 public class SubprogramChairTest {
 
     // fixtures
-	private List<Reviewer> myReviewerList;
 	private SubprogramChair mySubprogramChair;
 
+	/**
+	 * Initialize a subprogram chair
+	 * @throws Exception
+	 */
     @Before
     public void setUp() throws Exception {
-        myReviewerList = new ArrayList<Reviewer>();
         mySubprogramChair = new SubprogramChair("Marauder");
     }
 
     /**
-     * Test method for SubprogramChair constructor
+     * Test method for {@link SubprogramChair#SubprogramChair(String)}
      */
     @Test
     public void testConstructor() {
@@ -36,6 +38,7 @@ public class SubprogramChairTest {
 
     /**
      * Test method for {@link SubprogramChair#getMyAssignedConferences()}
+     * Tests to see if the correct list of conferences assigned to the subprogram chair is returned.
      */
     @Test
     public void testGetMyAssignedConferences() {
@@ -54,6 +57,10 @@ public class SubprogramChairTest {
     	assertEquals(theAssignedConferences.size(), 1);
     }
 
+    /**
+     * Test method for {@link SubprogramChair#getReviewers()}
+     * Tests if list of all reviewers is returned from the method
+     */
     @Test
     public void testGetReviewers() {
     	// initialize a temporary list of Reviewers
@@ -83,6 +90,10 @@ public class SubprogramChairTest {
     	assertEquals(listToBeTested.size(), Database.getReviewerListSize());
     }
 
+    /**
+     * Test method for {@link SubprogramChair#getConferenceList()}
+     * Tests if correct list of viewable conferences for the subprogram chair is returned
+     */
     @Test
     public void testGetConfernceList() {
         List<Conference> conferenceListWithMoreThanOne = new ArrayList<Conference>();
