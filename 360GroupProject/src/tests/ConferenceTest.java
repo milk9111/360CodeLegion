@@ -14,9 +14,13 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Josiah on 4/27/2017.
+ * This class is for testing the Conference class
  */
 public class ConferenceTest {
 
+    /**
+     * Test to verify that get submission date works properly
+     */
     @Test
     public void testGetSubmissionDeadline() {
         Date submissionDeadline = new Date();
@@ -32,6 +36,9 @@ public class ConferenceTest {
         assertEquals(submissionDeadline2, tester.getSubmissionDeadline());
     }
 
+    /**
+     * Test to verify that get review deadline works properly
+     */
     @Test
     public void testGetReviewDeadline() {
 
@@ -49,6 +56,9 @@ public class ConferenceTest {
 
     }
 
+    /**
+     * Tests to make sure the get past reviewers works properly
+     */
     @Test
     public void getPastReviewers() {
 
@@ -59,6 +69,9 @@ public class ConferenceTest {
     }
 
 
+    /**
+     * Tests submit and get manuscript in valid cases.
+     */
     @Test
     public void testForSubmitManuscriptAndGetManuscripts() {
         Calendar c = Calendar.getInstance();
@@ -77,6 +90,9 @@ public class ConferenceTest {
         assertTrue("Second failure", tester.getManuscripts().containsAll(theManuscripts));
     }
 
+    /**
+     * Tests to verify that when submitting a manuscript after the deadline it doesn't work.
+     */
     @Test
     public void testForSubmitManuscriptDeadlineVerification() {
         Calendar c = Calendar.getInstance();
@@ -93,19 +109,3 @@ public class ConferenceTest {
     }
 
 }
-
-/*
-    Fields
-		Manuscripts
-		Submission Deadline
-		Review Deadline
-		Past Reviewers
-	Methods
-		getManuscript()
-		getSubmissionDeadline()
-		getReviewDeadline()
-		getPastReviewers()
-		submitManuscript()
-		getManuscriptList()
-		getReviewer()
- */
