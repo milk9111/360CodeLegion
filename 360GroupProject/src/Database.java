@@ -42,8 +42,20 @@ public class Database {
 		return theReviewer;
 	}
 	
+	/**
+	 * This method returns the number of reviewers within the database's reviewer list
+	 * @return integer indicating number of the reviewers in the database
+	 */
 	static public int getReviewerListSize() {
 		return myReviewerListSize;
+	}
+	
+	/**
+	 * This method is meant to clear the databsae for testing purposes
+	 */
+	static public void clearDatabase() {
+		myReviewerList = new ArrayList<Reviewer>();
+		myReviewerListSize = 0;
 	}
 	
 }

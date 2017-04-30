@@ -23,6 +23,7 @@ public class SubprogramChairTest {
     @Before
     public void setUp() throws Exception {
         mySubprogramChair = new SubprogramChair("Marauder");
+        Database.clearDatabase();
     }
 
     /**
@@ -111,7 +112,8 @@ public class SubprogramChairTest {
      */
     @Test
     public void testGetReviewersForEmptyList() {
-    	List<Reviewer> listToBeTested = mySubprogramChair.getReviewers();
+    	SubprogramChair chairWithNoReviewers = new SubprogramChair("Jack");
+    	List<Reviewer> listToBeTested = chairWithNoReviewers.getReviewers();
         	
     	assertEquals(listToBeTested.size(), Database.getReviewerListSize());
     	assertEquals(listToBeTested.size(), 0);
