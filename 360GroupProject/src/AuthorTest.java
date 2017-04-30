@@ -79,7 +79,7 @@ public class AuthorTest {
 	/ having total of 4 Manuscripts Buissness rule should not be triggered.
 	*/
 	@Test
-	public void testMax-1PriorManuscriptsAsAuthor() {
+	public void testMaxMinusOnePriorManuscriptsAsAuthor() {
 		Date date = new Date();
 		HashMap<Reviewer, String> mapOfReviewers = new HashMap<Reviewer, String>();
 		ArrayList<Author> listOfAuthors = new ArrayList<Author>();
@@ -126,7 +126,7 @@ public class AuthorTest {
 	/ having total of 4 Manuscripts Buissness rule should not be triggered.
 	*/
 	@Test
-	public void testMax-1PriorManuscriptsAsCoAuthor() {
+	public void testMaxMinusOnePriorManuscriptsAsCoAuthor() {
 		Date date = new Date();
 		HashMap<Reviewer, String> mapOfReviewers = new HashMap<Reviewer, String>();
 		ArrayList<Author> listOfAuthors = new ArrayList<Author>();
