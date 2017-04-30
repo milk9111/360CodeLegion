@@ -14,7 +14,7 @@ import org.junit.Test;
  * @version 4/30/2017
  */
 public class ManuscriptTest {
-	Manuscript myPaper;
+	private Manuscript myPaper;
 
 	/**
 	 * The set up before each unit test. Just instantiates a simple Manuscript.
