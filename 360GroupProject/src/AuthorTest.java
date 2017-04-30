@@ -29,7 +29,7 @@ public class AuthorTest {
 	}
 
 	/**
-	 * Test method for {@link Author#Author(int)}.
+	 * Test to check Author object successfully created.
 	 */
 	@Test
 	public void testAuthor() {
@@ -39,7 +39,7 @@ public class AuthorTest {
 
 
 	/**
-	 * Test method for {@link Author#setReview(java.io.File)}.
+	 * Test to add review to an Author.
 	 */
 	@Test
 	public void testAddReview() {
@@ -48,14 +48,20 @@ public class AuthorTest {
 		assertEquals("myAuthor Review should be test.txt!", file, myAuthor.getReviewList().get(0));
 	}
 	
+	/**
+	/ Test to set the user name of an Author.
+	/*
 	@Test
 	public void testSetUserName() {
 		myAuthor.setUserName("Fred Jones");
 		assertEquals("myAuthors myUserName should me Fred Jones!", "Fred Jones", myAuthor.getUserName());
 	}
 	
+	/**
+	/ Test to add Manuscript to an Author.
+	/*
 	@Test
-	public void testAddManuscript() {
+	public void testAddManuscriptToAuthor() {
 		Date date = new Date();
 		HashMap<Reviewer, String> mapOfReviewers = new HashMap<Reviewer, String>();
 		ArrayList<Author> listOfAuthors = new ArrayList<Author>();
@@ -68,8 +74,12 @@ public class AuthorTest {
 		
 	}
 	
+	/**
+	/ Test to check buissness rule An Author is limited to 5 Manuscripts using Author 
+	/ having total of 4 Manuscripts Buissness rule should not be triggered.
+	/*
 	@Test
-	public void testAddManuscriptWithCurrentManuscriptCountAt4() {
+	public void testMax-1PriorManuscriptsAsAuthor() {
 		Date date = new Date();
 		HashMap<Reviewer, String> mapOfReviewers = new HashMap<Reviewer, String>();
 		ArrayList<Author> listOfAuthors = new ArrayList<Author>();
@@ -87,8 +97,12 @@ public class AuthorTest {
 		assertEquals("ManuScript was not added to list properly", fithManuscript, myAuthor.getManuscript(conference).get(4));		
 	}
 	
+	/**
+	/ Test to check buissness rule An Author is limited to 5 Manuscripts using Author
+	/ having total of 5 Manuscripts Buissness rule should be triggered.
+	/*
 	@Test
-	public void testAddManuscriptWithCurrentManuscriptCountAt5ShouldFail() {
+	public void testMaxPriorManuscriptsAsAuthor() {
 		Date date = new Date();
 		HashMap<Reviewer, String> mapOfReviewers = new HashMap<Reviewer, String>();
 		ArrayList<Author> listOfAuthors = new ArrayList<Author>();
@@ -107,8 +121,12 @@ public class AuthorTest {
 		assertFalse(myAuthor.getManuscript(conference).contains(sixthManuscript));	
 	}
 
+	/**
+	/ Test to check buissness rule An Author is limited to 5 Manuscripts using CoAuthor
+	/ having total of 4 Manuscripts Buissness rule should not be triggered.
+	/*
 	@Test
-	public void testCoAuthorAddManuscriptWithCurrentManuscriptCountAt4() {
+	public void testMax-1PriorManuscriptsAsCoAuthor() {
 		Date date = new Date();
 		HashMap<Reviewer, String> mapOfReviewers = new HashMap<Reviewer, String>();
 		ArrayList<Author> listOfAuthors = new ArrayList<Author>();
@@ -127,8 +145,12 @@ public class AuthorTest {
 		assertEquals("ManuScript was not added to list properly", fithManuscript, myAuthor.getManuscript(conference).get(4));		
 	}
 	
+	/**
+	/ Test to check buissness rule An Author is limited to 5 Manuscripts using CoAuthor
+	/ having total of 5 Manuscripts Buissness rule should be triggered.
+	/*
 	@Test
-	public void testCoAuthorAddManuscriptWithCurrentManuscriptCountAt5ShouldFail() {
+	public void testMaxPriorManuscriptsAsCoAuthor() {
 		Date date = new Date();
 		HashMap<Reviewer, String> mapOfReviewers = new HashMap<Reviewer, String>();
 		ArrayList<Author> listOfAuthors = new ArrayList<Author>();
@@ -148,8 +170,12 @@ public class AuthorTest {
 		assertFalse(myAuthor.getManuscript(conference).contains(sixthManuscript));	
 	}
 	
+	/**
+	/ Test to check buissness rule An Author is limited to 5 Manuscripts using both Author and CoAuthor
+	/ having total of 5 Manuscripts Buissness rule should be triggered.
+	/*
 	@Test
-	public void testCoAuthorAndAuthorAddManuscriptWithCurrentManuscriptCountAt5ShouldFail() {
+	public void testMaxPiorManuscriptsAsBothAuthorAndCoAuthor() {
 		Date date = new Date();
 		HashMap<Reviewer, String> mapOfReviewers = new HashMap<Reviewer, String>();
 		ArrayList<Author> listOfAuthors = new ArrayList<Author>();
@@ -169,8 +195,12 @@ public class AuthorTest {
 		assertFalse(myAuthor.getManuscript(conference).contains(sixthManuscript));	
 	}
 	
+	/**
+	/ Test to check buissness rule An Author is limited to 5 Manuscripts using both Author and CoAuthor
+	/ having a total of 4 Manuscripts Buissness rule should not be triggered.
+	/*
 	@Test
-	public void testCoAuthorAndAuthorAddManuscriptWithCurrentManuscriptCountAt4() {
+	public void testMaxLessThanMaxPriorManuscriptsAsAuthorAndCoAuthor() {
 		Date date = new Date();
 		HashMap<Reviewer, String> mapOfReviewers = new HashMap<Reviewer, String>();
 		ArrayList<Author> listOfAuthors = new ArrayList<Author>();
