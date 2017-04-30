@@ -50,7 +50,7 @@ public class AuthorTest {
 	
 	/**
 	/ Test to set the user name of an Author.
-	/*
+	*/
 	@Test
 	public void testSetUserName() {
 		myAuthor.setUserName("Fred Jones");
@@ -59,7 +59,7 @@ public class AuthorTest {
 	
 	/**
 	/ Test to add Manuscript to an Author.
-	/*
+	*/
 	@Test
 	public void testAddManuscriptToAuthor() {
 		Date date = new Date();
@@ -77,7 +77,7 @@ public class AuthorTest {
 	/**
 	/ Test to check buissness rule An Author is limited to 5 Manuscripts using Author 
 	/ having total of 4 Manuscripts Buissness rule should not be triggered.
-	/*
+	*/
 	@Test
 	public void testMax-1PriorManuscriptsAsAuthor() {
 		Date date = new Date();
@@ -100,7 +100,7 @@ public class AuthorTest {
 	/**
 	/ Test to check buissness rule An Author is limited to 5 Manuscripts using Author
 	/ having total of 5 Manuscripts Buissness rule should be triggered.
-	/*
+	*/
 	@Test
 	public void testMaxPriorManuscriptsAsAuthor() {
 		Date date = new Date();
@@ -124,7 +124,7 @@ public class AuthorTest {
 	/**
 	/ Test to check buissness rule An Author is limited to 5 Manuscripts using CoAuthor
 	/ having total of 4 Manuscripts Buissness rule should not be triggered.
-	/*
+	*/
 	@Test
 	public void testMax-1PriorManuscriptsAsCoAuthor() {
 		Date date = new Date();
@@ -148,7 +148,7 @@ public class AuthorTest {
 	/**
 	/ Test to check buissness rule An Author is limited to 5 Manuscripts using CoAuthor
 	/ having total of 5 Manuscripts Buissness rule should be triggered.
-	/*
+	*/
 	@Test
 	public void testMaxPriorManuscriptsAsCoAuthor() {
 		Date date = new Date();
@@ -173,7 +173,7 @@ public class AuthorTest {
 	/**
 	/ Test to check buissness rule An Author is limited to 5 Manuscripts using both Author and CoAuthor
 	/ having total of 5 Manuscripts Buissness rule should be triggered.
-	/*
+	*/
 	@Test
 	public void testMaxPiorManuscriptsAsBothAuthorAndCoAuthor() {
 		Date date = new Date();
@@ -198,7 +198,7 @@ public class AuthorTest {
 	/**
 	/ Test to check buissness rule An Author is limited to 5 Manuscripts using both Author and CoAuthor
 	/ having a total of 4 Manuscripts Buissness rule should not be triggered.
-	/*
+	*/
 	@Test
 	public void testMaxLessThanMaxPriorManuscriptsAsAuthorAndCoAuthor() {
 		Date date = new Date();
