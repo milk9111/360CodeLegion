@@ -16,8 +16,14 @@ public class SubprogramChair extends User {
      */
     private List<Manuscript> myAssignedManuscripts;
 
+    /**
+     * List of conferences viewable to the subprogram chair
+     */
     private List<Conference> myConferences;
 
+    /**
+     * List of conferences assigned to the subprogram chair by a program chair
+     */
     private List<Conference> myAssignedConferences;
 
     /**
@@ -29,6 +35,7 @@ public class SubprogramChair extends User {
         this.myAssignedManuscripts = new ArrayList<Manuscript>();
         this.myConferences = new ArrayList<Conference>();
         this.myAssignedConferences = new ArrayList<Conference>();
+        super.myConferenceList = new ArrayList<Conference>();
     }
 
     /**
