@@ -111,6 +111,11 @@ public class Manuscript {
 	}
 	
 	
+	public void addReview (final Reviewer theReviewer, String theReview) {
+		myReviews.replace(theReviewer, theReview);
+	}
+	
+	
 	/**
 	 * Submits a manuscript then returns it upon success
 	 * @param
