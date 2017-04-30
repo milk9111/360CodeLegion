@@ -3,7 +3,9 @@
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 
@@ -52,12 +54,26 @@ public class Manuscript {
 	 * @return All reviews for this manuscript
 	 */
 	public ArrayList<String> getReviews () {
-		return (ArrayList<String>) myReviews.values();
+		ArrayList<String> returnList = new ArrayList<String>();
+		Set<Reviewer> reviewSet = myReviews.keySet();
+		Iterator itr = reviewSet.iterator();
+		while (itr.hasNext()) {
+			returnList.add(myReviews.get(itr.next()));
+		}
+		
+		return returnList;
 	}
 	
 	
 	public ArrayList<Reviewer> getReviewers () {
-		return (ArrayList<Reviewer>) myReviews.keySet();
+		ArrayList<Reviewer> returnList = new ArrayList<Reviewer>();
+		Set<Reviewer> reviewSet = myReviews.keySet();
+		Iterator itr = reviewSet.iterator();
+		while (itr.hasNext()) {
+			returnList.add((Reviewer) itr.next());
+		}
+		
+		return returnList;
 	}
 	
 	
