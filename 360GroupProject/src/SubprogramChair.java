@@ -35,6 +35,7 @@ public class SubprogramChair extends User {
         this.myAssignedManuscripts = new ArrayList<Manuscript>();
         this.myConferences = new ArrayList<Conference>();
         this.myAssignedConferences = new ArrayList<Conference>();
+        super.myConferenceList = new ArrayList<Conference>();
     }
 
     /**

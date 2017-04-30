@@ -56,6 +56,20 @@ public class SubprogramChairTest {
     	assertTrue(theAssignedConferences.get(0) == tempConference);
     	assertEquals(theAssignedConferences.size(), 1);
     }
+    
+    /**
+     * Test method for {@link SubprogramChair#getMyAssignedConferences()}
+     * tests for when there are 0 assigned conferences for the subprogram chair
+     */
+    @Test
+    public void testGetMyAssignedConferencesIfEmpty() {
+    	List<Conference> theAssignedConferences = mySubprogramChair.getMyAssignedConferences();
+    	
+    	// assert if the added conference is equivalent to the one in the current subprogram chair
+    	assertTrue(theAssignedConferences instanceof List<?>);
+    	assertEquals(theAssignedConferences.size(), 0);
+
+    }
 
     /**
      * Test method for {@link SubprogramChair#getReviewers()}
@@ -89,6 +103,20 @@ public class SubprogramChairTest {
     	// testing size of both lists
     	assertEquals(listToBeTested.size(), Database.getReviewerListSize());
     }
+    
+    
+    /**
+     * Test method for {@link SubprogramChair#getReviewers()}
+     * Tests if list there are 0 reviewers in the reviewers list
+     */
+    @Test
+    public void testGetReviewersIfEmpty() {
+    	List<Reviewer> listToBeTested = mySubprogramChair.getReviewers();
+        	
+    	assertEquals(listToBeTested.size(), Database.getReviewerListSize());
+    	assertEquals(listToBeTested.size(), 0);
+    }
+
 
     /**
      * Test method for {@link SubprogramChair#getConferenceList()}
@@ -109,6 +137,21 @@ public class SubprogramChairTest {
         mySubprogramChair.setConferences(conferenceListWithMoreThanOne);
 
         assertEquals(mySubprogramChair.getConferenceList(), conferenceListWithMoreThanOne);
+    }
+
+    /**
+     * Test method for {@link SubprogramChair#getConferenceList()}
+     * Tests list of conferences is correct when subprogram chair has 0 viewable conferences
+     */
+    @Test
+    public void testGetConfernceListIfEmpty() {
+        List<Conference> testConferenceList = mySubprogramChair.getConferenceList();
+
+        assertTrue("Conference list should be an instance of List<Conference>",
+        			testConferenceList instanceof List<?>);
+
+        assertEquals("Conference list should have a size of 0 when empty",
+        			 testConferenceList.size(), 0);
     }
 
 }
