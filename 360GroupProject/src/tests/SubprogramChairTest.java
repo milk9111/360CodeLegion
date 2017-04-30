@@ -41,7 +41,7 @@ public class SubprogramChairTest {
      * Tests to see if the correct list of conferences assigned to the subprogram chair is returned.
      */
     @Test
-    public void testGetMyAssignedConferences() {
+    public void testGetMyAssignedConferencesForListWithOneItem() {
     	// add a single conference to subprogram chair's assigned conferences
     	Date submissionDeadline = new Date();
     	Date reviewDeadline = new Date();
@@ -62,7 +62,7 @@ public class SubprogramChairTest {
      * tests for when there are 0 assigned conferences for the subprogram chair
      */
     @Test
-    public void testGetMyAssignedConferencesIfEmpty() {
+    public void testGetMyAssignedConferencesForEmptyList() {
     	List<Conference> theAssignedConferences = mySubprogramChair.getMyAssignedConferences();
     	
     	// assert if the added conference is equivalent to the one in the current subprogram chair
@@ -76,7 +76,7 @@ public class SubprogramChairTest {
      * Tests if list of all reviewers is returned from the method
      */
     @Test
-    public void testGetReviewers() {
+    public void testGetReviewersForListWithMultipleItems() {
     	// initialize a temporary list of Reviewers
     	Reviewer tempReviewerA = new Reviewer("John Doe", new ArrayList<Conference>());
     	Reviewer tempReviewerB = new Reviewer("Jane Doe", new ArrayList<Conference>());
@@ -110,7 +110,7 @@ public class SubprogramChairTest {
      * Tests if list there are 0 reviewers in the reviewers list
      */
     @Test
-    public void testGetReviewersIfEmpty() {
+    public void testGetReviewersForEmptyList() {
     	List<Reviewer> listToBeTested = mySubprogramChair.getReviewers();
         	
     	assertEquals(listToBeTested.size(), Database.getReviewerListSize());
@@ -123,7 +123,7 @@ public class SubprogramChairTest {
      * Tests if correct list of viewable conferences for the subprogram chair is returned
      */
     @Test
-    public void testGetConfernceList() {
+    public void testGetConfernceListForListWithMultipleItems() {
         List<Conference> conferenceListWithMoreThanOne = new ArrayList<Conference>();
         Conference tempConfA = new Conference(new Date(), new Date(), new ArrayList<Reviewer>());
         Conference tempConfB = new Conference(new Date(), new Date(), new ArrayList<Reviewer>());
@@ -144,7 +144,7 @@ public class SubprogramChairTest {
      * Tests list of conferences is correct when subprogram chair has 0 viewable conferences
      */
     @Test
-    public void testGetConfernceListIfEmpty() {
+    public void testGetConfernceListForEmptyList() {
         List<Conference> testConferenceList = mySubprogramChair.getConferenceList();
 
         assertTrue("Conference list should be an instance of List<Conference>",
