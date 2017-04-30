@@ -19,6 +19,7 @@ import static org.junit.Assert.assertTrue;
 public class ConferenceTest {
 
     /**
+     * @author Josiah Hopkins
      * Test to verify that get submission date works properly
      */
     @Test
@@ -37,6 +38,7 @@ public class ConferenceTest {
     }
 
     /**
+     * @author Josiah Hopkins
      * Test to verify that get review deadline works properly
      */
     @Test
@@ -57,6 +59,7 @@ public class ConferenceTest {
     }
 
     /**
+     * @author Josiah Hopkins
      * Tests to make sure the get past reviewers works properly
      */
     @Test
@@ -70,6 +73,7 @@ public class ConferenceTest {
 
 
     /**
+     * @author Josiah Hopkins
      * Tests submit and get manuscript in valid cases.
      */
     @Test
@@ -91,7 +95,9 @@ public class ConferenceTest {
     }
 
     /**
+     * @author Josiah Hopkins
      * Tests to verify that when submitting a manuscript after the deadline it doesn't work.
+     * This test is for business rule 1.b
      */
     @Test
     public void testForSubmitManuscriptDeadlineVerification() {
