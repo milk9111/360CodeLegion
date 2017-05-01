@@ -24,7 +24,7 @@ public class ConferenceTest {
      * Test to verify that get submission date works properly
      */
     @Test
-    public void testGetSubmissionDeadline() {
+    public void testGetSubmissionDeadline_CorrectValues() {
         Date submissionDeadline = new Date();
         Date reviewDeadline = new Date();
         Conference tester = new Conference(submissionDeadline, reviewDeadline, new ArrayList<Reviewer>());
@@ -43,7 +43,7 @@ public class ConferenceTest {
      * Test to verify that get review deadline works properly
      */
     @Test
-    public void testGetReviewDeadline() {
+    public void testGetReviewDeadline_CorrectValues() {
 
         Date submissionDeadline = new Date();
         Date reviewDeadline = new Date();
@@ -64,7 +64,7 @@ public class ConferenceTest {
      * Tests to make sure the get past reviewers works properly
      */
     @Test
-    public void getPastReviewers() {
+    public void getPastReviewers_CorrectBlankList() {
 
         Date submissionDeadline = Calendar.getInstance().getTime();
         Date reviewDeadline = Calendar.getInstance().getTime();
@@ -78,7 +78,7 @@ public class ConferenceTest {
      * Tests submit and get manuscript in valid cases.
      */
     @Test
-    public void testForSubmitManuscriptAndGetManuscripts() {
+    public void testForSubmitManuscriptAndGetManuscripts_CorrectValues() {
         Calendar c = Calendar.getInstance();
         c.add(Calendar.DATE, 1);
         Conference tester = new Conference(c.getTime(), Calendar.getInstance().getTime(),
@@ -101,7 +101,7 @@ public class ConferenceTest {
      * This test is for business rule 1.b
      */
     @Test
-    public void testForSubmitManuscriptDeadlineVerification() {
+    public void testForSubmitManuscript_InvalidAfterDeadline() {
         Calendar c = Calendar.getInstance();
         c.add(Calendar.DATE, -1);
         Conference tester = new Conference(c.getTime(), Calendar.getInstance().getTime(),
