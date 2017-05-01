@@ -16,6 +16,11 @@ import java.util.Map;
 public class Author extends User {
 	
 	/**
+	 * The maximum amount of Manuscripts a Author is allowed to submit per Conference.
+	 */
+	public static final int MAX_MANUSCRIPT_ALLOWED = 5;
+	
+	/**
 	 * List of the current Reviews returned to the Author.
 	 */
 	private ArrayList<File> myReviewList;
@@ -121,7 +126,7 @@ public class Author extends User {
 		boolean auhorAlreadyHas5Manuscripts = false;
 		for (int i = 0; i < theManuscript.getAuthors().size(); i++) {
 			if (theManuscript.getAuthors().get(i).getManuscriptMap().containsKey(theConference)) {
-				if (theManuscript.getAuthors().get(i).getNumberOfManuscriptsSubmitted(theConference) >= 5) {
+				if (theManuscript.getAuthors().get(i).getNumberOfManuscriptsSubmitted(theConference) >= MAX_MANUSCRIPT_ALLOWED) {
 					auhorAlreadyHas5Manuscripts = true;
 				}
 			}
@@ -138,7 +143,4 @@ public class Author extends User {
 		return super.myConferenceList;
 	}
 
-
-
-	
 }
