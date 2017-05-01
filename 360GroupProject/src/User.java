@@ -69,7 +69,7 @@ public abstract class User {
 	}
 	
 	/**
-	 * Mehod to return the current username.
+	 * Method to return the current username.
 	 * @return The user name associated with current user.
 	 */
 	public String getName() {

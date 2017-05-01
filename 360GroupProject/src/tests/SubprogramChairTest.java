@@ -28,6 +28,7 @@ public class SubprogramChairTest {
 
     /**
      * Test method for {@link SubprogramChair#SubprogramChair(String)}
+     * @author Ryan Tran
      */
     @Test
     public void testConstructor() {
@@ -40,6 +41,7 @@ public class SubprogramChairTest {
     /**
      * Test method for {@link SubprogramChair#getMyAssignedConferences()}
      * Tests to see if the correct list of conferences assigned to the subprogram chair is returned.
+     * @author Ryan Tran
      */
     @Test
     public void testGetMyAssignedConferencesForListWithOneItem() {
@@ -61,6 +63,7 @@ public class SubprogramChairTest {
     /**
      * Test method for {@link SubprogramChair#getMyAssignedConferences()}
      * tests for when there are 0 assigned conferences for the subprogram chair
+     * @author Ryan Tran
      */
     @Test
     public void testGetMyAssignedConferencesForEmptyList() {
@@ -75,6 +78,7 @@ public class SubprogramChairTest {
     /**
      * Test method for {@link SubprogramChair#getReviewers()}
      * Tests if list of all reviewers is returned from the method
+     * @author Ryan Tran
      */
     @Test
     public void testGetReviewersForListWithMultipleItems() {
@@ -109,6 +113,7 @@ public class SubprogramChairTest {
     /**
      * Test method for {@link SubprogramChair#getReviewers()}
      * Tests if list there are 0 reviewers in the reviewers list
+     * @author Ryan Tran
      */
     @Test
     public void testGetReviewersForEmptyList() {
@@ -123,6 +128,7 @@ public class SubprogramChairTest {
     /**
      * Test method for {@link SubprogramChair#getConferenceList()}
      * Tests if correct list of viewable conferences for the subprogram chair is returned
+     * @author Ryan Tran
      */
     @Test
     public void testGetConfernceListForListWithMultipleItems() {
@@ -144,6 +150,7 @@ public class SubprogramChairTest {
     /**
      * Test method for {@link SubprogramChair#getConferenceList()}
      * Tests list of conferences is correct when subprogram chair has 0 viewable conferences
+     * @author Ryan Tran
      */
     @Test
     public void testGetConfernceListForEmptyList() {
