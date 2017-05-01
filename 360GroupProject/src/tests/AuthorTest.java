@@ -21,6 +21,7 @@ public class AuthorTest {
 	private Author myAuthor;
 
 	/**
+	 * @author Casey Anderson
 	 * @throws java.lang.Exception
 	 */
 	@Before
@@ -29,6 +30,7 @@ public class AuthorTest {
 	}
 
 	/**
+	 * @author Casey Anderson
 	 * Test to check Author object successfully created.
 	 */
 	@Test
@@ -39,6 +41,7 @@ public class AuthorTest {
 
 
 	/**
+	 * @author Casey Anderson
 	 * Test to add review to an Author.
 	 */
 	@Test
@@ -49,8 +52,9 @@ public class AuthorTest {
 	}
 	
 	/**
-	/ Test to set the user name of an Author.
-	*/
+	 * @author Casey Anderson
+	 * Test to set the user name of an Author.
+	 */
 	@Test
 	public void testSetUserName() {
 		myAuthor.setUserName("Fred Jones");
@@ -58,8 +62,9 @@ public class AuthorTest {
 	}
 	
 	/**
-	/ Test to add Manuscript to an Author.
-	*/
+	 * @author Casey Anderson
+	 * Test to add Manuscript to an Author.
+	 */
 	@Test
 	public void testAddManuscriptToAuthor() {
 		Date date = new Date();
@@ -75,8 +80,9 @@ public class AuthorTest {
 	}
 	
 	/**
-	/ Test to check buissness rule An Author is limited to 5 Manuscripts using Author 
-	/ having total of 4 Manuscripts Buissness rule should not be triggered.
+	 * @author Casey Anderson
+	 * Test to check buissness rule An Author is limited to 5 Manuscripts using Author 
+	 * having total of 4 Manuscripts Buissness rule should not be triggered.
 	*/
 	@Test
 	public void testMaxMinusOnePriorManuscriptsAsAuthor() {
@@ -98,8 +104,9 @@ public class AuthorTest {
 	}
 	
 	/**
-	/ Test to check buissness rule An Author is limited to 5 Manuscripts using Author
-	/ having total of 5 Manuscripts Buissness rule should be triggered.
+	 * @author Casey Anderson
+	 * Test to check buissness rule An Author is limited to 5 Manuscripts using Author
+	 * having total of 5 Manuscripts Buissness rule should be triggered.
 	*/
 	@Test
 	public void testMaxPriorManuscriptsAsAuthor() {
@@ -122,8 +129,9 @@ public class AuthorTest {
 	}
 
 	/**
-	/ Test to check buissness rule An Author is limited to 5 Manuscripts using CoAuthor
-	/ having total of 4 Manuscripts Buissness rule should not be triggered.
+	 * @author Casey Anderson
+	 * Test to check buissness rule An Author is limited to 5 Manuscripts using CoAuthor
+	 * having total of 4 Manuscripts Buissness rule should not be triggered.
 	*/
 	@Test
 	public void testMaxMinusOnePriorManuscriptsAsCoAuthor() {
@@ -146,8 +154,9 @@ public class AuthorTest {
 	}
 	
 	/**
-	/ Test to check buissness rule An Author is limited to 5 Manuscripts using CoAuthor
-	/ having total of 5 Manuscripts Buissness rule should be triggered.
+	 * @author Casey Anderson
+	 * Test to check buissness rule An Author is limited to 5 Manuscripts using CoAuthor
+	 * having total of 5 Manuscripts Buissness rule should be triggered.
 	*/
 	@Test
 	public void testMaxPriorManuscriptsAsCoAuthor() {
@@ -171,8 +180,9 @@ public class AuthorTest {
 	}
 	
 	/**
-	/ Test to check buissness rule An Author is limited to 5 Manuscripts using both Author and CoAuthor
-	/ having total of 5 Manuscripts Buissness rule should be triggered.
+	 * @author Casey Anderson
+	 * Test to check buissness rule An Author is limited to 5 Manuscripts using both Author and CoAuthor
+	 * having total of 5 Manuscripts Buissness rule should be triggered.
 	*/
 	@Test
 	public void testMaxPiorManuscriptsAsBothAuthorAndCoAuthor() {
@@ -196,8 +206,9 @@ public class AuthorTest {
 	}
 	
 	/**
-	/ Test to check buissness rule An Author is limited to 5 Manuscripts using both Author and CoAuthor
-	/ having a total of 4 Manuscripts Buissness rule should not be triggered.
+	 * @author Casey Anderson
+	 * Test to check buissness rule An Author is limited to 5 Manuscripts using both Author and CoAuthor
+	 * having a total of 4 Manuscripts Buissness rule should not be triggered.
 	*/
 	@Test
 	public void testMaxLessThanMaxPriorManuscriptsAsAuthorAndCoAuthor() {
