@@ -19,16 +19,20 @@ import org.junit.Test;
 public class AuthorTest {
 
 	private Author myAuthor;
+	private Author myCoAuthor;
 
 	/**
+	 * @author Casey Anderson
 	 * @throws java.lang.Exception
 	 */
 	@Before
 	public void setUp() throws Exception {
-		myAuthor = new Author("John Doe");
+		myAuthor = new Author("simpson@ieee.org");
+		myCoAuthor = new Author("fleegle@uw.edu");
 	}
 
 	/**
+	 * @author Casey Anderson
 	 * Test to check Author object successfully created.
 	 */
 	@Test
@@ -39,6 +43,7 @@ public class AuthorTest {
 
 
 	/**
+	 * @author Casey Anderson
 	 * Test to add review to an Author.
 	 */
 	@Test
@@ -49,19 +54,21 @@ public class AuthorTest {
 	}
 	
 	/**
-	/ Test to set the user name of an Author.
-	*/
+	 * @author Casey Anderson
+	 * Test to set the user name of an Author.
+	 */
 	@Test
 	public void testSetUserName() {
-		myAuthor.setUserName("Fred Jones");
-		assertEquals("myAuthors myUserName should me Fred Jones!", "Fred Jones", myAuthor.getUserName());
+		myAuthor.setUserName("hardy@acm.org");
+		assertEquals("myAuthors myUserName should me hardy@acm.org!", "hardy@acm.org", myAuthor.getUserName());
 	}
 	
 	/**
-	/ Test to add Manuscript to an Author.
-	*/
+	 * @author Casey Anderson
+	 * Test to add Manuscript to an Author.
+	 */
 	@Test
-	public void testAddManuscriptToAuthor() {
+	public void testAddManuscriptToAuthorBusinessRuleNotTriggered() {
 		Date date = new Date();
 		HashMap<Reviewer, String> mapOfReviewers = new HashMap<Reviewer, String>();
 		ArrayList<Author> listOfAuthors = new ArrayList<Author>();
@@ -75,11 +82,12 @@ public class AuthorTest {
 	}
 	
 	/**
-	/ Test to check buissness rule An Author is limited to 5 Manuscripts using Author 
-	/ having total of 4 Manuscripts Buissness rule should not be triggered.
+	 * @author Casey Anderson
+	 * Test to check business rule An Author is limited to 5 Manuscripts using Author 
+	 * having total of 4 Manuscripts Business rule should not be triggered.
 	*/
 	@Test
-	public void testMaxMinusOnePriorManuscriptsAsAuthor() {
+	public void testMaxMinusOnePriorManuscriptsAsAuthorBusinessRuleNotTriggered() {
 		Date date = new Date();
 		HashMap<Reviewer, String> mapOfReviewers = new HashMap<Reviewer, String>();
 		ArrayList<Author> listOfAuthors = new ArrayList<Author>();
@@ -98,11 +106,12 @@ public class AuthorTest {
 	}
 	
 	/**
-	/ Test to check buissness rule An Author is limited to 5 Manuscripts using Author
-	/ having total of 5 Manuscripts Buissness rule should be triggered.
+	 * @author Casey Anderson
+	 * Test to check business rule An Author is limited to 5 Manuscripts using Author
+	 * having total of 5 Manuscripts Business rule should be triggered.
 	*/
 	@Test
-	public void testMaxPriorManuscriptsAsAuthor() {
+	public void testMaxPriorManuscriptsAsAuthorBusinessRuleTriggered() {
 		Date date = new Date();
 		HashMap<Reviewer, String> mapOfReviewers = new HashMap<Reviewer, String>();
 		ArrayList<Author> listOfAuthors = new ArrayList<Author>();
@@ -122,72 +131,72 @@ public class AuthorTest {
 	}
 
 	/**
-	/ Test to check buissness rule An Author is limited to 5 Manuscripts using CoAuthor
-	/ having total of 4 Manuscripts Buissness rule should not be triggered.
+	 * @author Casey Anderson
+	 * Test to check business rule An Author is limited to 5 Manuscripts using CoAuthor
+	 * having total of 4 Manuscripts Business rule should not be triggered.
 	*/
 	@Test
-	public void testMaxMinusOnePriorManuscriptsAsCoAuthor() {
+	public void testMaxMinusOnePriorManuscriptsAsCoAuthorBusinessRuleNotTriggered() {
 		Date date = new Date();
 		HashMap<Reviewer, String> mapOfReviewers = new HashMap<Reviewer, String>();
 		ArrayList<Author> listOfAuthors = new ArrayList<Author>();
 		listOfAuthors.add(myAuthor);
-		Author CoAuthor = new Author("Batman");
-		listOfAuthors.add(CoAuthor);
+		listOfAuthors.add(myCoAuthor);
 		Manuscript manuscript = new Manuscript("Old Yeller", date, mapOfReviewers, listOfAuthors);
 		ArrayList<Reviewer> reviewerList = new ArrayList<Reviewer>();
 		Conference conference = new Conference(date, date, reviewerList);
-		CoAuthor.addManuscript(conference, manuscript);
-		CoAuthor.addManuscript(conference, manuscript);
-		CoAuthor.addManuscript(conference, manuscript);
-		CoAuthor.addManuscript(conference, manuscript);
+		myCoAuthor.addManuscript(conference, manuscript);
+		myCoAuthor.addManuscript(conference, manuscript);
+		myCoAuthor.addManuscript(conference, manuscript);
+		myCoAuthor.addManuscript(conference, manuscript);
 		Manuscript fithManuscript = new Manuscript("Nano Tech", date, mapOfReviewers, listOfAuthors);
 		myAuthor.addManuscript(conference, fithManuscript);
 		assertEquals("ManuScript was not added to list properly", fithManuscript, myAuthor.getManuscript(conference).get(4));		
 	}
 	
 	/**
-	/ Test to check buissness rule An Author is limited to 5 Manuscripts using CoAuthor
-	/ having total of 5 Manuscripts Buissness rule should be triggered.
+	 * @author Casey Anderson
+	 * Test to check business rule An Author is limited to 5 Manuscripts using CoAuthor
+	 * having total of 5 Manuscripts Business rule should be triggered.
 	*/
 	@Test
-	public void testMaxPriorManuscriptsAsCoAuthor() {
+	public void testMaxPriorManuscriptsAsCoAuthorBusinessRuleTriggered() {
 		Date date = new Date();
 		HashMap<Reviewer, String> mapOfReviewers = new HashMap<Reviewer, String>();
 		ArrayList<Author> listOfAuthors = new ArrayList<Author>();
 		listOfAuthors.add(myAuthor);
-		Author CoAuthor = new Author("Batman");
-		listOfAuthors.add(CoAuthor);
+		listOfAuthors.add(myCoAuthor);
 		Manuscript manuscript = new Manuscript("Old Yeller", date, mapOfReviewers, listOfAuthors);
 		ArrayList<Reviewer> reviewerList = new ArrayList<Reviewer>();
 		Conference conference = new Conference(date, date, reviewerList);
-		CoAuthor.addManuscript(conference, manuscript);
-		CoAuthor.addManuscript(conference, manuscript);
-		CoAuthor.addManuscript(conference, manuscript);
-		CoAuthor.addManuscript(conference, manuscript);
-		CoAuthor.addManuscript(conference, manuscript);
+		myCoAuthor.addManuscript(conference, manuscript);
+		myCoAuthor.addManuscript(conference, manuscript);
+		myCoAuthor.addManuscript(conference, manuscript);
+		myCoAuthor.addManuscript(conference, manuscript);
+		myCoAuthor.addManuscript(conference, manuscript);
 		Manuscript sixthManuscript = new Manuscript("Nano Tech", date, mapOfReviewers, listOfAuthors);
 		myAuthor.addManuscript(conference, sixthManuscript);
 		assertFalse(myAuthor.getManuscript(conference).contains(sixthManuscript));	
 	}
 	
 	/**
-	/ Test to check buissness rule An Author is limited to 5 Manuscripts using both Author and CoAuthor
-	/ having total of 5 Manuscripts Buissness rule should be triggered.
+	 * @author Casey Anderson
+	 * Test to check business rule An Author is limited to 5 Manuscripts using both Author and CoAuthor
+	 * having total of 5 Manuscripts Business rule should be triggered.
 	*/
 	@Test
-	public void testMaxPiorManuscriptsAsBothAuthorAndCoAuthor() {
+	public void testMaxPiorManuscriptsAsBothAuthorAndCoAuthorBusinessRuleTriggered() {
 		Date date = new Date();
 		HashMap<Reviewer, String> mapOfReviewers = new HashMap<Reviewer, String>();
 		ArrayList<Author> listOfAuthors = new ArrayList<Author>();
 		listOfAuthors.add(myAuthor);
-		Author CoAuthor = new Author("Batman");
-		listOfAuthors.add(CoAuthor);
+		listOfAuthors.add(myCoAuthor);
 		Manuscript manuscript = new Manuscript("Old Yeller", date, mapOfReviewers, listOfAuthors);
 		ArrayList<Reviewer> reviewerList = new ArrayList<Reviewer>();
 		Conference conference = new Conference(date, date, reviewerList);
-		CoAuthor.addManuscript(conference, manuscript);
-		CoAuthor.addManuscript(conference, manuscript);
-		CoAuthor.addManuscript(conference, manuscript);
+		myCoAuthor.addManuscript(conference, manuscript);
+		myCoAuthor.addManuscript(conference, manuscript);
+		myCoAuthor.addManuscript(conference, manuscript);
 		myAuthor.addManuscript(conference, manuscript);
 		myAuthor.addManuscript(conference, manuscript);
 		Manuscript sixthManuscript = new Manuscript("Nano Tech", date, mapOfReviewers, listOfAuthors);
@@ -196,22 +205,22 @@ public class AuthorTest {
 	}
 	
 	/**
-	/ Test to check buissness rule An Author is limited to 5 Manuscripts using both Author and CoAuthor
-	/ having a total of 4 Manuscripts Buissness rule should not be triggered.
+	 * @author Casey Anderson
+	 * Test to check business rule An Author is limited to 5 Manuscripts using both Author and CoAuthor
+	 * having a total of 4 Manuscripts Business rule should not be triggered.
 	*/
 	@Test
-	public void testMaxLessThanMaxPriorManuscriptsAsAuthorAndCoAuthor() {
+	public void testMaxLessThanMaxPriorManuscriptsAsAuthorAndCoAuthorBusinessRuleNotTriggered() {
 		Date date = new Date();
 		HashMap<Reviewer, String> mapOfReviewers = new HashMap<Reviewer, String>();
 		ArrayList<Author> listOfAuthors = new ArrayList<Author>();
 		listOfAuthors.add(myAuthor);
-		Author CoAuthor = new Author("Batman");
-		listOfAuthors.add(CoAuthor);
+		listOfAuthors.add(myCoAuthor);
 		Manuscript manuscript = new Manuscript("Old Yeller", date, mapOfReviewers, listOfAuthors);
 		ArrayList<Reviewer> reviewerList = new ArrayList<Reviewer>();
 		Conference conference = new Conference(date, date, reviewerList);
-		CoAuthor.addManuscript(conference, manuscript);
-		CoAuthor.addManuscript(conference, manuscript);
+		myCoAuthor.addManuscript(conference, manuscript);
+		myCoAuthor.addManuscript(conference, manuscript);
 		myAuthor.addManuscript(conference, manuscript);
 		myAuthor.addManuscript(conference, manuscript);
 		Manuscript fithManuscript = new Manuscript("Nano Tech", date, mapOfReviewers, listOfAuthors);

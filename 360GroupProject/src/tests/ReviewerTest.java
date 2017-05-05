@@ -9,29 +9,30 @@ import org.junit.Test;
 
 public class ReviewerTest {
 
+	private static final int MAX_CAPACITY = 8;
 	private Reviewer myTestReviewer;
-	private Manuscript testManuscript;
-	private List<Author> authorList;
-	private List<Manuscript> manuscriptList;
-	private List<Conference> myDummyConferenceList;
+	private Manuscript myTestManuscript;
+	private List<Author> myAuthorList;
+	private List<Manuscript> myManuscriptList;
+	private List<Conference> myEmptyConferenceList;
 	
 	@Before
 	public void setup() throws Exception{
 		
-		myDummyConferenceList = new ArrayList<>();
+		myEmptyConferenceList = new ArrayList<>();
 		
-		authorList = new ArrayList<Author>();
-		authorList.add(new Author("Steinbeck"));
-		authorList.add(new Author("Hemmingway"));
+		myAuthorList = new ArrayList<Author>();
+		myAuthorList.add(new Author("Steinbeck"));
+		myAuthorList.add(new Author("Hemmingway"));
 		
-		testManuscript = new Manuscript();
-		testManuscript.setAuthors(authorList);
+		myTestManuscript = new Manuscript();
+		myTestManuscript.setAuthors(myAuthorList);
 		
-		manuscriptList = new ArrayList<Manuscript>();
-		manuscriptList.add(testManuscript);
+		myManuscriptList = new ArrayList<Manuscript>();
+		myManuscriptList.add(myTestManuscript);
 		
 		
-		myTestReviewer = new Reviewer("Roger Ebert", myDummyConferenceList, manuscriptList);
+		myTestReviewer = new Reviewer("Roger Ebert", myEmptyConferenceList, myManuscriptList);
 		
 		
 		
@@ -41,8 +42,8 @@ public class ReviewerTest {
 	 */
 	@Test
 	public void testReviewerConstructor() {
-		assertNotNull("Reviewer not instantiated", myTestReviewer);
-		assertEquals(myTestReviewer.getName(), "Roger Ebert");
+		assertNotNull("Reviewer object Null", myTestReviewer);
+		assertEquals("Reveiwers name should equal default test name \"Roger Ebert\"", myTestReviewer.getName(), "Roger Ebert");
 	}
 
 
@@ -54,11 +55,11 @@ public class ReviewerTest {
 	 * Author names = Steinbeck, Hemmingway
 	 */
 	@Test
-	public void testAssignManuscriptReviewerNotAnAuthor() {
+	public void testAssignManuscript_ReviewerNotAnAuthor_SuccessfullyAssign() {
 
-		assertTrue("assignManuscript method should return true.", myTestReviewer.assignManuscript(testManuscript));
+		assertTrue("assignManuscript method should return true.", myTestReviewer.assignManuscript(myTestManuscript));
 		
-		assertEquals(myTestReviewer.getAssignedManuscriptList().size(), 2);
+		assertEquals("A successful assignment should increase assignedManuscriptList from 1 to 2", myTestReviewer.getAssignedManuscriptList().size(), 2);
 
 	}
 	
@@ -67,18 +68,18 @@ public class ReviewerTest {
  	 * and assigned manuscript list should stay at size 1.
 	 */
 	@Test
-	public void testAssignManuscriptReviewerAuthor() {
+	public void testAssignManuscript_ReviewerIsAuthor_FailToAssign() {
 
+		//Add Reviewer to authorlist for a manuscript 
+		myAuthorList.add(0, new Author("Roger Ebert"));
+		myTestManuscript.setAuthors(myAuthorList);
+		myManuscriptList.clear();
+		myManuscriptList.add(0, myTestManuscript);
+		myTestReviewer = new Reviewer("Roger Ebert", myEmptyConferenceList, myManuscriptList);
 		
-		authorList.add(0, new Author("Roger Ebert"));
-		testManuscript.setAuthors(authorList);
-		manuscriptList.clear();
-		manuscriptList.add(0, testManuscript);
-		myTestReviewer = new Reviewer("Roger Ebert", myDummyConferenceList, manuscriptList);
+		assertFalse("Reviewer cannot be assigned a paper when is an author", myTestReviewer.assignManuscript(myTestManuscript));
 		
-		assertFalse(myTestReviewer.assignManuscript(testManuscript));
-		
-		assertEquals(myTestReviewer.getAssignedManuscriptList().size(), 1);
+		assertEquals("Reviewer AssignedManuscriptList should stay at 1",myTestReviewer.getAssignedManuscriptList().size(), 1);
 		
 	}
 	
@@ -87,15 +88,15 @@ public class ReviewerTest {
 	 * and assigned manuscript list should stay at size 1.
 	 */
 	@Test
-	public void testAssignManuscriptReviewerCoauthor() {
+	public void testAssignManuscript_ReviewerCoauthor_FailToAssign() {
 				
-		authorList.add(new Author("Roger Ebert"));
-		testManuscript.setAuthors(authorList);
-		manuscriptList.clear();
-		manuscriptList.add(0, testManuscript);
-		myTestReviewer = new Reviewer("Roger Ebert", myDummyConferenceList, manuscriptList);
+		myAuthorList.add(new Author("Roger Ebert"));
+		myTestManuscript.setAuthors(myAuthorList);
+		myManuscriptList.clear();
+		myManuscriptList.add(0, myTestManuscript);
+		myTestReviewer = new Reviewer("Roger Ebert", myEmptyConferenceList, myManuscriptList);
 
-		assertFalse(myTestReviewer.assignManuscript(testManuscript));
+		assertFalse("Reviewer cannot be assigned a paper when is an author", myTestReviewer.assignManuscript(myTestManuscript));
 		assertEquals(myTestReviewer.getAssignedManuscriptList().size(), 1);
 	}
 	
@@ -104,45 +105,45 @@ public class ReviewerTest {
 	 * Should return true and assign manuscript to Reviewers list.
 	 */
 	@Test
-	public void testAssignManuscriptReviewer2assignedManuscripts() {
+	public void testAssignManuscript_ReviewerUnderMaxAssignedManuscripts_SuccessfullyAssign() {
 		
-		manuscriptList.add(testManuscript);
+		myManuscriptList.add(myTestManuscript);
 
-		myTestReviewer = new Reviewer("Roger Ebert", myDummyConferenceList, manuscriptList);
+		myTestReviewer = new Reviewer("Roger Ebert", myEmptyConferenceList, myManuscriptList);
 
-		assertTrue("Should add to assigned Man List" , myTestReviewer.assignManuscript(testManuscript));
-		assertEquals(myTestReviewer.getAssignedManuscriptList().size(), 3);
+		assertTrue("Should add to assigned Man List" , myTestReviewer.assignManuscript(myTestManuscript));
+		assertEquals("Reviewer AssignedManuscriptList should stay at 1", myTestReviewer.getAssignedManuscriptList().size(), 3);
 
 	}
 	
 	/**
-	 * Tests Biz Rule 2b2: Reviewer has 7 assigned manuscripts, which is max-1.  
+	 * Tests Biz Rule 2b2: Reviewer has MAX_CAPACITY-1 assigned manuscripts, which is max-1.  
 	 * Should return true and assign manuscript to Reviewers list.
 	 */
 	@Test
-	public void testAssignManuscriptReviewer7assignedManuscripts() {
-		for (int i = manuscriptList.size(); i < 7; i++) {
-			manuscriptList.add(testManuscript);
+	public void testAssignManuscript_ReviewerMAXLess1AssignedManuscripts_SuccessfullyAssign() {
+		for (int i = myManuscriptList.size(); i < MAX_CAPACITY-1; i++) {
+			myManuscriptList.add(myTestManuscript);
 		}
-		assertTrue("Should add to assigned Man List" , myTestReviewer.assignManuscript(testManuscript));
-		assertEquals(myTestReviewer.getAssignedManuscriptList().size(), 8);
+		assertTrue("Should add to AssignedManuscriptList" , myTestReviewer.assignManuscript(myTestManuscript));
+		assertEquals("AssignedManuscriptList should reach MAX capacity", myTestReviewer.getAssignedManuscriptList().size(), MAX_CAPACITY);
 
 
 		
 	}
 	
 	/**
-	 * Tests Biz Rule 2b3: Reviewer has 8 assigned manuscripts, which is max.  
+	 * Tests Biz Rule 2b3: Reviewer has MAX_CAPACITY assigned manuscripts.  
 	 * Should return false and not assign manuscript to Reviewers list.
 	 */
 	@Test
-	public void testAssignManuscriptReviewer8assignedManuscripts() {
-		for (int i = manuscriptList.size(); i < 8; i++) {
-			manuscriptList.add(testManuscript);
+	public void testAssignManuscript_ReviewerOverCapacityAssignedManuscripts_FailToAssign() {
+		for (int i = myManuscriptList.size(); i < MAX_CAPACITY; i++) {
+			myManuscriptList.add(myTestManuscript);
 		}
 		
-		assertFalse("Should not add to assigned Man List" , myTestReviewer.assignManuscript(testManuscript));
-		assertEquals(myTestReviewer.getAssignedManuscriptList().size(), 8);
+		assertFalse("Should not add to assigned Man List" , myTestReviewer.assignManuscript(myTestManuscript));
+		assertEquals(myTestReviewer.getAssignedManuscriptList().size(), MAX_CAPACITY);
 
 		
 	}

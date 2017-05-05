@@ -16,6 +16,11 @@ import java.util.Map;
 public class Author extends User {
 	
 	/**
+	 * The maximum amount of Manuscripts a Author is allowed to submit per Conference.
+	 */
+	public static final int MAX_MANUSCRIPT_ALLOWED = 5;
+	
+	/**
 	 * List of the current Reviews returned to the Author.
 	 */
 	private ArrayList<File> myReviewList;
@@ -30,18 +35,22 @@ public class Author extends User {
 	 * @param theUserName The Username of the Author.
 	 */
 	public Author(String theUserName) {		
+		
 		super(theUserName);
 		this.myReviewList = new ArrayList<File>();
 		myManuscriptList = new HashMap<Conference,ArrayList<Manuscript>>();
+	
 	}
 	
 	
 	/**
-	 * Method to add Review to the Author.
+	 * Method to add Review to the Author theReview must be a PDF file.
 	 * @param theReview Review file to be added to Author.
 	 */
 	public void addReview(File theReview) {
+		
 		myReviewList.add(theReview);
+	
 	}
 	
 	/**
@@ -53,7 +62,9 @@ public class Author extends User {
 	 * @return The Manuscript containing all the new information.
 	 */
 	public Manuscript createManuscript(String theTitle, Date theSubmittedDate, HashMap<Reviewer, String> theReviews, ArrayList<Author> theAuthors) {
+		
 		return new Manuscript(theTitle, theSubmittedDate, theReviews, theAuthors) ;
+	
 	}
 	
 	/**
@@ -61,7 +72,9 @@ public class Author extends User {
 	 * @return A list of files containing Authors Reviews.
 	 */
 	public ArrayList<File> getReviewList() {
+		
 		return myReviewList;
+	
 	}
 	
 	/**
@@ -70,7 +83,9 @@ public class Author extends User {
 	 * @return A ArrayList of Manuscripts the Author has already submitted.
 	 */
 	public ArrayList<Manuscript> getManuscript(Conference theConference) {
+		
 		return myManuscriptList.get(theConference);
+	
 	}
 	
 	/**
@@ -78,20 +93,37 @@ public class Author extends User {
 	 * @param theConference The conference that the manuscript is to be added to.
 	 * @param theManuscript The manuscript to be added to Conference.
 	 */
-	public void addManuscript(Conference theConference, Manuscript theManuscript) {	
+	public String addManuscript(Conference theConference, Manuscript theManuscript) {	
+		
+		String messageToUser;
+		
 		if (!isAuthorAtManuscriptLimit(theConference, theManuscript)) {
+			
 			for (int i = 0; i < theManuscript.getAuthors().size(); i++) {			
+				
 				if (theManuscript.getAuthors().get(i).getManuscriptMap().containsKey(theConference)) {
+					
 					theManuscript.getAuthors().get(i).getManuscriptMap().get(theConference).add(theManuscript);
+				
 				} else {
+					
 					ArrayList<Manuscript> ManuscriptList = new ArrayList<Manuscript>();
 					ManuscriptList.add(theManuscript);
 					theManuscript.getAuthors().get(i).getManuscriptMap().put(theConference, ManuscriptList);
+				
 				}
 			}
+			
+			messageToUser = "Congradulations! Manuscript succesfully submitted.";
+			
 		} else {
-			System.out.println("Already have 5 Manuscript submitted!");
+			
+			messageToUser = "Already have 5 Manuscript submitted!";
+			
 		}
+		
+		return messageToUser;
+		
 	}
 	
 	/**
@@ -100,7 +132,9 @@ public class Author extends User {
 	 * @return An Integer representing how many manuscripts the Author has already submitted.
 	 */
 	public int getNumberOfManuscriptsSubmitted(Conference theConference) {
+		
 		return myManuscriptList.get(theConference).size();
+	
 	}
 	
 	/**
@@ -108,7 +142,9 @@ public class Author extends User {
 	 * @return A Map with the value of A List of Manuscripts and the key the Conference they are submitted to.
 	 */
 	private Map<Conference,ArrayList<Manuscript>> getManuscriptMap() {
+		
 		return myManuscriptList;
+		
 	}
 	
 	/**
@@ -118,15 +154,25 @@ public class Author extends User {
 	 * @return A boolean Value indicating if the any Author has Already submitted their limit of Manuscripts.
 	 */
 	private boolean isAuthorAtManuscriptLimit(Conference theConference, Manuscript theManuscript) {
+		
 		boolean auhorAlreadyHas5Manuscripts = false;
+		
 		for (int i = 0; i < theManuscript.getAuthors().size(); i++) {
+			
 			if (theManuscript.getAuthors().get(i).getManuscriptMap().containsKey(theConference)) {
-				if (theManuscript.getAuthors().get(i).getNumberOfManuscriptsSubmitted(theConference) >= 5) {
+				
+				if (theManuscript.getAuthors().get(i).getNumberOfManuscriptsSubmitted(theConference) >= MAX_MANUSCRIPT_ALLOWED) {
+					
 					auhorAlreadyHas5Manuscripts = true;
+				
 				}
+			
 			}
+		
 		}
+		
 		return auhorAlreadyHas5Manuscripts;
+	
 	}
 
 	/**
@@ -135,10 +181,9 @@ public class Author extends User {
 	 */
 	@Override
 	public List<Conference> getConferenceList() {
+		
 		return super.myConferenceList;
+	
 	}
 
-
-
-	
 }

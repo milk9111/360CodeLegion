@@ -18,6 +18,8 @@ public class Reviewer extends User {
 	
 	/**
 	 * Constructor for Reviewer.
+	 * 
+	 * @author Morgan Blackmore
 	 */
 	public Reviewer(String theName, List<Conference> theConferenceList){
 		super(theName, theConferenceList);
@@ -27,6 +29,8 @@ public class Reviewer extends User {
 	
 	/**
 	 * Constructor for Reviewer with assigned manuscripts list.
+	 * 
+	 * @author Morgan Blackmore
 	 */
 	public Reviewer(String theName, List<Conference> theConferenceList, List<Manuscript> theManuscripts){
 		super(theName, theConferenceList);
@@ -40,6 +44,7 @@ public class Reviewer extends User {
 	 * Should also throw some exception to the class that's calling it.
 	 * Adds the manuscript to this reviewer's list.
 	 * 
+	 * @author Morgan Blackmore
 	 * @param theMan The Manuscript to be assigned
 	 * 
 	 * @return boolean true if assigned successfully
@@ -48,13 +53,10 @@ public class Reviewer extends User {
 		boolean wasAssigned = true;
 		
 		//Condition 1: check if Reviewer is a coauthor on this manuscript 
+		//Condition 2: check if Reviewer is over review limit
 		if ((isReviewerAnAuthor(theManuscript) == true) || (isOverReviewLimit() == true) ) {
 			wasAssigned = false;			
-//		}
-		
-//		//Condition 2: check if Reviewer is over review limit
-//		else if (isOverReviewLimit() == true) {
-//			wasAssigned = false;
+
 		} else {
 		myAssignedManuscriptList.add(theManuscript);
 		}
@@ -64,7 +66,7 @@ public class Reviewer extends User {
 	
 	/**
 	 * Compares size of assigned manuscript list with limit defined by MAX_REVIEWS
-	 * 
+	 * @author Morgan Blackmore
 	 * @return true if over limit.
 	 */
 	private boolean isOverReviewLimit() {

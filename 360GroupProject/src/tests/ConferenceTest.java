@@ -1,4 +1,3 @@
-// package tests;
 //import org.junit.jupiter.api.BeforeAll;
 //import org.junit.jupiter.api.Test;
 
@@ -78,9 +77,31 @@ public class ConferenceTest {
      * Tests submit and get manuscript in valid cases.
      */
     @Test
-    public void testForSubmitManuscriptAndGetManuscripts_CorrectValues() {
+    public void testForSubmitManuscriptAndGetManuscripts_CorrectValuesJustInTime() {
         Calendar c = Calendar.getInstance();
         c.add(Calendar.DATE, 1);
+        Conference tester = new Conference(c.getTime(), Calendar.getInstance().getTime(),
+                new ArrayList<Reviewer>());
+        Manuscript testManuscript = new Manuscript();
+        List<Manuscript> theManuscripts = new ArrayList<Manuscript>();
+        theManuscripts.add(testManuscript);
+        tester.submitManuscript(testManuscript);
+        assertEquals("First failure", tester.getManuscripts(), theManuscripts);
+
+        Manuscript secondManuscript = new Manuscript();
+        theManuscripts.add(secondManuscript);
+        tester.submitManuscript(secondManuscript);
+        assertTrue("Second failure", tester.getManuscripts().containsAll(theManuscripts));
+    }
+
+    /**
+     * @author Josiah Hopkins
+     * Tests submit and get manuscript in valid cases just before the deadline.
+     */
+    @Test
+    public void testForSubmitManuscriptAndGetManuscripts_CorrectValuesWayBeforeDueDate() {
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.DATE, 100);
         Conference tester = new Conference(c.getTime(), Calendar.getInstance().getTime(),
                 new ArrayList<Reviewer>());
         Manuscript testManuscript = new Manuscript();
@@ -101,9 +122,30 @@ public class ConferenceTest {
      * This test is for business rule 1.b
      */
     @Test
-    public void testForSubmitManuscript_InvalidAfterDeadline() {
+    public void testForSubmitManuscript_InvalidJustAfterDeadline() {
         Calendar c = Calendar.getInstance();
         c.add(Calendar.DATE, -1);
+        Conference tester = new Conference(c.getTime(), Calendar.getInstance().getTime(),
+                new ArrayList<Reviewer>());
+        Manuscript testManuscript = new Manuscript();
+        List<Manuscript> theManuscripts = new ArrayList<Manuscript>();
+        tester.submitManuscript(testManuscript);
+        assertEquals(tester.getManuscripts(), theManuscripts);
+
+        Manuscript secondManuscript = new Manuscript();
+        assertEquals(tester.getManuscripts(), theManuscripts);
+    }
+
+
+    /**
+     * @author Josiah Hopkins
+     * Tests to verify that when submitting a manuscript after the deadline it doesn't work.
+     * This test is for business rule 1.b
+     */
+    @Test
+    public void testForSubmitManuscript_InvalidFarAfterDeadline() {
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.DATE, -100);
         Conference tester = new Conference(c.getTime(), Calendar.getInstance().getTime(),
                 new ArrayList<Reviewer>());
         Manuscript testManuscript = new Manuscript();

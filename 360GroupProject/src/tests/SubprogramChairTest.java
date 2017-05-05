@@ -27,24 +27,12 @@ public class SubprogramChairTest {
     }
 
     /**
-     * Test method for {@link SubprogramChair#SubprogramChair(String)}
-     * @author Ryan Tran
-     */
-    @Test
-    public void testConstructor() {
-        String testUsername = "Scion";
-        SubprogramChair simpleChairObj = new SubprogramChair(testUsername);
-
-        assertEquals(simpleChairObj.getName(), testUsername);
-    }
-
-    /**
      * Test method for {@link SubprogramChair#getMyAssignedConferences()}
      * Tests to see if the correct list of conferences assigned to the subprogram chair is returned.
      * @author Ryan Tran
      */
     @Test
-    public void testGetMyAssignedConferencesForListWithOneItem() {
+    public void getMyAssignedConferences_forConferenceListWithOneItem_shouldReturnList() {
     	// add a single conference to subprogram chair's assigned conferences
     	Date submissionDeadline = new Date();
     	Date reviewDeadline = new Date();
@@ -56,8 +44,10 @@ public class SubprogramChairTest {
     	List<Conference> theAssignedConferences = mySubprogramChair.getMyAssignedConferences();
     	
     	// assert if the added conference is equivalent to the one in the current subprogram chair
-    	assertTrue(theAssignedConferences.get(0) == tempConference);
-    	assertEquals(theAssignedConferences.size(), 1);
+    	assertTrue("Conference in assigned conferences list should be equal to created Conference",
+    			theAssignedConferences.get(0) == tempConference);
+    	assertEquals("Returned Conference List should be size of 0",
+    			theAssignedConferences.size(), 1);
     }
     
     /**
@@ -66,13 +56,14 @@ public class SubprogramChairTest {
      * @author Ryan Tran
      */
     @Test
-    public void testGetMyAssignedConferencesForEmptyList() {
+    public void getMyAssignedConferences_forEmptyConferenceList_shouldReturnEmptyList() {
     	List<Conference> theAssignedConferences = mySubprogramChair.getMyAssignedConferences();
     	
     	// assert if the added conference is equivalent to the one in the current subprogram chair
-    	assertTrue(theAssignedConferences instanceof List<?>);
-    	assertEquals(theAssignedConferences.size(), 0);
-
+    	assertTrue("Returned object should be an instance of List<Conference>",
+    			theAssignedConferences instanceof List<?>);
+    	assertEquals("Assigned Conferences list should be size of 0",
+    			theAssignedConferences.size(), 0);
     }
 
     /**
@@ -81,7 +72,7 @@ public class SubprogramChairTest {
      * @author Ryan Tran
      */
     @Test
-    public void testGetReviewersForListWithMultipleItems() {
+    public void getReviewers_forReviewerListWithMoreThanOneItem_shouldReturnList() {
     	// initialize a temporary list of Reviewers
     	Reviewer tempReviewerA = new Reviewer("John Doe", new ArrayList<Conference>());
     	Reviewer tempReviewerB = new Reviewer("Jane Doe", new ArrayList<Conference>());
@@ -102,11 +93,13 @@ public class SubprogramChairTest {
     	
     	for(int i = 0; i < Database.getReviewerListSize(); i++) {
     		// Using == to test Reviewer objects by reference rather than field values
-    		assertTrue(listToBeTested.get(i) == tempReviewerList.get(i));
+    		assertTrue("Individual Reviewer in list should be equal to temp list's Reviewer",
+    				listToBeTested.get(i) == tempReviewerList.get(i));
     	}
     	
     	// testing size of both lists
-    	assertEquals(listToBeTested.size(), Database.getReviewerListSize());
+    	assertEquals("Returned Reviewer list should be equal in size to database list",
+    			listToBeTested.size(), Database.getReviewerListSize());
     }
     
     
@@ -116,12 +109,14 @@ public class SubprogramChairTest {
      * @author Ryan Tran
      */
     @Test
-    public void testGetReviewersForEmptyList() {
+    public void getReviewers_forEmptyReviewerList_shouldReturnEmptyList() {
     	SubprogramChair chairWithNoReviewers = new SubprogramChair("Jack");
     	List<Reviewer> listToBeTested = chairWithNoReviewers.getReviewers();
         	
-    	assertEquals(listToBeTested.size(), Database.getReviewerListSize());
-    	assertEquals(listToBeTested.size(), 0);
+    	assertEquals("Reviewer list size should be equal to one from database",
+    			listToBeTested.size(), Database.getReviewerListSize());
+    	assertEquals("Reviewer list size should be 0",
+    			listToBeTested.size(), 0);
     }
 
 
@@ -131,7 +126,7 @@ public class SubprogramChairTest {
      * @author Ryan Tran
      */
     @Test
-    public void testGetConfernceListForListWithMultipleItems() {
+    public void getConferenceList_forListWithMoreThanOne_shouldReturnConferenceList() {
         List<Conference> conferenceListWithMoreThanOne = new ArrayList<Conference>();
         Conference tempConfA = new Conference(new Date(), new Date(), new ArrayList<Reviewer>());
         Conference tempConfB = new Conference(new Date(), new Date(), new ArrayList<Reviewer>());
@@ -144,7 +139,8 @@ public class SubprogramChairTest {
 
         mySubprogramChair.setConferences(conferenceListWithMoreThanOne);
 
-        assertEquals(mySubprogramChair.getConferenceList(), conferenceListWithMoreThanOne);
+        assertEquals("Conference list should be returned with correct 3 items",
+        		mySubprogramChair.getConferenceList(), conferenceListWithMoreThanOne);
     }
 
     /**
@@ -153,7 +149,7 @@ public class SubprogramChairTest {
      * @author Ryan Tran
      */
     @Test
-    public void testGetConfernceListForEmptyList() {
+    public void getConferenceList_forEmptyList_shouldReturnEmptyList() {
         List<Conference> testConferenceList = mySubprogramChair.getConferenceList();
 
         assertTrue("Conference list should be an instance of List<Conference>",
