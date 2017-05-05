@@ -18,7 +18,9 @@ public class ManuscriptTest {
 
 	/**
 	 * The set up before each unit test. Just instantiates a simple Manuscript.
+	 * 
 	 * @author Connor Lundberg
+	 * @version 5/5/2017
 	 * @throws Exception
 	 */
 	@Before
@@ -35,7 +37,9 @@ public class ManuscriptTest {
 	/**
 	 * A test for the getReviews() method. It is just a check to make sure that the
 	 * reviews are not null.
+	 * 
 	 * @author Connor Lundberg
+	 * @version 5/5/2017
 	 */
 	@Test
 	public void getReviews_TestGetReviewsForNullValues () {
@@ -53,7 +57,9 @@ public class ManuscriptTest {
 	 * the addReview method is adding the correct review string and attaching it to 
 	 * the correct Reviewer while the getReviews is returning the correct reviews
 	 * associated with the Manuscript.
+	 * 
 	 * @author Connor Lundberg
+	 * @version 5/5/2017
 	 */
 	@Test
 	public void addReviewAndGetReview_TestAddReviewAndGetReviewForCorrectValues () {
@@ -71,7 +77,9 @@ public class ManuscriptTest {
 	/**
 	 * A test for the getAuthors method. It is a simple test to check if the Authors
 	 * attached to a Manuscript are not null and that they are part of the Author class.
+	 * 
 	 * @author Connor Lundberg
+	 * @version 5/5/2017
 	 */
 	@Test
 	public void getAuthors_TestGetAuthorsForNullValues () {
@@ -84,7 +92,9 @@ public class ManuscriptTest {
 	/**
 	 * A test for the assignReviewer method. This is a test to check that assignReviewer
 	 * is adding the passed Reviewer to the Reviewer list attached to the Manuscript.
+	 * 
 	 * @author Connor Lundberg
+	 * @version 5/5/2017
 	 */
 	@Test
 	public void assignReviewer_TestAssignReviewerForNullValues () {
@@ -105,7 +115,9 @@ public class ManuscriptTest {
 	 * A test for the submitManuscript method. This is a test to check if the Manuscript
 	 * returned is the same as the original. This is not mean the same Manuscript reference,
 	 * but the Manuscript information within.
+	 * 
 	 * @author Connor Lundberg
+	 * @version 5/5/2017
 	 */
 	@Test
 	public void submitManuscript_TestSubmitManuscriptForCorrectPaperReturned () {
