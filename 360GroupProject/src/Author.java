@@ -42,7 +42,7 @@ public class Author extends User {
 	
 	
 	/**
-	 * Method to add Review to the Author.
+	 * Method to add Review to the Author theReview must be a PDF file.
 	 * @param theReview Review file to be added to Author.
 	 */
 	public void addReview(File theReview) {
