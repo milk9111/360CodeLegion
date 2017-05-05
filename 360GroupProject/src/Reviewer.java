@@ -48,13 +48,10 @@ public class Reviewer extends User {
 		boolean wasAssigned = true;
 		
 		//Condition 1: check if Reviewer is a coauthor on this manuscript 
+		//Condition 2: check if Reviewer is over review limit
 		if ((isReviewerAnAuthor(theManuscript) == true) || (isOverReviewLimit() == true) ) {
 			wasAssigned = false;			
-//		}
-		
-//		//Condition 2: check if Reviewer is over review limit
-//		else if (isOverReviewLimit() == true) {
-//			wasAssigned = false;
+
 		} else {
 		myAssignedManuscriptList.add(theManuscript);
 		}
