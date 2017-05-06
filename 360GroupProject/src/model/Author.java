@@ -1,15 +1,16 @@
 package model;
 
-
-
-import model.User;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import model.Conference;
+import model.Manuscript;
+import model.Reviewer;
+import model.User;
 
 
 /**

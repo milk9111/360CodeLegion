@@ -9,8 +9,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import model.Author;
+import model.Conference;
 import model.Manuscript;
 import model.Reviewer;
+import model.User;
 
 /**
  * The Manuscript unit tests.

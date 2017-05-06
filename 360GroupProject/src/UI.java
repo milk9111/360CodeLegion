@@ -129,11 +129,16 @@ public class UI extends Observable implements Observer{
 			case 3:
 				ListOfConferenceView();
 			}
-		} else {
+		} else if (theState >= 20){
 			setUserType("SubProgram Chair");
 			displayHeader();
+			switch (theState % 20) {
+			case (0):
+				subProgramChairView();
+				break;
+				
+			}
 			//add switch statement
-			subProgramChairView();
 			subProgramChairConferenceView();
 			subProgramChairAssignReviewerView(); 
 			subProgramChairManuscriptsView();
@@ -238,17 +243,31 @@ public class UI extends Observable implements Observer{
 	}
 
 	private void subProgramChairManuscriptsView() {
+		//make a call to database to get myAssignedManuscripts list from SPC
+		//display index + 1 and Manuscript title 
+		//will take the users input (a digit) and get the title at that index, then send the title as a string to controller 
 
 	}
 
+	/**
+	 * Calls db to get conference list for subprogramChair
+	 */
 	private void subProgramChairConferenceView() {
+		//make a call to database to get myAssignedConferences for SPC
+		//display index and conference title
+		//will take the users input (a digit) and get the title at that index, then send the title as a string to controller
+		//Should take user to next menu-Conference View 
 
 	}
+	
+	/**
+	 * This method is redundant from a back-end POV, it just forces a user to select from a conference
+	 */
 	private void subProgramChairAssignReviewerView() {
+		//make a call to database to get myAssignedConferences for SPC
+		//display index and conference title
 
-		System.out.println("Assign Reviewer Options");
-		System.out.println("First, Choose a conference");
-		ListOfConferenceView();//display conference list
+		
 
 	}
 

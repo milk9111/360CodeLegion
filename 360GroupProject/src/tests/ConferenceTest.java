@@ -13,6 +13,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import model.Author;
+import model.Conference;
+import model.Manuscript;
+import model.Reviewer;
+import model.User;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -30,13 +36,13 @@ public class ConferenceTest {
     public void testGetSubmissionDeadline_CorrectValues() {
         Date submissionDeadline = new Date();
         Date reviewDeadline = new Date();
-        Conference tester = new Conference(submissionDeadline, reviewDeadline, new ArrayList<Reviewer>());
+        Conference tester = new Conference("RSA", submissionDeadline, reviewDeadline, new ArrayList<Reviewer>());
         assertEquals(submissionDeadline, tester.getSubmissionDeadline());
 
 
         Date submissionDeadline2 = new Date();
         Date reviewDeadline2 = new Date();
-        tester = new Conference(submissionDeadline2, reviewDeadline2, new ArrayList<Reviewer>()
+        tester = new Conference("Tessellations", submissionDeadline2, reviewDeadline2, new ArrayList<Reviewer>()
         );
         assertEquals(submissionDeadline2, tester.getSubmissionDeadline());
     }
@@ -50,14 +56,14 @@ public class ConferenceTest {
 
         Date submissionDeadline = new Date();
         Date reviewDeadline = new Date();
-        Conference tester = new Conference(submissionDeadline, reviewDeadline, new ArrayList<Reviewer>()
+        Conference tester = new Conference("RSA", submissionDeadline, reviewDeadline, new ArrayList<Reviewer>()
         );
 
         assertEquals(reviewDeadline, tester.getReviewDeadline());
 
         Date submissionDeadline2 = new Date();
         Date reviewDeadline2 = new Date();
-        tester = new Conference(submissionDeadline2, reviewDeadline2, new ArrayList<Reviewer>());
+        tester = new Conference("RSA", submissionDeadline2, reviewDeadline2, new ArrayList<Reviewer>());
         assertEquals(reviewDeadline2, tester.getReviewDeadline());
 
     }
@@ -71,7 +77,7 @@ public class ConferenceTest {
 
         Date submissionDeadline = Calendar.getInstance().getTime();
         Date reviewDeadline = Calendar.getInstance().getTime();
-        Conference tester = new Conference(submissionDeadline, reviewDeadline, new ArrayList<Reviewer>());
+        Conference tester = new Conference("RSA", submissionDeadline, reviewDeadline, new ArrayList<Reviewer>());
         assertEquals(tester.getPastReviewers(), new ArrayList<Reviewer>());
     }
 
@@ -84,7 +90,7 @@ public class ConferenceTest {
     public void testForSubmitManuscriptAndGetManuscripts_CorrectValuesJustInTime() {
         Calendar c = Calendar.getInstance();
         c.add(Calendar.DATE, 1);
-        Conference tester = new Conference(c.getTime(), Calendar.getInstance().getTime(),
+        Conference tester = new Conference("RSA", c.getTime(), Calendar.getInstance().getTime(),
                 new ArrayList<Reviewer>());
         Manuscript testManuscript = new Manuscript();
         List<Manuscript> theManuscripts = new ArrayList<Manuscript>();
@@ -106,7 +112,7 @@ public class ConferenceTest {
     public void testForSubmitManuscriptAndGetManuscripts_CorrectValuesWayBeforeDueDate() {
         Calendar c = Calendar.getInstance();
         c.add(Calendar.DATE, 100);
-        Conference tester = new Conference(c.getTime(), Calendar.getInstance().getTime(),
+        Conference tester = new Conference("RSA", c.getTime(), Calendar.getInstance().getTime(),
                 new ArrayList<Reviewer>());
         Manuscript testManuscript = new Manuscript();
         List<Manuscript> theManuscripts = new ArrayList<Manuscript>();
@@ -129,7 +135,7 @@ public class ConferenceTest {
     public void testForSubmitManuscript_InvalidJustAfterDeadline() {
         Calendar c = Calendar.getInstance();
         c.add(Calendar.DATE, -1);
-        Conference tester = new Conference(c.getTime(), Calendar.getInstance().getTime(),
+        Conference tester = new Conference("RSA", c.getTime(), Calendar.getInstance().getTime(),
                 new ArrayList<Reviewer>());
         Manuscript testManuscript = new Manuscript();
         List<Manuscript> theManuscripts = new ArrayList<Manuscript>();
@@ -150,7 +156,7 @@ public class ConferenceTest {
     public void testForSubmitManuscript_InvalidFarAfterDeadline() {
         Calendar c = Calendar.getInstance();
         c.add(Calendar.DATE, -100);
-        Conference tester = new Conference(c.getTime(), Calendar.getInstance().getTime(),
+        Conference tester = new Conference("RSA", c.getTime(), Calendar.getInstance().getTime(),
                 new ArrayList<Reviewer>());
         Manuscript testManuscript = new Manuscript();
         List<Manuscript> theManuscripts = new ArrayList<Manuscript>();
