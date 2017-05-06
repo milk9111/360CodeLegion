@@ -2,8 +2,6 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -59,6 +57,7 @@ public class UI extends Observable implements Observer{
 	public static void main(final String[] theArgs) {
 		new UI().start();
 	}
+	
 	/**
 	 * Login prompt.  Displays prompt and scans input, compares to list of existing users.
 	 * If valid, updates this UI user fields and proceeds to top menuL chooseUserTypeMenuView 
@@ -66,7 +65,6 @@ public class UI extends Observable implements Observer{
 	 * @author Casey Anderson, Morgan Blackmore
 	 * 
 	 */
-
 	private void start() {
 		boolean validUserName = false;
 		while (!validUserName) {
@@ -116,61 +114,91 @@ public class UI extends Observable implements Observer{
 
 	}
 
+	/**
+	 * Change state method to change view displayed to user based off of what the theState recieved from the Controller.
+	 * 
+	 * @author Casey Anderson, Morgan Blackmore
+	 * 
+	 */
 	public void changeState(int theState) {
 
 		if (theState < 10) {
+			
 			setUserType("Author");
 			displayHeader();
+			
 			switch (theState) {
+			
 			case 1:
 				AuthorManuscriptSubmissionView();
+				break;
+				
 			case 2:
 				AuthorListOfManuscriptsView();
+				break;
+			
 			case 3:
 				ListOfConferenceView();
+				break;
+			
 			}
-		} else if (theState >= 20){
+		} 
+		
+		else if (theState >= 20){
+			
 			setUserType("SubProgram Chair");
 			displayHeader();
+			
 			switch (theState % 20) {
+			
 			case (0):
 				subProgramChairView();
 				break;
 				
 			}
+			
 			//add switch statement
 			subProgramChairConferenceView();
 			subProgramChairAssignReviewerView(); 
 			subProgramChairManuscriptsView();
+			
 		}
 	}
 
 
 	private void setUserType(String theUserType) {
+		
 		userType = theUserType;
+		
 	}
 
 	private void displayHeader() {
+		
 		System.out.println(myUserName + " - " + userType);
 		System.out.println();
 
 	}
 
 	private void AuthorView() {
+		
 		System.out.println("Author Options:");
 		System.out.println("1 - Submit new Manuscript.");
 		System.out.println("2 - View currently submitted Manuscripts.");
 		System.out.println("3 - View current list of Conferences.");
 		myUserChoice = myScanner.next();
+		
 		if (myUserChoice.equals("1")) {
 			notifyObservers("Submit Manuscript"); 
-		} 
+		}
+		
 		else if (myUserChoice.equals("2")) {
 			notifyObservers("Manuscript List"); 
 		}
+		
 		else if (myUserChoice.equals("3")) {
 			notifyObservers("Conference List"); 
 		}
+		
 		else {
 			System.out.println("Invalid choice, please select from the options displayed");
 			AuthorView();
@@ -179,6 +207,7 @@ public class UI extends Observable implements Observer{
 	}
 
 	private void AuthorManuscriptSubmissionView() {
+		
 		String manuscriptTile;
 		String authorList = "";
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy");
@@ -189,19 +218,28 @@ public class UI extends Observable implements Observer{
 		System.out.println("Manuscript submission:");
 		System.out.println("Please Enter Title of Manuscript: ");
 		manuscriptTile = myScanner.next();
+		
 		while (!moreAuthors.equals("0")) {
+			
 			System.out.println("Please Enter name of Author or CoAuthor for Manuscript or \"0\" when done: ");
 			moreAuthors = myScanner.next();
+			
 			if (!moreAuthors.equals("0")) {
 				listOfAuthors.add(myScanner.next());
 			} 
+			
 		}
+		
 		System.out.println("Please Enter file path of Manuscript: ");
 		ManuscriptFilePath = myScanner.next();	
+		
 		for (int i = 0; i < listOfAuthors.size(); i++) {
+			
 			authorList += listOfAuthors.get(i) + ",";
+			
 		}
-		notifyObservers("Submit Manuscript," + manuscriptTile + "," + dtf.format(localDate) + authorList); 
+		
+		notifyObservers("Submit Manuscript," + manuscriptTile + "," + ManuscriptFilePath + "," + dtf.format(localDate) + authorList); 
 
 
 	}
