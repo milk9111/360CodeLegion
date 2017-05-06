@@ -4,6 +4,10 @@
 
 import org.junit.*;
 
+import model.Conference;
+import model.Manuscript;
+import model.Reviewer;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;

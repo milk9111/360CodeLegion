@@ -9,6 +9,7 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Scanner;
 
+import javafx.beans.InvalidationListener;
 import model.User;
 
 /**
@@ -36,13 +37,12 @@ public class UI extends Observable implements Observer{
 	private String myUserName;
 	private User myUser;
 	private Scanner myScanner;
-<<<<<<< HEAD
-	private int myUserChoice;
 
-=======
+	//	private int myUserChoice;
+
+
 	private String myUserChoice;
-	
->>>>>>> d59c822f1433e491ea1a47e2a4bd86709720fa46
+
 	public UI() {
 		myState = 0;
 		userType = "";
@@ -72,8 +72,9 @@ public class UI extends Observable implements Observer{
 		while (!validUserName) {
 			System.out.println("Please enter user name to log in: ");
 			myUserName = myScanner.next();
-			if (myUser.isUserRegistered(myUserName)) {
-				validUserName = true;
+//			if (myUser.isUserRegistered(myUserName)) {
+			if (true) { //temporary block while we don't have a User registry to check
+			validUserName = true;
 
 				chooseUserTypeMenuView();
 			} else {
@@ -131,9 +132,11 @@ public class UI extends Observable implements Observer{
 		} else {
 			setUserType("SubProgram Chair");
 			displayHeader();
-
+			//add switch statement
 			subProgramChairView();
+			subProgramChairConferenceView();
 			subProgramChairAssignReviewerView(); 
+			subProgramChairManuscriptsView();
 		}
 	}
 
@@ -167,10 +170,7 @@ public class UI extends Observable implements Observer{
 			System.out.println("Invalid choice, please select from the options displayed");
 			AuthorView();
 		}
-<<<<<<< HEAD
 
-=======
->>>>>>> d59c822f1433e491ea1a47e2a4bd86709720fa46
 	}
 
 	private void AuthorManuscriptSubmissionView() {
@@ -203,7 +203,7 @@ public class UI extends Observable implements Observer{
 
 	private void AuthorListOfManuscriptsView() {
 		System.out.println("List of currently submitted Manuscripts:");
-		for (int i = 0; i < )
+		//		for (int i = 0; i < )
 	}
 
 	private void ListOfConferenceView() { //Gets list from database and displays.  DB isn't ready yet.
@@ -220,17 +220,16 @@ public class UI extends Observable implements Observer{
 		System.out.println("1 - Assign a Reviewer");
 		System.out.println("2 - Select a Conference");
 		System.out.println("3 - Select a Manuscript");
-		//		while (!myScanner.hasNextInt() || (myUserChoice < 1 || myUserChoice > 3)) {
-		myUserChoice = myScanner.nextInt();
-		//		}
+		myUserChoice = myScanner.next();
+		
 		switch (myUserChoice){
-		case (1):
+		case ("1"):
 			notifyObservers("ASSIGN_REVIEWER"); 
 		break;
-		case (2):
+		case ("2"):
 			notifyObservers("LIST_CONFERENCE_VIEW"); 
 		break;
-		case (3):
+		case ("3"):
 			notifyObservers("LIST_MANUSCRIPT_VIEW"); 
 		break;
 		}
@@ -243,7 +242,7 @@ public class UI extends Observable implements Observer{
 	}
 
 	private void subProgramChairConferenceView() {
-		
+
 	}
 	private void subProgramChairAssignReviewerView() {
 
@@ -255,13 +254,13 @@ public class UI extends Observable implements Observer{
 
 
 
-	@Override
 	public void removeListener(InvalidationListener listener) {
-
-
-		public void update(Observable arg0, Object arg1) {
-			// TODO Auto-generated method stub
-
-		}
+		
+	}
+	
+	public void update(Observable arg0, Object arg1) {
+		// TODO Auto-generated method stub
 
 	}
+
+}

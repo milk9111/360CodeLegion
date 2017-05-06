@@ -23,7 +23,7 @@ public class Reviewer extends User {
 	 * 
 	 * @author Morgan Blackmore
 	 */
-	public Reviewer(String theName, List<Conference> theConferenceList){
+	public Reviewer(String theName, ArrayList<Conference> theConferenceList){
 		super(theName, theConferenceList);
 		this.myAssignedManuscriptList = new ArrayList<Manuscript>();
 		
@@ -91,12 +91,12 @@ public class Reviewer extends User {
 	private boolean isReviewerAnAuthor(Manuscript theManuscript) {
 		boolean isAuthor = false;
 
-		String reviewerName = getName();
+		String reviewerName = getUsername();
 		List<Author> authorlist = theManuscript.getAuthors();
 		
 	
 		for (int i = 0; i < authorlist.size(); i++) {
-			if (authorlist.get(i).getName().equals(reviewerName)) {
+			if (authorlist.get(i).getUsername().equals(reviewerName)) {
 				isAuthor = true;
 			}
 		}

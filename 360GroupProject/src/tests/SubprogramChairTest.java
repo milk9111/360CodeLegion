@@ -1,6 +1,11 @@
 import org.junit.Before;
 import org.junit.Test;
 
+import model.Conference;
+import model.Database;
+import model.Reviewer;
+import model.SubprogramChair;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
