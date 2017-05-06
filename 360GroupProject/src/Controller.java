@@ -14,19 +14,19 @@ import model.*;
 public class Controller extends Observable implements Observer {
 
 	//View States
-    public final int LOG_IN_STATE = -2;
-    public final int CHOOSE_USER = -1;
-	public final int AUTHOR = 0;
-	public final int REVIEWER = 10;
-	public final int SUBPROGRAM_CHAIR = 20;
+    public static final int LOG_IN_STATE = -2;
+    public static final int CHOOSE_USER = -1;
+	public static final int AUTHOR = 0;
+	public static final int REVIEWER = 10;
+	public static final int SUBPROGRAM_CHAIR = 20;
 	
 	//Action States
-	public final int USER_OPTIONS = 0;
-	public final int SUBMIT_MANUSCRIPT = 1;
-	public final int LIST_MANUSCRIPT_VIEW = 2;
-	public final int LIST_CONFERENCE_VIEW = 3;
-	public final int ASSIGN_REVIEWER = 4;
-	public final int LIST_ASSIGNED_REVIEWERS_VIEW = 5;
+	public static final int USER_OPTIONS = 0;
+	public static final int SUBMIT_MANUSCRIPT = 1;
+	public static final int LIST_MANUSCRIPT_VIEW = 2;
+	public static final int LIST_CONFERENCE_VIEW = 3;
+	public static final int ASSIGN_REVIEWER = 4;
+	public static final int LIST_ASSIGNED_REVIEWERS_VIEW = 5;
 
 	
 	//Objects we are adding in the system. We are saving them because we need persistence between states.
@@ -92,12 +92,18 @@ public class Controller extends Observable implements Observer {
 						break;
 					case LIST_MANUSCRIPT_VIEW:
 						if (pieces[0].equals("List Manuscript View")) {
-							
+							myCurrentState = AUTHOR + USER_OPTIONS;
+							setChanged();
+							notifyObservers(myCurrentState);
 						}
 						break;
 					case LIST_CONFERENCE_VIEW:
 						if (pieces[0].equals("List Conference View")) {
-
+							myCurrentConference = findConference(theNextState, myAccount.getMySubprogramChair().getConferenceList());
+							
+							myCurrentState = AUTHOR + USER_OPTIONS;
+							setChanged();
+							notifyObservers(myCurrentState);
 						}
 						break;
 				}
@@ -113,18 +119,29 @@ public class Controller extends Observable implements Observer {
 				switch (myCurrentState % 10){
                     case ASSIGN_REVIEWER:
 						myCurrentReviewer = findReviewer(theNextState, myCurrentConference.getPastReviewers());
-						// What should happen when this succeeds?
 
-                        myCurrentState = 5;
+                        myCurrentState = SUBPROGRAM_CHAIR + LIST_ASSIGNED_REVIEWERS_VIEW;
+                        setChanged();
+						notifyObservers(myCurrentState);
                         break;
                     case LIST_CONFERENCE_VIEW:
 						myCurrentConference = findConference(theNextState, myAccount.getMySubprogramChair().getConferenceList());
+						
+						myCurrentState = SUBPROGRAM_CHAIR + USER_OPTIONS;
+						setChanged();
+						notifyObservers(myCurrentState);
                         break;
 					case LIST_MANUSCRIPT_VIEW:
-
+						myCurrentState = SUBPROGRAM_CHAIR + USER_OPTIONS;
+                    	
+						setChanged();
+						notifyObservers(myCurrentState);
 						break;
                     case LIST_ASSIGNED_REVIEWERS_VIEW:
-
+                    	myCurrentState = SUBPROGRAM_CHAIR + USER_OPTIONS;
+                    	
+						setChanged();
+						notifyObservers(myCurrentState);
                         break;
 				}
 				break;
