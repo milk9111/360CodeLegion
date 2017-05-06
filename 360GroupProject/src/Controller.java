@@ -1,5 +1,8 @@
+import java.util.Date;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Scanner;
+import java.util.regex.Pattern;
 
 /**
  * The system controller that handles the different states of the 
@@ -22,8 +25,13 @@ public class Controller extends Observable implements Observer {
 	public final int ASSIGN_REVIEWER = 4;
 	
 	
+	//Objects we are adding in the system. We are saving them because we need persistence between states.
 	private int myCurrentState;
+	private User myUser;
+	private Conference myConference;
+	private Manuscript myCurrentManuscript;
 	
+
 	
 	/**
 	 * Call this method after instantiating the Controller
@@ -49,17 +57,82 @@ public class Controller extends Observable implements Observer {
 	 * @param theNextState The next state the program will be in.
 	 */
 	private void changeState (String theNextState) {
+		String[] pieces = theNextState.split(",");
 		
 		switch ((myCurrentState / 10) * 10) {
 			case AUTHOR:
+				switch (myCurrentState % 10){
+					case SUBMIT_MANUSCRIPT:
+                        Manuscript manuscriptToSubmit = new Manuscript();
+						if(pieces[0].equals("Submit Manuscript")){
+							
+							
+							manuscriptToSubmit.setSubmittedDate(new Date(pieces[2]));
+							
+							try {
+								((Author) myUser).addManuscript(myConference, manuscriptToSubmit);
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+                        }
+
+						break;
+					case LIST_MANUSCRIPT_VIEW:
+					case ASSIGN_REVIEWER:
+
+
+						break;
+					case LIST_CONFERENCE_VIEW:
+
+						break;
+				}
 				
 				break;
 			case REVIEWER:
+				switch (myCurrentState % 10){
+
+				}
 				break;
 			case SUBPROGRAM_CHAIR:
+				
+				switch (myCurrentState % 10){
+                    case LIST_MANUSCRIPT_VIEW:
+
+                        break;
+                    case LIST_CONFERENCE_VIEW:
+
+                        break;
+				}
 				break;
 		}
 	}
+	
+	
+	/**
+	 * Makes the Manuscript to submit. This is just a helper method for clarity of
+	 * FSM.
+	 * 
+	 * @param thePieces The parsed String array
+	 * @return The new Manuscript
+	 * @author Connor Lundberg
+	 * @version 5/6/2017
+	 */
+	private Manuscript makeManuscript (String[] thePieces) {
+		Manuscript returnManuscript = new Manuscript();
+		
+		returnManuscript.setTitle(thePieces[1]);
+		returnManuscript.setSubmittedDate(new Date(thePieces[2]));
+		
+		//Adds the remaining Authors in the list.
+		for (int i = 3; i < thePieces.length; i++) {
+			returnManuscript.addAuthor(new Author(thePieces[i]));
+		}
+		
+		return returnManuscript;
+	}
+
+
 	
 
 	@Override
@@ -70,3 +143,29 @@ public class Controller extends Observable implements Observer {
 	}
 		
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

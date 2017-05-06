@@ -27,6 +27,8 @@ public class Manuscript {
 	 * @param theSubmittedDate The date submitted
 	 * @param theReviews The reviews to assign
 	 * @param theAuthors The authors for the manuscript
+	 * @author Connor Lundberg
+	 * @version 5/6/2017
 	 */
 	public Manuscript (String theTitle, Date theSubmittedDate, HashMap<Reviewer, String> theReviews, ArrayList<Author> theAuthors) {
 		myReviews = (HashMap<Reviewer, String>) theReviews.clone();
@@ -37,7 +39,10 @@ public class Manuscript {
 	
 	
 	/**
-	 * Default constructor;
+	 * Default constructor.
+	 * 
+	 * @author Connor Lundberg
+	 * @version 5/6/2017
 	 */
 	public Manuscript () {
 		myReviews = new HashMap<Reviewer, String> ();
@@ -64,6 +69,13 @@ public class Manuscript {
 	}
 	
 	
+	/**
+	 * Returns the ArrayList of Reviewers attached to this Manuscript.
+	 * 
+	 * @return The list of Reviewers. This can be empty, but never null.
+	 * @author Connor Lundberg
+	 * @version 5/6/2017
+	 */
 	public ArrayList<Reviewer> getReviewers () {
 		ArrayList<Reviewer> returnList = new ArrayList<Reviewer>();
 		Set<Reviewer> reviewSet = myReviews.keySet();
@@ -77,17 +89,35 @@ public class Manuscript {
 	
 	
 	/**
+	 * Sets the title to the String title passed.
+	 * 
+	 * @param theTitle The title String to set
+	 * @author Connor Lundberg
+	 * @version 5/6/2017
+	 */
+	public void setTitle (String theTitle) {
+		myTitle = theTitle;
+	}
+	
+	
+	/**
 	 * Returns an ArrayList of all authors attached to this
 	 * manuscript.
 	 * 
 	 * @return All authors for this manuscript
+	 * @author Connor Lundberg
+	 * @version 5/6/2017
 	 */
 	public ArrayList<Author> getAuthors () {
 		return (ArrayList<Author>) myAuthors.clone();
 	}
 	
+	
 	/**
-	 * Sets myAuthors list.  Allows tester to use default constructor and add authors later.
+	 * Sets myAuthors list.  Allows tester to use default constructor.
+	 * 
+	 * @author Connor Lundberg
+	 * @version 5/1/2017
 	 */
 	public void setAuthors(List<Author> theAuthors) {
 		myAuthors = (ArrayList<Author>) theAuthors;
@@ -95,9 +125,23 @@ public class Manuscript {
 	
 	
 	/**
+	 * Adds a single author to the Author list.
+	 * 
+	 * @param theAuthor The author to add to the list.
+	 * @author Connor Lundberg
+	 * @version 5/6/2017
+	 */
+	public void addAuthor(Author theAuthor) {
+		myAuthors.add(theAuthor);
+	}
+	
+	
+	/**
 	 * Returns the date this manuscript was submitted.
 	 * 
 	 * @return The submitted date
+	 * @author Connor Lundberg
+	 * @version 5/6/2017
 	 */
 	public Date getSubmittedDate () {
 		return (Date) mySubmittedDate.clone();
@@ -105,9 +149,24 @@ public class Manuscript {
 	
 	
 	/**
+	 * Sets the submitted date for the Manuscript. This is used on submission
+	 * of the Manuscript only.
+	 * 
+	 * @param theSubmittedDate The new submitted date
+	 * @author Connor Lundberg
+	 * @version 5/6/2017
+	 */
+	public void setSubmittedDate (Date theSubmittedDate) {
+		mySubmittedDate = theSubmittedDate;
+	}
+	
+	
+	/**
 	 * Returns the title of this manuscript.
 	 * 
 	 * @return The manuscript title
+	 * @author Connor Lundberg
+	 * @version 5/6/2017
 	 */
 	public String getTitle () {
 		return myTitle;
@@ -120,21 +179,33 @@ public class Manuscript {
 	 * empty string as the value.
 	 * 
 	 * @param theReviewer The reviewer to add
+	 * @author Connor Lundberg
+	 * @version 5/6/2017
 	 */
 	public void assignReviewer (final Reviewer theReviewer) {
 		myReviews.put(theReviewer, "");
 	}
 	
 	
+	/**
+	 * Adds a review to the review list.
+	 * 
+	 * @param theReviewer The Reviewer linked to the review given
+	 * @param theReview The review to add
+	 * @author Connor Lundberg
+	 * @version 5/6/2017
+	 */
 	public void addReview (final Reviewer theReviewer, String theReview) {
 		myReviews.replace(theReviewer, theReview);
 	}
 	
 	
 	/**
-	 * Submits a manuscript then returns it upon success
-	 * @param
+	 * Submits a manuscript then returns it upon success.
+	 * 
 	 * @return A copy of the manuscript
+	 * @author Connor Lundberg
+	 * @version 5/6/2017
 	 */
 	public Manuscript submitManuscript () {
 		return new Manuscript(this.myTitle, this.mySubmittedDate, this.myReviews, this.myAuthors);
