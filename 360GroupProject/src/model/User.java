@@ -1,4 +1,6 @@
+import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * This is a abstract class to hold information common for all user types.
@@ -8,6 +10,20 @@ import java.util.List;
  *
  */
 public abstract class User {
+	/**
+	 * User Instance Fields
+	 */
+	
+	private HashMap<UUID, User> MY_USER_LIST;
+	
+	/**
+	 * Individual User Object Fields
+	 */
+	
+	/**
+	 * Unique ID for identification of the User
+	 */
+	private UUID myID;
 	
 	/**
 	 * The User name for the system to recognize the current user.
@@ -25,6 +41,7 @@ public abstract class User {
 	 * @param theConferenceList List of all current conferences.
 	 */
 	public User(String theUserName, List<Conference> theConferenceList) {
+		myID = UUID.randomUUID();
 		MyUserName = theUserName;
 		myConferenceList = theConferenceList;
 	}
