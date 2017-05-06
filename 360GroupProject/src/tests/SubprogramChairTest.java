@@ -50,7 +50,7 @@ public class SubprogramChairTest {
     	Date submissionDeadline = new Date();
     	Date reviewDeadline = new Date();
     	List<Reviewer> pastReviewerList = new ArrayList<Reviewer>();
-    	Conference tempConference = new Conference(submissionDeadline, reviewDeadline, pastReviewerList);
+    	Conference tempConference = new Conference("Conference Title ex", submissionDeadline, reviewDeadline, pastReviewerList);
 
     	mySubprogramChair.getMyAssignedConferences().add(tempConference);
     	
@@ -141,9 +141,9 @@ public class SubprogramChairTest {
     @Test
     public void getConferenceList_forListWithMoreThanOne_shouldReturnConferenceList() {
         List<Conference> conferenceListWithMoreThanOne = new ArrayList<Conference>();
-        Conference tempConfA = new Conference(new Date(), new Date(), new ArrayList<Reviewer>());
-        Conference tempConfB = new Conference(new Date(), new Date(), new ArrayList<Reviewer>());
-        Conference tempConfC = new Conference(new Date(), new Date(), new ArrayList<Reviewer>());
+        Conference tempConfA = new Conference("Science of memory", new Date(), new Date(), new ArrayList<Reviewer>());
+        Conference tempConfB = new Conference("Research on machine learning", new Date(), new Date(), new ArrayList<Reviewer>());
+        Conference tempConfC = new Conference("Genetic Algorithms", new Date(), new Date(), new ArrayList<Reviewer>());
 
         // initialize conference list to have multiple items
         conferenceListWithMoreThanOne.add(tempConfA);

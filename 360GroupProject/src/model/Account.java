@@ -1,17 +1,26 @@
 package model;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 /**
  * Created by Josiah on 5/6/2017.
  */
-public class Account implements Serializable{
+public class Account implements Serializable {
 
     private Author myAuthor;
     private Reviewer myReviewer;
     private SubprogramChair mySubprogramChair;
-
+    private UUID myID;
+    private String myUsername;
+    
+    public Account(String theUsername) {
+    	this.myID = UUID.randomUUID();
+    	this.myUsername = theUsername;
+    }
+    
     public Account(Author myAuthor, Reviewer myReviewer, SubprogramChair mySubprogramChair) {
+    	this.myID = UUID.randomUUID();
         this.myAuthor = myAuthor;
         this.myReviewer = myReviewer;
         this.mySubprogramChair = mySubprogramChair;
@@ -39,6 +48,14 @@ public class Account implements Serializable{
 
     public void setMySubprogramChair(SubprogramChair mySubprogramChair) {
         this.mySubprogramChair = mySubprogramChair;
+    }
+    
+    public String getMyUsername() {
+    	return this.myUsername;
+    }
+    
+    public UUID getMyID() {
+    	return this.myID;
     }
 
 
