@@ -1,25 +1,19 @@
-import java.util.HashMap;
+import java.util.TreeMap;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.List;
 import java.util.UUID;
 
 /**
  * This is a abstract class to hold information common for all user types.
+ * Additionally, holds static methods and fields for Users as a whole
  * 
- * @author Casey Anderson
+ * @author Casey Anderson, Ryan Tran
  * @version 1 
  *
  */
 public abstract class User {
-	/**
-	 * User Instance Fields
-	 */
-	
-	private HashMap<UUID, User> MY_USER_LIST;
-	
-	/**
-	 * Individual User Object Fields
-	 */
-	
 	/**
 	 * Unique ID for identification of the User
 	 */
@@ -76,20 +70,13 @@ public abstract class User {
 		MyUserName = theUserName;
 	}
 
-
-	/**
-	 * Method to change the Users username.
-     * @return returns the user's username as a string
-	 */
-	public String getUserName() {
-		return this.MyUserName;
-	}
 	
 	/**
 	 * Method to return the current username.
 	 * @return The user name associated with current user.
 	 */
-	public String getName() {
+	public String getUsername() {
 		return MyUserName;
 	}
+
 }

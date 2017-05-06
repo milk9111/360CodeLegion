@@ -43,7 +43,7 @@ public class ReviewerTest {
 	@Test
 	public void testReviewerConstructor() {
 		assertNotNull("Reviewer object Null", myTestReviewer);
-		assertEquals("Reveiwers name should equal default test name \"Roger Ebert\"", myTestReviewer.getName(), "Roger Ebert");
+		assertEquals("Reveiwers name should equal default test name \"Roger Ebert\"", myTestReviewer.getUsername(), "Roger Ebert");
 	}
 
 
