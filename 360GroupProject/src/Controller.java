@@ -1,12 +1,6 @@
 import java.util.*;
 import java.util.regex.Pattern;
 
-import model.Author;
-import model.Conference;
-import model.Manuscript;
-import model.Reviewer;
-import model.User;
-
 /**
  * The system controller that handles the different states of the 
  * program. It is the bridge between the UI and the Model. 
@@ -97,7 +91,9 @@ public class Controller extends Observable implements Observer {
 						}
 						break;
 					case LIST_CONFERENCE_VIEW:
-
+						if (pieces[0].equals("List Conference View")) {
+							
+						}
 						break;
 				}
 				

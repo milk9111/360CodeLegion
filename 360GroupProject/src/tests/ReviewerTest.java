@@ -11,6 +11,8 @@ import model.Author;
 import model.Conference;
 import model.Manuscript;
 import model.Reviewer;
+import model.User;
+
 
 public class ReviewerTest {
 

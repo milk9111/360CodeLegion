@@ -2,6 +2,7 @@ import model.Author;
 import model.Conference;
 import model.Manuscript;
 import model.Reviewer;
+import model.User;
 
 import static org.junit.Assert.*;
 
