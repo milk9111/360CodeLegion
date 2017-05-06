@@ -4,12 +4,6 @@ import java.util.Observer;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
-import model.Author;
-import model.Conference;
-import model.Manuscript;
-import model.Reviewer;
-import model.User;
-
 /**
  * The system controller that handles the different states of the 
  * program. It is the bridge between the UI and the Model. 
@@ -80,13 +74,13 @@ public class Controller extends Observable implements Observer {
 							manuscriptToSubmit = makeManuscript(pieces);
 							
 							try {
-								((Author) myUser).addManuscript(myConference, manuscriptToSubmit);
+								((Author) myUser).addManuscript(myCurrentConference, manuscriptToSubmit);
 							} catch (Exception e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 							
-							myConference.submitManuscript(manuscriptToSubmit);
+							myCurrentConference.submitManuscript(manuscriptToSubmit);
 							
 							myCurrentState = AUTHOR + LIST_MANUSCRIPT_VIEW;
 							setChanged();
@@ -100,7 +94,9 @@ public class Controller extends Observable implements Observer {
 						}
 						break;
 					case LIST_CONFERENCE_VIEW:
-
+						if (pieces[0].equals("List Conference View")) {
+							
+						}
 						break;
 				}
 				

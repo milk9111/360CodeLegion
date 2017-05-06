@@ -13,6 +13,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import model.Author;
+import model.Conference;
+import model.Manuscript;
+import model.Reviewer;
+import model.User;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
