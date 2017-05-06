@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
  * program. It is the bridge between the UI and the Model. 
  * 
  * @author Connor Lundberg
+ * @author Josiah Hopkins
  * @version 5/5/2017
  */
 public class Controller extends Observable implements Observer {
@@ -19,6 +20,7 @@ public class Controller extends Observable implements Observer {
 	public final int SUBPROGRAM_CHAIR = 20;
 	
 	//Action States
+	public final int USER_OPTIONS = 0;
 	public final int SUBMIT_MANUSCRIPT = 1;
 	public final int LIST_MANUSCRIPT_VIEW = 2;
 	public final int LIST_CONFERENCE_VIEW = 3;
@@ -27,9 +29,12 @@ public class Controller extends Observable implements Observer {
 	
 	//Objects we are adding in the system. We are saving them because we need persistence between states.
 	private int myCurrentState;
+
 	private User myUser;
-	private Conference myConference;
+
+	private Conference myCurrentConference;
 	private Manuscript myCurrentManuscript;
+	private Reviewer myCurrentReviewer;
 	
 
 	
@@ -53,6 +58,7 @@ public class Controller extends Observable implements Observer {
 	 * the UI accordingly.
 	 * 
 	 * @author Connor Lundberg
+	 * @author Josiah Hopkins
 	 * @version 5/5/2017
 	 * @param theNextState The next state the program will be in.
 	 */
@@ -63,11 +69,9 @@ public class Controller extends Observable implements Observer {
 			case AUTHOR:
 				switch (myCurrentState % 10){
 					case SUBMIT_MANUSCRIPT:
-                        Manuscript manuscriptToSubmit = new Manuscript();
+                        Manuscript manuscriptToSubmit;
 						if(pieces[0].equals("Submit Manuscript")){
-							
-							
-							manuscriptToSubmit.setSubmittedDate(new Date(pieces[2]));
+							manuscriptToSubmit = makeManuscript(pieces);
 							
 							try {
 								((Author) myUser).addManuscript(myConference, manuscriptToSubmit);
@@ -75,13 +79,19 @@ public class Controller extends Observable implements Observer {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
+							
+							myConference.submitManuscript(manuscriptToSubmit);
+							
+							myCurrentState = AUTHOR + LIST_MANUSCRIPT_VIEW;
+							setChanged();
+							notifyObservers(myCurrentState);
                         }
 
 						break;
 					case LIST_MANUSCRIPT_VIEW:
-					case ASSIGN_REVIEWER:
-
-
+						if (pieces[0].equals("List Manuscript View")) {
+							
+						}
 						break;
 					case LIST_CONFERENCE_VIEW:
 
@@ -97,12 +107,15 @@ public class Controller extends Observable implements Observer {
 			case SUBPROGRAM_CHAIR:
 				
 				switch (myCurrentState % 10){
-                    case LIST_MANUSCRIPT_VIEW:
-
+                    case ASSIGN_REVIEWER:
+						myCurrentReviewer = findReviewer(theNextState, myCurrentConference.getPastReviewers());
                         break;
                     case LIST_CONFERENCE_VIEW:
-
+						//myCurrentConference =
                         break;
+					case LIST_MANUSCRIPT_VIEW:
+
+						break;
 				}
 				break;
 		}
