@@ -129,11 +129,16 @@ public class UI extends Observable implements Observer{
 			case 3:
 				ListOfConferenceView();
 			}
-		} else {
+		} else if (theState >= 20){
 			setUserType("SubProgram Chair");
 			displayHeader();
+			switch (theState % 20) {
+			case (0):
+				subProgramChairView();
+				break;
+				
+			}
 			//add switch statement
-			subProgramChairView();
 			subProgramChairConferenceView();
 			subProgramChairAssignReviewerView(); 
 			subProgramChairManuscriptsView();
