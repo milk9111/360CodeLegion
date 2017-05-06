@@ -92,12 +92,18 @@ public class Controller extends Observable implements Observer {
 						break;
 					case LIST_MANUSCRIPT_VIEW:
 						if (pieces[0].equals("List Manuscript View")) {
-							
+							myCurrentState = AUTHOR + USER_OPTIONS;
+							setChanged();
+							notifyObservers(myCurrentState);
 						}
 						break;
 					case LIST_CONFERENCE_VIEW:
 						if (pieces[0].equals("List Conference View")) {
-
+							myCurrentConference = findConference(theNextState, myAccount.getMySubprogramChair().getConferenceList());
+							
+							myCurrentState = AUTHOR + USER_OPTIONS;
+							setChanged();
+							notifyObservers(myCurrentState);
 						}
 						break;
 				}
@@ -113,18 +119,29 @@ public class Controller extends Observable implements Observer {
 				switch (myCurrentState % 10){
                     case ASSIGN_REVIEWER:
 						myCurrentReviewer = findReviewer(theNextState, myCurrentConference.getPastReviewers());
-						// What should happen when this succeeds?
 
-                        myCurrentState = 5;
+                        myCurrentState = SUBPROGRAM_CHAIR + LIST_ASSIGNED_REVIEWERS_VIEW;
+                        setChanged();
+						notifyObservers(myCurrentState);
                         break;
                     case LIST_CONFERENCE_VIEW:
 						myCurrentConference = findConference(theNextState, myAccount.getMySubprogramChair().getConferenceList());
+						
+						myCurrentState = SUBPROGRAM_CHAIR + USER_OPTIONS;
+						setChanged();
+						notifyObservers(myCurrentState);
                         break;
 					case LIST_MANUSCRIPT_VIEW:
-
+						myCurrentState = SUBPROGRAM_CHAIR + USER_OPTIONS;
+                    	
+						setChanged();
+						notifyObservers(myCurrentState);
 						break;
                     case LIST_ASSIGNED_REVIEWERS_VIEW:
-
+                    	myCurrentState = SUBPROGRAM_CHAIR + USER_OPTIONS;
+                    	
+						setChanged();
+						notifyObservers(myCurrentState);
                         break;
 				}
 				break;
