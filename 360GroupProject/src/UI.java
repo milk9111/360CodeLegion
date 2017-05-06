@@ -29,7 +29,7 @@ public class UI extends Observable implements Observer{
     public static void main(final String[] theArgs) {
         new UI().start();
     }
-	
+	//if user exists, then instantiate UI fields and switch to chooseUserType menu view
     private void start() {
     	boolean validUserName = false;
     	while (!validUserName) {
@@ -37,10 +37,29 @@ public class UI extends Observable implements Observer{
 	    	myUserName = myScanner.next();
 	    	if (myUser.isUserRegistered(myUserName)) {
 	    		validUserName = true;
+	    		chooseUserTypeMenuView();
 	    	} else {
 	    		System.out.println("Invalid User Name!");
 	    	}
     	}
+    	
+    }
+    
+    private void chooseUserTypeMenuView() {
+    	
+    	System.out.println("\nChoose what type of user you are");
+    	System.out.println("1 - Author");
+    	System.out.println("2 - SubProgram Chair");
+    	if (myScanner.next()== "1") {
+    		notifyObservers("Author"); 
+    	} else if(myScanner.next()=="2"){
+    		notifyObservers("SubProgram Chair"); 
+      	} else {
+      		System.out.println("Invalid choice, please select from the options displayed");
+      		chooseUserTypeMenuView();
+      	}
+    	
+    	
     	
     }
     
@@ -113,6 +132,18 @@ public class UI extends Observable implements Observer{
 	private void ListOfConferenceView() {
 		
 	}
+	
+	/**
+	 * Display SubProgramChair top menu
+	 * 
+	 * @author Morgan
+	 */
+	private void subProgramChairView(){
+		System.out.println("SubProgram Chair Options");
+		System.out.println("1 - Assign a reviewer to a manuscript");
+		System.out.println("2 - View my assigned manuscripts");
+		System.out.println("3 - View my conferences");
+		}
 
 	@Override
 	public void removeListener(InvalidationListener listener) {
