@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
  * program. It is the bridge between the UI and the Model. 
  * 
  * @author Connor Lundberg
+ * @author Josiah Hopkins
  * @version 5/5/2017
  */
 public class Controller extends Observable implements Observer {
@@ -53,6 +54,7 @@ public class Controller extends Observable implements Observer {
 	 * the UI accordingly.
 	 * 
 	 * @author Connor Lundberg
+	 * @author Josiah Hopkins
 	 * @version 5/5/2017
 	 * @param theNextState The next state the program will be in.
 	 */
@@ -63,11 +65,9 @@ public class Controller extends Observable implements Observer {
 			case AUTHOR:
 				switch (myCurrentState % 10){
 					case SUBMIT_MANUSCRIPT:
-                        Manuscript manuscriptToSubmit = new Manuscript();
+                        Manuscript manuscriptToSubmit;
 						if(pieces[0].equals("Submit Manuscript")){
-							
-							
-							manuscriptToSubmit.setSubmittedDate(new Date(pieces[2]));
+							manuscriptToSubmit = makeManuscript(pieces);
 							
 							try {
 								((Author) myUser).addManuscript(myConference, manuscriptToSubmit);
@@ -75,6 +75,8 @@ public class Controller extends Observable implements Observer {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
+							
+							myConference.submitManuscript(manuscriptToSubmit);
                         }
 
 						break;
