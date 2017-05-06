@@ -7,6 +7,11 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import model.Author;
+import model.Conference;
+import model.Manuscript;
+import model.Reviewer;
+
 public class ReviewerTest {
 
 	private static final int MAX_CAPACITY = 8;

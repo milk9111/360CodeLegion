@@ -23,7 +23,7 @@ public class Reviewer extends User {
 	 * 
 	 * @author Morgan Blackmore
 	 */
-	public Reviewer(String theName, List<Conference> theConferenceList){
+	public Reviewer(String theName, ArrayList<Conference> theConferenceList){
 		super(theName, theConferenceList);
 		this.myAssignedManuscriptList = new ArrayList<Manuscript>();
 		

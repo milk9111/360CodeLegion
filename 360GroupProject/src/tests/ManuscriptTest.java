@@ -3,9 +3,14 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import model.Author;
+import model.Manuscript;
+import model.Reviewer;
 
 /**
  * The Manuscript unit tests.
@@ -99,6 +104,7 @@ public class ManuscriptTest {
 	@Test
 	public void assignReviewer_TestAssignReviewerForNullValues () {
 		Manuscript testPaper = new Manuscript ();
+		//Reviewer testReviewer = new Reviewer("Terry Pratchett", new ArrayList<Conference>());
 		Reviewer testReviewer = new Reviewer("Terry Pratchett", new ArrayList<Conference>());
 		testPaper.assignReviewer(testReviewer);
 		

@@ -1,8 +1,10 @@
 package model;
 
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.TreeMap;
 import java.util.UUID;
 
@@ -74,4 +76,20 @@ public class UserDatabase {
 		
 		return userListToReturn;
 	}
+	
+
+	public void createEmptySerializedUserList() {
+		TreeMap<UUID, User> emptyUserList = new TreeMap<UUID, User>();
+		
+	      try {
+	         FileOutputStream fileOut = new FileOutputStream("/tmp/employee.ser");
+	         ObjectOutputStream out = new ObjectOutputStream(fileOut);
+	         out.writeObject(emptyUserList);
+	         out.close();
+	         fileOut.close();
+	         System.out.printf("Serialized data is saved in /tmp/employee.ser");
+	      }catch(IOException i) {
+	         i.printStackTrace();
+	      }
+	   }
 }
