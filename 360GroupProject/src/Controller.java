@@ -1,7 +1,4 @@
-import java.util.Date;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.Scanner;
+import java.util.*;
 import java.util.regex.Pattern;
 
 import model.Author;
@@ -126,8 +123,16 @@ public class Controller extends Observable implements Observer {
 				break;
 		}
 	}
-	
-	
+
+	private Reviewer findReviewer(String theNextState, List<Reviewer> pastReviewers) {
+		for(Reviewer r: pastReviewers){
+			if(theNextState.contains(r.getUserName())){
+				return r;
+			}
+		}
+	}
+
+
 	/**
 	 * Makes the Manuscript to submit. This is just a helper method for clarity of
 	 * FSM.
