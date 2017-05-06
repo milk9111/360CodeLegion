@@ -32,7 +32,7 @@ public class UI extends Observable implements Observer{
 	public final int ASSIGN_REVIEWER = 4;
 
 	private int myState;
-	private String userType;
+	private String myUserType;
 	private String myUserName;
 	private User myUser;
 	private Scanner myScanner;
@@ -44,7 +44,7 @@ public class UI extends Observable implements Observer{
 
 	public UI() {
 		myState = 0;
-		userType = "";
+		myUserType = "";
 		myUserName = "";
 		myUserChoice = "";
 		myScanner = new Scanner(System.in);
@@ -117,16 +117,17 @@ public class UI extends Observable implements Observer{
 		
 		else {
 			
-				System.out.println("Invalid choice, please select from the options displayed");
-				chooseUserTypeMenuView();
+			System.out.println("Invalid choice, please select from the options displayed");
+			chooseUserTypeMenuView();
 	    
 		}   	
 
 	}
 
 	/**
-	 * Change state method to change view displayed to user based off of what the theState recieved from the Controller.
+	 * Change state method to change view displayed to user based off of what the theState received from the Controller.
 	 * 
+	 * @param theState The current state of the Controller for UI to display.
 	 * @author Casey Anderson, Morgan Blackmore
 	 * 
 	 */
@@ -179,20 +180,34 @@ public class UI extends Observable implements Observer{
 		}
 	}
 
-
+	/**
+	 * Method to set myUserType to theUserType of the user.
+	 * @param theUserType
+	 * @author Casey Anderson
+	 */
 	private void setUserType(String theUserType) {
 		
-		userType = theUserType;
+		myUserType = theUserType;
 		
 	}
 
+	/**
+	 * Method to diplay header on every page so user can see their myUserName and myUserType.
+	 * 
+	 * @author Casey Anderson
+	 */
 	private void displayHeader() {
 		
-		System.out.println(myUserName + " - " + userType);
+		System.out.println(myUserName + " - " + myUserType);
 		System.out.println();
 
 	}
 
+	/**
+	 * Method to display the current Author option to the user gather their selection and send it to the Controller.
+	 * 
+	 * @author Casey Anderson
+	 */
 	private void AuthorView() {
 		
 		System.out.println("Author Main Page:");
@@ -220,13 +235,19 @@ public class UI extends Observable implements Observer{
 
 	}
 
+	/**
+	 * Method to display the Manuscript submission page to user and gather information from user to submit their
+	 * Manuscript and send collected information to the Controller.
+	 * 
+	 * @author Casey Anderson
+	 */
 	private void AuthorManuscriptSubmissionView() {
 		
 		String manuscriptTile;
 		String authorList = "";
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy");
 		LocalDate localDate = LocalDate.now();
-		String moreAuthors = "1";
+		String moreAuthors = "";
 		List<String> listOfAuthors = new ArrayList<String>();
 		String ManuscriptFilePath;
 		System.out.println("Manuscript Submission Page");
@@ -258,6 +279,11 @@ public class UI extends Observable implements Observer{
 
 	}
 
+	/**
+	 * Method to display all of the current Authors Manuscripts they have aready submitted.
+	 * 
+	 * @author Casey Anderson
+	 */
 	private void AuthorListOfManuscriptsView() {
 		System.out.println("Manuscript List Page");
 		//		for (int i = 0; i < )
