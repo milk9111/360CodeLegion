@@ -42,7 +42,6 @@ public class Author extends User {
 	
 	}
 	
-	
 	/**
 	 * Method to add Review to the Author theReview must be a PDF file.
 	 * @param theReview Review file to be added to Author.
@@ -92,10 +91,9 @@ public class Author extends User {
 	 * Adds manuscript to a conference.
 	 * @param theConference The conference that the manuscript is to be added to.
 	 * @param theManuscript The manuscript to be added to Conference.
+	 * @throws illegalArgumentException
 	 */
-	public String addManuscript(Conference theConference, Manuscript theManuscript) {	
-		
-		String messageToUser;
+	public void addManuscript(Conference theConference, Manuscript theManuscript) throws Exception {	
 		
 		if (!isAuthorAtManuscriptLimit(theConference, theManuscript)) {
 			
@@ -114,15 +112,11 @@ public class Author extends User {
 				}
 			}
 			
-			messageToUser = "Congradulations! Manuscript succesfully submitted.";
-			
 		} else {
 			
-			messageToUser = "Already have 5 Manuscript submitted!";
+			throw new IllegalArgumentException("Author or CoAuthor already has " + MAX_MANUSCRIPT_ALLOWED + " Manuscripts");
 			
 		}
-		
-		return messageToUser;
 		
 	}
 	

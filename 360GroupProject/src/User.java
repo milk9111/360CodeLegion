@@ -20,7 +20,7 @@ public abstract class User {
 	protected List<Conference> myConferenceList;
 	
 	/**
-	 * Contructor for the User. 
+	 * Constructor for the User. 
 	 * @param theUserName The chosen user name.
 	 * @param theConferenceList List of all current conferences.
 	 */
@@ -29,8 +29,8 @@ public abstract class User {
 		myConferenceList = theConferenceList;
 	}
 
-		/**
-	 * Contructor for the User. Only supplying the username.
+	/**
+	 * Constructor for the User. Only supplying the username.
 	 * @param theUserName The chosen user name.
 	 */
 	public User(String theUserName) {
