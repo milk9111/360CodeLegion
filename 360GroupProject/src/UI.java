@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Scanner;
@@ -8,13 +10,13 @@ public class UI implements Observer{
 	private String myUserName;
 	private User myUser;
 	private Scanner myScanner;
-	private int userChoice;
+	private int myUserChoice;
 	
 	public UI() {
 		myState = 0;
 		userType = "";
 		myUserName = "";
-		userChoice = 0;
+		myUserChoice = 0;
 		myScanner = new Scanner(System.in);
 	}
 	
@@ -64,9 +66,34 @@ public class UI implements Observer{
 	
 	private void AuthorView() {
 		System.out.println("Author Options:");
-		System.out.println("0 - View currently submitted Manuscripts.");
-		System.out.println("1 - View current list of Conferences.");
-		System.out.println("2 - Submit new Manuscript.");
+		System.out.println("1 - Submit new Manuscript.");
+		System.out.println("2 - View currently submitted Manuscripts.");
+		System.out.println("3 - View current list of Conferences.");	
+		while (!myScanner.hasNextInt() || (myUserChoice < 1 || myUserChoice > 3)) {
+			myUserChoice = myScanner.nextInt();
+		}
+		
+	}
+	
+	private void AuthorManuscriptSubmissionView() {
+		String manuscriptTile;
+		int moreAuthors = 1;
+		List<String> listOfAuthors = new ArrayList<String>();
+		String ManuscriptFilePath;
+		System.out.println("Manuscript submission:");
+		System.out.println("Please Enter Title of Manuscript: ");
+		manuscriptTile = myScanner.next();
+		while (moreAuthors != 0) {
+			System.out.println("Please Enter name of Author or CoAuthor for Manuscript or \"0\" when done: ");
+			if (myScanner.hasNextInt()) {
+				moreAuthors = myScanner.nextInt();
+			} else {
+				listOfAuthors.add(myScanner.next());
+			}
+		}
+		System.out.println("Please Enter file path of Manuscript: ");
+		ManuscriptFilePath = myScanner.next();	
+		
 	}
 	
 	private void AuthorListOfManuscriptsView() {
