@@ -19,6 +19,8 @@ public class UserDatabase {
 
 	private TreeMap<UUID, User> MY_USER_LIST;
 	
+	private final String USER_SERIALIZED_PATH = "360GroupProject/src/model/serializedModel/";
+	
 		
 	/**
 	 * Instance Methods
@@ -58,7 +60,7 @@ public class UserDatabase {
 		TreeMap<UUID, User> userListToReturn = null;
 
 		try {
-			FileInputStream fileIn = new FileInputStream("serializedModel/users.ser");
+			FileInputStream fileIn = new FileInputStream(USER_SERIALIZED_PATH + "users.ser");
 			ObjectInputStream in = new ObjectInputStream(fileIn);
 			userListToReturn = (TreeMap<UUID, User>) in.readObject();
 			in.close();
@@ -82,12 +84,12 @@ public class UserDatabase {
 		TreeMap<UUID, User> emptyUserList = new TreeMap<UUID, User>();
 		
 	      try {
-	         FileOutputStream fileOut = new FileOutputStream("/tmp/employee.ser");
+	         FileOutputStream fileOut = new FileOutputStream(USER_SERIALIZED_PATH + "users.ser");
 	         ObjectOutputStream out = new ObjectOutputStream(fileOut);
 	         out.writeObject(emptyUserList);
 	         out.close();
 	         fileOut.close();
-	         System.out.printf("Serialized data is saved in /tmp/employee.ser");
+	         System.out.printf("Serialized data is saved in " + USER_SERIALIZED_PATH + "users.ser");
 	      }catch(IOException i) {
 	         i.printStackTrace();
 	      }
