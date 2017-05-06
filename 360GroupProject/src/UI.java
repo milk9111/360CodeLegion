@@ -1,5 +1,9 @@
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -54,7 +58,7 @@ public class UI extends Observable implements Observer{
      * Login prompt.  Displays prompt and scans input, compares to list of existing users.
      * If valid, updates this UI user fields and proceeds to top menuL chooseUserTypeMenuView 
      * 
-     * @author Casey, Anderson Morgan Blackmore
+     * @author Casey Anderson, Morgan Blackmore
      * 
      */
 	
@@ -86,10 +90,17 @@ public class UI extends Observable implements Observer{
     	System.out.println("\nChoose what type of user you are");
     	System.out.println("1 - Author");
     	System.out.println("2 - SubProgram Chair");
+<<<<<<< HEAD
     	if (myScanner.next()== "1") {
     		notifyObservers("AUTHOR"); 
     	} else if(myScanner.next()=="2"){
     		notifyObservers("SUBPROGRAM_CHAIR"); 
+=======
+    	if (myScanner.next() == "1") {
+    		notifyObservers("Author"); 
+    	} else if(myScanner.next() =="2"){
+    		notifyObservers("SubProgram Chair"); 
+>>>>>>> branch 'master' of https://github.com/milk9111/360CodeLegion/
       	} else {
       		System.out.println("Invalid choice, please select from the options displayed");
       		chooseUserTypeMenuView();
@@ -124,6 +135,7 @@ public class UI extends Observable implements Observer{
 	private void setUserType(String theUserType) {
 		userType = theUserType;
 	}
+	
 	private void displayHeader() {
 		System.out.println(myUserName + " - " + userType);
 		System.out.println();
@@ -143,22 +155,29 @@ public class UI extends Observable implements Observer{
 	
 	private void AuthorManuscriptSubmissionView() {
 		String manuscriptTile;
-		int moreAuthors = 1;
+		String authorList = "";
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+		LocalDate localDate = LocalDate.now();
+		String moreAuthors = "1";
 		List<String> listOfAuthors = new ArrayList<String>();
 		String ManuscriptFilePath;
 		System.out.println("Manuscript submission:");
 		System.out.println("Please Enter Title of Manuscript: ");
 		manuscriptTile = myScanner.next();
-		while (moreAuthors != 0) {
+		while (!moreAuthors.equals("0")) {
 			System.out.println("Please Enter name of Author or CoAuthor for Manuscript or \"0\" when done: ");
-			if (myScanner.hasNextInt()) {
-				moreAuthors = myScanner.nextInt();
-			} else {
+			moreAuthors = myScanner.next();
+			if (!moreAuthors.equals("0")) {
 				listOfAuthors.add(myScanner.next());
-			}
+			} 
 		}
 		System.out.println("Please Enter file path of Manuscript: ");
 		ManuscriptFilePath = myScanner.next();	
+		for (int i = 0; i < listOfAuthors.size(); i++) {
+			authorList += listOfAuthors.get(i) + ",";
+		}
+		notifyObservers("Submit Manuscript," + manuscriptTile + "," + dtf.format(localDate) + authorList); 
+		
 		
 	}
 	
@@ -198,6 +217,7 @@ public class UI extends Observable implements Observer{
 				
 
 		}
+	
 	private void myManuscriptsView() {
 		
 	}
