@@ -34,13 +34,13 @@ public class UI extends Observable implements Observer{
 	private String myUserName;
 	private User myUser;
 	private Scanner myScanner;
-	private int myUserChoice;
+	private String myUserChoice;
 	
 	public UI() {
 		myState = 0;
 		userType = "";
 		myUserName = "";
-		myUserChoice = 0;
+		myUserChoice = "";
 		myScanner = new Scanner(System.in);
 	}
 	
@@ -115,7 +115,7 @@ public class UI extends Observable implements Observer{
 				ListOfConferenceView();
 			}
 		} else {
-			setUserType("SubProgramChair");
+			setUserType("SubProgram Chair");
 			displayHeader();
 		}
 	}
@@ -135,11 +135,21 @@ public class UI extends Observable implements Observer{
 		System.out.println("Author Options:");
 		System.out.println("1 - Submit new Manuscript.");
 		System.out.println("2 - View currently submitted Manuscripts.");
-		System.out.println("3 - View current list of Conferences.");	
-		while (!myScanner.hasNextInt() || (myUserChoice < 1 || myUserChoice > 3)) {
-			myUserChoice = myScanner.nextInt();
+		System.out.println("3 - View current list of Conferences.");
+		myUserChoice = myScanner.next();
+		if (myUserChoice.equals("1")) {
+			notifyObservers("Submit Manuscript"); 
+		} 
+		else if (myUserChoice.equals("2")) {
+			notifyObservers("Manuscript List"); 
 		}
-		
+		else if (myUserChoice.equals("3")) {
+			notifyObservers("Conference List"); 
+		}
+		else {
+			System.out.println("Invalid choice, please select from the options displayed");
+			AuthorView();
+		}
 	}
 	
 	private void AuthorManuscriptSubmissionView() {
