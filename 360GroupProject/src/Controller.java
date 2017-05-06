@@ -4,6 +4,12 @@ import java.util.Observer;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
+import model.Author;
+import model.Conference;
+import model.Manuscript;
+import model.Reviewer;
+import model.User;
+
 /**
  * The system controller that handles the different states of the 
  * program. It is the bridge between the UI and the Model. 
