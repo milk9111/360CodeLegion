@@ -113,15 +113,24 @@ public class Controller extends Observable implements Observer {
 				switch (myCurrentState % 10){
                     case ASSIGN_REVIEWER:
 						myCurrentReviewer = findReviewer(theNextState, myCurrentConference.getPastReviewers());
+
+						/////// Assign here.
+
+
+
+
+
 						// What should happen when this succeeds?
 
                         myCurrentState = 5;
                         break;
                     case LIST_CONFERENCE_VIEW:
 						myCurrentConference = findConference(theNextState, myAccount.getMySubprogramChair().getConferenceList());
+						myCurrentState = LIST_MANUSCRIPT_VIEW;
                         break;
 					case LIST_MANUSCRIPT_VIEW:
-
+						myCurrentManuscript = findManuscript(theNextState, myCurrentConference.getManuscripts());
+						myCurrentState = ASSIGN_REVIEWER;
 						break;
                     case LIST_ASSIGNED_REVIEWERS_VIEW:
 
@@ -131,7 +140,16 @@ public class Controller extends Observable implements Observer {
 		}
 	}
 
-    private Conference findConference(String theNextState, List<Conference> conferenceList) {
+	private Manuscript findManuscript(String theNextState, List<Manuscript> manuscripts) {
+		for(Manuscript m: manuscripts){
+			if(theNextState.contains(m.getTitle())){
+				return m;
+			}
+		}
+		return null;
+	}
+
+	private Conference findConference(String theNextState, List<Conference> conferenceList) {
 	    for(Conference c: conferenceList){
 	        if(theNextState.contains(c.getMyName())){
 	            return c;
