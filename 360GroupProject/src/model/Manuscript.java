@@ -27,6 +27,8 @@ public class Manuscript {
 	 * @param theSubmittedDate The date submitted
 	 * @param theReviews The reviews to assign
 	 * @param theAuthors The authors for the manuscript
+	 * @author Connor Lundberg
+	 * @version 5/6/2017
 	 */
 	public Manuscript (String theTitle, Date theSubmittedDate, HashMap<Reviewer, String> theReviews, ArrayList<Author> theAuthors) {
 		myReviews = (HashMap<Reviewer, String>) theReviews.clone();
@@ -37,7 +39,10 @@ public class Manuscript {
 	
 	
 	/**
-	 * Default constructor;
+	 * Default constructor.
+	 * 
+	 * @author Connor Lundberg
+	 * @version 5/6/2017
 	 */
 	public Manuscript () {
 		myReviews = new HashMap<Reviewer, String> ();
@@ -64,6 +69,13 @@ public class Manuscript {
 	}
 	
 	
+	/**
+	 * Returns the ArrayList of Reviewers attached to this Manuscript.
+	 * 
+	 * @return The list of Reviewers. This can be empty, but never null.
+	 * @author Connor Lundberg
+	 * @version 5/6/2017
+	 */
 	public ArrayList<Reviewer> getReviewers () {
 		ArrayList<Reviewer> returnList = new ArrayList<Reviewer>();
 		Set<Reviewer> reviewSet = myReviews.keySet();
@@ -73,6 +85,11 @@ public class Manuscript {
 		}
 		
 		return returnList;
+	}
+	
+	
+	public void setTitle (String theTitle) {
+		myTitle = theTitle;
 	}
 	
 	
@@ -86,11 +103,27 @@ public class Manuscript {
 		return (ArrayList<Author>) myAuthors.clone();
 	}
 	
+	
 	/**
-	 * Sets myAuthors list.  Allows tester to use default constructor and add authors later.
+	 * Sets myAuthors list.  Allows tester to use default constructor.
+	 * 
+	 * @author Connor Lundberg
+	 * @version 5/1/2017
 	 */
 	public void setAuthors(List<Author> theAuthors) {
 		myAuthors = (ArrayList<Author>) theAuthors;
+	}
+	
+	
+	/**
+	 * Adds a single author to the Author list.
+	 * 
+	 * @param theAuthor The author to add to the list.
+	 * @author Connor Lundberg
+	 * @version 5/6/2017
+	 */
+	public void addAuthor(Author theAuthor) {
+		myAuthors.add(theAuthor);
 	}
 	
 	

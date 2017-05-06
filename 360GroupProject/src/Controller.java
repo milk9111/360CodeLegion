@@ -1,5 +1,7 @@
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Scanner;
+import java.util.regex.Pattern;
 
 /**
  * The system controller that handles the different states of the 
@@ -23,6 +25,8 @@ public class Controller extends Observable implements Observer {
 	
 	
 	private int myCurrentState;
+	private User myUser;
+	private Conference myConference;
 	
 	
 	/**
@@ -52,13 +56,29 @@ public class Controller extends Observable implements Observer {
 		
 		switch ((myCurrentState / 10) * 10) {
 			case AUTHOR:
-				
+				Manuscript manuscriptToAdd = new Manuscript();
+				manuscriptToAdd.setTitle();
+				manuscriptToAdd.addAuthor();
+				((Author) myUser).addManuscript(myConference, new Manuscript());
+				myConference.submitManuscript(theManuscript);
 				break;
 			case REVIEWER:
 				break;
 			case SUBPROGRAM_CHAIR:
+				
 				break;
 		}
+	}
+	
+	
+	private Manuscript makeManuscript (String theStringToParse) {
+		Manuscript returnManuscript = new Manuscript();
+		Scanner stringScan = new Scanner (theStringToParse);
+		
+		Pattern delimiterPattern = stringScan.delimiter();
+		stringScan.findInLine(delimiterPattern);
+		
+		return returnManuscript;
 	}
 	
 
@@ -70,3 +90,29 @@ public class Controller extends Observable implements Observer {
 	}
 		
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
