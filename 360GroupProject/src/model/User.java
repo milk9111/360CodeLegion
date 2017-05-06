@@ -1,3 +1,6 @@
+package model;
+
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -7,7 +10,7 @@ import java.util.List;
  * @version 1 
  *
  */
-public abstract class User {
+public abstract class User implements Serializable{
 	
 	/**
 	 * The User name for the system to recognize the current user.

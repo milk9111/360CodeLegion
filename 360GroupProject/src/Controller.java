@@ -29,9 +29,12 @@ public class Controller extends Observable implements Observer {
 	
 	//Objects we are adding in the system. We are saving them because we need persistence between states.
 	private int myCurrentState;
+
 	private User myUser;
-	private Conference myConference;
+
+	private Conference myCurrentConference;
 	private Manuscript myCurrentManuscript;
+	private Reviewer myCurrentReviewer;
 	
 
 	
@@ -104,12 +107,15 @@ public class Controller extends Observable implements Observer {
 			case SUBPROGRAM_CHAIR:
 				
 				switch (myCurrentState % 10){
-                    case LIST_MANUSCRIPT_VIEW:
-
+                    case ASSIGN_REVIEWER:
+						myCurrentReviewer = findReviewer(theNextState, myCurrentConference.getPastReviewers());
                         break;
                     case LIST_CONFERENCE_VIEW:
-
+						//myCurrentConference =
                         break;
+					case LIST_MANUSCRIPT_VIEW:
+
+						break;
 				}
 				break;
 		}
