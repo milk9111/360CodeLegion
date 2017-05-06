@@ -29,6 +29,7 @@ public class UserDatabaseTest {
 	@Before
 	public void setUp() throws Exception {
 		myUserDatabase = new UserDatabase();
+		myUserDatabase.createEmptySerializedUserList();
 	}
 
 	/**
@@ -48,8 +49,8 @@ public class UserDatabaseTest {
 		myUserDatabase.saveUserToDatabase(validUser);
 
 		TreeMap<UUID, User> validList = myUserDatabase.deserializeUserList();
-		assertTrue(validList.size() == 1);
-		System.out.println(validList.toString());
+		assertTrue("list size should only be 1 and have only 1 user saved", validList.size() == 1);
+		assertTrue(validList.get(validUser.getID()).getUsername().equals(validUser.getUsername()));
 	}
 	
 	@Test
