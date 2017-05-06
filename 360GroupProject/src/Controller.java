@@ -14,19 +14,19 @@ import model.*;
 public class Controller extends Observable implements Observer {
 
 	//View States
-    public final int LOG_IN_STATE = -2;
-    public final int CHOOSE_USER = -1;
-	public final int AUTHOR = 0;
-	public final int REVIEWER = 10;
-	public final int SUBPROGRAM_CHAIR = 20;
+    public static final int LOG_IN_STATE = -2;
+    public static final int CHOOSE_USER = -1;
+	public static final int AUTHOR = 0;
+	public static final int REVIEWER = 10;
+	public static final int SUBPROGRAM_CHAIR = 20;
 	
 	//Action States
-	public final int USER_OPTIONS = 0;
-	public final int SUBMIT_MANUSCRIPT = 1;
-	public final int LIST_MANUSCRIPT_VIEW = 2;
-	public final int LIST_CONFERENCE_VIEW = 3;
-	public final int ASSIGN_REVIEWER = 4;
-	public final int LIST_ASSIGNED_REVIEWERS_VIEW = 5;
+	public static final int USER_OPTIONS = 0;
+	public static final int SUBMIT_MANUSCRIPT = 1;
+	public static final int LIST_MANUSCRIPT_VIEW = 2;
+	public static final int LIST_CONFERENCE_VIEW = 3;
+	public static final int ASSIGN_REVIEWER = 4;
+	public static final int LIST_ASSIGNED_REVIEWERS_VIEW = 5;
 
 	
 	//Objects we are adding in the system. We are saving them because we need persistence between states.
