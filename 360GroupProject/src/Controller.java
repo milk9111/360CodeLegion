@@ -1,12 +1,9 @@
 import java.util.Date;
 import java.util.Observable;
 import java.util.Observer;
-<<<<<<< HEAD
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
-=======
->>>>>>> master
 /**
  * The system controller that handles the different states of the 
  * program. It is the bridge between the UI and the Model. 
@@ -72,11 +69,18 @@ public class Controller extends Observable implements Observer {
 							
 							manuscriptToSubmit.setSubmittedDate(new Date(pieces[2]));
 							
-							((Author) myUser).addManuscript(myConference, manuscriptToSubmit);
+							try {
+								((Author) myUser).addManuscript(myConference, manuscriptToSubmit);
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
                         }
 
 						break;
 					case LIST_MANUSCRIPT_VIEW:
+					case ASSIGN_REVIEWER:
+
 
 						break;
 					case LIST_CONFERENCE_VIEW:
@@ -93,7 +97,12 @@ public class Controller extends Observable implements Observer {
 			case SUBPROGRAM_CHAIR:
 				
 				switch (myCurrentState % 10){
+                    case LIST_MANUSCRIPT_VIEW:
 
+                        break;
+                    case LIST_CONFERENCE_VIEW:
+
+                        break;
 				}
 				break;
 		}
@@ -122,6 +131,8 @@ public class Controller extends Observable implements Observer {
 		
 		return returnManuscript;
 	}
+
+
 	
 
 	@Override
