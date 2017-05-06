@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Map;
 import java.util.TreeMap;
 import java.util.UUID;
 
@@ -47,7 +48,7 @@ public class AccountDatabase {
 	public Account saveAccountToDatabase(Account theAccount) {
 		TreeMap<UUID, Account> accountList = deserializeAccountList();
 
-		boolean isUsernameUnique = isUsernameInListValid(accountList, theAccount);
+		boolean isUsernameUnique = isUsernameInListValid(accountList, theAccount.getMyUsername());
 	    if(isUsernameUnique) {
 	    	accountList.put(theAccount.getMyID(), theAccount);
 	    	saveAccountListToDatabase(accountList);
@@ -59,10 +60,16 @@ public class AccountDatabase {
 	    return null;
 	}
 	
-	public boolean isUsernameInListValid(TreeMap<UUID, Account> theAccountList, Account theAccount) {
+	/**
+	 * This method will check if the given username belongs to an account that is part of the system
+	 * @param theAccountList the account list to check against
+	 * @param theAccount the Account 
+	 * @return
+	 */
+	public boolean isUsernameInListValid(TreeMap<UUID, Account> theAccountList, String theUsername) {
 		boolean UsernameIsUnique = true;
 		for (Account aAccountToCompare : theAccountList.values()) {
-			if (theAccount.getMyUsername().equals(aAccountToCompare.getMyUsername())) {
+			if (theUsername.equals(aAccountToCompare.getMyUsername())) {
 				UsernameIsUnique = false;
 			}
 		}
@@ -130,4 +137,11 @@ public class AccountDatabase {
 	         i.printStackTrace();
 	      }
 	   }
+	
+	public void printContents() {
+		TreeMap<UUID, Account> currentList = deserializeAccountList();
+		for (Map.Entry<UUID, Account> entry : currentList.entrySet()) {
+		     System.out.println("ID: " + entry.getKey() + ". Value: " + entry.getValue().getMyUsername());
+		}
+	}
 }

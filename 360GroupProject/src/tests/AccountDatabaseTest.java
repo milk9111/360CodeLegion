@@ -67,7 +67,7 @@ public class AccountDatabaseTest {
 
 		TreeMap<UUID, Account> validList = myAccountDatabase.deserializeAccountList();
 		assertTrue(validList.size() == 1);
-		System.out.println(validList.toString());
+		myAccountDatabase.printContents();
 
 	}
 
@@ -78,7 +78,6 @@ public class AccountDatabaseTest {
 	public void testDeserializeAccountList() {
 		TreeMap<UUID, Account> validList = myAccountDatabase.deserializeAccountList();
 		
-		System.out.println(validList.toString());
 		assertTrue(validList instanceof TreeMap);
 	}
 	
