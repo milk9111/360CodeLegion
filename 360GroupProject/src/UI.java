@@ -5,6 +5,12 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Scanner;
 
+/**
+ * 
+ * @author Casey Anderson, Morgan Blackmore
+ * @version 5/6/17 1:45pm
+ */
+
 public class UI extends Observable implements Observer{
 	
 	
