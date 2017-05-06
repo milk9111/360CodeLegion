@@ -1,10 +1,12 @@
 
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
 
 /**
  * This class is representing an Author user type with all the functionality they are entitled.
