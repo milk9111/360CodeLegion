@@ -48,6 +48,14 @@ public class UI extends Observable implements Observer{
 		if (theState < 10) {
 			setUserType("Author");
 			displayHeader();
+			switch (theState) {
+			case 1:
+				AuthorManuscriptSubmissionView();
+			case 2:
+				AuthorListOfManuscriptsView();
+			case 3:
+				ListOfConferenceView();
+			}
 		} else {
 			setUserType("SubProgramChair");
 			displayHeader();
@@ -99,6 +107,10 @@ public class UI extends Observable implements Observer{
 	private void AuthorListOfManuscriptsView() {
 		System.out.println("List of currently submitted Manuscripts:");
 		for (int i = 0; i < )
+	}
+	
+	private void ListOfConferenceView() {
+		
 	}
 
 	@Override
