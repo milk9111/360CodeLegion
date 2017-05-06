@@ -1,6 +1,11 @@
 import java.util.Observable;
 import java.util.Observer;
+<<<<<<< HEAD
+import java.util.Scanner;
+import java.util.regex.Pattern;
 
+=======
+>>>>>>> master
 /**
  * The system controller that handles the different states of the 
  * program. It is the bridge between the UI and the Model. 
@@ -22,8 +27,13 @@ public class Controller extends Observable implements Observer {
 	public final int ASSIGN_REVIEWER = 4;
 	
 	
+	//Objects we are adding in the system. We are saving them because we need persistence between states.
 	private int myCurrentState;
+	private User myUser;
+	private Conference myConference;
+	private Manuscript myCurrentManuscript;
 	
+
 	
 	/**
 	 * Call this method after instantiating the Controller
@@ -49,16 +59,55 @@ public class Controller extends Observable implements Observer {
 	 * @param theNextState The next state the program will be in.
 	 */
 	private void changeState (String theNextState) {
+		String[] pieces = theNextState.split(",");
 		
 		switch ((myCurrentState / 10) * 10) {
 			case AUTHOR:
+				Manuscript manuscriptToAdd = new Manuscript();
+				manuscriptToAdd.setTitle();
+				manuscriptToAdd.addAuthor();
+				((Author) myUser).addManuscript(myConference, new Manuscript());
+				myConference.submitManuscript(theManuscript);
+				switch (myCurrentState % 10){
+					case SUBMIT_MANUSCRIPT:
+                        Manuscript submitting;
+						if(pieces[0].equals("Submit Manuscript")){
+
+                        }
+
+						break;
+					case LIST_MANUSCRIPT_VIEW:
+
+						break;
+					case LIST_CONFERENCE_VIEW:
+
+						break;
+				}
 				
 				break;
 			case REVIEWER:
+				switch (myCurrentState % 10){
+
+				}
 				break;
 			case SUBPROGRAM_CHAIR:
+				
+				switch (myCurrentState % 10){
+
+				}
 				break;
 		}
+	}
+	
+	
+	private Manuscript makeManuscript (String theStringToParse) {
+		Manuscript returnManuscript = new Manuscript();
+		Scanner stringScan = new Scanner (theStringToParse);
+		
+		Pattern delimiterPattern = stringScan.delimiter();
+		stringScan.findInLine(delimiterPattern);
+		
+		return returnManuscript;
 	}
 	
 
@@ -70,3 +119,29 @@ public class Controller extends Observable implements Observer {
 	}
 		
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
