@@ -9,7 +9,7 @@ import java.util.Observer;
  * @version 5/5/2017
  */
 public class Controller extends Observable implements Observer {
-	
+
 	//View States
 	public final int AUTHOR = 0;
 	public final int REVIEWER = 10;
@@ -67,6 +67,6 @@ public class Controller extends Observable implements Observer {
 		if (arg1 instanceof String) {
 			changeState ((String) arg1);
 		}
-		
 	}
+		
 }
