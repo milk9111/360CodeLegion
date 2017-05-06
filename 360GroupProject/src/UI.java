@@ -131,9 +131,11 @@ public class UI extends Observable implements Observer{
 		} else {
 			setUserType("SubProgram Chair");
 			displayHeader();
-
+			//add switch statement
 			subProgramChairView();
+			subProgramChairConferenceView();
 			subProgramChairAssignReviewerView(); 
+			subProgramChairManuscriptsView();
 		}
 	}
 

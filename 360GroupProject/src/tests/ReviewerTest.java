@@ -7,6 +7,11 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import model.Author;
+import model.Conference;
+import model.Manuscript;
+import model.Reviewer;
+
 public class ReviewerTest {
 
 	private static final int MAX_CAPACITY = 8;
@@ -43,7 +48,7 @@ public class ReviewerTest {
 	@Test
 	public void testReviewerConstructor() {
 		assertNotNull("Reviewer object Null", myTestReviewer);
-		assertEquals("Reveiwers name should equal default test name \"Roger Ebert\"", myTestReviewer.getName(), "Roger Ebert");
+		assertEquals("Reveiwers name should equal default test name \"Roger Ebert\"", myTestReviewer.getUsername(), "Roger Ebert");
 	}
 
 

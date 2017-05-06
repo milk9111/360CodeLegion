@@ -1,16 +1,34 @@
 package model;
 
+import java.util.TreeMap;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.List;
+import java.util.UUID;
+
+import model.Conference;
 
 /**
  * This is a abstract class to hold information common for all user types.
+ * Additionally, holds static methods and fields for Users as a whole
  * 
- * @author Casey Anderson
+ * @author Casey Anderson, Ryan Tran
  * @version 1 
  *
  */
-public abstract class User implements Serializable{
+public abstract class User implements Serializable {
+	
+	/**
+	 * UID used for object serialization
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	/**
+	 * Unique ID for identification of the User
+	 */
+	private UUID myID;
 	
 	/**
 	 * The User name for the system to recognize the current user.
@@ -28,6 +46,7 @@ public abstract class User implements Serializable{
 	 * @param theConferenceList List of all current conferences.
 	 */
 	public User(String theUserName, List<Conference> theConferenceList) {
+		myID = UUID.randomUUID();
 		MyUserName = theUserName;
 		myConferenceList = theConferenceList;
 	}
@@ -37,6 +56,7 @@ public abstract class User implements Serializable{
 	 * @param theUserName The chosen user name.
 	 */
 	public User(String theUserName) {
+		myID = UUID.randomUUID();
 		MyUserName = theUserName;
 	}
 	
@@ -62,20 +82,21 @@ public abstract class User implements Serializable{
 		MyUserName = theUserName;
 	}
 
-
-	/**
-	 * Method to change the Users username.
-     * @return returns the user's username as a string
-	 */
-	public String getUserName() {
-		return this.MyUserName;
-	}
 	
 	/**
 	 * Method to return the current username.
 	 * @return The user name associated with current user.
 	 */
-	public String getName() {
+	public String getUsername() {
 		return MyUserName;
 	}
+	
+	/**
+	 * Method to return the current user's unique ID
+	 * @return UUID of user's unique ID
+	 */
+	public UUID getID() {
+		return myID;
+	}
+
 }
