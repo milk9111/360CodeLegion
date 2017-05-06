@@ -87,13 +87,6 @@ public class Controller extends Observable implements Observer {
 			case SUBPROGRAM_CHAIR:
 				
 				switch (myCurrentState % 10){
-                    case SUBMIT_MANUSCRIPT:
-                        Manuscript submitting;
-                        if(pieces[0].equals("Submit Manuscript")){
-
-                        }
-
-                        break;
                     case LIST_MANUSCRIPT_VIEW:
 
                         break;
