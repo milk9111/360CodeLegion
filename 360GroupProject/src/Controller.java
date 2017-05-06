@@ -20,6 +20,7 @@ public class Controller extends Observable implements Observer {
 	public final int SUBPROGRAM_CHAIR = 20;
 	
 	//Action States
+	public final int USER_OPTIONS = 0;
 	public final int SUBMIT_MANUSCRIPT = 1;
 	public final int LIST_MANUSCRIPT_VIEW = 2;
 	public final int LIST_CONFERENCE_VIEW = 3;
@@ -77,13 +78,17 @@ public class Controller extends Observable implements Observer {
 							}
 							
 							myConference.submitManuscript(manuscriptToSubmit);
+							
+							myCurrentState = AUTHOR + LIST_MANUSCRIPT_VIEW;
+							setChanged();
+							notifyObservers(myCurrentState);
                         }
 
 						break;
 					case LIST_MANUSCRIPT_VIEW:
-					case ASSIGN_REVIEWER:
-
-
+						if (pieces[0].equals("List Manuscript View")) {
+							
+						}
 						break;
 					case LIST_CONFERENCE_VIEW:
 
