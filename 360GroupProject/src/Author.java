@@ -92,10 +92,9 @@ public class Author extends User {
 	 * Adds manuscript to a conference.
 	 * @param theConference The conference that the manuscript is to be added to.
 	 * @param theManuscript The manuscript to be added to Conference.
+	 * @throws illegalArgumentException
 	 */
-	public String addManuscript(Conference theConference, Manuscript theManuscript) {	
-		
-		String messageToUser;
+	public void addManuscript(Conference theConference, Manuscript theManuscript) {	
 		
 		if (!isAuthorAtManuscriptLimit(theConference, theManuscript)) {
 			
@@ -114,15 +113,11 @@ public class Author extends User {
 				}
 			}
 			
-			messageToUser = "Congradulations! Manuscript succesfully submitted.";
-			
 		} else {
 			
-			messageToUser = "Already have 5 Manuscript submitted!";
+			throw new IllegalArgumentException("Author or CoAuthor already has " + MAX_MANUSCRIPT_ALLOWED + " Manuscripts");
 			
 		}
-		
-		return messageToUser;
 		
 	}
 	
