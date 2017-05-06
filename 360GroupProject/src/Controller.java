@@ -1,11 +1,9 @@
+import java.util.Date;
 import java.util.Observable;
 import java.util.Observer;
-<<<<<<< HEAD
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
-=======
->>>>>>> master
 /**
  * The system controller that handles the different states of the 
  * program. It is the bridge between the UI and the Model. 
@@ -63,20 +61,26 @@ public class Controller extends Observable implements Observer {
 		
 		switch ((myCurrentState / 10) * 10) {
 			case AUTHOR:
-				Manuscript manuscriptToAdd = new Manuscript();
-				manuscriptToAdd.setTitle();
-				manuscriptToAdd.addAuthor();
-				((Author) myUser).addManuscript(myConference, new Manuscript());
-				myConference.submitManuscript(theManuscript);
 				switch (myCurrentState % 10){
 					case SUBMIT_MANUSCRIPT:
-                        Manuscript submitting;
+                        Manuscript manuscriptToSubmit = new Manuscript();
 						if(pieces[0].equals("Submit Manuscript")){
-
+							
+							
+							manuscriptToSubmit.setSubmittedDate(new Date(pieces[2]));
+							
+							try {
+								((Author) myUser).addManuscript(myConference, manuscriptToSubmit);
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
                         }
 
 						break;
 					case LIST_MANUSCRIPT_VIEW:
+					case ASSIGN_REVIEWER:
+
 
 						break;
 					case LIST_CONFERENCE_VIEW:
@@ -93,22 +97,42 @@ public class Controller extends Observable implements Observer {
 			case SUBPROGRAM_CHAIR:
 				
 				switch (myCurrentState % 10){
+                    case LIST_MANUSCRIPT_VIEW:
 
+                        break;
+                    case LIST_CONFERENCE_VIEW:
+
+                        break;
 				}
 				break;
 		}
 	}
 	
 	
-	private Manuscript makeManuscript (String theStringToParse) {
+	/**
+	 * Makes the Manuscript to submit. This is just a helper method for clarity of
+	 * FSM.
+	 * 
+	 * @param thePieces The parsed String array
+	 * @return The new Manuscript
+	 * @author Connor Lundberg
+	 * @version 5/6/2017
+	 */
+	private Manuscript makeManuscript (String[] thePieces) {
 		Manuscript returnManuscript = new Manuscript();
-		Scanner stringScan = new Scanner (theStringToParse);
 		
-		Pattern delimiterPattern = stringScan.delimiter();
-		stringScan.findInLine(delimiterPattern);
+		returnManuscript.setTitle(thePieces[1]);
+		returnManuscript.setSubmittedDate(new Date(thePieces[2]));
+		
+		//Adds the remaining Authors in the list.
+		for (int i = 3; i < thePieces.length; i++) {
+			returnManuscript.addAuthor(new Author(thePieces[i]));
+		}
 		
 		return returnManuscript;
 	}
+
+
 	
 
 	@Override
