@@ -9,6 +9,12 @@ import java.util.List;
  * Created by Josiah on 4/27/2017.
  */
 public class Conference {
+    public String getMyName() {
+        return myName;
+    }
+
+    private String myName;
+
     //Contains the list of manuscripts which have been submitted to this conference.
     private List<Manuscript> myManuscripts;
 
@@ -27,12 +33,13 @@ public class Conference {
      * @param theReviewDeadline is the deadlines for reviews to be turned in
      * @param thePastReviewers is the list of past reviewers for this conference
      */
-    public Conference(Date theSubmissionDeadline, Date theReviewDeadline,
+    public Conference(String theName, Date theSubmissionDeadline, Date theReviewDeadline,
                       List<Reviewer> thePastReviewers) {
         this.myManuscripts = new ArrayList<Manuscript>();
         this.myPastReviewers = thePastReviewers;
         this.myReviewDeadline = theReviewDeadline;
         this.mySubmissionDeadline = theSubmissionDeadline;
+        this.myName = myName;
     }
 
     /**

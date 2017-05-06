@@ -1,6 +1,8 @@
 import java.util.*;
 import java.util.regex.Pattern;
 
+import model.*;
+
 /**
  * The system controller that handles the different states of the 
  * program. It is the bridge between the UI and the Model. 
@@ -12,6 +14,8 @@ import java.util.regex.Pattern;
 public class Controller extends Observable implements Observer {
 
 	//View States
+    public final int LOG_IN_STATE = -2;
+    public final int CHOOSE_USER = -1;
 	public final int AUTHOR = 0;
 	public final int REVIEWER = 10;
 	public final int SUBPROGRAM_CHAIR = 20;
@@ -22,12 +26,13 @@ public class Controller extends Observable implements Observer {
 	public final int LIST_MANUSCRIPT_VIEW = 2;
 	public final int LIST_CONFERENCE_VIEW = 3;
 	public final int ASSIGN_REVIEWER = 4;
-	
+	public final int LIST_ASSIGNED_REVIEWERS_VIEW = 5;
+
 	
 	//Objects we are adding in the system. We are saving them because we need persistence between states.
 	private int myCurrentState;
 
-	private User myUser;
+	private Account myAccount;
 
 	private Conference myCurrentConference;
 	private Manuscript myCurrentManuscript;
@@ -71,7 +76,7 @@ public class Controller extends Observable implements Observer {
 							manuscriptToSubmit = makeManuscript(pieces);
 							
 							try {
-								((Author) myUser).addManuscript(myCurrentConference, manuscriptToSubmit);
+								(myAccount.getMyAuthor()).addManuscript(myCurrentConference, manuscriptToSubmit);
 							} catch (Exception e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -92,7 +97,7 @@ public class Controller extends Observable implements Observer {
 						break;
 					case LIST_CONFERENCE_VIEW:
 						if (pieces[0].equals("List Conference View")) {
-							
+
 						}
 						break;
 				}
@@ -108,19 +113,34 @@ public class Controller extends Observable implements Observer {
 				switch (myCurrentState % 10){
                     case ASSIGN_REVIEWER:
 						myCurrentReviewer = findReviewer(theNextState, myCurrentConference.getPastReviewers());
+						// What should happen when this succeeds?
+
+                        myCurrentState = 5;
                         break;
                     case LIST_CONFERENCE_VIEW:
-						//myCurrentConference =
+						myCurrentConference = findConference(theNextState, myAccount.getMySubprogramChair().getConferenceList());
                         break;
 					case LIST_MANUSCRIPT_VIEW:
 
 						break;
+                    case LIST_ASSIGNED_REVIEWERS_VIEW:
+
+                        break;
 				}
 				break;
 		}
 	}
 
-	private Reviewer findReviewer(String theNextState, List<Reviewer> pastReviewers) {
+    private Conference findConference(String theNextState, List<Conference> conferenceList) {
+	    for(Conference c: conferenceList){
+	        if(theNextState.contains(c.getMyName())){
+	            return c;
+            }
+        }
+        return null;
+    }
+
+    private Reviewer findReviewer(String theNextState, List<Reviewer> pastReviewers) {
 		for(Reviewer r: pastReviewers){
 			if(theNextState.contains(r.getUsername())){
 				return r;
