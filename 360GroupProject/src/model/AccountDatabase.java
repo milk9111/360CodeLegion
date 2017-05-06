@@ -22,10 +22,9 @@ public class AccountDatabase {
 	
 	private final String Account_SERIALIZED_PATH = "360GroupProject/src/model/serializedModel/";
 	
-		
-	/**
-	 * Instance Methods
-	 */
+	public void AccountDatabase() {
+		MY_ACCOUNT_LIST = null;
+	}
 	
 	/**
 	 * Returns a list of accounts by deserializing the account object file
@@ -36,6 +35,28 @@ public class AccountDatabase {
 	public TreeMap<UUID, Account> getAllAccounts() {
 		TreeMap<UUID, Account> mapToReturn = deserializeAccountList();
 		return mapToReturn;
+	}
+	
+	/**
+	 * Given the user name returns the associated user account from the account.
+	 * Returns null if account is not found
+	 * precondition: username belongs to valid account
+	 * @param theAccountList The account list to search for the username
+	 * @param theUsername the username to find the associated account for
+	 * @return an account associated with the passed in username
+	 */
+	public Account getAccountByUsername(TreeMap<UUID, Account> theAccountList, String theUsername) {
+		TreeMap<UUID, Account> mapToReturn = deserializeAccountList();
+		Account accountToReturn = null;
+
+		for (Account aAccountToCompare : theAccountList.values()) {
+			if (theUsername.equals(aAccountToCompare.getMyUsername())) {
+				accountToReturn = aAccountToCompare;
+			}
+		}
+		
+		return accountToReturn;
+
 	}
 	
 	/**
