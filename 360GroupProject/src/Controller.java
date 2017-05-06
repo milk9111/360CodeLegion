@@ -69,14 +69,8 @@ public class Controller extends Observable implements Observer {
 				((Author) myUser).addManuscript(myConference, new Manuscript());
 				myConference.submitManuscript(theManuscript);
 				switch (myCurrentState % 10){
-					case SUBMIT_MANUSCRIPT:
-                        Manuscript submitting;
-						if(pieces[0].equals("Submit Manuscript")){
+					case ASSIGN_REVIEWER:
 
-                        }
-
-						break;
-					case LIST_MANUSCRIPT_VIEW:
 
 						break;
 					case LIST_CONFERENCE_VIEW:
@@ -93,7 +87,19 @@ public class Controller extends Observable implements Observer {
 			case SUBPROGRAM_CHAIR:
 				
 				switch (myCurrentState % 10){
+                    case SUBMIT_MANUSCRIPT:
+                        Manuscript submitting;
+                        if(pieces[0].equals("Submit Manuscript")){
 
+                        }
+
+                        break;
+                    case LIST_MANUSCRIPT_VIEW:
+
+                        break;
+                    case LIST_CONFERENCE_VIEW:
+
+                        break;
 				}
 				break;
 		}
@@ -109,6 +115,8 @@ public class Controller extends Observable implements Observer {
 		
 		return returnManuscript;
 	}
+
+
 	
 
 	@Override
