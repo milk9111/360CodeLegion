@@ -6,6 +6,19 @@ import java.util.Observer;
 import java.util.Scanner;
 
 public class UI extends Observable implements Observer{
+	
+	
+	//View States
+	public final int AUTHOR = 0;
+	public final int REVIEWER = 10;
+	public final int SUBPROGRAM_CHAIR = 20;
+	
+	//Action States
+	public final int SUBMIT_MANUSCRIPT = 1;
+	public final int LIST_MANUSCRIPT_VIEW = 2;
+	public final int LIST_CONFERENCE_VIEW = 3;
+	public final int ASSIGN_REVIEWER = 4;
+	
 	private int myState;
 	private String userType;
 	private String myUserName;
@@ -159,12 +172,16 @@ public class UI extends Observable implements Observer{
 		System.out.println("To select a conference, press 1");
 		System.out.println("To view my assigned manuscripts, press 2");
 		if (myScanner.next() == "1") {
-			ListOfConferenceView();
+			ListOfConferenceView(); //what happens here?  What does UI need to do to display this?
+			//also, how to capture the User's selection and pass to controller?
 		}
-		ListOfConferenceView();
+		ListOfConferenceView(); 
 		
 		//add switch for selection
 		}
+	private void myManuscriptsView() {
+		
+	}
 	
 	private void assignReviewerView() {
 		System.out.println("Assign Reviewer Options");
