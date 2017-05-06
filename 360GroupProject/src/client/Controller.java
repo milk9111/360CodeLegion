@@ -35,12 +35,23 @@ public class Controller extends Observable implements Observer {
 	private int myCurrentState;
 
 	private Account myAccount;
+	private AccountDatabase myAccountDatabase;
 
 	private Conference myCurrentConference;
 	private Manuscript myCurrentManuscript;
 	private Reviewer myCurrentReviewer;
 	
 
+	public Controller () {
+		myCurrentState = AUTHOR;
+		myAccount = new Account(null);
+		myCurrentConference = new Conference(null, null, null, null);
+		myCurrentManuscript = new Manuscript();
+		myCurrentReviewer = new Reviewer(null, null);
+		myAccountDatabase = new AccountDatabase();
+		myAccountDatabase.createEmptySerializedAccountList();
+	}
+	
 	
 	/**
 	 * Call this method after instantiating the Controller
@@ -213,6 +224,16 @@ public class Controller extends Observable implements Observer {
 		
 		return returnManuscript;
 	}
+	
+	
+	private void setAccount (Account theNewAccount) {
+		if (myAccountDatabase.isUsernameInListValid(myAccountDatabase.getAllAccounts(), theNewAccount)) {
+			myAccount = theNewAccount;
+		} else {
+			myAccountDatabase.saveAccountToDatabase(theNewAccount);
+			myAccount = theNewAccount;
+		}
+	}
 
 
 	/**
@@ -225,6 +246,8 @@ public class Controller extends Observable implements Observer {
 	public void update(Observable arg0, Object arg1) {
 		if (arg1 instanceof String) {
 			changeState ((String) arg1);
+		} else if (arg1 instanceof Account) {
+			setAccount((Account) arg1);
 		}
 	}
 		
