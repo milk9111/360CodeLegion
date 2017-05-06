@@ -5,6 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
 
+import model.Author;
+import model.Conference;
+import model.Database;
+import model.Manuscript;
+import model.Reviewer;
+import model.SubprogramChair;
+import model.User;
+
 import static org.junit.Assert.*;
 
 /**
