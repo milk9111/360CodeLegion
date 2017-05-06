@@ -18,17 +18,7 @@ import model.Conference;
  * @version 1 
  *
  */
-public abstract class User implements Serializable {
-	
-	/**
-	 * UID used for object serialization
-	 */
-	private static final long serialVersionUID = 1L;
-	
-	/**
-	 * Unique ID for identification of the User
-	 */
-	private UUID myID;
+public abstract class User {
 	
 	/**
 	 * The User name for the system to recognize the current user.
@@ -46,7 +36,6 @@ public abstract class User implements Serializable {
 	 * @param theConferenceList List of all current conferences.
 	 */
 	public User(String theUserName, List<Conference> theConferenceList) {
-		myID = UUID.randomUUID();
 		MyUserName = theUserName;
 		myConferenceList = theConferenceList;
 	}
@@ -56,7 +45,6 @@ public abstract class User implements Serializable {
 	 * @param theUserName The chosen user name.
 	 */
 	public User(String theUserName) {
-		myID = UUID.randomUUID();
 		MyUserName = theUserName;
 	}
 	
@@ -91,12 +79,5 @@ public abstract class User implements Serializable {
 		return MyUserName;
 	}
 	
-	/**
-	 * Method to return the current user's unique ID
-	 * @return UUID of user's unique ID
-	 */
-	public UUID getID() {
-		return myID;
-	}
 
 }
