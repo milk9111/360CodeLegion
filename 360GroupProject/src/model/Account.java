@@ -5,6 +5,7 @@ import java.util.UUID;
 
 /**
  * Created by Josiah on 5/6/2017.
+ * @author Josiah, Ryan Tran
  */
 public class Account implements Serializable {
 

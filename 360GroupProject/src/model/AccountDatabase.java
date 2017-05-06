@@ -22,10 +22,9 @@ public class AccountDatabase {
 	
 	private final String Account_SERIALIZED_PATH = "360GroupProject/src/model/serializedModel/";
 	
-		
-	/**
-	 * Instance Methods
-	 */
+	public void AccountDatabase() {
+		MY_ACCOUNT_LIST = null;
+	}
 	
 	/**
 	 * Returns a list of accounts by deserializing the account object file
