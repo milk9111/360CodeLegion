@@ -38,6 +38,28 @@ public class AccountDatabase {
 	}
 	
 	/**
+	 * Given the user name returns the associated user account from the account.
+	 * Returns null if account is not found
+	 * precondition: username belongs to valid account
+	 * @param theAccountList The account list to search for the username
+	 * @param theUsername the username to find the associated account for
+	 * @return an account associated with the passed in username
+	 */
+	public Account getAccountByUsername(TreeMap<UUID, Account> theAccountList, String theUsername) {
+		TreeMap<UUID, Account> mapToReturn = deserializeAccountList();
+		Account accountToReturn = null;
+
+		for (Account aAccountToCompare : theAccountList.values()) {
+			if (theUsername.equals(aAccountToCompare.getMyUsername())) {
+				accountToReturn = aAccountToCompare;
+			}
+		}
+		
+		return accountToReturn;
+
+	}
+	
+	/**
 	 * This method will save the given accounts to the serialized database object.
 	 * This method will do so by first checking if the accounts's Username is valid or not.
 	 * @param theAccount the Account object to be saved to the database
