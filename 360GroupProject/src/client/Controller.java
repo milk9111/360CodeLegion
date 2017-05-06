@@ -11,7 +11,7 @@ import model.*;
  * 
  * @author Connor Lundberg
  * @author Josiah Hopkins
- * @version 5/5/2017
+ * @version 5/6/2017
  */
 public class Controller extends Observable implements Observer {
 
@@ -63,7 +63,7 @@ public class Controller extends Observable implements Observer {
 	 * 
 	 * @author Connor Lundberg
 	 * @author Josiah Hopkins
-	 * @version 5/5/2017
+	 * @version 5/6/2017
 	 * @param theNextState The next state the program will be in.
 	 */
 	private void changeState (String theNextState) {
@@ -150,6 +150,17 @@ public class Controller extends Observable implements Observer {
 		}
 	}
 
+	
+	/**
+	 * Finds the Conference title referenced within theNextState inside the Conference list that
+	 * is retrieved from the Subprogram Chair.
+	 * 
+	 * @param theNextState The String used to pull the Conference title from
+	 * @param conferenceList The list of Conferences to check against
+	 * @return The Conference, otherwise null.
+	 * @author Josiah Hopkins
+	 * @version 5/6/2017
+	 */
     private Conference findConference(String theNextState, List<Conference> conferenceList) {
 	    for(Conference c: conferenceList){
 	        if(theNextState.contains(c.getMyName())){
@@ -159,6 +170,17 @@ public class Controller extends Observable implements Observer {
         return null;
     }
 
+    
+    /**
+	 * Finds the Reviewer name/UID referenced within theNextState inside the past Reviewers list that
+	 * is retrieved from the current Conference.
+	 * 
+	 * @param theNextState The String used to pull the Reviewer name/UID from
+	 * @param pastReviewers The list of Reviewers to check against
+	 * @return The Reviewer, otherwise null.
+	 * @author Josiah Hopkins
+	 * @version 5/6/2017
+	 */
     private Reviewer findReviewer(String theNextState, List<Reviewer> pastReviewers) {
 		for(Reviewer r: pastReviewers){
 			if(theNextState.contains(r.getUsername())){
@@ -193,8 +215,12 @@ public class Controller extends Observable implements Observer {
 	}
 
 
-	
-
+	/**
+	 * Used to talk to the UI while staying decoupled.
+	 * 
+	 * @author Connor Lundberg
+	 * @version 5/6/2017
+	 */
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		if (arg1 instanceof String) {
