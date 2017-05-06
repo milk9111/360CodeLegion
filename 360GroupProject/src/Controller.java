@@ -130,6 +130,7 @@ public class Controller extends Observable implements Observer {
 				return r;
 			}
 		}
+		return null;
 	}
 
 
