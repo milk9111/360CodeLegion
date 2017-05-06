@@ -117,8 +117,8 @@ public class UI extends Observable implements Observer{
 		
 		else {
 			
-				System.out.println("Invalid choice, please select from the options displayed");
-				chooseUserTypeMenuView();
+			System.out.println("Invalid choice, please select from the options displayed");
+			chooseUserTypeMenuView();
 	    
 		}   	
 
@@ -247,7 +247,7 @@ public class UI extends Observable implements Observer{
 		String authorList = "";
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy");
 		LocalDate localDate = LocalDate.now();
-		String moreAuthors = "1";
+		String moreAuthors = "";
 		List<String> listOfAuthors = new ArrayList<String>();
 		String ManuscriptFilePath;
 		System.out.println("Manuscript Submission Page");
