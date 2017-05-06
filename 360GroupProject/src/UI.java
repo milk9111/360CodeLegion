@@ -29,6 +29,13 @@ public class UI extends Observable implements Observer{
     public static void main(final String[] theArgs) {
         new UI().start();
     }
+    /**
+     * Login prompt.  Displays prompt and scans input, compares to list of existing users.
+     * If valid, updates this UI user fields and proceeds to top menuL chooseUserTypeMenuView 
+     * 
+     * @author Casey, Anderson Morgan Blackmore
+     * 
+     */
 	//if user exists, then instantiate UI fields and switch to chooseUserType menu view
     private void start() {
     	boolean validUserName = false;
@@ -37,6 +44,7 @@ public class UI extends Observable implements Observer{
 	    	myUserName = myScanner.next();
 	    	if (myUser.isUserRegistered(myUserName)) {
 	    		validUserName = true;
+	    		
 	    		chooseUserTypeMenuView();
 	    	} else {
 	    		System.out.println("Invalid User Name!");
@@ -45,6 +53,13 @@ public class UI extends Observable implements Observer{
     	
     }
     
+    /**
+     * Top menu from login.  
+     * User chooses how they want to proceed which notifies Observer with string
+     * 
+     * @author Morgan Blackmore
+     * 
+     */
     private void chooseUserTypeMenuView() {
     	
     	System.out.println("\nChoose what type of user you are");
@@ -129,21 +144,36 @@ public class UI extends Observable implements Observer{
 		for (int i = 0; i < )
 	}
 	
-	private void ListOfConferenceView() {
+	private void ListOfConferenceView() { //how know which conference list to display?
 		
 	}
 	
 	/**
 	 * Display SubProgramChair top menu
 	 * 
-	 * @author Morgan
+	 * @author Morgan Blackmore
 	 */
 	private void subProgramChairView(){
 		System.out.println("SubProgram Chair Options");
-		System.out.println("1 - Assign a reviewer to a manuscript");
-		System.out.println("2 - View my assigned manuscripts");
-		System.out.println("3 - View my conferences");
+		System.out.println("To assign a reviewer to a manuscript, select a conference");
+		System.out.println("To select a conference, press 1");
+		System.out.println("To view my assigned manuscripts, press 2");
+		if (myScanner.next() == "1") {
+			ListOfConferenceView();
 		}
+		ListOfConferenceView();
+		
+		//add switch for selection
+		}
+	
+	private void assignReviewerView() {
+		System.out.println("Assign Reviewer Options");
+		System.out.println("First, Choose a conference");
+		ListOfConferenceView();//display conference list
+		
+	}
+	
+	
 
 	@Override
 	public void removeListener(InvalidationListener listener) {
