@@ -26,8 +26,14 @@ public class UserDatabase {
 	 * Instance Methods
 	 */
 	
+	/**
+	 * Returns a list of users by deserializing the user object file
+	 * precondition: Assumes an existing user file is on the file system
+	 * if not, then you can create one using createEmptySerializedUserList();
+	 * @return
+	 */
 	public TreeMap<UUID, User> getAllUsers() {
-		TreeMap<UUID, User> mapToReturn = new TreeMap<UUID, User>();
+		TreeMap<UUID, User> mapToReturn = deserializeUserList();
 		return mapToReturn;
 	}
 	
