@@ -43,9 +43,9 @@ public class UI extends Observable implements Observer{
     	
     }
     
-	public void changeState() {
+	public void changeState(int theState) {
 			
-		if (Controller.theState < 10) {
+		if (theState < 10) {
 			setUserType("Author");
 			displayHeader();
 		} else {
