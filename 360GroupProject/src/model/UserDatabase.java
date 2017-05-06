@@ -41,14 +41,45 @@ public class UserDatabase {
 	public User saveUserToDatabase(User theUser) {
 		TreeMap<UUID, User> userList = deserializeUserList();
 
-		boolean isUsernameUnique = userList.containsValue(theUser.getUsername());
+		boolean isUsernameUnique = isUsernameInListValid(userList, theUser);
 	    if(isUsernameUnique) {
-	    	System.out.println("Username is already taken");
-	    } else {
 	    	System.out.println("Username is valid");
+	    	userList.put(theUser.getID(), theUser);
+	    	saveUserListToDatabase(userList);
+
+	    } else {
+	    	System.out.println("Username is invalid");
 	    }
 	    
 	    return null;
+	}
+	
+	public boolean isUsernameInListValid(TreeMap<UUID, User> theUserList, User theUser) {
+		boolean usernameIsUnique = true;
+		for (User aUserToCompare : theUserList.values()) {
+			if (theUser.getUsername().equals(aUserToCompare.getUsername())) {
+				usernameIsUnique = false;
+			}
+		}
+		
+		return usernameIsUnique;
+	}
+	
+	/**
+	 * Saves userlist to database
+	 * @param theUserList
+	 */
+	public void saveUserListToDatabase(TreeMap<UUID, User> theUserList) {
+	      try {
+	         FileOutputStream fileOut = new FileOutputStream(USER_SERIALIZED_PATH + "users.ser");
+	         ObjectOutputStream out = new ObjectOutputStream(fileOut);
+	         out.writeObject(theUserList);
+	         out.close();
+	         fileOut.close();
+	         System.out.printf("Serialized data is saved in " + USER_SERIALIZED_PATH + "users.ser");
+	      }catch(IOException i) {
+	         i.printStackTrace();
+	      }
 	}
 	
 	
