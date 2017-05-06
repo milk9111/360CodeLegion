@@ -1,6 +1,5 @@
 import java.util.Observable;
 import java.util.Observer;
-
 /**
  * The system controller that handles the different states of the 
  * program. It is the bridge between the UI and the Model. 
@@ -23,6 +22,11 @@ public class Controller extends Observable implements Observer {
 	
 	
 	private int myCurrentState;
+
+	//Objects we are adding in the system. We are saving them because we need persistence between states.
+	private Conference currentConference;
+	private Manuscript currenManuscript;
+
 	
 	
 	/**
@@ -55,8 +59,11 @@ public class Controller extends Observable implements Observer {
 			case AUTHOR:
 				switch (myCurrentState % 10){
 					case SUBMIT_MANUSCRIPT:
-						if(false);
-						
+                        Manuscript submitting;
+						if(pieces[0].equals("Submit Manuscript")){
+
+                        }
+
 						break;
 					case LIST_MANUSCRIPT_VIEW:
 
