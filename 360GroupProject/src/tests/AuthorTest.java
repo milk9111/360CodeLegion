@@ -1,3 +1,7 @@
+import model.Author;
+import model.Conference;
+import model.Manuscript;
+import model.Reviewer;
 
 import static org.junit.Assert.*;
 

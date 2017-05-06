@@ -10,7 +10,7 @@ import java.util.List;
 public class DataHolder {
     public final List<User> users;
 
-    public DataHolder{
+    public DataHolder() {
         User e = null;
         try {
             FileInputStream fileIn = new FileInputStream("/tmp/employee.ser");

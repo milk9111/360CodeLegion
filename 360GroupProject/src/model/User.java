@@ -1,3 +1,5 @@
+package model;
+
 import java.util.TreeMap;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -5,6 +7,8 @@ import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
+
+import model.Conference;
 
 /**
  * This is a abstract class to hold information common for all user types.
