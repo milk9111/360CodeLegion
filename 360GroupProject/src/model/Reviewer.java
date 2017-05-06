@@ -5,6 +5,7 @@ import java.util.List;
 /**
  * Reviewers class.
  * 
+ * 
  * @author Morgan Blackmore
  * @version 4/27/17
  */
@@ -53,6 +54,9 @@ public class Reviewer extends User {
 		
 		//Condition 1: check if Reviewer is a coauthor on this manuscript 
 		//Condition 2: check if Reviewer is over review limit
+		
+		//separate these tests and throw exceptions
+		//also need to add a check for if this reviewer is already assigned to this manuscript.
 		if ((isReviewerAnAuthor(theManuscript) == true) || (isOverReviewLimit() == true) ) {
 			wasAssigned = false;			
 

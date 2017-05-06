@@ -1,13 +1,15 @@
 import java.util.Observable;
+import java.util.Observer;
 
 /**
  * The system controller that handles the different states of the 
- * program. It is the bridge between the UI and the Model.
+ * program. It is the bridge between the UI and the Model. 
  * 
  * @author Connor Lundberg
  * @version 5/5/2017
  */
-public class Controller extends Observable {
+public class Controller extends Observable implements Observer {
+
 	//View States
 	public final int AUTHOR = 0;
 	public final int REVIEWER = 10;
@@ -24,6 +26,20 @@ public class Controller extends Observable {
 	
 	
 	/**
+	 * Call this method after instantiating the Controller
+	 * to start the program. It sets myCurrentState to 0 and
+	 * makes the UI object.
+	 * 
+	 * @author Connor Lundberg
+	 * @version 5/6/2017
+	 */
+	public void startProgram () {
+		myCurrentState = AUTHOR;
+		changeState (null);
+	}
+	
+	
+	/**
 	 * This method is the finite state machine. It takes a integer 
 	 * representing the next state to change to and passes information to
 	 * the UI accordingly.
@@ -34,14 +50,23 @@ public class Controller extends Observable {
 	 */
 	private void changeState (String theNextState) {
 		
-		switch (myCurrentState) {
-		
-		case AUTHOR:
-			break;
-		case REVIEWER:
-			break;
-		case SUBPROGRAM_CHAIR:
-			break;
+		switch ((myCurrentState / 10) * 10) {
+			case AUTHOR:
+				
+				break;
+			case REVIEWER:
+				break;
+			case SUBPROGRAM_CHAIR:
+				break;
 		}
 	}
+	
+
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		if (arg1 instanceof String) {
+			changeState ((String) arg1);
+		}
+	}
+		
 }

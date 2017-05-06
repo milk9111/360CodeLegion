@@ -1,3 +1,4 @@
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -48,6 +49,14 @@ public class UI extends Observable implements Observer{
 		if (theState < 10) {
 			setUserType("Author");
 			displayHeader();
+			switch (theState) {
+			case 1:
+				AuthorManuscriptSubmissionView();
+			case 2:
+				AuthorListOfManuscriptsView();
+			case 3:
+				ListOfConferenceView();
+			}
 		} else {
 			setUserType("SubProgramChair");
 			displayHeader();
@@ -100,9 +109,16 @@ public class UI extends Observable implements Observer{
 		System.out.println("List of currently submitted Manuscripts:");
 		for (int i = 0; i < )
 	}
+	
+	private void ListOfConferenceView() {
+		
+	}
 
 	@Override
-	public void update(Observable arg0, Object arg1) {
+	public void removeListener(InvalidationListener listener) {
+
+
+		public void update(Observable arg0, Object arg1) {
 		// TODO Auto-generated method stub
 		
 	}
