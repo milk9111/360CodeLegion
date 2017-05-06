@@ -42,7 +42,6 @@ public class Author extends User {
 	
 	}
 	
-	
 	/**
 	 * Method to add Review to the Author theReview must be a PDF file.
 	 * @param theReview Review file to be added to Author.
@@ -94,7 +93,7 @@ public class Author extends User {
 	 * @param theManuscript The manuscript to be added to Conference.
 	 * @throws illegalArgumentException
 	 */
-	public void addManuscript(Conference theConference, Manuscript theManuscript) {	
+	public void addManuscript(Conference theConference, Manuscript theManuscript) throws Exception {	
 		
 		if (!isAuthorAtManuscriptLimit(theConference, theManuscript)) {
 			
