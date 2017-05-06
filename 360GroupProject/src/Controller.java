@@ -49,14 +49,33 @@ public class Controller extends Observable implements Observer {
 	 * @param theNextState The next state the program will be in.
 	 */
 	private void changeState (String theNextState) {
+		String[] pieces = theNextState.split(",");
 		
 		switch ((myCurrentState / 10) * 10) {
 			case AUTHOR:
+				switch (myCurrentState % 10){
+					case SUBMIT_MANUSCRIPT:
+						if(false);
+						
+						break;
+					case LIST_MANUSCRIPT_VIEW:
+
+						break;
+					case LIST_CONFERENCE_VIEW:
+
+						break;
+				}
 				
 				break;
 			case REVIEWER:
+				switch (myCurrentState % 10){
+
+				}
 				break;
 			case SUBPROGRAM_CHAIR:
+				switch (myCurrentState % 10){
+
+				}
 				break;
 		}
 	}
