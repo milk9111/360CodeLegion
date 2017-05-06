@@ -1,4 +1,5 @@
 import java.util.Observable;
+import java.util.Observer;
 
 /**
  * The system controller that handles the different states of the 
@@ -7,7 +8,7 @@ import java.util.Observable;
  * @author Connor Lundberg
  * @version 5/5/2017
  */
-public class Controller extends Observable {
+public class Controller extends Observable implements Observer {
 	//View States
 	public final int AUTHOR = 0;
 	public final int REVIEWER = 10;
@@ -43,5 +44,10 @@ public class Controller extends Observable {
 		case SUBPROGRAM_CHAIR:
 			break;
 		}
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+
 	}
 }
