@@ -92,12 +92,18 @@ public class Controller extends Observable implements Observer {
 						break;
 					case LIST_MANUSCRIPT_VIEW:
 						if (pieces[0].equals("List Manuscript View")) {
-							
+							myCurrentState = AUTHOR + USER_OPTIONS;
+							setChanged();
+							notifyObservers(myCurrentState);
 						}
 						break;
 					case LIST_CONFERENCE_VIEW:
 						if (pieces[0].equals("List Conference View")) {
+							myCurrentConference = findConference(theNextState, myAccount.getMySubprogramChair().getConferenceList());
 
+							myCurrentState = AUTHOR + USER_OPTIONS;
+							setChanged();
+							notifyObservers(myCurrentState);
 						}
 						break;
 				}
@@ -114,26 +120,31 @@ public class Controller extends Observable implements Observer {
                     case ASSIGN_REVIEWER:
 						myCurrentReviewer = findReviewer(theNextState, myCurrentConference.getPastReviewers());
 
-						/////// Assign here.
-
-
-
-
-
-						// What should happen when this succeeds?
-
-                        myCurrentState = 5;
+                        myCurrentState = SUBPROGRAM_CHAIR + LIST_ASSIGNED_REVIEWERS_VIEW;
+                        setChanged();
+						notifyObservers(myCurrentState);
                         break;
                     case LIST_CONFERENCE_VIEW:
 						myCurrentConference = findConference(theNextState, myAccount.getMySubprogramChair().getConferenceList());
 						myCurrentState = LIST_MANUSCRIPT_VIEW;
+
+						myCurrentState = SUBPROGRAM_CHAIR + USER_OPTIONS;
+						setChanged();
+						notifyObservers(myCurrentState);
                         break;
 					case LIST_MANUSCRIPT_VIEW:
 						myCurrentManuscript = findManuscript(theNextState, myCurrentConference.getManuscripts());
 						myCurrentState = ASSIGN_REVIEWER;
+						myCurrentState = SUBPROGRAM_CHAIR + USER_OPTIONS;
+
+						setChanged();
+						notifyObservers(myCurrentState);
 						break;
                     case LIST_ASSIGNED_REVIEWERS_VIEW:
+                    	myCurrentState = SUBPROGRAM_CHAIR + USER_OPTIONS;
 
+						setChanged();
+						notifyObservers(myCurrentState);
                         break;
 				}
 				break;

@@ -82,6 +82,25 @@ public class ManuscriptTest {
 	
 	
 	/**
+	 * A test for the addAuthor method. It may not be very long, but it is important
+	 * and therefore warrants its own test. This simply creates a new Author and adds
+	 * it to the Manuscript's list of authors then checks if that Author is found within
+	 * the returned list.
+	 * 
+	 * @author Connor Lundberg
+	 * @version 5/6/2017
+	 */
+	@Test
+	public void addAuthor_TestAddAuthorForCorrectAuthorAdded () {
+		Author testAuthor = new Author ("Jiminiy Cricket");
+		
+		myPaper.addAuthor(testAuthor);
+		
+		assertTrue ("The Manuscript contained the added author", myPaper.getAuthors().contains(testAuthor));
+	}
+	
+	
+	/**
 	 * A test for the getAuthors method. It is a simple test to check if the Authors
 	 * attached to a Manuscript are not null and that they are part of the Author class.
 	 * 
