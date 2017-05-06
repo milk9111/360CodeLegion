@@ -77,13 +77,13 @@ public class Controller extends Observable implements Observer {
 							manuscriptToSubmit = makeManuscript(pieces);
 							
 							try {
-								((Author) myUser).addManuscript(myConference, manuscriptToSubmit);
+								((Author) myUser).addManuscript(myCurrentConference, manuscriptToSubmit);
 							} catch (Exception e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 							
-							myConference.submitManuscript(manuscriptToSubmit);
+							myCurrentConference.submitManuscript(manuscriptToSubmit);
 							
 							myCurrentState = AUTHOR + LIST_MANUSCRIPT_VIEW;
 							setChanged();
@@ -126,7 +126,7 @@ public class Controller extends Observable implements Observer {
 
 	private Reviewer findReviewer(String theNextState, List<Reviewer> pastReviewers) {
 		for(Reviewer r: pastReviewers){
-			if(theNextState.contains(r.getUserName())){
+			if(theNextState.contains(r.getUsername())){
 				return r;
 			}
 		}
