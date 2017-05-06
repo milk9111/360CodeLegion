@@ -17,7 +17,7 @@ import model.AccountDatabase;
  */
 
 /**
- * @Account BlueAccords
+ * @Account Ryan Tran
  *
  */
 public class AccountDatabaseTest {
