@@ -66,17 +66,24 @@ public class UI extends Observable implements Observer{
 	 * 
 	 */
 	private void start() {
+		
 		boolean validUserName = false;
+		
 		while (!validUserName) {
+			
 			System.out.println("Please enter user name to log in: ");
 			myUserName = myScanner.next();
 //			if (myUser.isUserRegistered(myUserName)) {
+			
 			if (true) { //temporary block while we don't have a User registry to check
-			validUserName = true;
-
+				validUserName = true;
 				chooseUserTypeMenuView();
-			} else {
+			} 
+			
+			else {
+				
 				System.out.println("Invalid User Name!");
+			
 			}
 		}
 
@@ -95,22 +102,24 @@ public class UI extends Observable implements Observer{
 		System.out.println("1 - Author");
 		System.out.println("2 - SubProgram Chair");
 
-		if (myScanner.next()== "1") {
-			notifyObservers("AUTHOR"); 
-		} else if(myScanner.next()=="2"){
+		if (myScanner.next() == "1") {
+			
+			notifyObservers("AUTHOR");
+			
+		}
+		
+		else if(myScanner.next() == "2"){
+			
 			notifyObservers("SUBPROGRAM_CHAIR"); 
-
-			if (myScanner.next() == "1") {
-				notifyObservers("Author"); 
-			} else if(myScanner.next() =="2"){
-				notifyObservers("SubProgram Chair"); 
-
-			} else {
+			
+		} 
+		
+		else {
+			
 				System.out.println("Invalid choice, please select from the options displayed");
 				chooseUserTypeMenuView();
-			}
-		}    	
-
+	    
+		}   	
 
 	}
 
@@ -129,15 +138,19 @@ public class UI extends Observable implements Observer{
 			
 			switch (theState) {
 			
-			case 1:
+			case AUTHOR:
+				AuthorView();
+				break;
+			
+			case SUBMIT_MANUSCRIPT:
 				AuthorManuscriptSubmissionView();
 				break;
 				
-			case 2:
+			case LIST_MANUSCRIPT_VIEW:
 				AuthorListOfManuscriptsView();
 				break;
 			
-			case 3:
+			case LIST_CONFERENCE_VIEW:
 				ListOfConferenceView();
 				break;
 			
@@ -181,22 +194,22 @@ public class UI extends Observable implements Observer{
 
 	private void AuthorView() {
 		
-		System.out.println("Author Options:");
+		System.out.println("Author Main Page:");
 		System.out.println("1 - Submit new Manuscript.");
 		System.out.println("2 - View currently submitted Manuscripts.");
 		System.out.println("3 - View current list of Conferences.");
 		myUserChoice = myScanner.next();
 		
 		if (myUserChoice.equals("1")) {
-			notifyObservers("Submit Manuscript"); 
+			notifyObservers("SUBMIT_MANUSCRIPT"); 
 		}
 		
 		else if (myUserChoice.equals("2")) {
-			notifyObservers("Manuscript List"); 
+			notifyObservers("LIST_MANUSCRIPT_VIEW"); 
 		}
 		
 		else if (myUserChoice.equals("3")) {
-			notifyObservers("Conference List"); 
+			notifyObservers("LIST_CONFERENCE_VIEW"); 
 		}
 		
 		else {
@@ -215,8 +228,8 @@ public class UI extends Observable implements Observer{
 		String moreAuthors = "1";
 		List<String> listOfAuthors = new ArrayList<String>();
 		String ManuscriptFilePath;
-		System.out.println("Manuscript submission:");
-		System.out.println("Please Enter Title of Manuscript: ");
+		System.out.println("Manuscript Submission Page");
+		System.out.println("Please enter title of Manuscript: ");
 		manuscriptTile = myScanner.next();
 		
 		while (!moreAuthors.equals("0")) {
@@ -239,13 +252,13 @@ public class UI extends Observable implements Observer{
 			
 		}
 		
-		notifyObservers("Submit Manuscript," + manuscriptTile + "," + ManuscriptFilePath + "," + dtf.format(localDate) + authorList); 
+		notifyObservers("Submit Manuscript," + manuscriptTile + "," + ManuscriptFilePath + "," + dtf.format(localDate) + "," + authorList); 
 
 
 	}
 
 	private void AuthorListOfManuscriptsView() {
-		System.out.println("List of currently submitted Manuscripts:");
+		System.out.println("Manuscript List Page");
 		//		for (int i = 0; i < )
 	}
 
