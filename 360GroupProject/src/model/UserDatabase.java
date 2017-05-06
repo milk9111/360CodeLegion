@@ -1,6 +1,12 @@
 package model;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.TreeMap;
+import java.util.UUID;
+
+import model.User;
 
 /**
  * @author Ryan Tran
@@ -16,7 +22,7 @@ public class UserDatabase {
 	 * Instance Methods
 	 */
 	
-	public static TreeMap<UUID, User> getAllUsers() {
+	public TreeMap<UUID, User> getAllUsers() {
 		TreeMap<UUID, User> mapToReturn = new TreeMap<UUID, User>();
 		return mapToReturn;
 	}
@@ -28,7 +34,7 @@ public class UserDatabase {
 	 * @return A User after it has been successfully saved to the database,
 	 * else return null if not possible
 	 */
-	public static User saveUserToDatabase(User theUser) {
+	public User saveUserToDatabase(User theUser) {
 		TreeMap<UUID, User> userList = deserializeUserList();
 
 		boolean isUsernameUnique = userList.containsValue(theUser.getUsername());
@@ -46,7 +52,7 @@ public class UserDatabase {
 	 * Deserialize the user list, if user list exists
 	 * @return a TreeMap of the userlist
 	 */
-	private static TreeMap<UUID, User> deserializeUserList() {
+	public TreeMap<UUID, User> deserializeUserList() {
 		TreeMap<UUID, User> userListToReturn = null;
 
 		try {

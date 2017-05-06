@@ -19,6 +19,12 @@ import model.Conference;
  *
  */
 public abstract class User implements Serializable {
+	
+	/**
+	 * UID used for object serialization
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * Unique ID for identification of the User
 	 */
@@ -50,6 +56,7 @@ public abstract class User implements Serializable {
 	 * @param theUserName The chosen user name.
 	 */
 	public User(String theUserName) {
+		myID = UUID.randomUUID();
 		MyUserName = theUserName;
 	}
 	
@@ -82,6 +89,14 @@ public abstract class User implements Serializable {
 	 */
 	public String getUsername() {
 		return MyUserName;
+	}
+	
+	/**
+	 * Method to return the current user's unique ID
+	 * @return UUID of user's unique ID
+	 */
+	public UUID getID() {
+		return myID;
 	}
 
 }

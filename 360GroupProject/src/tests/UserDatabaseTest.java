@@ -7,6 +7,10 @@ import java.util.UUID;
 import org.junit.Before;
 import org.junit.Test;
 
+import model.Author;
+import model.User;
+import model.UserDatabase;
+
 /**
  * 
  */
