@@ -5,6 +5,8 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Scanner;
 
+import model.User;
+
 /**
  * 
  * @author Casey Anderson, Morgan Blackmore
@@ -55,7 +57,7 @@ public class UI extends Observable implements Observer{
      * @author Casey, Anderson Morgan Blackmore
      * 
      */
-	//if user exists, then instantiate UI fields and switch to chooseUserType menu view
+	
     private void start() {
     	boolean validUserName = false;
     	while (!validUserName) {
@@ -85,9 +87,9 @@ public class UI extends Observable implements Observer{
     	System.out.println("1 - Author");
     	System.out.println("2 - SubProgram Chair");
     	if (myScanner.next()== "1") {
-    		notifyObservers("Author"); 
+    		notifyObservers("AUTHOR"); 
     	} else if(myScanner.next()=="2"){
-    		notifyObservers("SubProgram Chair"); 
+    		notifyObservers("SUBPROGRAM_CHAIR"); 
       	} else {
       		System.out.println("Invalid choice, please select from the options displayed");
       		chooseUserTypeMenuView();
@@ -113,6 +115,8 @@ public class UI extends Observable implements Observer{
 		} else {
 			setUserType("SubProgramChair");
 			displayHeader();
+			
+			subProgramChairView();
 		}
 	}
 	
@@ -174,16 +178,25 @@ public class UI extends Observable implements Observer{
 	 */
 	private void subProgramChairView(){
 		System.out.println("SubProgram Chair Options");
-		System.out.println("To assign a reviewer to a manuscript, select a conference");
-		System.out.println("To select a conference, press 1");
-		System.out.println("To view my assigned manuscripts, press 2");
-		if (myScanner.next() == "1") {
-			ListOfConferenceView(); //what happens here?  What does UI need to do to display this?
-			//also, how to capture the User's selection and pass to controller?
+		System.out.println("1 - Assign a Reviewer");
+		System.out.println("2 - Select a Conference");
+		System.out.println("3 - Select a Manuscript");
+//		while (!myScanner.hasNextInt() || (myUserChoice < 1 || myUserChoice > 3)) {
+			myUserChoice = myScanner.nextInt();
+//		}
+		switch (myUserChoice){
+			case (1):
+				notifyObservers(); //add notify message
+				break;
+			case (2):
+				notifyObservers(); //add notify message
+				break;
+			case (3):
+				notifyObservers(); //add notify message
+				break;
 		}
-		ListOfConferenceView(); 
-		
-		//add switch for selection
+				
+
 		}
 	private void myManuscriptsView() {
 		

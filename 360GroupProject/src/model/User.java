@@ -1,9 +1,6 @@
 package model;
 
-<<<<<<< HEAD
-=======
 import java.io.Serializable;
->>>>>>> e1fdb9921dc02f39eb20e9d6f4fbe78d5662c481
 import java.util.List;
 
 /**
