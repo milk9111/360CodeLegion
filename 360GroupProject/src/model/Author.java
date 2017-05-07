@@ -41,19 +41,21 @@ public class Author extends User {
 	 * Constructor for Author class.
 	 * @param theUserName The Username of the Author.
 	 */
-	public Author(String theUserName) {		
-		
-		super(theUserName);
+	public Author(String theUserName, Conference theConference) {		
+		super(theUserName, theConference);
 		this.myReviewList = new ArrayList<File>();
 		myManuscriptList = new HashMap<Conference,ArrayList<Manuscript>>();
 	
 	}
 	
 	/**
-	 * Empty Author consturctor, only initializing what is needed
+	 * basic constructor for an author, a conference must be provided for
+	 * the author to be under.
+	 * Users with no roles will have this created for them if they choose to submit a manuscript.
+	 * @param theConference the conference to associate with the created author
 	 */
-	public Author() {
-		super();
+	public Author(Conference theConference) {
+		super(theConference);
 		this.myReviewList = new ArrayList<File>();
 		myManuscriptList = new HashMap<Conference,ArrayList<Manuscript>>();
 	}

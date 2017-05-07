@@ -2,6 +2,7 @@
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Before;
@@ -22,15 +23,17 @@ public class ReviewerTest {
 	private List<Author> myAuthorList;
 	private List<Manuscript> myManuscriptList;
 	private List<Conference> myEmptyConferenceList;
+	private Conference myConference;
 	
 	@Before
 	public void setup() throws Exception{
 		
 		myEmptyConferenceList = new ArrayList<>();
+		myConference = new Conference("Science Conference", new Date(), new Date());
 		
 		myAuthorList = new ArrayList<Author>();
-		myAuthorList.add(new Author("Steinbeck"));
-		myAuthorList.add(new Author("Hemmingway"));
+		myAuthorList.add(new Author("Steinbeck", myConference));
+		myAuthorList.add(new Author("Hemmingway", myConference));
 		
 		myTestManuscript = new Manuscript();
 		myTestManuscript.setAuthors(myAuthorList);
@@ -78,7 +81,7 @@ public class ReviewerTest {
 	public void testAssignManuscript_ReviewerIsAuthor_FailToAssign() {
 
 		//Add Reviewer to authorlist for a manuscript 
-		myAuthorList.add(0, new Author("Roger Ebert"));
+		myAuthorList.add(0, new Author("Roger Ebert", myConference));
 		myTestManuscript.setAuthors(myAuthorList);
 		myManuscriptList.clear();
 		myManuscriptList.add(0, myTestManuscript);
@@ -97,7 +100,7 @@ public class ReviewerTest {
 	@Test
 	public void testAssignManuscript_ReviewerCoauthor_FailToAssign() {
 				
-		myAuthorList.add(new Author("Roger Ebert"));
+		myAuthorList.add(new Author("Roger Ebert", myConference));
 		myTestManuscript.setAuthors(myAuthorList);
 		myManuscriptList.clear();
 		myManuscriptList.add(0, myTestManuscript);

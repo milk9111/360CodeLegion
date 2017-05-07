@@ -36,6 +36,13 @@ public abstract class User {
 	protected List<Conference> myConferenceList;
 	
 	/**
+	 * The conference this user role is associated with.
+	 * REQUIRED. Whether a program chair, subchair, reviewer, or author, all roles must be
+	 * associated with a conference
+	 */
+	private Conference myAssociatedConference;
+	
+	/**
 	 * Constructor for the User. 
 	 * @param theUserName The chosen user name.
 	 * @param theConferenceList List of all current conferences.
@@ -50,20 +57,22 @@ public abstract class User {
 	 * Constructor for the User. Only supplying the username.
 	 * @param theUserName The chosen user name.
 	 */
-	public User(String theUserName) {
+	public User(String theUserName, Conference theConference) {
 		myID = UUID.randomUUID();
 		MyUserName = theUserName;
+		myAssociatedConference = theConference;
 	}
 	
 	/**
-	 * Constructor for User without any attributes.
+	 * Constructor for User with a conference
 	 * This is possible because the user is NOT the account.
 	 * the ACCOUNT class will hold the user's username, name, email, password ect.
 	 * While the User class, and its subtypes are meant to hold roles associating the account
 	 * with a conference and a role.
 	 */
-	public User() {
+	public User(Conference theConference) {
 		myID = UUID.randomUUID();
+		myAssociatedConference = theConference;
 	}
 	
 	/**
@@ -104,6 +113,10 @@ public abstract class User {
 	 */
 	public UUID getMyID() {
 		return myID;
+	}
+	
+	public Conference getMyAssociatedConference() {
+		return this.myAssociatedConference;
 	}
 	
 

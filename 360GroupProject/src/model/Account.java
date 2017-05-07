@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.util.TreeMap;
 import java.util.UUID;
 
 /**
@@ -11,7 +12,7 @@ public class Account implements Serializable {
 
 	// TODO: change theses to lists and add conference ids to each user type
 	// that way, a user can have a user type for multiple conferneces
-    private Author myAuthor;
+    private TreeMap<UUID, Author> myAuthors;
     private Reviewer myReviewer;
     private SubprogramChair mySubprogramChair;
     private UUID myID;
@@ -22,19 +23,23 @@ public class Account implements Serializable {
     	this.myUsername = theUsername;
     }
     
-    public Account(Author myAuthor, Reviewer myReviewer, SubprogramChair mySubprogramChair) {
+    public Account(TreeMap<UUID, Author> theAuthors, Reviewer myReviewer, SubprogramChair mySubprogramChair) {
     	this.myID = UUID.randomUUID();
-        this.myAuthor = myAuthor;
+        this.myAuthors = theAuthors;
         this.myReviewer = myReviewer;
         this.mySubprogramChair = mySubprogramChair;
     }
 
-    public Author getMyAuthor() {
-        return myAuthor;
+    public TreeMap<UUID, Author> getMyAuthor() {
+        return this.myAuthors;
     }
 
-    public void setMyAuthor(Author myAuthor) {
-        this.myAuthor = myAuthor;
+    /**
+     * Adds a single author role to the account
+     * @param theAuthor The author to add to the account's authors list
+     */
+    public void addAuthorRoleToAccount(Author theAuthor) {
+        this.myAuthors.put(theAuthor.getMyAssociatedConference().getMyID(), theAuthor);
     }
 
     public Reviewer getMyReviewer() {

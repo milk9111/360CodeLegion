@@ -28,6 +28,7 @@ public class SubprogramChairTest {
 
     // fixtures
 	private SubprogramChair mySubprogramChair;
+	private Conference myConference;
 
 	/**
 	 * Initialize a subprogram chair
@@ -35,7 +36,8 @@ public class SubprogramChairTest {
 	 */
     @Before
     public void setUp() throws Exception {
-        mySubprogramChair = new SubprogramChair("Marauder");
+    	myConference = new Conference("Hydrogen Analysis", new Date(), new Date());
+        mySubprogramChair = new SubprogramChair("Marauder", myConference);
         Database.clearDatabase();
     }
 
@@ -123,7 +125,7 @@ public class SubprogramChairTest {
      */
     @Test
     public void getReviewers_forEmptyReviewerList_shouldReturnEmptyList() {
-    	SubprogramChair chairWithNoReviewers = new SubprogramChair("Jack");
+    	SubprogramChair chairWithNoReviewers = new SubprogramChair("Jack", myConference);
     	List<Reviewer> listToBeTested = chairWithNoReviewers.getReviewers();
         	
     	assertEquals("Reviewer list size should be equal to one from database",
