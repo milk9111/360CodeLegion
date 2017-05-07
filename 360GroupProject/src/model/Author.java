@@ -50,6 +50,15 @@ public class Author extends User {
 	}
 	
 	/**
+	 * Empty Author consturctor, only initializing what is needed
+	 */
+	public Author() {
+		super();
+		this.myReviewList = new ArrayList<File>();
+		myManuscriptList = new HashMap<Conference,ArrayList<Manuscript>>();
+	}
+	
+	/**
 	 * Method to add Review to the Author theReview must be a PDF file.
 	 * @param theReview Review file to be added to Author.
 	 */

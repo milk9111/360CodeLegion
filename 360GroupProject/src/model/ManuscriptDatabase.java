@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.TreeMap;
 import java.util.UUID;
 
@@ -108,6 +109,20 @@ public class ManuscriptDatabase {
 		}catch(IOException i) {
 			i.printStackTrace();
 		}
+	}
+	
+	public ArrayList<Manuscript> getManuscriptsBelongingToAuthor(Author theAuthor) {
+		ArrayList<Manuscript> returnListOfManuscripts = null;
+		TreeMap<UUID, Manuscript> allManuscripts = this.getAllManuscripts();
+		
+		for (Manuscript manuToCompare : allManuscripts.values()) {
+			if(manuToCompare.doesAuthorBelongToManuscript(theAuthor)) {
+				returnListOfManuscripts.add(manuToCompare);
+			}
+		}
+		
+		return returnListOfManuscripts;
+		
 	}
 
 }

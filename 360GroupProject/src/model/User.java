@@ -26,6 +26,11 @@ public abstract class User {
 	private String MyUserName;
 	
 	/**
+	 * Unique identifer ID for User
+	 */
+	private UUID myID;
+	
+	/**
 	 * The list of all current conferences the user has access to.
 	 */
 	protected List<Conference> myConferenceList;
@@ -36,6 +41,7 @@ public abstract class User {
 	 * @param theConferenceList List of all current conferences.
 	 */
 	public User(String theUserName, List<Conference> theConferenceList) {
+		myID = UUID.randomUUID();
 		MyUserName = theUserName;
 		myConferenceList = theConferenceList;
 	}
@@ -45,7 +51,19 @@ public abstract class User {
 	 * @param theUserName The chosen user name.
 	 */
 	public User(String theUserName) {
+		myID = UUID.randomUUID();
 		MyUserName = theUserName;
+	}
+	
+	/**
+	 * Constructor for User without any attributes.
+	 * This is possible because the user is NOT the account.
+	 * the ACCOUNT class will hold the user's username, name, email, password ect.
+	 * While the User class, and its subtypes are meant to hold roles associating the account
+	 * with a conference and a role.
+	 */
+	public User() {
+		myID = UUID.randomUUID();
 	}
 	
 	/**
@@ -77,6 +95,15 @@ public abstract class User {
 	 */
 	public String getUsername() {
 		return MyUserName;
+	}
+	
+	/**
+	 * Method to return the Usertype's ID. 
+	 * DIFFERENT from Account ID
+	 * @return UUID indicating user type ID
+	 */
+	public UUID getMyID() {
+		return myID;
 	}
 	
 
