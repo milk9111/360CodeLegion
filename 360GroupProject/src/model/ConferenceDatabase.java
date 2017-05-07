@@ -50,6 +50,25 @@ public class ConferenceDatabase {
 
 		return null;
 	}
+
+	/**
+	 * This method will accept an account and save it to the serialized account list, updating
+	 * the already existing account within the list.
+	 * preconditions: Assumes the given account already exists within the list.
+	 * @param theAccount the updated Account object to be saved to the database
+	 * @return An Account after it has been successfully saved to the database,
+	 */
+	public Conference updateAndSaveConferenceToDatabase(Conference theConference) {
+		if(myConferenceList.containsKey(theConference.getMyID())) {
+			TreeMap<UUID, Conference> conferenceList = deserializeConferenceList();
+			conferenceList.put(theConference.getMyID(), theConference);
+			saveConferenceListToDatabase(conferenceList);
+
+			return conferenceList.get(theConference.getMyID());
+		} else {
+			return null;
+		}
+	}
 	
 	/**
 	 * Saves passed in Conference list to database 

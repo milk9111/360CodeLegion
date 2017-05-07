@@ -475,6 +475,8 @@ public class UI extends Observable implements Observer{
 		conferenceChoice = myScanner.nextInt();
 		setChanged();
 		notifyObservers(listOfConferences[conferenceChoice - 1]);
+		setChanged();
+		notifyObservers("List Conference View," + listOfConferences[conferenceChoice - 1].getMyName());
 
 	}
 

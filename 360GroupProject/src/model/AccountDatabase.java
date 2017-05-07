@@ -108,19 +108,20 @@ public class AccountDatabase {
 	 */
 	public Account updateAndSaveAccountToDatabase(Account theAccount) {
 		TreeMap<UUID, Account> accountList = deserializeAccountList();
-		accountList.put(theAccount.getMyID(), theAccount);
 		if(accountList.containsKey(theAccount.getMyID())) {
-			
-		}
-		saveAccountListToDatabase(accountList);
+			accountList.put(theAccount.getMyID(), theAccount);
+			saveAccountListToDatabase(accountList);
 
-		return accountList.get(theAccount.getMyID());
+			return accountList.get(theAccount.getMyID());
+		} else {
+			return null;
+		}
 	}
 	
 	/**
 	 * This method will check if the given username belongs to an account that is part of the system
 	 * @param theAccountList the account list to check against
-	 * @param theAccount the Account 
+	 * @param theUsername the Account
 	 * @return
 	 */
 	public boolean isUsernameInListValid(TreeMap<UUID, Account> theAccountList, String theUsername) {

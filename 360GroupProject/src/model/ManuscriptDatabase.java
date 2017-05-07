@@ -125,4 +125,23 @@ public class ManuscriptDatabase {
 		
 	}
 
+	/**
+	 * This method will accept an account and save it to the serialized account list, updating
+	 * the already existing account within the list.
+	 * preconditions: Assumes the given account already exists within the list.
+	 * @param theManuscript the updated Account object to be saved to the database
+	 * @return An Account after it has been successfully saved to the database,
+	 */
+	public Manuscript updateAndSaveManuscriptToDatabase(Manuscript theManuscript) {
+		if(myManuscriptList.containsKey(theManuscript.getMyID())) {
+			TreeMap<UUID, Manuscript> conferenceList = deserializeManuscriptList();
+			conferenceList.put(theManuscript.getMyID(), theManuscript);
+			saveManuscriptListToDatabase(conferenceList);
+
+			return conferenceList.get(theManuscript.getMyID());
+		} else {
+			return null;
+		}
+	}
+
 }
