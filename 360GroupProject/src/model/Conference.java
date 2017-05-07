@@ -1,14 +1,26 @@
-package tests;
+package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by Josiah on 4/27/2017.
  */
-public class Conference {
+public class Conference implements Serializable {
+    public String getMyName() {
+        return myName;
+    }
+
+    // Unique ID to identify the conference by
+    private UUID myID;
+    
+    private String myName;
+
+    // TODO: change to list of manuscript IDs, May only be needed for Program Chair User Stories
     //Contains the list of manuscripts which have been submitted to this conference.
     private List<Manuscript> myManuscripts;
 
@@ -18,6 +30,7 @@ public class Conference {
     //Details the deadline for reviews to be turned in
     private Date myReviewDeadline;
 
+    // TODO: change to list of UUIDs
     //Contains the list of reviewers that have reviewed for this conference in the past.
     private List<Reviewer> myPastReviewers;
 
@@ -27,12 +40,28 @@ public class Conference {
      * @param theReviewDeadline is the deadlines for reviews to be turned in
      * @param thePastReviewers is the list of past reviewers for this conference
      */
-    public Conference(Date theSubmissionDeadline, Date theReviewDeadline,
+    public Conference(String theName, Date theSubmissionDeadline, Date theReviewDeadline,
                       List<Reviewer> thePastReviewers) {
+    	this.myID = UUID.randomUUID();
         this.myManuscripts = new ArrayList<Manuscript>();
         this.myPastReviewers = thePastReviewers;
         this.myReviewDeadline = theReviewDeadline;
         this.mySubmissionDeadline = theSubmissionDeadline;
+        this.myName = theName;
+    }
+    
+    /**
+     * Constructor for conference with no past reviewers
+     * @param theName name of conference
+     * @param theSubmissionDeadline date of which manuscript submissions are due
+     * @param theReviewDeadline date of which reviews are due
+     */
+    public Conference(String theName, Date theSubmissionDeadline, Date theReviewDeadline) {
+    	this.myID = UUID.randomUUID();
+        this.myManuscripts = new ArrayList<Manuscript>();
+        this.myReviewDeadline = theReviewDeadline;
+        this.mySubmissionDeadline = theSubmissionDeadline;
+        this.myName = theName;
     }
 
     /**
@@ -42,6 +71,10 @@ public class Conference {
      */
     public List<Manuscript> getManuscripts() {
         return myManuscripts;
+    }
+    
+    public UUID getMyID() {
+    	return myID;
     }
 
     /**
@@ -77,6 +110,7 @@ public class Conference {
      * @param theManuscript the manuscript which is trying to be submitted to the conference.
      */
     public void submitManuscript(Manuscript theManuscript) {
+    	// TODO: change to add manuscript IDs isnead of objects
         if(isWithinSubmissionDeadline()) {
             myManuscripts.add(theManuscript);
             System.out.println("Adding to manuscript list");

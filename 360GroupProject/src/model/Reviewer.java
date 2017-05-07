@@ -1,10 +1,13 @@
+package model;
 
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Reviewers class.
+ * 
  * 
  * @author Morgan Blackmore
  * @version 4/27/17
@@ -18,8 +21,10 @@ public class Reviewer extends User {
 	
 	/**
 	 * Constructor for Reviewer.
+	 * 
+	 * @author Morgan Blackmore
 	 */
-	public Reviewer(String theName, List<Conference> theConferenceList){
+	public Reviewer(String theName, ArrayList<Conference> theConferenceList){
 		super(theName, theConferenceList);
 		this.myAssignedManuscriptList = new ArrayList<Manuscript>();
 		
@@ -27,6 +32,8 @@ public class Reviewer extends User {
 	
 	/**
 	 * Constructor for Reviewer with assigned manuscripts list.
+	 * 
+	 * @author Morgan Blackmore
 	 */
 	public Reviewer(String theName, List<Conference> theConferenceList, List<Manuscript> theManuscripts){
 		super(theName, theConferenceList);
@@ -40,6 +47,7 @@ public class Reviewer extends User {
 	 * Should also throw some exception to the class that's calling it.
 	 * Adds the manuscript to this reviewer's list.
 	 * 
+	 * @author Morgan Blackmore
 	 * @param theMan The Manuscript to be assigned
 	 * 
 	 * @return boolean true if assigned successfully
@@ -48,13 +56,13 @@ public class Reviewer extends User {
 		boolean wasAssigned = true;
 		
 		//Condition 1: check if Reviewer is a coauthor on this manuscript 
+		//Condition 2: check if Reviewer is over review limit
+		
+		//separate these tests and throw exceptions
+		//also need to add a check for if this reviewer is already assigned to this manuscript.
 		if ((isReviewerAnAuthor(theManuscript) == true) || (isOverReviewLimit() == true) ) {
 			wasAssigned = false;			
-//		}
-		
-//		//Condition 2: check if Reviewer is over review limit
-//		else if (isOverReviewLimit() == true) {
-//			wasAssigned = false;
+
 		} else {
 		myAssignedManuscriptList.add(theManuscript);
 		}
@@ -64,7 +72,7 @@ public class Reviewer extends User {
 	
 	/**
 	 * Compares size of assigned manuscript list with limit defined by MAX_REVIEWS
-	 * 
+	 * @author Morgan Blackmore
 	 * @return true if over limit.
 	 */
 	private boolean isOverReviewLimit() {
@@ -84,12 +92,12 @@ public class Reviewer extends User {
 	private boolean isReviewerAnAuthor(Manuscript theManuscript) {
 		boolean isAuthor = false;
 
-		String reviewerName = getName();
-		List<Author> authorlist = theManuscript.getAuthors();
+		String reviewerName = getUsername();
+		List<UUID> authorlist = theManuscript.getAuthors();
 		
 	
 		for (int i = 0; i < authorlist.size(); i++) {
-			if (authorlist.get(i).getName().equals(reviewerName)) {
+			if (authorlist.get(i).getUsername().equals(reviewerName)) {
 				isAuthor = true;
 			}
 		}
