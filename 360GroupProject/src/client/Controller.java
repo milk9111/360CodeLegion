@@ -1,5 +1,6 @@
 package client;
 
+import java.io.File;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -333,10 +334,11 @@ public class Controller extends Observable implements Observer {
 		Manuscript returnManuscript = new Manuscript();
 		
 		returnManuscript.setTitle(thePieces[1]);
+		returnManuscript.setFilePath(new File(thePieces[2]));
 		returnManuscript.setSubmittedDate(new Date());
 		
 		//Adds the remaining Authors in the list.
-		for (int i = 3; i < thePieces.length; i++) {
+		for (int i = 4; i < thePieces.length; i++) {
 			returnManuscript.addAuthor(new Author(thePieces[i], myCurrentConference));
 		}
 		

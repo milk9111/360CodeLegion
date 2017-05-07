@@ -247,6 +247,11 @@ public class Manuscript implements Serializable {
 	}
 	
 	
+	public void setFilePath (File theNewFilePath) {
+		myFilePath = theNewFilePath;
+	}
+	
+	
 	/**
 	 * Submits a manuscript then returns it upon success.
 	 * 
