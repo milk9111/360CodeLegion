@@ -475,16 +475,10 @@ public class UI extends Observable implements Observer{
 		
 	}
 	
-<<<<<<< HEAD
 	public void update(Observable arg0, Object theArg) {
-		changeState((int) theArg);
-
-=======
-	public void update(Observable arg0, Object arg1) {
-		if (arg1 instanceof Integer) {
-			changeState((int) arg1);
+		if (theArg instanceof Integer) {
+			changeState((int) theArg);
 		}
->>>>>>> 98d936bdd30da04332b6e6f4b2a10ec291fc237b
 	}
 
 }
