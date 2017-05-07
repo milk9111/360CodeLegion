@@ -24,9 +24,8 @@ public class ConferenceDatabase {
 	}
 
 	public TreeMap<UUID, Conference> getAllConferences() {
-		TreeMap<UUID, Conference> listToReturn = null;
-
-		return null;
+		TreeMap<UUID, Conference> listToReturn = this.deserializeConferenceList();
+		return listToReturn;
 	}
 
 
