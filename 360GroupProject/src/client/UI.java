@@ -100,13 +100,13 @@ public class UI extends Observable implements Observer{
 		System.out.println("2 - SubProgram Chair");
 
 		if (myScanner.next() == "1") {
-			
+			setChanged();
 			notifyObservers("AUTHOR");
 			
 		}
 		
 		else if(myScanner.next() == "2"){
-			
+			setChanged();
 			notifyObservers("SUBPROGRAM_CHAIR"); 
 			
 		} 
@@ -128,6 +128,7 @@ public class UI extends Observable implements Observer{
 	 * 
 	 */
 	public void changeState(int theState) {
+		System.out.println("changeState method got called");
 
 		if (theState < 10) {
 			
@@ -474,8 +475,8 @@ public class UI extends Observable implements Observer{
 		
 	}
 	
-	public void update(Observable arg0, Object arg1) {
-		// TODO Auto-generated method stub
+	public void update(Observable arg0, Object theArg) {
+		changeState((int) theArg);
 
 	}
 
