@@ -9,6 +9,14 @@ import org.junit.Test;
 
 import client.Controller;
 
+
+/**
+ * All tests for the System Controller.
+ * 
+ * @author Connor Lundberg
+ * @version 5/6/2017
+ *
+ */
 public class ControllerTest {
 
 	private Controller myPracticeController;

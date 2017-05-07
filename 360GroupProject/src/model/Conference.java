@@ -20,6 +20,7 @@ public class Conference implements Serializable {
     
     private String myName;
 
+    // TODO: change to list of manuscript IDs, May only be needed for Program Chair User Stories
     //Contains the list of manuscripts which have been submitted to this conference.
     private List<Manuscript> myManuscripts;
 
@@ -29,6 +30,7 @@ public class Conference implements Serializable {
     //Details the deadline for reviews to be turned in
     private Date myReviewDeadline;
 
+    // TODO: change to list of UUIDs
     //Contains the list of reviewers that have reviewed for this conference in the past.
     private List<Reviewer> myPastReviewers;
 
@@ -108,6 +110,7 @@ public class Conference implements Serializable {
      * @param theManuscript the manuscript which is trying to be submitted to the conference.
      */
     public void submitManuscript(Manuscript theManuscript) {
+    	// TODO: change to add manuscript IDs isnead of objects
         if(isWithinSubmissionDeadline()) {
             myManuscripts.add(theManuscript);
             System.out.println("Adding to manuscript list");
