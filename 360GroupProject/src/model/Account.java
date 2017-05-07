@@ -46,7 +46,8 @@ public class Account implements Serializable {
      * Returns the author associated with the conference parameter
      * @param theConference conference who's id we are checking to see if the author belongs to it
      * @return An Author object belonging to the given conference
-     * preconditions: Assumes the an author associated with the given conference exists
+     * preconditions: Assumes the an author associated with the given conference exists, use
+     * doesAuthorAssociatedWithConferenceExists
      */
     public Author getAuthorAssociatedWithConference(Conference theConference) {
     	return this.myAuthors.get(theConference.getMyID());
