@@ -369,7 +369,7 @@ public class Controller extends Observable implements Observer {
 	 * @version 5/6/2017
 	 */
 	public void setConference (Conference theNewConference) {
-		if (myConferenceDatabase.isConferenceInListUnique(myConferenceDatabase.getAllConferences(), theNewConference)) {
+		if (!myConferenceDatabase.isConferenceInListUnique(myConferenceDatabase.getAllConferences(), theNewConference)) {
 			System.out.println("Found an old conference");
 			myCurrentConference = theNewConference;
 		} else {
