@@ -24,7 +24,12 @@ public class Account implements Serializable {
      * Map representing relationship between a user being a reviewer to a conference
      */
     private TreeMap<UUID, Reviewer> myReviewers;
-    private SubprogramChair mySubprogramChair;
+    
+    /**
+     * Map of Key: Conference Ids, Value: Subprogram Chair Object
+     * Map representing relationships between a conference and subprogram chair
+     */
+    private TreeMap<UUID, SubprogramChair> mySubprogramChairs;
     private UUID myID;
     private String myUsername;
     
@@ -35,11 +40,11 @@ public class Account implements Serializable {
         this.myReviewers = new TreeMap<UUID, Reviewer>();
     }
     
-    public Account(TreeMap<UUID, Author> theAuthors, TreeMap<UUID, Reviewer> theReviewers, SubprogramChair mySubprogramChair) {
+    public Account(TreeMap<UUID, Author> theAuthors, TreeMap<UUID, Reviewer> theReviewers, TreeMap<UUID, SubprogramChair> theSubprogramChairs) {
     	this.myID = UUID.randomUUID();
         this.myAuthors = theAuthors;
         this.myReviewers = theReviewers;
-        this.mySubprogramChair = mySubprogramChair;
+        this.mySubprogramChairs = theSubprogramChairs;
     }
     
 
@@ -94,12 +99,17 @@ public class Account implements Serializable {
     	this.myReviewers.put(theConference.getMyID(), theReviewer);
     }
 
-    public SubprogramChair getMySubprogramChair() {
-        return mySubprogramChair;
+    public TreeMap<UUID, SubprogramChair> getMySubprogramChairList() {
+        return this.mySubprogramChairs;
     }
 
-    public void setMySubprogramChair(SubprogramChair mySubprogramChair) {
-        this.mySubprogramChair = mySubprogramChair;
+    /**
+     * Adds a given subprogram chair, and its associated conference to the account's subprogram chair role list
+     * @param theSubprogramChair the subprogram chair to add to the account's subchair list
+     * @param theConference the conference to associate the subchair with
+     */
+    public void addSubprogramChairRoleToAccount(SubprogramChair theSubprogramChair, Conference theConference) {
+        this.mySubprogramChairs.put(theConference.getMyID(), theSubprogramChair);
     }
     
     public String getMyUsername() {
