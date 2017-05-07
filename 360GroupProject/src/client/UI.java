@@ -477,7 +477,8 @@ public class UI extends Observable implements Observer{
 	
 	public void update(Observable arg0, Object arg1) {
 		if (arg1 instanceof Integer) {
-			changeState((int) arg1);		
+			changeState((int) arg1);
+		}
 	}
 
 }
