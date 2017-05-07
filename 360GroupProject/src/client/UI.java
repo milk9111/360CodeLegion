@@ -67,6 +67,9 @@ public class UI extends Observable implements Observer{
 			System.out.println();
 			myAccount = new Account(myUserName);
 			notifyObservers(myAccount);
+
+			chooseUserTypeMenuView();
+
 			
 	}
 
@@ -85,13 +88,13 @@ public class UI extends Observable implements Observer{
 		myUserChoice = myScanner.next();
 		
 		if (myUserChoice.equals("1")) {
-			//setChanged();
+			setChanged();
 			notifyObservers("AUTHOR");
 			
 		}
 		
 		else if (myUserChoice.equals("2")){
-			//setChanged();
+			setChanged();
 			notifyObservers("SUBPROGRAM_CHAIR"); 
 			
 		} 
