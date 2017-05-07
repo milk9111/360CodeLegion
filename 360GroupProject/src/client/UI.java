@@ -3,13 +3,18 @@ package client;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Scanner;
+import java.util.TreeMap;
+import java.util.UUID;
 
 import javafx.beans.InvalidationListener;
 import model.Account;
+import model.Conference;
+import model.ConferenceDatabase;
 import model.User;
 
 /**
@@ -121,6 +126,7 @@ public class UI extends Observable implements Observer{
 		if (theState == LOG_IN_STATE){
 			login();
 		}
+		
 		if (theState == CHOOSE_USER) {
 			chooseUserTypeMenuView();
 		}
@@ -366,7 +372,7 @@ public class UI extends Observable implements Observer{
 	}
 
 	/**
-	 * Method to display all of the current Authors Manuscripts they have aready submitted.
+	 * Method to display all of the current Authors Manuscripts they have already submitted.
 	 * 
 	 * @author Casey Anderson
 	 */
@@ -376,8 +382,21 @@ public class UI extends Observable implements Observer{
 		//		for (int i = 0; i < )
 	}
 
-	private void ListOfConferenceView() { //Gets list from database and displays.  DB isn't ready yet.
-
+	/**
+	 * Method to display all of the current Conferences for user to select from and pass to Controller.
+	 * 
+	 * @author Casey Anderson
+	 */
+	private void ListOfConferenceView() { 
+		int conferenceChoice;
+		System.out.println("Conference List Page");
+		Conference[] listOfConferences = (Conference[]) new ConferenceDatabase().getAllConferences().values().toArray();
+		for (int i = 0; i < listOfConferences.length; i++) {
+			System.out.println("" + i + 1 + " - " + listOfConferences[i].getMyName());
+		}
+		conferenceChoice = myScanner.nextInt();
+		setChanged();
+		notifyObservers(listOfConferences[conferenceChoice - 1]);
 	}
 
 	/**
