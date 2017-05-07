@@ -17,7 +17,10 @@ public class ManuscriptDatabase {
 
 	private TreeMap<UUID, Manuscript> myManuscriptList;
 
-	private final String MANUSCRIPT_SERIALIZED_PATH = "360GroupProject/src/model/serializedModel/";
+	/**
+	 * serialized folder to prevent error from being thrown.
+	 */
+	private final String MANUSCRIPT_SERIALIZED_PATH = "/C:/serializedModel/";
 	private final String MANUSCRIPT_FILE_PATHNAME = "manuscripts.ser";
 
 	public void ManuscriptDatabase() {
