@@ -71,7 +71,7 @@ public class UI extends Observable implements Observer{
 	 */
 	private void login() {
 		
-		System.out.print("Loggin Page:");
+		System.out.println("Loggin Page:");
 		System.out.print("\nPlease enter user name to log in: ");
 		myUserName = myScanner.next();
 		System.out.println();
@@ -97,6 +97,7 @@ public class UI extends Observable implements Observer{
 		System.out.println("\nChoose what type of user you are");
 		System.out.println("1 - Author");
 		System.out.println("2 - SubProgram Chair");
+		System.out.print("Please enter choice: ");
 		myUserChoice = myScanner.next();
 
 		if (myUserChoice.equals("1")) {
@@ -237,7 +238,6 @@ public class UI extends Observable implements Observer{
 
 		System.out.println();
 		System.out.println(myUserName + " - " + myUserType);
-		System.out.println();
 
 	}
 
@@ -462,7 +462,7 @@ public class UI extends Observable implements Observer{
 	private void ListOfConferenceView() { 
 
 		int conferenceChoice;
-		System.out.println("Conference List Page");
+		System.out.println("Conference List Page:\n");
 		TreeMap<UUID, Conference> conferenceMap = new ConferenceDatabase().getAllConferences();
 		Conference[] listOfConferences = conferenceMap.values().toArray(new Conference[conferenceMap.values().size()]);
 
@@ -471,6 +471,8 @@ public class UI extends Observable implements Observer{
 			System.out.println("" + (i + 1) + " - " + listOfConferences[i].getMyName());
 			
 		}
+		
+		System.out.print("Please enter choice: ");
 
 		conferenceChoice = myScanner.nextInt();
 		setChanged();
