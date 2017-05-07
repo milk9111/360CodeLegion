@@ -15,17 +15,11 @@ import java.util.UUID;
  */
 public class SubprogramChair extends User {
 
-	// TODO: refactor to be a list of UUIDs of manuscripts
     /**
      * List manuscripts assigned to the subprogram chair
      */
     private List<UUID> myAssignedManuscripts;
 
-    // TODO: refactor to UUIDs of Conferences
-    /**
-     * List of conferences assigned to the subprogram chair by a program chair
-     */
-    private List<Conference> myAssignedConferences;
 
     /**
      * Constructor for the subprogram chair
@@ -34,18 +28,16 @@ public class SubprogramChair extends User {
     public SubprogramChair(String theUsername, Conference theConference) {
     	super(theUsername, theConference);
         this.myAssignedManuscripts = new ArrayList<UUID>();
-        this.myAssignedConferences = new ArrayList<Conference>();
         super.myConferenceList = new ArrayList<Conference>();
     }
     
     /**
-     * Constructor that just associates the subprogam chair with a conference
+     * Constructor that just associates the subprogram chair with a conference
      * @param theConference
      */
     public SubprogramChair(Conference theConference) {
     	super(theConference);
     	this.myAssignedManuscripts = new ArrayList<UUID>();
-        this.myAssignedConferences = new ArrayList<Conference>();
         super.myConferenceList = new ArrayList<Conference>();
     }
     
@@ -86,13 +78,6 @@ public class SubprogramChair extends User {
     	return doesExist;
     }
 
-    /**
-     * This method should return a list of conference objects assigned to this subprogram chair
-     * @return list of conference objects
-     */
-    public List<Conference> getMyAssignedConferences() {
-        return this.myAssignedConferences;
-    }
 
     /**
      * This method should return a list of all reviewers in the system
