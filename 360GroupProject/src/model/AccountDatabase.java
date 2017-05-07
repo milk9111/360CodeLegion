@@ -18,12 +18,12 @@ import model.Account;
  */
 public class AccountDatabase {
 
-	private TreeMap<UUID, Account> MY_ACCOUNT_LIST;
+	private TreeMap<UUID, Account> myAccountList;
 	
 	private final String Account_SERIALIZED_PATH = "360GroupProject/src/model/serializedModel/";
 	
 	public void AccountDatabase() {
-		MY_ACCOUNT_LIST = null;
+		myAccountList = null;
 	}
 	
 	/**

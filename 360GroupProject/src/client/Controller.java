@@ -227,7 +227,7 @@ public class Controller extends Observable implements Observer {
 	
 	
 	private void setAccount (Account theNewAccount) {
-		if (myAccountDatabase.isUsernameInListValid(myAccountDatabase.getAllAccounts(), theNewAccount)) {
+		if (myAccountDatabase.isUsernameInListValid(myAccountDatabase.getAllAccounts(), theNewAccount.getMyUsername())) {
 			myAccount = theNewAccount;
 		} else {
 			myAccountDatabase.saveAccountToDatabase(theNewAccount);
