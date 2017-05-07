@@ -46,16 +46,16 @@ public class UI extends Observable implements Observer{
 	public static final int LIST_ASSIGNED_REVIEWERS_VIEW = 5;
 
 
-	private int myState;
+	//private int myState;
 	private String myUserType;
 	private String myUserName;
-	private User myUser;
+	//private User myUser;
 	private Scanner myScanner;
 	private String myUserChoice;
 	private Account myAccount;
 
 	public UI() {
-		myState = 0;
+		//myState = 0;
 		myUserType = "";
 		myUserName = "";
 		myUserChoice = "";
@@ -70,20 +70,17 @@ public class UI extends Observable implements Observer{
 	 * 
 	 */
 	private void login() {
-
-		System.out.print("Please enter user name to log in: ");
+		
+		System.out.print("Loggin Page:");
+		System.out.print("\nPlease enter user name to log in: ");
 		myUserName = myScanner.next();
 		System.out.println();
 		myAccount = new Account(myUserName);
 		setChanged();
 		notifyObservers(myAccount);
-
-		myState = LOG_IN_STATE;
+		//myState = LOG_IN_STATE;
 		setChanged();
 		notifyObservers("LOG_IN_STATE");
-
-
-
 
 	}
 
@@ -96,22 +93,23 @@ public class UI extends Observable implements Observer{
 	 */
 	private void chooseUserTypeMenuView() {
 
+		System.out.println("User Type Page:");
 		System.out.println("\nChoose what type of user you are");
 		System.out.println("1 - Author");
 		System.out.println("2 - SubProgram Chair");
 		myUserChoice = myScanner.next();
 
 		if (myUserChoice.equals("1")) {
+			
 			setChanged();
 			notifyObservers("AUTHOR");
-			//	AuthorView();
 
 		}
 
 		else if (myUserChoice.equals("2")){
+			
 			setChanged();
 			notifyObservers("SUBPROGRAM_CHAIR"); 
-			//	subProgramChairView();
 
 		} 
 
@@ -231,12 +229,13 @@ public class UI extends Observable implements Observer{
 	}
 
 	/**
-	 * Method to diplay header on every page so user can see their myUserName and myUserType.
+	 * Method to display header on every page so user can see their myUserName and myUserType.
 	 * 
 	 * @author Casey Anderson
 	 */
 	private void displayHeader() {
 
+		System.out.println();
 		System.out.println(myUserName + " - " + myUserType);
 		System.out.println();
 
@@ -295,8 +294,8 @@ public class UI extends Observable implements Observer{
 
 		String manuscriptTile;
 		String authorList = "";
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-		LocalDate localDate = LocalDate.now();
+		//DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+		//LocalDate localDate = LocalDate.now();
 		String moreAuthors = "";
 		List<String> listOfAuthors = new ArrayList<String>();
 		String ManuscriptFilePath;
