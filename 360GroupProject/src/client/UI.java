@@ -68,6 +68,9 @@ public class UI extends Observable implements Observer{
 			myAccount = new Account(myUserName);
 			setChanged();
 			notifyObservers(myAccount);
+
+			chooseUserTypeMenuView();
+
 			
 	}
 
