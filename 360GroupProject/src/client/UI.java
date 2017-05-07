@@ -22,13 +22,9 @@ public class UI extends Observable implements Observer{
 
 
 	//View States
-<<<<<<< HEAD
     public static final int LOG_IN_STATE = -2;
     public static final int CHOOSE_USER = -1;
-=======
-	public static final int LOG_IN_STATE = -2;
-	public static final int CHOOSE_USER = -1;
->>>>>>> 1b451a36d8f29f63b48e4772f16137dfcdb14cb4
+
 	public static final int AUTHOR = 0;
 	public static final int REVIEWER = 10;
 	public static final int SUBPROGRAM_CHAIR = 20;
@@ -116,7 +112,7 @@ public class UI extends Observable implements Observer{
 	public void changeState(int theState) {
 		
 		if (theState == LOG_IN_STATE){
-			start();
+			login();
 		}
 		if (theState == CHOOSE_USER) {
 			chooseUserTypeMenuView();
@@ -469,20 +465,13 @@ public class UI extends Observable implements Observer{
 		
 	}
 	
-<<<<<<< HEAD
 
-	public void update(Observable arg0, Object theArg) {
-		changeState((int) theArg);
-
-
-=======
 	public void update(Observable arg0, Object theArg) {
 		
 		if (theArg instanceof Integer) {
 			changeState((int) theArg);
 		}
 		
->>>>>>> 1b451a36d8f29f63b48e4772f16137dfcdb14cb4
 	}
 
 }
