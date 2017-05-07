@@ -3,6 +3,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Reviewers class.
@@ -92,7 +93,7 @@ public class Reviewer extends User {
 		boolean isAuthor = false;
 
 		String reviewerName = getUsername();
-		List<Author> authorlist = theManuscript.getAuthors();
+		List<UUID> authorlist = theManuscript.getAuthors();
 		
 	
 		for (int i = 0; i < authorlist.size(); i++) {

@@ -1,4 +1,5 @@
 import model.Account;
+import model.AccountDatabase;
 import model.Author;
 import model.Conference;
 import model.Manuscript;
@@ -31,6 +32,7 @@ public class AuthorTest {
 	private Author myAuthor;
 	private Author myCoAuthor;
 	private Conference myConference;
+	private AccountDatabase myAccountDatabase;
 	// ID of Authors
 	private ArrayList<UUID> myListOfAuthors;
 	// Key: Account ID, Value: Account Obj
@@ -42,6 +44,7 @@ public class AuthorTest {
 	 */
 	@Before
 	public void setUp() {
+		myAccountDatabase = new AccountDatabase();
 		myAccount = new Account("Chase");
 		myCoAuthAccount = new Account("Steven");
 		myConference = new Conference("Alchemy Conference", new Date(), new Date());
@@ -77,7 +80,10 @@ public class AuthorTest {
 		ArrayList<Reviewer> reviewerList = new ArrayList<Reviewer>();
 		Conference conference = new Conference("RSA", date, date, reviewerList);
 		myAccount.addAuthorRoleToAccount(myAuthor);
+
+		myAccountDatabase.saveAccountToDatabase(myAccount);
 		this.myListOfAccountAuthors.put(myAccount.getMyID(), myAccount);
+		
 
 		myAuthor.addManuscript(conference, manuscript, myListOfAccountAuthors);
 		myAuthor.addManuscript(conference, manuscript, myListOfAccountAuthors);
@@ -85,8 +91,12 @@ public class AuthorTest {
 		myAuthor.addManuscript(conference, manuscript, myListOfAccountAuthors);
 
 		myListOfAuthors.add(myAuthor.getMyID());
+		
 		Manuscript fithManuscript = new Manuscript("Nano Tech", date, mapOfReviewers, myListOfAuthors, new File(""));
 		myAuthor.addManuscript(conference, fithManuscript, myListOfAccountAuthors);
+		
+		TreeMap<UUID, Account> allAccts = new AccountDatabase().getAllAccounts();
+		//myAuthor = new AccountDatabase().getAllAccounts().get(myAccount.getMyID()).getAuthorAssociatedWithConference(conference);
 		assertTrue("ManuScript was not added to list properly", myAuthor.getManuscript(conference).contains(fithManuscript.getMyID()));
 	}
 	

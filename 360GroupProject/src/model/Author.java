@@ -213,12 +213,23 @@ public class Author extends User implements Serializable {
 											  TreeMap<UUID, Account> theGlobalAccountList) {
 		
 		boolean authorAlreadyHasMaxManuscripts = false;
+		System.out.println(theGlobalAccountList);
+		System.out.println("global list^");
 		
 		for(Account acctToCompare : theGlobalAccountList.values()) {
 			Author currentAcctAuthor = acctToCompare.getAuthorAssociatedWithConference(theConference);
 			
+			// if associated author to conference is not found then break out of loop;
+			if(currentAcctAuthor == null) {
+				continue;
+			}
+			
 			// Checks to see if the manuscript contains an author id equivalent to the current iteration's account's 
 			// author associated with the conference parameter id
+			System.out.println("inside isAuthorAtLimit");
+			System.out.println(theManuscript.getAuthors());
+			System.out.println("divider====");
+			System.out.println(currentAcctAuthor);
 			if(theManuscript.getAuthors().contains(currentAcctAuthor.getMyID())) {
 				
 				if(currentAcctAuthor.getNumberOfManuscriptsSubmitted(theConference) >= MAX_MANUSCRIPT_ALLOWED) { 
