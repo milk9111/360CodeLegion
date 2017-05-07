@@ -89,149 +89,156 @@ public class Controller extends Observable implements Observer {
 	 * 
 	 * @author Connor Lundberg
 	 * @author Josiah Hopkins
+	 * @author Morgan Blackmore
 	 * @version 5/6/2017
 	 * @param theNextState The next state the program will be in.
 	 */
 	private void changeState (String theNextState) {
-		//temp testers:
-		System.out.println("In controller changeState: " +theNextState);
+//test print
+		//System.out.println("In controller changeState: " +theNextState);
+
+		//System.out.println("Current state: " + myCurrentState);
 		
 		String[] pieces = theNextState.split(",");
-		
-		switch ((myCurrentState / 10) * 10) {
-			case LOG_IN_STATE:
-				System.out.println("in LOG_IN_STATE");
-				myCurrentState = CHOOSE_USER;
-				
-				setChanged();
-				notifyObservers(myCurrentState);
-				break;
-			case CHOOSE_USER:
-				System.out.println("in choose user");
-				switch (pieces[0]) {
-					case "AUTHOR":
-						System.out.println("in author");
-						myCurrentState = AUTHOR;
-						break;
-					case "SUBPROGRAM_CHAIR":
-						System.out.println("in subprogram chair");
-						myCurrentState = SUBPROGRAM_CHAIR;
-						break;
-				}
-				System.out.println("finished CHOOSE_USER");
-				myCurrentState += LIST_CONFERENCE_VIEW;
-				
-				setChanged();
-				notifyObservers(myCurrentState);
-				break;
-			case AUTHOR:
-				switch (myCurrentState % 10){
-					case SUBMIT_MANUSCRIPT:
-                        Manuscript manuscriptToSubmit;
-						if(pieces[0].equals("Submit Manuscript")){
-							manuscriptToSubmit = makeManuscript(pieces);
-							
-							try {
-								if (myAccount.doesAutorAssociatedWithConferenceExist(myCurrentConference)) {
-									(myAccount.getAuthorAssociatedWithConference(myCurrentConference)).addManuscript(myCurrentConference, manuscriptToSubmit);
-								} else {
-									myAccount.addAuthorRoleToAccount(new Author(myAccount.getMyUsername(), myCurrentConference));
-									(myAccount.getAuthorAssociatedWithConference(myCurrentConference)).addManuscript(myCurrentConference, manuscriptToSubmit);
+		if (myCurrentState < 0) {
+			switch (myCurrentState) {
+				case LOG_IN_STATE:
+					//System.out.println("in LOG_IN_STATE");
+					myCurrentState = CHOOSE_USER;
+					
+					setChanged();
+					notifyObservers(myCurrentState);
+					break;
+				case CHOOSE_USER:
+					//System.out.println("in choose user");
+					switch (pieces[0]) {
+						case "AUTHOR":
+							//System.out.println("in author");
+							myCurrentState = AUTHOR;
+							break;
+						case "SUBPROGRAM_CHAIR":
+							//System.out.println("in subprogram chair");
+							myCurrentState = SUBPROGRAM_CHAIR;
+							break;
+					}
+					//System.out.println("finished CHOOSE_USER");
+					myCurrentState += LIST_CONFERENCE_VIEW;
+					
+					setChanged();
+					notifyObservers(myCurrentState);
+					break;
+			}
+		} else {
+			switch ((myCurrentState / 10) * 10) {
+				case AUTHOR:
+					switch (myCurrentState % 10){
+						case SUBMIT_MANUSCRIPT:
+	                        Manuscript manuscriptToSubmit;
+							if(pieces[0].equals("Submit Manuscript")){
+								manuscriptToSubmit = makeManuscript(pieces);
+								
+								try {
+									if (myAccount.doesAutorAssociatedWithConferenceExist(myCurrentConference)) {
+										(myAccount.getAuthorAssociatedWithConference(myCurrentConference)).addManuscript(myCurrentConference, manuscriptToSubmit);
+									} else {
+										myAccount.addAuthorRoleToAccount(new Author(myAccount.getMyUsername(), myCurrentConference));
+										(myAccount.getAuthorAssociatedWithConference(myCurrentConference)).addManuscript(myCurrentConference, manuscriptToSubmit);
+									}
+									
+								} catch (Exception e) {
+									e.printStackTrace();
 								}
 								
-							} catch (Exception e) {
-								e.printStackTrace();
+								myCurrentConference.submitManuscript(manuscriptToSubmit);
+								
+								myCurrentState = AUTHOR + LIST_MANUSCRIPT_VIEW;
+								setChanged();
+								notifyObservers(myCurrentState);
+	                        }
+	
+							break;
+						case LIST_MANUSCRIPT_VIEW:
+							if (pieces[0].equals("List Manuscript View")) {
+								myCurrentState = AUTHOR + USER_OPTIONS;
+								setChanged();
+								notifyObservers(myCurrentState);
 							}
-							
-							myCurrentConference.submitManuscript(manuscriptToSubmit);
-							
-							myCurrentState = AUTHOR + LIST_MANUSCRIPT_VIEW;
-							setChanged();
-							notifyObservers(myCurrentState);
-                        }
-
-						break;
-					case LIST_MANUSCRIPT_VIEW:
-						if (pieces[0].equals("List Manuscript View")) {
-							myCurrentState = AUTHOR + USER_OPTIONS;
-							setChanged();
-							notifyObservers(myCurrentState);
-						}
-						break;
-					case LIST_CONFERENCE_VIEW:
-						if (pieces[0].equals("List Conference View")) {
-							myCurrentConference = findConference(theNextState, myAccount.getMySubprogramChair().getConferenceList());
-							
-							myCurrentState = AUTHOR + USER_OPTIONS;
-							setChanged();
-							notifyObservers(myCurrentState);
-						}
-						break;
-					case USER_OPTIONS:
-						switch (pieces[0]) {
-                    	case "Submit Manuscript":
-                    		myCurrentState = AUTHOR + SUBMIT_MANUSCRIPT;
-                    		break;
-                    	case "Go Back":
-                    		myCurrentState = AUTHOR + LIST_CONFERENCE_VIEW;
-                    		break;
-						}
-						
-						setChanged();
-						notifyObservers(myCurrentState);
-						break;
-				}
-				
-				break;
-			case REVIEWER:
-				switch (myCurrentState % 10){
-
-				}
-				break;
-			case SUBPROGRAM_CHAIR:
-				
-				switch (myCurrentState % 10){
-                    case ASSIGN_REVIEWER:
-						myCurrentReviewer = findReviewer(theNextState, myCurrentConference.getPastReviewers());
-
-                        myCurrentState = SUBPROGRAM_CHAIR + LIST_ASSIGNED_REVIEWERS_VIEW;
-                        setChanged();
-						notifyObservers(myCurrentState);
-                        break;
-                    case LIST_CONFERENCE_VIEW:
-						myCurrentConference = findConference(theNextState, myAccount.getMySubprogramChair().getConferenceList());
-						
-						myCurrentState = SUBPROGRAM_CHAIR + USER_OPTIONS;
-						setChanged();
-						notifyObservers(myCurrentState);
-                        break;
-					case LIST_MANUSCRIPT_VIEW:
-						myCurrentState = SUBPROGRAM_CHAIR + USER_OPTIONS;
-                    	
-						setChanged();
-						notifyObservers(myCurrentState);
-						break;
-                    case LIST_ASSIGNED_REVIEWERS_VIEW:
-                    	myCurrentState = SUBPROGRAM_CHAIR + USER_OPTIONS;
-                    	
-						setChanged();
-						notifyObservers(myCurrentState);
-                        break;
-                    case USER_OPTIONS:
-                    	switch (pieces[0]) {
-	                    	case "Assign Reviewer":
-	                    		myCurrentState = SUBPROGRAM_CHAIR + ASSIGN_REVIEWER;
+							break;
+						case LIST_CONFERENCE_VIEW:
+							if (pieces[0].equals("List Conference View")) {
+								myCurrentConference = findConference(theNextState, myAccount.getMySubprogramChair().getConferenceList());
+								
+								myCurrentState = AUTHOR + USER_OPTIONS;
+								setChanged();
+								notifyObservers(myCurrentState);
+							}
+							break;
+						case USER_OPTIONS:
+							switch (pieces[0]) {
+	                    	case "Submit Manuscript":
+	                    		myCurrentState = AUTHOR + SUBMIT_MANUSCRIPT;
 	                    		break;
 	                    	case "Go Back":
-	                    		myCurrentState = SUBPROGRAM_CHAIR + LIST_CONFERENCE_VIEW;
+	                    		myCurrentState = AUTHOR + LIST_CONFERENCE_VIEW;
 	                    		break;
-                    	}
-                    	
-                    	setChanged();
-						notifyObservers(myCurrentState);
-                    	break;
-				}
-				break;
+							}
+							
+							setChanged();
+							notifyObservers(myCurrentState);
+							break;
+					}
+					
+					break;
+				case REVIEWER:
+					switch (myCurrentState % 10){
+	
+					}
+					break;
+				case SUBPROGRAM_CHAIR:
+					
+					switch (myCurrentState % 10){
+	                    case ASSIGN_REVIEWER:
+							myCurrentReviewer = findReviewer(theNextState, myCurrentConference.getPastReviewers());
+	
+	                        myCurrentState = SUBPROGRAM_CHAIR + LIST_ASSIGNED_REVIEWERS_VIEW;
+	                        setChanged();
+							notifyObservers(myCurrentState);
+	                        break;
+	                    case LIST_CONFERENCE_VIEW:
+							myCurrentConference = findConference(theNextState, myAccount.getMySubprogramChair().getConferenceList());
+							
+							myCurrentState = SUBPROGRAM_CHAIR + USER_OPTIONS;
+							setChanged();
+							notifyObservers(myCurrentState);
+	                        break;
+						case LIST_MANUSCRIPT_VIEW:
+							myCurrentState = SUBPROGRAM_CHAIR + USER_OPTIONS;
+	                    	
+							setChanged();
+							notifyObservers(myCurrentState);
+							break;
+	                    case LIST_ASSIGNED_REVIEWERS_VIEW:
+	                    	myCurrentState = SUBPROGRAM_CHAIR + USER_OPTIONS;
+	                    	
+							setChanged();
+							notifyObservers(myCurrentState);
+	                        break;
+	                    case USER_OPTIONS:
+	                    	switch (pieces[0]) {
+		                    	case "Assign Reviewer":
+		                    		myCurrentState = SUBPROGRAM_CHAIR + ASSIGN_REVIEWER;
+		                    		break;
+		                    	case "Go Back":
+		                    		myCurrentState = SUBPROGRAM_CHAIR + LIST_CONFERENCE_VIEW;
+		                    		break;
+	                    	}
+	                    	
+	                    	setChanged();
+							notifyObservers(myCurrentState);
+	                    	break;
+					}
+					break;
+			}
 		}
 	}
 	
@@ -372,7 +379,7 @@ public class Controller extends Observable implements Observer {
 	 */
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		System.out.println("received something in update");
+		//System.out.println("received something in update");
 		if (arg1 instanceof String) {
 			changeState ((String) arg1);
 		} else if (arg1 instanceof Account) {
