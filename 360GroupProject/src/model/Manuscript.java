@@ -23,6 +23,7 @@ import model.Reviewer;
 public class Manuscript implements Serializable {
 	private UUID myID;
 	private HashMap<Reviewer, String> myReviews;
+	// TODO: Refactor to list of author UUIDs instead, maybe TreeMap of Author/User UUID, Authors
 	private ArrayList<Author> myAuthors;
 	private Date mySubmittedDate;
 	private String myTitle;

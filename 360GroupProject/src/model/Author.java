@@ -33,6 +33,7 @@ public class Author extends User implements Serializable {
 	 */
 	private ArrayList<File> myReviewList;
 	
+	// TODO: refactor this to be conference IDs and Manuscript IDs
 	/**
 	 * Map of the Manuscripts already submitted to each conference.
 	 */

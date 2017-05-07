@@ -160,8 +160,6 @@ public class Account implements Serializable {
     public void addReviewerRoleToAccount(Reviewer theReviewer, Conference theConference) {
     	this.myReviewers.put(theConference.getMyID(), theReviewer);
     }
-
-
     
     public String getMyUsername() {
     	return this.myUsername;
