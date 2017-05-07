@@ -1,6 +1,7 @@
 package model;
 
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,6 +29,7 @@ public class Manuscript implements Serializable {
 	private ArrayList<UUID> myAuthorsIDs;
 	private Date mySubmittedDate;
 	private String myTitle;
+	private File myFilePath;
 	
 	
 	/**
@@ -39,12 +41,14 @@ public class Manuscript implements Serializable {
 	 * @author Connor Lundberg
 	 * @version 5/6/2017
 	 */
-	public Manuscript (String theTitle, Date theSubmittedDate, HashMap<Reviewer, String> theReviews, ArrayList<UUID> theAuthorsIDs) {
+	public Manuscript (String theTitle, Date theSubmittedDate, HashMap<Reviewer, String> theReviews,
+			ArrayList<UUID> theAuthorsIDs,File theFilePath) {
 		myID = UUID.randomUUID();
 		myReviews = (HashMap<Reviewer, String>) theReviews.clone();
 		myAuthorsIDs = (ArrayList<UUID>) theAuthorsIDs.clone();
 		mySubmittedDate = theSubmittedDate;
 		myTitle = theTitle;
+		myFilePath = theFilePath;
 	}
 	
 	public Manuscript(String theTitle, Date theSubmittedDate, ArrayList<UUID> theAuthorsIDs) {
@@ -61,10 +65,11 @@ public class Manuscript implements Serializable {
 	 * @param theSubmittedDate submission date
 	 * @param theAuthor Author to add to author list for manuscript
 	 */
-	public Manuscript(String theTitle, Date theSubmittedDate, Author theAuthor) {
+	public Manuscript(String theTitle, Date theSubmittedDate, Author theAuthor, File theFilePath) {
 		myID = UUID.randomUUID();
 		myTitle = theTitle;
 		mySubmittedDate = theSubmittedDate;
+		myFilePath = theFilePath;
 		
 		// init author list and add passed in author to list
 		ArrayList<UUID> authorIDList = new ArrayList<UUID>();
@@ -84,6 +89,7 @@ public class Manuscript implements Serializable {
 		myReviews = new HashMap<Reviewer, String> ();
 		myAuthorsIDs = new ArrayList<UUID> ();
 		mySubmittedDate = new Date ();
+		myFilePath = new File("");
 	}
 	
 	/**
@@ -241,6 +247,23 @@ public class Manuscript implements Serializable {
 	public void addReview (final Reviewer theReviewer, String theReview) {
 		myReviews.replace(theReviewer, theReview);
 	}
+	
+	
+	public void setFilePath (File theNewFilePath) {
+		myFilePath = theNewFilePath;
+	}
+	
+	
+	/**
+	 * Submits a manuscript then returns it upon success.
+	 * 
+	 * @return A copy of the manuscript
+	 * @author Connor Lundberg
+	 * @version 5/6/2017
+	 
+	public Manuscript submitManuscript () {
+		return new Manuscript(this.myTitle, this.mySubmittedDate, this.myReviews, this.myAuthors);
+	}*/
 	
 
 	/**

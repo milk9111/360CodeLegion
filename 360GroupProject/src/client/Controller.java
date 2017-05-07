@@ -1,5 +1,6 @@
 package client;
 
+import java.io.File;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -97,7 +98,7 @@ public class Controller extends Observable implements Observer {
 //test print
 //		System.out.println("In controller changeState: " +theNextState);
 
-		//System.out.println("Current state: " + myCurrentState);
+		System.out.println("Current state: " + myCurrentState);
 		
 		String[] pieces = theNextState.split(",");
 		if (myCurrentState < 0) {
@@ -114,10 +115,14 @@ public class Controller extends Observable implements Observer {
 					switch (pieces[0]) {
 						case "AUTHOR":
 							//System.out.println("in author");
+							myAccount.addAuthorRoleToAccount(new Author(myCurrentConference));
+							myAccountDatabase.updateAndSaveAccountToDatabase(myAccount);
 							myCurrentState = AUTHOR;
 							break;
 						case "SUBPROGRAM_CHAIR":
 							//System.out.println("in subprogram chair");
+							myAccount.addSubprogramChairRoleToAccount(new SubprogramChair(myCurrentConference), myCurrentConference);
+							myAccountDatabase.updateAndSaveAccountToDatabase(myAccount);
 							myCurrentState = SUBPROGRAM_CHAIR;
 							break;
 					}
@@ -133,15 +138,22 @@ public class Controller extends Observable implements Observer {
 				case AUTHOR:
 					switch (myCurrentState % 10){
 						case SUBMIT_MANUSCRIPT:
+							//System.out.println("in submit manuscript");
 	                        Manuscript manuscriptToSubmit;
+	                        //System.out.println(pieces[0]);
 							if(pieces[0].equals("Submit Manuscript")){
+								//System.out.println("in submit manuscript inner");
+								System.out.println(theNextState);
 								manuscriptToSubmit = makeManuscript(pieces);
 								
 								try {
 									if (myAccount.doesAutorAssociatedWithConferenceExist(myCurrentConference)) {
 										(myAccount.getAuthorAssociatedWithConference(myCurrentConference)).addManuscript(myCurrentConference, manuscriptToSubmit);
 									} else {
-										myAccount.addAuthorRoleToAccount(new Author(myAccount.getMyUsername(), myCurrentConference));
+										//System.out.println(myAccount.getAuthorAssociatedWithConference(myCurrentConference).getMyAssociatedConference());
+										//System.out.println(myCurrentConference);
+										//System.out.println("else entered");
+										myAccount.addAuthorRoleToAccount(new Author(myCurrentConference));
 										(myAccount.getAuthorAssociatedWithConference(myCurrentConference)).addManuscript(myCurrentConference, manuscriptToSubmit);
 									}
 									
@@ -150,6 +162,7 @@ public class Controller extends Observable implements Observer {
 								}
 								
 								myCurrentConference.submitManuscript(manuscriptToSubmit);
+								myManuscriptDatabase.saveManuscriptToDatabase(manuscriptToSubmit);
 								
 								myCurrentState = AUTHOR + LIST_MANUSCRIPT_VIEW;
 								setChanged();
@@ -167,9 +180,11 @@ public class Controller extends Observable implements Observer {
 						case LIST_CONFERENCE_VIEW:
 							if (pieces[0].equals("List Conference View")) {
 								TreeMap<UUID, Conference> currentConferenceList = this.myConferenceDatabase.deserializeConferenceList();
+								//System.out.println(currentConferenceList.values());
+								//System.out.println(myAccount.getAllConferencesAssociatedWithMyAuthorList(currentConferenceList));
 								myCurrentConference = findConference(theNextState, 
 										myAccount.getAllConferencesAssociatedWithMyAuthorList(currentConferenceList));
-								
+								System.out.println("This is the current conference: " + myCurrentConference);
 								myCurrentState = AUTHOR + USER_OPTIONS;
 								setChanged();
 								notifyObservers(myCurrentState);
@@ -177,7 +192,7 @@ public class Controller extends Observable implements Observer {
 							break;
 						case USER_OPTIONS:
 							switch (pieces[0]) {
-	                    	case "Submit Manuscript":
+	                    	case "SUBMIT_MANUSCRIPT":
 	                    		myCurrentState = AUTHOR + SUBMIT_MANUSCRIPT;
 	                    		break;
 	                    	case "Go Back":
@@ -328,10 +343,11 @@ public class Controller extends Observable implements Observer {
 		Manuscript returnManuscript = new Manuscript();
 		
 		returnManuscript.setTitle(thePieces[1]);
-		returnManuscript.setSubmittedDate(new Date(thePieces[2]));
+		returnManuscript.setFilePath(new File(thePieces[2]));
+		returnManuscript.setSubmittedDate(new Date());
 		
 		//Adds the remaining Authors in the list.
-		for (int i = 3; i < thePieces.length; i++) {
+		for (int i = 4; i < thePieces.length; i++) {
 			returnManuscript.addAuthor(new Author(thePieces[i], myCurrentConference));
 		}
 		
@@ -370,13 +386,21 @@ public class Controller extends Observable implements Observer {
 	 */
 	public void setConference (Conference theNewConference) {
 		if (!myConferenceDatabase.isConferenceInListUnique(myConferenceDatabase.getAllConferences(), theNewConference)) {
-			System.out.println("Found an old conference");
+			//System.out.println("Found an old conference");
 			myCurrentConference = theNewConference;
+			//System.out.println(myCurrentConference.getMyName());
 		} else {
-			System.out.println("made a new conference");
+			//System.out.println("made a new conference");
 			myConferenceDatabase.saveConferenceToDatabase(theNewConference);
 			myCurrentConference = theNewConference;
 		}
+		
+		//System.out.println("at end: " + myCurrentConference);
+	}
+	
+	
+	public Conference getCurrentConference () {
+		return myCurrentConference;
 	}
 
 
@@ -389,6 +413,7 @@ public class Controller extends Observable implements Observer {
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		//System.out.println("received something in update");
+		//System.out.println(myCurrentConference);
 		if (arg1 instanceof String) {
 			changeState ((String) arg1);
 		} else if (arg1 instanceof Account) {

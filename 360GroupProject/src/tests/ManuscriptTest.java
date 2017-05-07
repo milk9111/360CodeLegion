@@ -1,5 +1,6 @@
 import static org.junit.Assert.*;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -38,7 +39,7 @@ public class ManuscriptTest {
 		String title = "Aerodynamics of a Hamburger";
 		Date date = new Date();
 		
-		myPaper = new Manuscript(title, date, reviews, authors);
+		myPaper = new Manuscript(title, date, reviews, authors, new File(""));
 	}
 	
 
@@ -138,6 +139,37 @@ public class ManuscriptTest {
 		}
 		
 	}
+	
+	
+	/**
+	 * A test for the submitManuscript method. This is a test to check if the Manuscript
+	 * returned is the same as the original. This is not mean the same Manuscript reference,
+	 * but the Manuscript information within.
+	 * 
+	 * @author Connor Lundberg
+	 * @version 5/5/2017
+	 
+	@Test
+	public void submitManuscript_TestSubmitManuscriptForCorrectPaperReturned () {
+		Manuscript testPaper = myPaper.submitManuscript();
+		assertEquals (testPaper instanceof Manuscript, true);
+		for (int i = 0; i < testPaper.getAuthors().size(); i++) {
+			assertEquals(testPaper.getAuthors().get(i), myPaper.getAuthors().get(i));
+		}
+		
+		for (int i = 0; i < testPaper.getReviews().size(); i++) {
+			assertEquals(testPaper.getReviews().get(i), myPaper.getReviews().get(i));
+		}
+		
+		
+		for (int i = 0; i < testPaper.getReviewers().size(); i++) {
+			assertEquals(testPaper.getReviewers().get(i), myPaper.getReviewers().get(i));
+		}
+		
+		assertEquals(testPaper.getSubmittedDate(), myPaper.getSubmittedDate());
+		
+		assertEquals(testPaper.getTitle(), myPaper.getTitle());
+	}*/
 
 }
 

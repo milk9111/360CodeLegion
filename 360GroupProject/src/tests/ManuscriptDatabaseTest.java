@@ -5,6 +5,7 @@
 
 import static org.junit.Assert.*;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.TreeMap;
@@ -82,9 +83,9 @@ public class ManuscriptDatabaseTest {
 		Account userAccount = new Account("RyanTran");
 		Conference primaryConference = new Conference("Education of Electronics", new Date(), new Date());
 		Author authorRole = new Author(primaryConference);
-		Manuscript manuA = new Manuscript("Alpha script", new Date(), authorRole);
-		Manuscript manuB = new Manuscript("Beta script", new Date(), authorRole);
-		Manuscript manuC = new Manuscript("Charlie script", new Date(), authorRole);
+		Manuscript manuA = new Manuscript("Alpha script", new Date(), authorRole, new File(""));
+		Manuscript manuB = new Manuscript("Beta script", new Date(), authorRole, new File(""));
+		Manuscript manuC = new Manuscript("Charlie script", new Date(), authorRole, new File(""));
 		
 		myManuscriptDatabase.saveManuscriptToDatabase(manuA);
 		myManuscriptDatabase.saveManuscriptToDatabase(manuB);

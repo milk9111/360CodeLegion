@@ -26,10 +26,14 @@ import org.junit.Test;
  */
 public class AuthorTest {
 
+	private Account myAccount;
+	private Account myCoAuthAccount;
 	private Author myAuthor;
 	private Author myCoAuthor;
 	private Conference myConference;
+	// ID of Authors
 	private ArrayList<UUID> myListOfAuthors;
+	// Key: Account ID, Value: Account Obj
 	private TreeMap<UUID, Account> myListOfAccountAuthors;
 
 	/**
@@ -38,6 +42,8 @@ public class AuthorTest {
 	 */
 	@Before
 	public void setUp() {
+		myAccount = new Account("Chase");
+		myCoAuthAccount = new Account("Steven");
 		myConference = new Conference("Alchemy Conference", new Date(), new Date());
 		myAuthor = new Author("simpson@ieee.org", myConference);
 		myCoAuthor = new Author("fleegle@uw.edu", myConference);
@@ -67,17 +73,20 @@ public class AuthorTest {
 		Date date = new Date();
 		HashMap<Reviewer, String> mapOfReviewers = new HashMap<Reviewer, String>();
 		myListOfAuthors.add(myAuthor.getMyID());
-		Manuscript manuscript = new Manuscript("Old Yeller", date, mapOfReviewers, myListOfAuthors);
+		Manuscript manuscript = new Manuscript("Old Yeller", date, mapOfReviewers, myListOfAuthors, new File(""));
 		ArrayList<Reviewer> reviewerList = new ArrayList<Reviewer>();
 		Conference conference = new Conference("RSA", date, date, reviewerList);
-		this.myListOfAccountAuthors.put(, value)
-		myAuthor.addManuscript(conference, manuscript);
-		myAuthor.addManuscript(conference, manuscript);
-		myAuthor.addManuscript(conference, manuscript);
-		myAuthor.addManuscript(conference, manuscript);
+		myAccount.addAuthorRoleToAccount(myAuthor);
+		this.myListOfAccountAuthors.put(myAccount.getMyID(), myAccount);
+
+		myAuthor.addManuscript(conference, manuscript, myListOfAccountAuthors);
+		myAuthor.addManuscript(conference, manuscript, myListOfAccountAuthors);
+		myAuthor.addManuscript(conference, manuscript, myListOfAccountAuthors);
+		myAuthor.addManuscript(conference, manuscript, myListOfAccountAuthors);
+
 		myListOfAuthors.add(myAuthor.getMyID());
-		Manuscript fithManuscript = new Manuscript("Nano Tech", date, mapOfReviewers, myListOfAuthors);
-		myAuthor.addManuscript(conference, fithManuscript);
+		Manuscript fithManuscript = new Manuscript("Nano Tech", date, mapOfReviewers, myListOfAuthors, new File(""));
+		myAuthor.addManuscript(conference, fithManuscript, myListOfAccountAuthors);
 		assertTrue("ManuScript was not added to list properly", myAuthor.getManuscript(conference).contains(fithManuscript.getMyID()));
 	}
 	
@@ -93,17 +102,23 @@ public class AuthorTest {
 		HashMap<Reviewer, String> mapOfReviewers = new HashMap<Reviewer, String>();
 		ArrayList<Author> listOfAuthors = new ArrayList<Author>();
 		myListOfAuthors.add(myAuthor.getMyID());
-		Manuscript manuscript = new Manuscript("Old Yeller", date, mapOfReviewers, myListOfAuthors);
+		Manuscript manuscript = new Manuscript("Old Yeller", date, mapOfReviewers, myListOfAuthors, new File(""));
 		ArrayList<Reviewer> reviewerList = new ArrayList<Reviewer>();
 		Conference conference = new Conference("RSA", date, date, reviewerList);
-		myAuthor.addManuscript(conference, manuscript);
-		myAuthor.addManuscript(conference, manuscript);
-		myAuthor.addManuscript(conference, manuscript);
-		myAuthor.addManuscript(conference, manuscript);
-		myAuthor.addManuscript(conference, manuscript);
+		
+		// add author to account's author list
+		myAccount.addAuthorRoleToAccount(myAuthor);
+		this.myListOfAccountAuthors.put(myAccount.getMyID(), myAccount);
+
+		// add manuscripts
+		myAuthor.addManuscript(conference, manuscript, myListOfAccountAuthors);
+		myAuthor.addManuscript(conference, manuscript, myListOfAccountAuthors);
+		myAuthor.addManuscript(conference, manuscript, myListOfAccountAuthors);
+		myAuthor.addManuscript(conference, manuscript, myListOfAccountAuthors);
+		myAuthor.addManuscript(conference, manuscript, myListOfAccountAuthors);
 		myListOfAuthors.add(myAuthor.getMyID());
-		Manuscript sixthManuscript = new Manuscript("Nano Tech", date, mapOfReviewers, myListOfAuthors);
-		myAuthor.addManuscript(conference, sixthManuscript);
+		Manuscript sixthManuscript = new Manuscript("Nano Tech", date, mapOfReviewers, myListOfAuthors, new File(""));
+		myAuthor.addManuscript(conference, sixthManuscript, myListOfAccountAuthors);
 	}
 
 	/**
@@ -118,15 +133,24 @@ public class AuthorTest {
 		HashMap<Reviewer, String> mapOfReviewers = new HashMap<Reviewer, String>();
 		myListOfAuthors.add(myAuthor.getMyID());
 		myListOfAuthors.add(myCoAuthor.getMyID());
-		Manuscript manuscript = new Manuscript("Old Yeller", date, mapOfReviewers, myListOfAuthors);
+		Manuscript manuscript = new Manuscript("Old Yeller", date, mapOfReviewers, myListOfAuthors, new File(""));
 		ArrayList<Reviewer> reviewerList = new ArrayList<Reviewer>();
 		Conference conference = new Conference("RSA", date, date, reviewerList);
-		myCoAuthor.addManuscript(conference, manuscript);
-		myCoAuthor.addManuscript(conference, manuscript);
-		myCoAuthor.addManuscript(conference, manuscript);
-		myCoAuthor.addManuscript(conference, manuscript);
-		Manuscript fithManuscript = new Manuscript("Nano Tech", date, mapOfReviewers, myListOfAuthors);
-		myAuthor.addManuscript(conference, fithManuscript);
+		
+		myCoAuthAccount.addAuthorRoleToAccount(myCoAuthor);
+		this.myListOfAccountAuthors.put(myCoAuthAccount.getMyID(), myCoAuthAccount);
+		
+		myCoAuthor.addManuscript(conference, manuscript, myListOfAccountAuthors);
+		myCoAuthor.addManuscript(conference, manuscript, myListOfAccountAuthors);
+		myCoAuthor.addManuscript(conference, manuscript, myListOfAccountAuthors);
+		myCoAuthor.addManuscript(conference, manuscript, myListOfAccountAuthors);
+
+		Manuscript fithManuscript = new Manuscript("Nano Tech", date, mapOfReviewers, myListOfAuthors, new File(""));
+		myAuthor.addManuscript(conference, fithManuscript, myListOfAccountAuthors);
+		
+		myAccount.addAuthorRoleToAccount(myAuthor);
+		this.myListOfAccountAuthors.put(myAccount.getMyID(), myAccount);
+		
 		assertTrue("ManuScript was not added to list properly", myAuthor.getManuscript(conference).contains(fithManuscript.getMyID()));
 	}
 	
@@ -142,16 +166,27 @@ public class AuthorTest {
 		HashMap<Reviewer, String> mapOfReviewers = new HashMap<Reviewer, String>();
 		myListOfAuthors.add(myAuthor.getMyID());
 		myListOfAuthors.add(myCoAuthor.getMyID());
-		Manuscript manuscript = new Manuscript("Old Yeller", date, mapOfReviewers, myListOfAuthors);
+		Manuscript manuscript = new Manuscript("Old Yeller", date, mapOfReviewers, myListOfAuthors, new File(""));
+
 		ArrayList<Reviewer> reviewerList = new ArrayList<Reviewer>();
 		Conference conference = new Conference("RSA", date, date, reviewerList);
-		myCoAuthor.addManuscript(conference, manuscript);
-		myCoAuthor.addManuscript(conference, manuscript);
-		myCoAuthor.addManuscript(conference, manuscript);
-		myCoAuthor.addManuscript(conference, manuscript);
-		myCoAuthor.addManuscript(conference, manuscript);
-		Manuscript sixthManuscript = new Manuscript("Nano Tech", date, mapOfReviewers, myListOfAuthors);
-		myAuthor.addManuscript(conference, sixthManuscript);
+		
+		myCoAuthAccount.addAuthorRoleToAccount(myCoAuthor);
+		this.myListOfAccountAuthors.put(myCoAuthAccount.getMyID(), myCoAuthAccount);
+		
+		myCoAuthor.addManuscript(conference, manuscript, myListOfAccountAuthors);
+		myCoAuthor.addManuscript(conference, manuscript, myListOfAccountAuthors);
+		myCoAuthor.addManuscript(conference, manuscript, myListOfAccountAuthors);
+		myCoAuthor.addManuscript(conference, manuscript, myListOfAccountAuthors);
+		myCoAuthor.addManuscript(conference, manuscript, myListOfAccountAuthors);
+
+		Manuscript sixthManuscript = new Manuscript("Nano Tech", date, mapOfReviewers, myListOfAuthors, new File(""));
+		
+		myAccount.addAuthorRoleToAccount(myAuthor);
+		this.myListOfAccountAuthors.put(myAccount.getMyID(), myAccount);
+		myAuthor.addManuscript(conference, sixthManuscript, myListOfAccountAuthors);
+		
+		
 	}
 	
 	/**
@@ -166,16 +201,25 @@ public class AuthorTest {
 		HashMap<Reviewer, String> mapOfReviewers = new HashMap<Reviewer, String>();
 		myListOfAuthors.add(myAuthor.getMyID());
 		myListOfAuthors.add(myCoAuthor.getMyID());
-		Manuscript manuscript = new Manuscript("Old Yeller", date, mapOfReviewers, myListOfAuthors);
+		Manuscript manuscript = new Manuscript("Old Yeller", date, mapOfReviewers, myListOfAuthors, new File(""));
 		ArrayList<Reviewer> reviewerList = new ArrayList<Reviewer>();
 		Conference conference = new Conference("RSA", date, date, reviewerList);
-		myCoAuthor.addManuscript(conference, manuscript);
-		myCoAuthor.addManuscript(conference, manuscript);
-		myCoAuthor.addManuscript(conference, manuscript);
-		myAuthor.addManuscript(conference, manuscript);
-		myAuthor.addManuscript(conference, manuscript);
-		Manuscript sixthManuscript = new Manuscript("Nano Tech", date, mapOfReviewers, myListOfAuthors);
-	    myAuthor.addManuscript(conference, sixthManuscript);
+		
+		// adding authors to their respective account and then account list
+		myAccount.addAuthorRoleToAccount(myAuthor);
+		myCoAuthAccount.addAuthorRoleToAccount(myCoAuthor);
+		
+		this.myListOfAccountAuthors.put(myAccount.getMyID(), myAccount);
+		this.myListOfAccountAuthors.put(myCoAuthAccount.getMyID(), myCoAuthAccount);
+		
+		myCoAuthor.addManuscript(conference, manuscript, myListOfAccountAuthors);
+		myCoAuthor.addManuscript(conference, manuscript, myListOfAccountAuthors);
+		myCoAuthor.addManuscript(conference, manuscript, myListOfAccountAuthors);
+		myAuthor.addManuscript(conference, manuscript, myListOfAccountAuthors);
+		myAuthor.addManuscript(conference, manuscript, myListOfAccountAuthors);
+
+		Manuscript sixthManuscript = new Manuscript("Nano Tech", date, mapOfReviewers, myListOfAuthors, new File(""));
+	    myAuthor.addManuscript(conference, sixthManuscript, myListOfAccountAuthors);
 	}
 	
 	/**
@@ -190,15 +234,23 @@ public class AuthorTest {
 		HashMap<Reviewer, String> mapOfReviewers = new HashMap<Reviewer, String>();
 		myListOfAuthors.add(myAuthor.getMyID());
 		myListOfAuthors.add(myCoAuthor.getMyID());
-		Manuscript manuscript = new Manuscript("Old Yeller", date, mapOfReviewers, myListOfAuthors);
+		Manuscript manuscript = new Manuscript("Old Yeller", date, mapOfReviewers, myListOfAuthors, new File(""));
 		ArrayList<Reviewer> reviewerList = new ArrayList<Reviewer>();
 		Conference conference = new Conference("RSA", date, date, reviewerList);
-		myCoAuthor.addManuscript(conference, manuscript);
-		myCoAuthor.addManuscript(conference, manuscript);
-		myAuthor.addManuscript(conference, manuscript);
-		myAuthor.addManuscript(conference, manuscript);
-		Manuscript fithManuscript = new Manuscript("Nano Tech", date, mapOfReviewers, myListOfAuthors);
-		myAuthor.addManuscript(conference, fithManuscript);
+		
+		// adding authors to author account list
+		myCoAuthAccount.addAuthorRoleToAccount(myCoAuthor);
+		myAccount.addAuthorRoleToAccount(myAuthor);
+		
+		this.myListOfAccountAuthors.put(myAccount.getMyID(), myAccount);
+		this.myListOfAccountAuthors.put(myCoAuthAccount.getMyID(), myCoAuthAccount);
+		
+		myCoAuthor.addManuscript(conference, manuscript, myListOfAccountAuthors);
+		myCoAuthor.addManuscript(conference, manuscript, myListOfAccountAuthors);
+		myAuthor.addManuscript(conference, manuscript, myListOfAccountAuthors);
+		myAuthor.addManuscript(conference, manuscript, myListOfAccountAuthors);
+		Manuscript fithManuscript = new Manuscript("Nano Tech", date, mapOfReviewers, myListOfAuthors, new File(""));
+		myAuthor.addManuscript(conference, fithManuscript, myListOfAccountAuthors);
 		assertTrue("ManuScript was not added to list properly", myAuthor.getManuscript(conference).contains(fithManuscript.getMyID()));
 	}
 

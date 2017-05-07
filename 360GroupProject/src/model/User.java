@@ -73,6 +73,7 @@ public abstract class User implements Serializable {
 	public User(Conference theConference) {
 		myID = UUID.randomUUID();
 		myAssociatedConference = theConference;
+		//System.out.println("User associated conference " + this.myAssociatedConference);
 	}
 	
 	/**

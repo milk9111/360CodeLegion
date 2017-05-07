@@ -59,6 +59,8 @@ public class Account implements Serializable {
      * @param theAuthor The author to add to the account's authors list
      */
     public void addAuthorRoleToAccount(Author theAuthor) {
+    	System.out.println(theAuthor.getMyID());
+    	System.out.println(theAuthor.getMyAssociatedConference());
         this.myAuthors.put(theAuthor.getMyAssociatedConference().getMyID(), theAuthor);
     }
         
@@ -120,8 +122,9 @@ public class Account implements Serializable {
     
     public ArrayList<Conference> getAllConferencesAssociatedWithMyAuthorList(TreeMap<UUID, Conference> theConfList) {
     	ArrayList<Conference> returnList = new ArrayList<Conference>();
-    	
+    	System.out.println(myAuthors.size());
     	for(UUID aConferenceID : this.myAuthors.keySet()) {
+    		//System.out.println(aConferenceID);
     		if(theConfList.containsKey(aConferenceID)) {
     			returnList.add(theConfList.get(aConferenceID));
     		}
