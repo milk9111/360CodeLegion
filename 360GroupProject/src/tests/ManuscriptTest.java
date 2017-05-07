@@ -92,7 +92,8 @@ public class ManuscriptTest {
 	 */
 	@Test
 	public void addAuthor_TestAddAuthorForCorrectAuthorAdded () {
-		Author testAuthor = new Author ("Jiminiy Cricket");
+		Conference testConference = new Conference("Sci Conference", new Date(), new Date());
+		Author testAuthor = new Author ("Jiminiy Cricket", testConference);
 		
 		myPaper.addAuthor(testAuthor);
 		

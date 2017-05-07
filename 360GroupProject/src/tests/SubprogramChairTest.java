@@ -28,6 +28,7 @@ public class SubprogramChairTest {
 
     // fixtures
 	private SubprogramChair mySubprogramChair;
+	private Conference myConference;
 
 	/**
 	 * Initialize a subprogram chair
@@ -35,49 +36,11 @@ public class SubprogramChairTest {
 	 */
     @Before
     public void setUp() throws Exception {
-        mySubprogramChair = new SubprogramChair("Marauder");
+    	myConference = new Conference("Hydrogen Analysis", new Date(), new Date());
+        mySubprogramChair = new SubprogramChair("Marauder", myConference);
         Database.clearDatabase();
     }
 
-    /**
-     * Test method for {@link SubprogramChair#getMyAssignedConferences()}
-     * Tests to see if the correct list of conferences assigned to the subprogram chair is returned.
-     * @author Ryan Tran
-     */
-    @Test
-    public void getMyAssignedConferences_forConferenceListWithOneItem_shouldReturnList() {
-    	// add a single conference to subprogram chair's assigned conferences
-    	Date submissionDeadline = new Date();
-    	Date reviewDeadline = new Date();
-    	List<Reviewer> pastReviewerList = new ArrayList<Reviewer>();
-    	Conference tempConference = new Conference("Conference Title ex", submissionDeadline, reviewDeadline, pastReviewerList);
-
-    	mySubprogramChair.getMyAssignedConferences().add(tempConference);
-    	
-    	List<Conference> theAssignedConferences = mySubprogramChair.getMyAssignedConferences();
-    	
-    	// assert if the added conference is equivalent to the one in the current subprogram chair
-    	assertTrue("Conference in assigned conferences list should be equal to created Conference",
-    			theAssignedConferences.get(0) == tempConference);
-    	assertEquals("Returned Conference List should be size of 0",
-    			theAssignedConferences.size(), 1);
-    }
-    
-    /**
-     * Test method for {@link SubprogramChair#getMyAssignedConferences()}
-     * tests for when there are 0 assigned conferences for the subprogram chair
-     * @author Ryan Tran
-     */
-    @Test
-    public void getMyAssignedConferences_forEmptyConferenceList_shouldReturnEmptyList() {
-    	List<Conference> theAssignedConferences = mySubprogramChair.getMyAssignedConferences();
-    	
-    	// assert if the added conference is equivalent to the one in the current subprogram chair
-    	assertTrue("Returned object should be an instance of List<Conference>",
-    			theAssignedConferences instanceof List<?>);
-    	assertEquals("Assigned Conferences list should be size of 0",
-    			theAssignedConferences.size(), 0);
-    }
 
     /**
      * Test method for {@link SubprogramChair#getReviewers()}
@@ -123,7 +86,7 @@ public class SubprogramChairTest {
      */
     @Test
     public void getReviewers_forEmptyReviewerList_shouldReturnEmptyList() {
-    	SubprogramChair chairWithNoReviewers = new SubprogramChair("Jack");
+    	SubprogramChair chairWithNoReviewers = new SubprogramChair("Jack", myConference);
     	List<Reviewer> listToBeTested = chairWithNoReviewers.getReviewers();
         	
     	assertEquals("Reviewer list size should be equal to one from database",

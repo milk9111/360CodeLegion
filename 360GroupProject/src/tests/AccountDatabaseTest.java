@@ -1,6 +1,7 @@
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.TreeMap;
 import java.util.UUID;
 
@@ -11,6 +12,8 @@ import model.Account;
 import model.Account;
 import model.Account;
 import model.AccountDatabase;
+import model.Author;
+import model.Conference;
 
 /**
  * 
@@ -85,5 +88,56 @@ public class AccountDatabaseTest {
 	public void createEmptySerializedAccountList_ForNoListAvailable_ShouldCreateNewList() {
 		myAccountDatabase.createEmptySerializedAccountList();
 	}
+	
+	@Test
+	public void updateAndSaveAccountToDatabase_ForsingleAccount_ShouldUpdateAccount() {
+		Conference validConference = new Conference("The science of everything", new Date(), new Date());
+		
+		// add single account to list
+		Account validAccount = new Account("Ryan");
+		myAccountDatabase.saveAccountToDatabase(validAccount);
+		
+		TreeMap<UUID, Account> validList = myAccountDatabase.deserializeAccountList();
+		assertTrue(validList.size() == 1);
+		assertTrue(validAccount.getMyAuthorList().size() == 0);
+		
+		// update account
+		Author authorToAddtoAccount = new Author(validConference);
+		validAccount.addAuthorRoleToAccount(authorToAddtoAccount);
+		
+		myAccountDatabase.updateAndSaveAccountToDatabase(validAccount);
+		
+		// check if updates were properly saved to serialized object
+		validList = myAccountDatabase.deserializeAccountList();
+		
+		assertTrue(validList.get(validAccount.getMyID()).getMyAuthorList().size() == 1);
+		assertTrue(validList.get(validAccount.getMyID()).getMyAuthorList().get(validConference.getMyID()) instanceof Author);
+
+	}
+	
+	@Test
+	public void doesAccountExistWithinDatabase_forExistingAccount_shouldExist() {
+		// add single account to list
+		Account validAccount = new Account("Ryan");
+		myAccountDatabase.saveAccountToDatabase(validAccount);
+		
+		TreeMap<UUID, Account> validList = myAccountDatabase.deserializeAccountList();
+		assertTrue(validList.size() == 1);
+		assertTrue(myAccountDatabase.doesAccountExistWithinDatabase(validAccount));
+	}
+	
+	@Test
+	public void doesAccountExistWithinDatabase_forAcctNotInDB_shouldNotExist() {
+		// add single account to list
+		Account validAccount = new Account("Ryan");
+		Account invalidAccount = new Account("acctNotInDB");
+		myAccountDatabase.saveAccountToDatabase(validAccount);
+		
+		TreeMap<UUID, Account> validList = myAccountDatabase.deserializeAccountList();
+		assertTrue(validList.size() == 1);
+		assertTrue(myAccountDatabase.doesAccountExistWithinDatabase(validAccount));
+		assertFalse(myAccountDatabase.doesAccountExistWithinDatabase(invalidAccount));
+	}
+
 
 }

@@ -1,12 +1,14 @@
 package model;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import model.Reviewer;
 
@@ -18,7 +20,8 @@ import model.Reviewer;
  * This is the Manuscript class. It contains information about the
  * individual manuscript including author(s) and reviews.
  */
-public class Manuscript {
+public class Manuscript implements Serializable {
+	private UUID myID;
 	private HashMap<Reviewer, String> myReviews;
 	private ArrayList<Author> myAuthors;
 	private Date mySubmittedDate;
@@ -35,10 +38,36 @@ public class Manuscript {
 	 * @version 5/6/2017
 	 */
 	public Manuscript (String theTitle, Date theSubmittedDate, HashMap<Reviewer, String> theReviews, ArrayList<Author> theAuthors) {
+		myID = UUID.randomUUID();
 		myReviews = (HashMap<Reviewer, String>) theReviews.clone();
 		myAuthors = (ArrayList<Author>) theAuthors.clone();
 		mySubmittedDate = theSubmittedDate;
 		myTitle = theTitle;
+	}
+	
+	public Manuscript(String theTitle, Date theSubmittedDate, ArrayList<Author> theAuthors) {
+		myID = UUID.randomUUID();
+		myTitle = theTitle;
+		mySubmittedDate = theSubmittedDate;
+		myAuthors = theAuthors;
+	}
+	
+	/**
+	 * constructor that Automatically inits an author list and adds the given author to the list
+	 * to set as the author list
+	 * @param theTitle title of manuscript
+	 * @param theSubmittedDate submission date
+	 * @param theAuthor Author to add to author list for manuscript
+	 */
+	public Manuscript(String theTitle, Date theSubmittedDate, Author theAuthor) {
+		myID = UUID.randomUUID();
+		myTitle = theTitle;
+		mySubmittedDate = theSubmittedDate;
+		
+		// init author list and add passed in author to list
+		ArrayList<Author> authorList = new ArrayList<Author>();
+		authorList.add(theAuthor);
+		myAuthors = authorList;
 	}
 	
 	
@@ -49,11 +78,19 @@ public class Manuscript {
 	 * @version 5/6/2017
 	 */
 	public Manuscript () {
+		myID = UUID.randomUUID();
 		myReviews = new HashMap<Reviewer, String> ();
 		myAuthors = new ArrayList<Author> ();
 		mySubmittedDate = new Date ();
 	}
 	
+	/**
+	 * Returns the manuscripts unique ID
+	 * @return the UUID reprensenting the manuscript's ID
+	 */
+	public UUID getMyID() {
+		return this.myID;
+	}
 	
 	/**
 	 * Returns an ArrayList of all the reviews attached to this
@@ -213,6 +250,25 @@ public class Manuscript {
 	 */
 	public Manuscript submitManuscript () {
 		return new Manuscript(this.myTitle, this.mySubmittedDate, this.myReviews, this.myAuthors);
+	}
+	
+
+	/**
+	 * this method returns a boolean indicating if the passed in author exists within the manuscript's
+	 * list of authors or not.
+	 * @param theAuthor the author to check if it exists within the manuscript's author's list..
+	 * @return true if author exists in authors list, false otherwise.
+	 */
+	public boolean doesAuthorBelongToManuscript(Author theAuthor) {
+		boolean authorBelongsToManuscript = false;
+		
+		for(Author anAuthor : this.myAuthors) {
+			if(anAuthor.getMyID().equals(theAuthor.getMyID())) {
+				authorBelongsToManuscript = true;
+			}
+		}
+		
+		return authorBelongsToManuscript;
 	}
 }
 

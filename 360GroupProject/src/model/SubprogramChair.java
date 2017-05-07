@@ -2,6 +2,8 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
+import java.util.UUID;
 
 /**
  * Subprogram chair class to handle all fields/methods of a subprogram chair.
@@ -16,37 +18,66 @@ public class SubprogramChair extends User {
     /**
      * List manuscripts assigned to the subprogram chair
      */
-    private List<Manuscript> myAssignedManuscripts;
+    private List<UUID> myAssignedManuscripts;
 
-    /**
-     * List of conferences viewable to the subprogram chair
-     */
-    private List<Conference> myConferences;
-
-    /**
-     * List of conferences assigned to the subprogram chair by a program chair
-     */
-    private List<Conference> myAssignedConferences;
 
     /**
      * Constructor for the subprogram chair
      * @param theUsername Username of the subprogram chair
      */
-    public SubprogramChair(String theUsername) {
-    	super(theUsername);
-        this.myAssignedManuscripts = new ArrayList<Manuscript>();
-        this.myConferences = new ArrayList<Conference>();
-        this.myAssignedConferences = new ArrayList<Conference>();
+    public SubprogramChair(String theUsername, Conference theConference) {
+    	super(theUsername, theConference);
+        this.myAssignedManuscripts = new ArrayList<UUID>();
         super.myConferenceList = new ArrayList<Conference>();
     }
-
+    
     /**
-     * This method should return a list of conference objects assigned to this subprogram chair
-     * @return list of conference objects
+     * Constructor that just associates the subprogram chair with a conference
+     * @param theConference
      */
-    public List<Conference> getMyAssignedConferences() {
-        return this.myAssignedConferences;
+    public SubprogramChair(Conference theConference) {
+    	super(theConference);
+    	this.myAssignedManuscripts = new ArrayList<UUID>();
+        super.myConferenceList = new ArrayList<Conference>();
     }
+    
+    /**
+     * This method will return a list of manuscripts that the subprogram chair is assigned to.
+     * preconditions: Assumes the manuscript list parameter is non-null and the subprogrma chair
+     * is assigned to at least 1 manuscript
+     * @param theManuList the global manuscripts to retrieve manuscripts from.
+     * @return a culled manuscript list consisting of only ones the subprogram chair is assigned to.
+     */
+    public List<Manuscript> getMyAssignedManuscripts(TreeMap<UUID, Manuscript> theManuList) {
+    	ArrayList<Manuscript> listToReturn = new ArrayList<Manuscript>();
+    	
+    	for(Manuscript listManu : theManuList.values()) {
+    		if(this.isManuscriptWithinMyAssignedManuscripts(listManu)) {
+    			listToReturn.add(listManu);
+    		}
+    	}
+    	
+    	return listToReturn;
+    }
+    
+    /**
+     * Checks to see if the passed in manuscript exists within this subprogram chair's list of assigned manuscripts
+     * and returns a boolean indicating so.
+     * @param theManuscript the manuscript to search for within my assigned manuscripts
+     * @return a boolean, true if manuscript exists with assigned manuscripts, false otherwise
+     */
+    public boolean isManuscriptWithinMyAssignedManuscripts(Manuscript theManuscript) {
+    	boolean doesExist = false;
+
+    	for(UUID myManuID : this.myAssignedManuscripts) {
+    		if(myManuID.equals(theManuscript.getMyID())) {
+    			doesExist = true;
+    		}
+    	}
+    	
+    	return doesExist;
+    }
+
 
     /**
      * This method should return a list of all reviewers in the system
