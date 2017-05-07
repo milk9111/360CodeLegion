@@ -89,6 +89,7 @@ public class Controller extends Observable implements Observer {
 	 * 
 	 * @author Connor Lundberg
 	 * @author Josiah Hopkins
+	 * @author Morgan Blackmore
 	 * @version 5/6/2017
 	 * @param theNextState The next state the program will be in.
 	 */
