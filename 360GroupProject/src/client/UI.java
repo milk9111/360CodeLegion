@@ -388,15 +388,19 @@ public class UI extends Observable implements Observer{
 	 * @author Casey Anderson
 	 */
 	private void ListOfConferenceView() { 
+		
 		int conferenceChoice;
 		System.out.println("Conference List Page");
-		Conference[] listOfConferences = (Conference[]) new ConferenceDatabase().getAllConferences().values().toArray();
+		Conference[] listOfConferences = (Conference[]) new ConferenceDatabase().getAllConferences().values().toArray(new Conference[0]);
+		
 		for (int i = 0; i < listOfConferences.length; i++) {
 			System.out.println("" + i + 1 + " - " + listOfConferences[i].getMyName());
 		}
+		
 		conferenceChoice = myScanner.nextInt();
 		setChanged();
 		notifyObservers(listOfConferences[conferenceChoice - 1]);
+		
 	}
 
 	/**
