@@ -1,18 +1,23 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by Josiah on 4/27/2017.
  */
-public class Conference {
+public class Conference implements Serializable {
     public String getMyName() {
         return myName;
     }
 
+    // Unique ID to identify the conference by
+    private UUID myID;
+    
     private String myName;
 
     //Contains the list of manuscripts which have been submitted to this conference.
@@ -35,11 +40,12 @@ public class Conference {
      */
     public Conference(String theName, Date theSubmissionDeadline, Date theReviewDeadline,
                       List<Reviewer> thePastReviewers) {
+    	this.myID = UUID.randomUUID();
         this.myManuscripts = new ArrayList<Manuscript>();
         this.myPastReviewers = thePastReviewers;
         this.myReviewDeadline = theReviewDeadline;
         this.mySubmissionDeadline = theSubmissionDeadline;
-        this.myName = myName;
+        this.myName = theName;
     }
 
     /**
@@ -49,6 +55,10 @@ public class Conference {
      */
     public List<Manuscript> getManuscripts() {
         return myManuscripts;
+    }
+    
+    public UUID getMyID() {
+    	return myID;
     }
 
     /**
