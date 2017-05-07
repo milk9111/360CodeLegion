@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import model.Reviewer;
 
@@ -19,6 +20,7 @@ import model.Reviewer;
  * individual manuscript including author(s) and reviews.
  */
 public class Manuscript {
+	private UUID myID;
 	private HashMap<Reviewer, String> myReviews;
 	private ArrayList<Author> myAuthors;
 	private Date mySubmittedDate;
@@ -35,6 +37,7 @@ public class Manuscript {
 	 * @version 5/6/2017
 	 */
 	public Manuscript (String theTitle, Date theSubmittedDate, HashMap<Reviewer, String> theReviews, ArrayList<Author> theAuthors) {
+		myID = UUID.randomUUID();
 		myReviews = (HashMap<Reviewer, String>) theReviews.clone();
 		myAuthors = (ArrayList<Author>) theAuthors.clone();
 		mySubmittedDate = theSubmittedDate;
@@ -49,6 +52,7 @@ public class Manuscript {
 	 * @version 5/6/2017
 	 */
 	public Manuscript () {
+		myID = UUID.randomUUID();
 		myReviews = new HashMap<Reviewer, String> ();
 		myAuthors = new ArrayList<Author> ();
 		mySubmittedDate = new Date ();

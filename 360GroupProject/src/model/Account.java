@@ -9,6 +9,8 @@ import java.util.UUID;
  */
 public class Account implements Serializable {
 
+	// TODO: change theses to lists and add conference ids to each user type
+	// that way, a user can have a user type for multiple conferneces
     private Author myAuthor;
     private Reviewer myReviewer;
     private SubprogramChair mySubprogramChair;
