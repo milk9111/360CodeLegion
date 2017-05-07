@@ -62,13 +62,13 @@ public class UI extends Observable implements Observer{
 		
 		while (!validUserName) {
 			
-			System.out.println("Please enter user name to log in: ");
+			System.out.print("Please enter user name to log in: ");
 			myUserName = myScanner.next();
-//			if (myUser.isUserRegistered(myUserName)) {
+			System.out.println();
 			
 			if (true) { //temporary block while we don't have a User registry to check
 				validUserName = true;
-				chooseUserTypeMenuView();
+				//chooseUserTypeMenuView();
 			} 
 			
 			else {
@@ -94,13 +94,13 @@ public class UI extends Observable implements Observer{
 		System.out.println("2 - SubProgram Chair");
 		myUserChoice = myScanner.next();
 		if (myUserChoice.equals("1")) {
-			setChanged();
+			//setChanged();
 			notifyObservers("AUTHOR");
 			
 		}
 		
 		else if (myUserChoice.equals("2")){
-			setChanged();
+			//setChanged();
 			notifyObservers("SUBPROGRAM_CHAIR"); 
 			
 		} 
