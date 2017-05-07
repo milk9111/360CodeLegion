@@ -39,7 +39,6 @@ public class ConferenceDatabase {
 	public Conference saveConferenceToDatabase(Conference theConference) {
 		TreeMap<UUID, Conference> conferenceList = deserializeConferenceList();
 
-		System.out.println(theConference.getMyName());
 		boolean isConferenceUnique = isConferenceInListUnique(conferenceList, theConference);
 		if(isConferenceUnique) {
 			conferenceList.put(theConference.getMyID(), theConference);

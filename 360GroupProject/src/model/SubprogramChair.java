@@ -13,16 +13,20 @@ import java.util.List;
  */
 public class SubprogramChair extends User {
 
+	// TODO: refactor to be a list of UUIDs of manuscripts
     /**
      * List manuscripts assigned to the subprogram chair
      */
     private List<Manuscript> myAssignedManuscripts;
 
+    // TODO: remove, as its unnecssary. viewing manuscripts assigned to user as subprogram chair
+    // will be done in the Account instead
     /**
      * List of conferences viewable to the subprogram chair
      */
     private List<Conference> myConferences;
 
+    // TODO: refactor to UUIDs of Conferences
     /**
      * List of conferences assigned to the subprogram chair by a program chair
      */
@@ -35,6 +39,18 @@ public class SubprogramChair extends User {
     public SubprogramChair(String theUsername, Conference theConference) {
     	super(theUsername, theConference);
         this.myAssignedManuscripts = new ArrayList<Manuscript>();
+        this.myConferences = new ArrayList<Conference>();
+        this.myAssignedConferences = new ArrayList<Conference>();
+        super.myConferenceList = new ArrayList<Conference>();
+    }
+    
+    /**
+     * Constructor that just associates the subprogam chair with a conference
+     * @param theConference
+     */
+    public SubprogramChair(Conference theConference) {
+    	super(theConference);
+    	this.myAssignedManuscripts = new ArrayList<Manuscript>();
         this.myConferences = new ArrayList<Conference>();
         this.myAssignedConferences = new ArrayList<Conference>();
         super.myConferenceList = new ArrayList<Conference>();

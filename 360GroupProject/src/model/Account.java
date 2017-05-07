@@ -39,6 +39,7 @@ public class Account implements Serializable {
     	this.myUsername = theUsername;
         this.myAuthors = new TreeMap<UUID, Author>();
         this.myReviewers = new TreeMap<UUID, Reviewer>();
+        this.mySubprogramChairs = new TreeMap<UUID, SubprogramChair>();
     }
     
     public Account(TreeMap<UUID, Author> theAuthors, TreeMap<UUID, Reviewer> theReviewers, TreeMap<UUID, SubprogramChair> theSubprogramChairs) {
