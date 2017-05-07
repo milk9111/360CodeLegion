@@ -57,27 +57,12 @@ public class UI extends Observable implements Observer{
 	 * 
 	 */
 	private void login() {
-		
-		boolean validUserName = false;
-		
-		while (!validUserName) {
 			
 			System.out.print("Please enter user name to log in: ");
 			myUserName = myScanner.next();
 			System.out.println();
+			notifyObservers(new Account(myUserName));
 			
-			if (true) { //temporary block while we don't have a User registry to check
-				validUserName = true;
-				//chooseUserTypeMenuView();
-			} 
-			
-			else {
-				
-				System.out.println("Invalid User Name!");
-			
-			}
-		}
-
 	}
 
 	/**
@@ -472,9 +457,11 @@ public class UI extends Observable implements Observer{
 	}
 	
 	public void update(Observable arg0, Object theArg) {
+		
 		if (theArg instanceof Integer) {
 			changeState((int) theArg);
 		}
+		
 	}
 
 }
