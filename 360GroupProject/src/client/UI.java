@@ -117,8 +117,7 @@ public class UI extends Observable implements Observer{
 	 * 
 	 */
 	public void changeState(int theState) {
-		//test print
-		System.out.println("In UI ChangeState: " +theState);
+
 		if (theState == LOG_IN_STATE){
 			login();
 		}

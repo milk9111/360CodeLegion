@@ -89,12 +89,12 @@ public class Controller extends Observable implements Observer {
 	 * 
 	 * @author Connor Lundberg
 	 * @author Josiah Hopkins
+	 * @author Morgan Blackmore
 	 * @version 5/6/2017
 	 * @param theNextState The next state the program will be in.
 	 */
 	private void changeState (String theNextState) {
-//test print
-		System.out.println("In controller changeState: " +theNextState);
+
 		String[] pieces = theNextState.split(",");
 		
 		switch ((myCurrentState / 10) * 10) {
@@ -124,8 +124,7 @@ public class Controller extends Observable implements Observer {
 				notifyObservers(myCurrentState);
 				break;
 			case AUTHOR:
-				//test print
-				System.out.println("In controller changeState case Author");
+
 				myCurrentState = AUTHOR;
 				setChanged();
 				notifyObservers(myCurrentState);
@@ -194,6 +193,10 @@ public class Controller extends Observable implements Observer {
 				}
 				break;
 			case SUBPROGRAM_CHAIR:
+				
+				myCurrentState = SUBPROGRAM_CHAIR;
+				setChanged();
+				notifyObservers(myCurrentState);
 				
 				switch (myCurrentState % 10){
                     case ASSIGN_REVIEWER:
