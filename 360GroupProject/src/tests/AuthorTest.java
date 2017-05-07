@@ -61,7 +61,7 @@ public class AuthorTest {
 		HashMap<Reviewer, String> mapOfReviewers = new HashMap<Reviewer, String>();
 		ArrayList<Author> listOfAuthors = new ArrayList<Author>();
 		listOfAuthors.add(myAuthor);
-		Manuscript manuscript = new Manuscript("Old Yeller", date, mapOfReviewers, listOfAuthors);
+		Manuscript manuscript = new Manuscript("Old Yeller", date, mapOfReviewers, listOfAuthors, new File(""));
 		ArrayList<Reviewer> reviewerList = new ArrayList<Reviewer>();
 		Conference conference = new Conference("RSA", date, date, reviewerList);
 		myAuthor.addManuscript(conference, manuscript);
@@ -69,7 +69,7 @@ public class AuthorTest {
 		myAuthor.addManuscript(conference, manuscript);
 		myAuthor.addManuscript(conference, manuscript);
 		listOfAuthors.add(myAuthor);
-		Manuscript fithManuscript = new Manuscript("Nano Tech", date, mapOfReviewers, listOfAuthors);
+		Manuscript fithManuscript = new Manuscript("Nano Tech", date, mapOfReviewers, listOfAuthors, new File(""));
 		myAuthor.addManuscript(conference, fithManuscript);
 		assertTrue("ManuScript was not added to list properly", myAuthor.getManuscript(conference).contains(fithManuscript.getMyID()));
 	}
@@ -86,7 +86,7 @@ public class AuthorTest {
 		HashMap<Reviewer, String> mapOfReviewers = new HashMap<Reviewer, String>();
 		ArrayList<Author> listOfAuthors = new ArrayList<Author>();
 		listOfAuthors.add(myAuthor);
-		Manuscript manuscript = new Manuscript("Old Yeller", date, mapOfReviewers, listOfAuthors);
+		Manuscript manuscript = new Manuscript("Old Yeller", date, mapOfReviewers, listOfAuthors, new File(""));
 		ArrayList<Reviewer> reviewerList = new ArrayList<Reviewer>();
 		Conference conference = new Conference("RSA", date, date, reviewerList);
 		myAuthor.addManuscript(conference, manuscript);
@@ -95,7 +95,7 @@ public class AuthorTest {
 		myAuthor.addManuscript(conference, manuscript);
 		myAuthor.addManuscript(conference, manuscript);
 		listOfAuthors.add(myAuthor);
-		Manuscript sixthManuscript = new Manuscript("Nano Tech", date, mapOfReviewers, listOfAuthors);
+		Manuscript sixthManuscript = new Manuscript("Nano Tech", date, mapOfReviewers, listOfAuthors, new File(""));
 		myAuthor.addManuscript(conference, sixthManuscript);
 	}
 
@@ -112,14 +112,14 @@ public class AuthorTest {
 		ArrayList<Author> listOfAuthors = new ArrayList<Author>();
 		listOfAuthors.add(myAuthor);
 		listOfAuthors.add(myCoAuthor);
-		Manuscript manuscript = new Manuscript("Old Yeller", date, mapOfReviewers, listOfAuthors);
+		Manuscript manuscript = new Manuscript("Old Yeller", date, mapOfReviewers, listOfAuthors, new File(""));
 		ArrayList<Reviewer> reviewerList = new ArrayList<Reviewer>();
 		Conference conference = new Conference("RSA", date, date, reviewerList);
 		myCoAuthor.addManuscript(conference, manuscript);
 		myCoAuthor.addManuscript(conference, manuscript);
 		myCoAuthor.addManuscript(conference, manuscript);
 		myCoAuthor.addManuscript(conference, manuscript);
-		Manuscript fithManuscript = new Manuscript("Nano Tech", date, mapOfReviewers, listOfAuthors);
+		Manuscript fithManuscript = new Manuscript("Nano Tech", date, mapOfReviewers, listOfAuthors, new File(""));
 		myAuthor.addManuscript(conference, fithManuscript);
 		assertTrue("ManuScript was not added to list properly", myAuthor.getManuscript(conference).contains(fithManuscript.getMyID()));
 	}
@@ -137,7 +137,7 @@ public class AuthorTest {
 		ArrayList<Author> listOfAuthors = new ArrayList<Author>();
 		listOfAuthors.add(myAuthor);
 		listOfAuthors.add(myCoAuthor);
-		Manuscript manuscript = new Manuscript("Old Yeller", date, mapOfReviewers, listOfAuthors);
+		Manuscript manuscript = new Manuscript("Old Yeller", date, mapOfReviewers, listOfAuthors, new File(""));
 		ArrayList<Reviewer> reviewerList = new ArrayList<Reviewer>();
 		Conference conference = new Conference("RSA", date, date, reviewerList);
 		myCoAuthor.addManuscript(conference, manuscript);
@@ -145,7 +145,7 @@ public class AuthorTest {
 		myCoAuthor.addManuscript(conference, manuscript);
 		myCoAuthor.addManuscript(conference, manuscript);
 		myCoAuthor.addManuscript(conference, manuscript);
-		Manuscript sixthManuscript = new Manuscript("Nano Tech", date, mapOfReviewers, listOfAuthors);
+		Manuscript sixthManuscript = new Manuscript("Nano Tech", date, mapOfReviewers, listOfAuthors, new File(""));
 		myAuthor.addManuscript(conference, sixthManuscript);
 	}
 	
@@ -162,7 +162,7 @@ public class AuthorTest {
 		ArrayList<Author> listOfAuthors = new ArrayList<Author>();
 		listOfAuthors.add(myAuthor);
 		listOfAuthors.add(myCoAuthor);
-		Manuscript manuscript = new Manuscript("Old Yeller", date, mapOfReviewers, listOfAuthors);
+		Manuscript manuscript = new Manuscript("Old Yeller", date, mapOfReviewers, listOfAuthors, new File(""));
 		ArrayList<Reviewer> reviewerList = new ArrayList<Reviewer>();
 		Conference conference = new Conference("RSA", date, date, reviewerList);
 		myCoAuthor.addManuscript(conference, manuscript);
@@ -170,7 +170,7 @@ public class AuthorTest {
 		myCoAuthor.addManuscript(conference, manuscript);
 		myAuthor.addManuscript(conference, manuscript);
 		myAuthor.addManuscript(conference, manuscript);
-		Manuscript sixthManuscript = new Manuscript("Nano Tech", date, mapOfReviewers, listOfAuthors);
+		Manuscript sixthManuscript = new Manuscript("Nano Tech", date, mapOfReviewers, listOfAuthors, new File(""));
 	    myAuthor.addManuscript(conference, sixthManuscript);
 	}
 	
@@ -187,14 +187,14 @@ public class AuthorTest {
 		ArrayList<Author> listOfAuthors = new ArrayList<Author>();
 		listOfAuthors.add(myAuthor);
 		listOfAuthors.add(myCoAuthor);
-		Manuscript manuscript = new Manuscript("Old Yeller", date, mapOfReviewers, listOfAuthors);
+		Manuscript manuscript = new Manuscript("Old Yeller", date, mapOfReviewers, listOfAuthors, new File(""));
 		ArrayList<Reviewer> reviewerList = new ArrayList<Reviewer>();
 		Conference conference = new Conference("RSA", date, date, reviewerList);
 		myCoAuthor.addManuscript(conference, manuscript);
 		myCoAuthor.addManuscript(conference, manuscript);
 		myAuthor.addManuscript(conference, manuscript);
 		myAuthor.addManuscript(conference, manuscript);
-		Manuscript fithManuscript = new Manuscript("Nano Tech", date, mapOfReviewers, listOfAuthors);
+		Manuscript fithManuscript = new Manuscript("Nano Tech", date, mapOfReviewers, listOfAuthors, new File(""));
 		myAuthor.addManuscript(conference, fithManuscript);
 		assertTrue("ManuScript was not added to list properly", myAuthor.getManuscript(conference).contains(fithManuscript.getMyID()));
 	}

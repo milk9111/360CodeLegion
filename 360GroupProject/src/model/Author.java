@@ -78,7 +78,7 @@ public class Author extends User implements Serializable {
 	 */
 	public Manuscript createManuscript(String theTitle, Date theSubmittedDate, HashMap<Reviewer, String> theReviews, ArrayList<Author> theAuthors) {
 		
-		return new Manuscript(theTitle, theSubmittedDate, theReviews, theAuthors) ;
+		return new Manuscript(theTitle, theSubmittedDate, theReviews, theAuthors, new File("")) ;
 	
 	}
 	

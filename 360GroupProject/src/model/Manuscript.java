@@ -253,10 +253,10 @@ public class Manuscript implements Serializable {
 	 * @return A copy of the manuscript
 	 * @author Connor Lundberg
 	 * @version 5/6/2017
-	 */
+	 
 	public Manuscript submitManuscript () {
 		return new Manuscript(this.myTitle, this.mySubmittedDate, this.myReviews, this.myAuthors);
-	}
+	}*/
 	
 
 	/**
