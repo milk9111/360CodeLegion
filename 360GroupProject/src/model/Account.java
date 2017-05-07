@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.TreeMap;
 import java.util.UUID;
 
@@ -90,19 +91,32 @@ public class Account implements Serializable {
     	
     	return isAuthorAssociated;
     }
+    
+    /**
+     * Subprogram Chair Methods
+     */
 
-    public TreeMap<UUID, Reviewer> getMyReviewers() {
-        return myReviewers;
+    /**
+     * This method will check the given conference list, and cross reference it with the
+     * list of subprogram chairs of the accounts and their associated conferences, and finally
+     * will return a list of conferences to which the the account has a subprogram chair association
+     * preconditions: Assumes the passed in list is not null
+     * @param theConfList the latest and up to date deserialized conference list
+     * @return All conferences that are related to a subprogram chair user type belonging to the account
+     * May also return an empty ArrayList if no conferences available
+     */
+    public ArrayList<Conference> getAllConferencesOfAccountSubprogramChairList(TreeMap<UUID, Conference> theConfList) {
+    	ArrayList<Conference> returnList = new ArrayList<Conference>();
+    	
+    	for(UUID aConferenceID : this.mySubprogramChairs.keySet()) {
+    		if(theConfList.containsKey(aConferenceID)) {
+    			returnList.add(theConfList.get(aConferenceID));
+    		}
+    	}
+    	
+    	return returnList;
     }
-
-    public void addReviewerRoleToAccount(Reviewer theReviewer, Conference theConference) {
-    	this.myReviewers.put(theConference.getMyID(), theReviewer);
-    }
-
-    public TreeMap<UUID, SubprogramChair> getMySubprogramChairList() {
-        return this.mySubprogramChairs;
-    }
-
+    
     /**
      * Adds a given subprogram chair, and its associated conference to the account's subprogram chair role list
      * @param theSubprogramChair the subprogram chair to add to the account's subchair list
@@ -111,6 +125,29 @@ public class Account implements Serializable {
     public void addSubprogramChairRoleToAccount(SubprogramChair theSubprogramChair, Conference theConference) {
         this.mySubprogramChairs.put(theConference.getMyID(), theSubprogramChair);
     }
+
+    /**
+     * Gets a list of the account's subprogram user roles with associated conferences as key
+     * @return a treeMap consisting of the account's subprogram chair types and their associated conferences as keys
+     */
+    public TreeMap<UUID, SubprogramChair> getMySubprogramChairList() {
+        return this.mySubprogramChairs;
+    }
+
+
+    /**
+     * Gets account's list of reviewer user types
+     * @return a treemap of reviewers, and their conference id keys
+     */
+    public TreeMap<UUID, Reviewer> getMyReviewers() {
+        return myReviewers;
+    }
+
+    public void addReviewerRoleToAccount(Reviewer theReviewer, Conference theConference) {
+    	this.myReviewers.put(theConference.getMyID(), theReviewer);
+    }
+
+
     
     public String getMyUsername() {
     	return this.myUsername;

@@ -126,7 +126,7 @@ public class AccountDatabaseTest {
 		assertTrue(myAccountDatabase.doesAccountExistWithinDatabase(validAccount));
 	}
 	
-		@Test
+	@Test
 	public void doesAccountExistWithinDatabase_forAcctNotInDB_shouldNotExist() {
 		// add single account to list
 		Account validAccount = new Account("Ryan");
