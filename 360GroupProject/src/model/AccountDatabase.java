@@ -56,7 +56,25 @@ public class AccountDatabase {
 		}
 		
 		return accountToReturn;
-
+	}
+	
+	/**
+	 * Checks to see if a given account exists within the database and returns
+	 * a boolean stating so
+	 * @param theAccount the account to check if exists within database
+	 * @return boolean, true if account exists within db, false otherwise
+	 */
+	public boolean doesAccountExistWithinDatabase(Account theAccount) {
+		boolean accountExists = false;
+		TreeMap<UUID, Account> listOfAccounts = deserializeAccountList();
+		
+		for(Account acctToCompare : listOfAccounts.values()) {
+			if(acctToCompare.getMyID().equals(theAccount.getMyID())) {
+				accountExists = true;
+			}
+		}
+		
+		return accountExists;
 	}
 	
 	/**

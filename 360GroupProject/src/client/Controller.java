@@ -93,8 +93,9 @@ public class Controller extends Observable implements Observer {
 	 * @param theNextState The next state the program will be in.
 	 */
 	private void changeState (String theNextState) {
-		//temp testers:
+//test print
 		System.out.println("In controller changeState: " +theNextState);
+
 		System.out.println("Current state: " + myCurrentState);
 		
 		String[] pieces = theNextState.split(",");
