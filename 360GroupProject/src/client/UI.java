@@ -9,6 +9,7 @@ import java.util.Observer;
 import java.util.Scanner;
 
 import javafx.beans.InvalidationListener;
+import model.Account;
 import model.User;
 
 /**
@@ -21,6 +22,8 @@ public class UI extends Observable implements Observer{
 
 
 	//View States
+	public static final int LOG_IN_STATE = -2;
+	public static final int CHOOSE_USER = -1;
 	public static final int AUTHOR = 0;
 	public static final int REVIEWER = 10;
 	public static final int SUBPROGRAM_CHAIR = 20;
@@ -45,15 +48,6 @@ public class UI extends Observable implements Observer{
 		myUserChoice = "";
 		myScanner = new Scanner(System.in);
 	}
-
-	/**
-	 * The start point for the program.
-	 * 
-	 * @param theArgs command line arguments - ignored
-	 */
-	public static void main(final String[] theArgs) {
-		new UI().start();
-	}
 	
 	/**
 	 * Login prompt.  Displays prompt and scans input, compares to list of existing users.
@@ -62,19 +56,19 @@ public class UI extends Observable implements Observer{
 	 * @author Casey Anderson, Morgan Blackmore
 	 * 
 	 */
-	private void start() {
+	private void login() {
 		
 		boolean validUserName = false;
 		
 		while (!validUserName) {
 			
-			System.out.println("Please enter user name to log in: ");
+			System.out.print("Please enter user name to log in: ");
 			myUserName = myScanner.next();
-//			if (myUser.isUserRegistered(myUserName)) {
+			System.out.println();
 			
 			if (true) { //temporary block while we don't have a User registry to check
 				validUserName = true;
-				chooseUserTypeMenuView();
+				//chooseUserTypeMenuView();
 			} 
 			
 			else {
@@ -98,15 +92,15 @@ public class UI extends Observable implements Observer{
 		System.out.println("\nChoose what type of user you are");
 		System.out.println("1 - Author");
 		System.out.println("2 - SubProgram Chair");
-
-		if (myScanner.next() == "1") {
-			
+		myUserChoice = myScanner.next();
+		if (myUserChoice.equals("1")) {
+			//setChanged();
 			notifyObservers("AUTHOR");
 			
 		}
 		
-		else if(myScanner.next() == "2"){
-			
+		else if (myUserChoice.equals("2")){
+			//setChanged();
 			notifyObservers("SUBPROGRAM_CHAIR"); 
 			
 		} 
@@ -128,6 +122,7 @@ public class UI extends Observable implements Observer{
 	 * 
 	 */
 	public void changeState(int theState) {
+		System.out.println("changeState method got called");
 
 		if (theState < 10) {
 			
@@ -135,6 +130,14 @@ public class UI extends Observable implements Observer{
 			displayHeader();
 			
 			switch (theState) {
+			
+			case LOG_IN_STATE:
+				login();
+				break;
+				
+			case CHOOSE_USER:
+				chooseUserTypeMenuView();
+				break;
 			
 			case AUTHOR:
 				
@@ -179,11 +182,7 @@ public class UI extends Observable implements Observer{
 				subProgramChairManuscriptsView();
 				break;
 				
-			}
-			
-			
-			
-			
+			}	
 			
 		}
 	}
@@ -468,15 +467,14 @@ public class UI extends Observable implements Observer{
 
 	}
 
-
-
 	public void removeListener(InvalidationListener listener) {
 		
 	}
 	
-	public void update(Observable arg0, Object arg1) {
-		// TODO Auto-generated method stub
-
+	public void update(Observable arg0, Object theArg) {
+		if (theArg instanceof Integer) {
+			changeState((int) theArg);
+		}
 	}
 
 }
