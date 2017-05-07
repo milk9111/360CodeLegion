@@ -12,8 +12,18 @@ public class Account implements Serializable {
 
 	// TODO: change theses to lists and add conference ids to each user type
 	// that way, a user can have a user type for multiple conferneces
+	/**
+	 * Map of Key: Conference Ids, Value: Author Object
+	 * An account can be an author to multiple conferences so this list represents 
+	 * that multi conference relationship with one author object per author role for a conference
+	 */
     private TreeMap<UUID, Author> myAuthors;
-    private Reviewer myReviewer;
+    
+    /**
+     * Map of Key: Conference Ids, Value: Reviewer Object
+     * Map representing relationship between a user being a reviewer to a conference
+     */
+    private TreeMap<UUID, Reviewer> myReviewers;
     private SubprogramChair mySubprogramChair;
     private UUID myID;
     private String myUsername;
@@ -21,16 +31,19 @@ public class Account implements Serializable {
     public Account(String theUsername) {
     	this.myID = UUID.randomUUID();
     	this.myUsername = theUsername;
+        this.myAuthors = new TreeMap<UUID, Author>();
+        this.myReviewers = new TreeMap<UUID, Reviewer>();
     }
     
-    public Account(TreeMap<UUID, Author> theAuthors, Reviewer myReviewer, SubprogramChair mySubprogramChair) {
+    public Account(TreeMap<UUID, Author> theAuthors, TreeMap<UUID, Reviewer> theReviewers, SubprogramChair mySubprogramChair) {
     	this.myID = UUID.randomUUID();
         this.myAuthors = theAuthors;
-        this.myReviewer = myReviewer;
+        this.myReviewers = theReviewers;
         this.mySubprogramChair = mySubprogramChair;
     }
+    
 
-    public TreeMap<UUID, Author> getMyAuthor() {
+    public TreeMap<UUID, Author> getMyAuthorList() {
         return this.myAuthors;
     }
 
@@ -73,12 +86,12 @@ public class Account implements Serializable {
     	return isAuthorAssociated;
     }
 
-    public Reviewer getMyReviewer() {
-        return myReviewer;
+    public TreeMap<UUID, Reviewer> getMyReviewers() {
+        return myReviewers;
     }
 
-    public void setMyReviewer(Reviewer myReviewer) {
-        this.myReviewer = myReviewer;
+    public void addReviewerRoleToAccount(Reviewer theReviewer, Conference theConference) {
+    	this.myReviewers.put(theConference.getMyID(), theReviewer);
     }
 
     public SubprogramChair getMySubprogramChair() {

@@ -66,6 +66,7 @@ public class UI extends Observable implements Observer{
 			myUserName = myScanner.next();
 			System.out.println();
 			myAccount = new Account(myUserName);
+			setChanged();
 			notifyObservers(myAccount);
 
 			chooseUserTypeMenuView();
@@ -226,18 +227,21 @@ public class UI extends Observable implements Observer{
 		
 		if (myUserChoice.equals("1")) {
 			
+			setChanged();
 			notifyObservers("SUBMIT_MANUSCRIPT"); 
 		
 		}
 		
 		else if (myUserChoice.equals("2")) {
 			
+			setChanged();
 			notifyObservers("LIST_MANUSCRIPT_VIEW"); 
 		
 		}
 		
 		else if (myUserChoice.equals("3")) {
 			
+			setChanged();
 			notifyObservers("LIST_CONFERENCE_VIEW"); 
 		
 		}
@@ -292,6 +296,7 @@ public class UI extends Observable implements Observer{
 			
 		}
 		
+		setChanged();
 		notifyObservers("Submit Manuscript," + manuscriptTile + "," + ManuscriptFilePath + "," + dtf.format(localDate) + "," + authorList); 
 
 
@@ -312,12 +317,14 @@ public class UI extends Observable implements Observer{
 		
 		if (myUserChoice.equals("1")) {
 			
+			setChanged();
 			notifyObservers("SUBMIT_MANUSCRIPT");
 		
 		}
 		
 		else if (myUserChoice.equals("2")) {
 			
+			setChanged();
 			notifyObservers("AUTHOR");
 		
 		}
@@ -345,6 +352,7 @@ public class UI extends Observable implements Observer{
 		
 	    if (myUserChoice.equals("1")) {
 			
+	    	setChanged();
 			notifyObservers("AUTHOR");
 		
 		}
@@ -387,12 +395,15 @@ public class UI extends Observable implements Observer{
 		
 		switch (myUserChoice){
 		case ("1"):
+			setChanged();
 			notifyObservers("ASSIGN_REVIEWER"); 
 		break;
 		case ("2"):
+			setChanged();
 			notifyObservers("LIST_CONFERENCE_VIEW"); 
 		break;
 		case ("3"):
+			setChanged();
 			notifyObservers("LIST_MANUSCRIPT_VIEW"); 
 		break;
 		}
@@ -415,14 +426,18 @@ public class UI extends Observable implements Observer{
 		
 	    if (myUserChoice.equals("1")) {
 			
+	    	setChanged();
 			notifyObservers("ASSIGN_REVIEWER");
 		
 		}
 	    
-	    else if (myUserChoice.equals("2"))
+	    else if (myUserChoice.equals("2")) {
 	    	
+	    	setChanged();
 	    	notifyObservers("SUBPROGRAM_CHAIR");
-			
+	    	
+	    }
+	    
 		else {
 			
 			System.out.println("Invalid choice, please select from the options displayed");
