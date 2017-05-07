@@ -116,13 +116,11 @@ public class Controller extends Observable implements Observer {
 						case "AUTHOR":
 							//System.out.println("in author");
 							myAccount.addAuthorRoleToAccount(new Author(myCurrentConference));
-							myAccountDatabase.updateAndSaveAccountToDatabase(myAccount);
 							myCurrentState = AUTHOR;
 							break;
 						case "SUBPROGRAM_CHAIR":
 							//System.out.println("in subprogram chair");
 							myAccount.addSubprogramChairRoleToAccount(new SubprogramChair(myCurrentConference), myCurrentConference);
-							myAccountDatabase.updateAndSaveAccountToDatabase(myAccount);
 							myCurrentState = SUBPROGRAM_CHAIR;
 							break;
 					}
@@ -262,6 +260,8 @@ public class Controller extends Observable implements Observer {
 					break;
 			}
 		}
+		
+		myAccountDatabase.updateAndSaveAccountToDatabase(myAccount);	/*final save of the account at the end of the state.*/
 	}
 	
 	
