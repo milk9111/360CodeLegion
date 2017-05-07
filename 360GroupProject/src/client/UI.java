@@ -391,7 +391,8 @@ public class UI extends Observable implements Observer{
 		
 		int conferenceChoice;
 		System.out.println("Conference List Page");
-		Conference[] listOfConferences = (Conference[]) new ConferenceDatabase().getAllConferences().values().toArray(new Conference[0]);
+		TreeMap<UUID, Conference> conferenceMap = new ConferenceDatabase().getAllConferences();
+		Conference[] listOfConferences = conferenceMap.values().toArray(new Conference[conferenceMap.values().size()]);
 		
 		for (int i = 0; i < listOfConferences.length; i++) {
 			System.out.println("" + i + 1 + " - " + listOfConferences[i].getMyName());
