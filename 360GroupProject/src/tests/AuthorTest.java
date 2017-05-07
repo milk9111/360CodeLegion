@@ -63,7 +63,7 @@ public class AuthorTest {
 		listOfAuthors.add(myAuthor);
 		Manuscript manuscript = new Manuscript("Old Yeller", date, mapOfReviewers, listOfAuthors);
 		ArrayList<Reviewer> reviewerList = new ArrayList<Reviewer>();
-		Conference conference = new Conference(date, date, reviewerList);
+		Conference conference = new Conference("RSA", date, date, reviewerList);
 		myAuthor.addManuscript(conference, manuscript);
 		myAuthor.addManuscript(conference, manuscript);
 		myAuthor.addManuscript(conference, manuscript);
@@ -88,7 +88,7 @@ public class AuthorTest {
 		listOfAuthors.add(myAuthor);
 		Manuscript manuscript = new Manuscript("Old Yeller", date, mapOfReviewers, listOfAuthors);
 		ArrayList<Reviewer> reviewerList = new ArrayList<Reviewer>();
-		Conference conference = new Conference(date, date, reviewerList);
+		Conference conference = new Conference("RSA", date, date, reviewerList);
 		myAuthor.addManuscript(conference, manuscript);
 		myAuthor.addManuscript(conference, manuscript);
 		myAuthor.addManuscript(conference, manuscript);
@@ -114,7 +114,7 @@ public class AuthorTest {
 		listOfAuthors.add(myCoAuthor);
 		Manuscript manuscript = new Manuscript("Old Yeller", date, mapOfReviewers, listOfAuthors);
 		ArrayList<Reviewer> reviewerList = new ArrayList<Reviewer>();
-		Conference conference = new Conference(date, date, reviewerList);
+		Conference conference = new Conference("RSA", date, date, reviewerList);
 		myCoAuthor.addManuscript(conference, manuscript);
 		myCoAuthor.addManuscript(conference, manuscript);
 		myCoAuthor.addManuscript(conference, manuscript);
@@ -139,7 +139,7 @@ public class AuthorTest {
 		listOfAuthors.add(myCoAuthor);
 		Manuscript manuscript = new Manuscript("Old Yeller", date, mapOfReviewers, listOfAuthors);
 		ArrayList<Reviewer> reviewerList = new ArrayList<Reviewer>();
-		Conference conference = new Conference(date, date, reviewerList);
+		Conference conference = new Conference("RSA", date, date, reviewerList);
 		myCoAuthor.addManuscript(conference, manuscript);
 		myCoAuthor.addManuscript(conference, manuscript);
 		myCoAuthor.addManuscript(conference, manuscript);
@@ -164,7 +164,7 @@ public class AuthorTest {
 		listOfAuthors.add(myCoAuthor);
 		Manuscript manuscript = new Manuscript("Old Yeller", date, mapOfReviewers, listOfAuthors);
 		ArrayList<Reviewer> reviewerList = new ArrayList<Reviewer>();
-		Conference conference = new Conference(date, date, reviewerList);
+		Conference conference = new Conference("RSA", date, date, reviewerList);
 		myCoAuthor.addManuscript(conference, manuscript);
 		myCoAuthor.addManuscript(conference, manuscript);
 		myCoAuthor.addManuscript(conference, manuscript);
@@ -189,7 +189,7 @@ public class AuthorTest {
 		listOfAuthors.add(myCoAuthor);
 		Manuscript manuscript = new Manuscript("Old Yeller", date, mapOfReviewers, listOfAuthors);
 		ArrayList<Reviewer> reviewerList = new ArrayList<Reviewer>();
-		Conference conference = new Conference(date, date, reviewerList);
+		Conference conference = new Conference("RSA", date, date, reviewerList);
 		myCoAuthor.addManuscript(conference, manuscript);
 		myCoAuthor.addManuscript(conference, manuscript);
 		myAuthor.addManuscript(conference, manuscript);
