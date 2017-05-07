@@ -62,7 +62,7 @@ public class Controller extends Observable implements Observer {
 	 * @version 5/6/2017
 	 */
 	public void startProgram () {
-		myCurrentState = AUTHOR;
+		myCurrentState = LOG_IN_STATE;
 		changeState (null);
 	}
 	
