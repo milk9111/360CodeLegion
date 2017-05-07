@@ -1,6 +1,7 @@
 package model;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
@@ -20,7 +21,7 @@ import model.User;
  * @version 1 
  *
  */
-public class Author extends User {
+public class Author extends User implements Serializable {
 	
 	/**
 	 * The maximum amount of Manuscripts a Author is allowed to submit per Conference.
@@ -41,12 +42,23 @@ public class Author extends User {
 	 * Constructor for Author class.
 	 * @param theUserName The Username of the Author.
 	 */
-	public Author(String theUserName) {		
-		
-		super(theUserName);
+	public Author(String theUserName, Conference theConference) {		
+		super(theUserName, theConference);
 		this.myReviewList = new ArrayList<File>();
 		myManuscriptList = new HashMap<Conference,ArrayList<Manuscript>>();
 	
+	}
+	
+	/**
+	 * basic constructor for an author, a conference must be provided for
+	 * the author to be under.
+	 * Users with no roles will have this created for them if they choose to submit a manuscript.
+	 * @param theConference the conference to associate with the created author
+	 */
+	public Author(Conference theConference) {
+		super(theConference);
+		this.myReviewList = new ArrayList<File>();
+		myManuscriptList = new HashMap<Conference,ArrayList<Manuscript>>();
 	}
 	
 	/**

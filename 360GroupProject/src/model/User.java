@@ -18,7 +18,7 @@ import model.Conference;
  * @version 1 
  *
  */
-public abstract class User {
+public abstract class User implements Serializable {
 	
 	/**
 	 * The User name for the system to recognize the current user.
@@ -26,9 +26,21 @@ public abstract class User {
 	private String MyUserName;
 	
 	/**
+	 * Unique identifer ID for User
+	 */
+	private UUID myID;
+	
+	/**
 	 * The list of all current conferences the user has access to.
 	 */
 	protected List<Conference> myConferenceList;
+	
+	/**
+	 * The conference this user role is associated with.
+	 * REQUIRED. Whether a program chair, subchair, reviewer, or author, all roles must be
+	 * associated with a conference
+	 */
+	private Conference myAssociatedConference;
 	
 	/**
 	 * Constructor for the User. 
@@ -36,6 +48,7 @@ public abstract class User {
 	 * @param theConferenceList List of all current conferences.
 	 */
 	public User(String theUserName, List<Conference> theConferenceList) {
+		myID = UUID.randomUUID();
 		MyUserName = theUserName;
 		myConferenceList = theConferenceList;
 	}
@@ -44,8 +57,22 @@ public abstract class User {
 	 * Constructor for the User. Only supplying the username.
 	 * @param theUserName The chosen user name.
 	 */
-	public User(String theUserName) {
+	public User(String theUserName, Conference theConference) {
+		myID = UUID.randomUUID();
 		MyUserName = theUserName;
+		myAssociatedConference = theConference;
+	}
+	
+	/**
+	 * Constructor for User with a conference
+	 * This is possible because the user is NOT the account.
+	 * the ACCOUNT class will hold the user's username, name, email, password ect.
+	 * While the User class, and its subtypes are meant to hold roles associating the account
+	 * with a conference and a role.
+	 */
+	public User(Conference theConference) {
+		myID = UUID.randomUUID();
+		myAssociatedConference = theConference;
 	}
 	
 	/**
@@ -77,6 +104,19 @@ public abstract class User {
 	 */
 	public String getUsername() {
 		return MyUserName;
+	}
+	
+	/**
+	 * Method to return the Usertype's ID. 
+	 * DIFFERENT from Account ID
+	 * @return UUID indicating user type ID
+	 */
+	public UUID getMyID() {
+		return myID;
+	}
+	
+	public Conference getMyAssociatedConference() {
+		return this.myAssociatedConference;
 	}
 	
 

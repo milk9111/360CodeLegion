@@ -25,6 +25,7 @@ public class AuthorTest {
 
 	private Author myAuthor;
 	private Author myCoAuthor;
+	private Conference myConference;
 
 	/**
 	 * @author Casey Anderson
@@ -32,8 +33,9 @@ public class AuthorTest {
 	 */
 	@Before
 	public void setUp() {
-		myAuthor = new Author("simpson@ieee.org");
-		myCoAuthor = new Author("fleegle@uw.edu");
+		myConference = new Conference("Alchemy Conference", new Date(), new Date());
+		myAuthor = new Author("simpson@ieee.org", myConference);
+		myCoAuthor = new Author("fleegle@uw.edu", myConference);
 	}
 
 	/**

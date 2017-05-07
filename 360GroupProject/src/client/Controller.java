@@ -102,6 +102,20 @@ public class Controller extends Observable implements Observer {
 				setChanged();
 				notifyObservers(myCurrentState);
 				break;
+			case CHOOSE_USER:
+				switch (pieces[0]) {
+					case "Author":
+						myCurrentState = AUTHOR;
+						break;
+					case "Subprogram Chair":
+						myCurrentState = SUBPROGRAM_CHAIR;
+						break;
+				}
+				myCurrentState += LIST_CONFERENCE_VIEW;
+				
+				setChanged();
+				notifyObservers(myCurrentState);
+				break;
 			case AUTHOR:
 				switch (myCurrentState % 10){
 					case SUBMIT_MANUSCRIPT:
@@ -140,6 +154,19 @@ public class Controller extends Observable implements Observer {
 							notifyObservers(myCurrentState);
 						}
 						break;
+					case USER_OPTIONS:
+						switch (pieces[0]) {
+                    	case "Submit Manuscript":
+                    		myCurrentState = AUTHOR + SUBMIT_MANUSCRIPT;
+                    		break;
+                    	case "Go Back":
+                    		myCurrentState = AUTHOR + LIST_CONFERENCE_VIEW;
+                    		break;
+						}
+						
+						setChanged();
+						notifyObservers(myCurrentState);
+						break;
 				}
 				
 				break;
@@ -177,6 +204,19 @@ public class Controller extends Observable implements Observer {
 						setChanged();
 						notifyObservers(myCurrentState);
                         break;
+                    case USER_OPTIONS:
+                    	switch (pieces[0]) {
+	                    	case "Assign Reviewer":
+	                    		myCurrentState = SUBPROGRAM_CHAIR + ASSIGN_REVIEWER;
+	                    		break;
+	                    	case "Go Back":
+	                    		myCurrentState = SUBPROGRAM_CHAIR + LIST_CONFERENCE_VIEW;
+	                    		break;
+                    	}
+                    	
+                    	setChanged();
+						notifyObservers(myCurrentState);
+                    	break;
 				}
 				break;
 		}

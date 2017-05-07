@@ -32,8 +32,8 @@ public class SubprogramChair extends User {
      * Constructor for the subprogram chair
      * @param theUsername Username of the subprogram chair
      */
-    public SubprogramChair(String theUsername) {
-    	super(theUsername);
+    public SubprogramChair(String theUsername, Conference theConference) {
+    	super(theUsername, theConference);
         this.myAssignedManuscripts = new ArrayList<Manuscript>();
         this.myConferences = new ArrayList<Conference>();
         this.myAssignedConferences = new ArrayList<Conference>();

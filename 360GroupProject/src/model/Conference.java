@@ -47,6 +47,20 @@ public class Conference implements Serializable {
         this.mySubmissionDeadline = theSubmissionDeadline;
         this.myName = theName;
     }
+    
+    /**
+     * Constructor for conference with no past reviewers
+     * @param theName name of conference
+     * @param theSubmissionDeadline date of which manuscript submissions are due
+     * @param theReviewDeadline date of which reviews are due
+     */
+    public Conference(String theName, Date theSubmissionDeadline, Date theReviewDeadline) {
+    	this.myID = UUID.randomUUID();
+        this.myManuscripts = new ArrayList<Manuscript>();
+        this.myReviewDeadline = theReviewDeadline;
+        this.mySubmissionDeadline = theSubmissionDeadline;
+        this.myName = theName;
+    }
 
     /**
      * Gets the list of manuscripts.

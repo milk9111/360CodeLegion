@@ -52,6 +52,24 @@ public class Manuscript implements Serializable {
 		myAuthors = theAuthors;
 	}
 	
+	/**
+	 * constructor that Automatically inits an author list and adds the given author to the list
+	 * to set as the author list
+	 * @param theTitle title of manuscript
+	 * @param theSubmittedDate submission date
+	 * @param theAuthor Author to add to author list for manuscript
+	 */
+	public Manuscript(String theTitle, Date theSubmittedDate, Author theAuthor) {
+		myID = UUID.randomUUID();
+		myTitle = theTitle;
+		mySubmittedDate = theSubmittedDate;
+		
+		// init author list and add passed in author to list
+		ArrayList<Author> authorList = new ArrayList<Author>();
+		authorList.add(theAuthor);
+		myAuthors = authorList;
+	}
+	
 	
 	/**
 	 * Default constructor.
@@ -232,6 +250,25 @@ public class Manuscript implements Serializable {
 	 */
 	public Manuscript submitManuscript () {
 		return new Manuscript(this.myTitle, this.mySubmittedDate, this.myReviews, this.myAuthors);
+	}
+	
+
+	/**
+	 * this method returns a boolean indicating if the passed in author exists within the manuscript's
+	 * list of authors or not.
+	 * @param theAuthor the author to check if it exists within the manuscript's author's list..
+	 * @return true if author exists in authors list, false otherwise.
+	 */
+	public boolean doesAuthorBelongToManuscript(Author theAuthor) {
+		boolean authorBelongsToManuscript = false;
+		
+		for(Author anAuthor : this.myAuthors) {
+			if(anAuthor.getMyID().equals(theAuthor.getMyID())) {
+				authorBelongsToManuscript = true;
+			}
+		}
+		
+		return authorBelongsToManuscript;
 	}
 }
 
