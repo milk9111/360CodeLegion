@@ -95,33 +95,33 @@ public class Controller extends Observable implements Observer {
 	 */
 	private void changeState (String theNextState) {
 //test print
-		System.out.println("In controller changeState: " +theNextState);
+		//System.out.println("In controller changeState: " +theNextState);
 
-		System.out.println("Current state: " + myCurrentState);
+		//System.out.println("Current state: " + myCurrentState);
 		
 		String[] pieces = theNextState.split(",");
 		if (myCurrentState < 0) {
 			switch (myCurrentState) {
 				case LOG_IN_STATE:
-					System.out.println("in LOG_IN_STATE");
+					//System.out.println("in LOG_IN_STATE");
 					myCurrentState = CHOOSE_USER;
 					
 					setChanged();
 					notifyObservers(myCurrentState);
 					break;
 				case CHOOSE_USER:
-					System.out.println("in choose user");
+					//System.out.println("in choose user");
 					switch (pieces[0]) {
 						case "AUTHOR":
-							System.out.println("in author");
+							//System.out.println("in author");
 							myCurrentState = AUTHOR;
 							break;
 						case "SUBPROGRAM_CHAIR":
-							System.out.println("in subprogram chair");
+							//System.out.println("in subprogram chair");
 							myCurrentState = SUBPROGRAM_CHAIR;
 							break;
 					}
-					System.out.println("finished CHOOSE_USER");
+					//System.out.println("finished CHOOSE_USER");
 					myCurrentState += LIST_CONFERENCE_VIEW;
 					
 					setChanged();
@@ -379,7 +379,7 @@ public class Controller extends Observable implements Observer {
 	 */
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		System.out.println("received something in update");
+		//System.out.println("received something in update");
 		if (arg1 instanceof String) {
 			changeState ((String) arg1);
 		} else if (arg1 instanceof Account) {
