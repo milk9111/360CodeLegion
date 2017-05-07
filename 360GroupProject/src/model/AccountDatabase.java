@@ -109,6 +109,9 @@ public class AccountDatabase {
 	public Account updateAndSaveAccountToDatabase(Account theAccount) {
 		TreeMap<UUID, Account> accountList = deserializeAccountList();
 		accountList.put(theAccount.getMyID(), theAccount);
+		if(accountList.containsKey(theAccount.getMyID())) {
+			
+		}
 		saveAccountListToDatabase(accountList);
 
 		return accountList.get(theAccount.getMyID());

@@ -112,8 +112,8 @@ public class ManuscriptTest {
 	@Test
 	public void getAuthors_TestGetAuthorsForNullValues () {
 		assert (myPaper.getAuthors() != null);
-		for (Author au : myPaper.getAuthors()) 
-			assertEquals (au instanceof Author, true);
+		for (UUID au : myPaper.getAuthors()) 
+			assertEquals (au instanceof UUID, true);
 	}
 	
 	

@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.UUID;
-
 import model.Conference;
 import model.Manuscript;
 import model.Reviewer;
@@ -38,7 +38,7 @@ public class Author extends User implements Serializable {
 	/**
 	 * Map of the Manuscripts already submitted to each conference.
 	 */
-	private Map<Conference,ArrayList<Manuscript>> myManuscriptList;
+	private Map<UUID,HashSet<UUID>> myManuscriptList;
 	
 	/**
 	 * Constructor for Author class.
@@ -47,7 +47,7 @@ public class Author extends User implements Serializable {
 	public Author(String theUserName, Conference theConference) {		
 		super(theUserName, theConference);
 		this.myReviewList = new ArrayList<File>();
-		myManuscriptList = new HashMap<Conference,ArrayList<Manuscript>>();
+		myManuscriptList = new HashMap<UUID,HashSet<UUID>>();
 	
 	}
 	
@@ -60,7 +60,7 @@ public class Author extends User implements Serializable {
 	public Author(Conference theConference) {
 		super(theConference);
 		this.myReviewList = new ArrayList<File>();
-		myManuscriptList = new HashMap<Conference,ArrayList<Manuscript>>();
+		myManuscriptList = new HashMap<UUID,HashSet<UUID>>();
 	}
 	
 	/**
@@ -102,9 +102,9 @@ public class Author extends User implements Serializable {
 	 * @param theConference The Conference to get the list of Manuscripts from.
 	 * @return A ArrayList of Manuscripts the Author has already submitted.
 	 */
-	public ArrayList<Manuscript> getManuscript(Conference theConference) {
+	public HashSet<UUID> getManuscript(Conference theConference) {
 		
-		return myManuscriptList.get(theConference);
+		return myManuscriptList.get(theConference.getMyID());
 	
 	}
 	
@@ -122,14 +122,15 @@ public class Author extends User implements Serializable {
 				
 				if (theManuscript.getAuthors().get(i).getManuscriptMap().containsKey(theConference)) {
 					
-					theManuscript.getAuthors().get(i).getManuscriptMap().get(theConference).add(theManuscript);
+					theManuscript.getAuthors().get(i).getManuscriptMap().get(theConference).add(theManuscript.getMyID());
 				
 				} else {
 					
-					ArrayList<Manuscript> ManuscriptList = new ArrayList<Manuscript>();
-					ManuscriptList.add(theManuscript);
-					theManuscript.getAuthors().get(i).getManuscriptMap().put(theConference, ManuscriptList);
-				
+					HashSet<UUID> ManuscriptList = new HashSet<>();
+					ManuscriptList.add(theManuscript.getMyID());
+					if(theManuscript.getAuthors().get(i).getManuscriptMap() == null) {
+						theManuscript.getAuthors().get(i).getManuscriptMap().put(theConference.getMyID(), ManuscriptList);
+					}
 				}
 			}
 			
@@ -156,7 +157,7 @@ public class Author extends User implements Serializable {
 	 * Private helper method to return the internal map of Manuscripts and Conferences they are submitted to.
 	 * @return A Map with the value of A List of Manuscripts and the key the Conference they are submitted to.
 	 */
-	private Map<Conference,ArrayList<Manuscript>> getManuscriptMap() {
+	private Map<UUID,HashSet<UUID>> getManuscriptMap() {
 		
 		return myManuscriptList;
 		
