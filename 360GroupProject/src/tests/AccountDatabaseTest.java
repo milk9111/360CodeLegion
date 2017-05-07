@@ -114,5 +114,30 @@ public class AccountDatabaseTest {
 		assertTrue(validList.get(validAccount.getMyID()).getMyAuthorList().get(validConference.getMyID()) instanceof Author);
 
 	}
+	
+	@Test
+	public void doesAccountExistWithinDatabase_forExistingAccount_shouldExist() {
+		// add single account to list
+		Account validAccount = new Account("Ryan");
+		myAccountDatabase.saveAccountToDatabase(validAccount);
+		
+		TreeMap<UUID, Account> validList = myAccountDatabase.deserializeAccountList();
+		assertTrue(validList.size() == 1);
+		assertTrue(myAccountDatabase.doesAccountExistWithinDatabase(validAccount));
+	}
+	
+		@Test
+	public void doesAccountExistWithinDatabase_forAcctNotInDB_shouldNotExist() {
+		// add single account to list
+		Account validAccount = new Account("Ryan");
+		Account invalidAccount = new Account("acctNotInDB");
+		myAccountDatabase.saveAccountToDatabase(validAccount);
+		
+		TreeMap<UUID, Account> validList = myAccountDatabase.deserializeAccountList();
+		assertTrue(validList.size() == 1);
+		assertTrue(myAccountDatabase.doesAccountExistWithinDatabase(validAccount));
+		assertFalse(myAccountDatabase.doesAccountExistWithinDatabase(invalidAccount));
+	}
+
 
 }
