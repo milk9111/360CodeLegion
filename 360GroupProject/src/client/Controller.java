@@ -115,10 +115,14 @@ public class Controller extends Observable implements Observer {
 					switch (pieces[0]) {
 						case "AUTHOR":
 							//System.out.println("in author");
+							myAccount.addAuthorRoleToAccount(new Author(myCurrentConference));
+							myAccountDatabase.updateAndSaveAccountToDatabase(myAccount);
 							myCurrentState = AUTHOR;
 							break;
 						case "SUBPROGRAM_CHAIR":
 							//System.out.println("in subprogram chair");
+							myAccount.addSubprogramChairRoleToAccount(new SubprogramChair(myCurrentConference), myCurrentConference);
+							myAccountDatabase.updateAndSaveAccountToDatabase(myAccount);
 							myCurrentState = SUBPROGRAM_CHAIR;
 							break;
 					}
@@ -134,11 +138,11 @@ public class Controller extends Observable implements Observer {
 				case AUTHOR:
 					switch (myCurrentState % 10){
 						case SUBMIT_MANUSCRIPT:
-							System.out.println("in submit manuscript");
+							//System.out.println("in submit manuscript");
 	                        Manuscript manuscriptToSubmit;
-	                        System.out.println(pieces[0]);
+	                        //System.out.println(pieces[0]);
 							if(pieces[0].equals("Submit Manuscript")){
-								System.out.println("in submit manuscript inner");
+								//System.out.println("in submit manuscript inner");
 								System.out.println(theNextState);
 								manuscriptToSubmit = makeManuscript(pieces);
 								
@@ -146,7 +150,10 @@ public class Controller extends Observable implements Observer {
 									if (myAccount.doesAutorAssociatedWithConferenceExist(myCurrentConference)) {
 										(myAccount.getAuthorAssociatedWithConference(myCurrentConference)).addManuscript(myCurrentConference, manuscriptToSubmit);
 									} else {
-										myAccount.addAuthorRoleToAccount(new Author(myAccount.getMyUsername(), myCurrentConference));
+										//System.out.println(myAccount.getAuthorAssociatedWithConference(myCurrentConference).getMyAssociatedConference());
+										//System.out.println(myCurrentConference);
+										//System.out.println("else entered");
+										myAccount.addAuthorRoleToAccount(new Author(myCurrentConference));
 										(myAccount.getAuthorAssociatedWithConference(myCurrentConference)).addManuscript(myCurrentConference, manuscriptToSubmit);
 									}
 									
@@ -173,9 +180,11 @@ public class Controller extends Observable implements Observer {
 						case LIST_CONFERENCE_VIEW:
 							if (pieces[0].equals("List Conference View")) {
 								TreeMap<UUID, Conference> currentConferenceList = this.myConferenceDatabase.deserializeConferenceList();
+								//System.out.println(currentConferenceList.values());
+								//System.out.println(myAccount.getAllConferencesAssociatedWithMyAuthorList(currentConferenceList));
 								myCurrentConference = findConference(theNextState, 
 										myAccount.getAllConferencesAssociatedWithMyAuthorList(currentConferenceList));
-								
+								System.out.println("This is the current conference: " + myCurrentConference);
 								myCurrentState = AUTHOR + USER_OPTIONS;
 								setChanged();
 								notifyObservers(myCurrentState);
@@ -379,11 +388,19 @@ public class Controller extends Observable implements Observer {
 		if (!myConferenceDatabase.isConferenceInListUnique(myConferenceDatabase.getAllConferences(), theNewConference)) {
 			//System.out.println("Found an old conference");
 			myCurrentConference = theNewConference;
+			//System.out.println(myCurrentConference.getMyName());
 		} else {
 			//System.out.println("made a new conference");
 			myConferenceDatabase.saveConferenceToDatabase(theNewConference);
 			myCurrentConference = theNewConference;
 		}
+		
+		//System.out.println("at end: " + myCurrentConference);
+	}
+	
+	
+	public Conference getCurrentConference () {
+		return myCurrentConference;
 	}
 
 
@@ -396,6 +413,7 @@ public class Controller extends Observable implements Observer {
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		//System.out.println("received something in update");
+		//System.out.println(myCurrentConference);
 		if (arg1 instanceof String) {
 			changeState ((String) arg1);
 		} else if (arg1 instanceof Account) {

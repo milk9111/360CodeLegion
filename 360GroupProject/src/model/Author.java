@@ -54,6 +54,9 @@ public class Author extends User implements Serializable {
 	 */
 	public Author(Conference theConference) {
 		super(theConference);
+		//System.out.println("author contructor entered");
+		//System.out.println(this.getMyAssociatedConference());
+		//System.out.println(super.getMyAssociatedConference());
 		this.myReviewList = new ArrayList<File>();
 		myManuscriptList = new HashMap<UUID,HashSet<UUID>>();
 	}
