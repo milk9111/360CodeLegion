@@ -443,7 +443,7 @@ public class UI extends Observable implements Observer{
 		
 		for (int i = 0; i < manuscriptList.size(); i++) {
 			
-			System.out.println("" + (i + 1) + " - " + maunscriptList.get(i).getTitle());
+			System.out.println("" + (i + 1) + " - " + manuscriptList.get(i).getTitle());
 			
 		}
 		
