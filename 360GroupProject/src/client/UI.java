@@ -13,6 +13,7 @@ import java.util.UUID;
 
 import javafx.beans.InvalidationListener;
 import model.Account;
+import model.Author;
 import model.Conference;
 import model.ConferenceDatabase;
 import model.Manuscript;
