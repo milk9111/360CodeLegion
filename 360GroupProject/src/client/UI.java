@@ -15,6 +15,8 @@ import javafx.beans.InvalidationListener;
 import model.Account;
 import model.Conference;
 import model.ConferenceDatabase;
+import model.Manuscript;
+import model.ManuscriptDatabase;
 import model.User;
 
 /**
@@ -434,9 +436,21 @@ public class UI extends Observable implements Observer{
 	 * @author Casey Anderson
 	 */
 	private void AuthorListOfManuscriptsView() {
+		
+		int manuscriptChoice;
 		System.out.println("Manuscript List Page");
-
-		//		for (int i = 0; i < )
+		ArrayList<Manuscript> manuscriptList = new ManuscriptDatabase().getManuscriptsBelongingToAuthor(myUserName);
+		
+		for (int i = 0; i < manuscriptList.size(); i++) {
+			
+			System.out.println("" + (i + 1) + " - " + maunscriptList.get(i).getTitle());
+			
+		}
+		
+		manuscriptChoice = myScanner.nextInt();
+		setChanged();
+		notifyObservers(manuscriptList.get(manuscriptChoice - 1));
+		
 	}
 
 	/**
@@ -454,6 +468,7 @@ public class UI extends Observable implements Observer{
 		for (int i = 0; i < listOfConferences.length; i++) {
 
 			System.out.println("" + (i + 1) + " - " + listOfConferences[i].getMyName());
+			
 		}
 
 		conferenceChoice = myScanner.nextInt();
