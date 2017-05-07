@@ -169,16 +169,25 @@ public class UI extends Observable implements Observer{
 			
 			switch (theState % 20) {
 			
-			case (0):
+			case (SUBPROGRAM_CHAIR):
 				subProgramChairView();
+				break;
+				
+			case (LIST_CONFERENCE_VIEW):
+				subProgramChairConferenceView();
+				break;
+			case (ASSIGN_REVIEWER):
+				subProgramChairAssignReviewerView(); 
+				break;
+			case(LIST_MANUSCRIPT_VIEW):
+				subProgramChairManuscriptsView();
 				break;
 				
 			}
 			
-			//add switch statement
-			subProgramChairConferenceView();
-			subProgramChairAssignReviewerView(); 
-			subProgramChairManuscriptsView();
+			
+			
+			
 			
 		}
 	}
@@ -445,11 +454,19 @@ public class UI extends Observable implements Observer{
 	}
 	
 	/**
-	 * This method is redundant from a back-end POV, it just forces a user to select from a conference
+	 * Walks User through the process of selecting conference, manuscript, and reviewer then sends info to controller
 	 */
 	private void subProgramChairAssignReviewerView() {
 		//make a call to database to get myAssignedConferences for SPC
 		//display index and conference title
+		//take users input and store it
+		//call database to get manuscripts for the stored conference
+		//display manuscripts
+		//take manuscript and store it
+		//call database for list of reviewers
+		//display reviewers
+		//take reviewer and store it
+		//send stored values to controller
 
 		
 
