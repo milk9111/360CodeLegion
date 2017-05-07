@@ -34,18 +34,46 @@ public class ControllerTest {
 
 	
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void startProgram_testStartProgramForChangeSet () {
+		myPracticeController.startProgram();
+		assertTrue("startProgram() setChanged and notified correctly.", myControllerTestHelper.showWasChanged());
 	}
 	
 	
+	@Test
+	public void startProgram_testStartProgramForCorrectValuePassed () {
+		myPracticeController.startProgram();
+		assertEquals(myControllerTestHelper.showStateValue(), Controller.LOG_IN_STATE);
+	}
+	
 	
 	public class ControllerTestHelper extends Observable implements Observer {
+		
+		private boolean wasChanged;
+		private int stateValue;
+		
+		public ControllerTestHelper () {
+			reset();
+		}
+		
+		public void reset () {
+			wasChanged = false;
+		}
+		
+		public boolean showWasChanged () {
+			return wasChanged;
+		}
+		
+		public int showStateValue () {
+			return stateValue;
+		}
 
 		@Override
 		public void update(Observable arg0, Object arg1) {
-			// TODO Auto-generated method stub
-			
+			if (arg1 instanceof Integer) {
+				wasChanged = true;
+				stateValue = (Integer) arg1;
+			}
 		}
 		
 	}
