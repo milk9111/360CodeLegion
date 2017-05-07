@@ -21,25 +21,21 @@ public class UI extends Observable implements Observer{
 
 
 	//View States
-	public final int AUTHOR = 0;
-	public final int REVIEWER = 10;
-	public final int SUBPROGRAM_CHAIR = 20;
+	public static final int AUTHOR = 0;
+	public static final int REVIEWER = 10;
+	public static final int SUBPROGRAM_CHAIR = 20;
 
 	//Action States
-	public final int SUBMIT_MANUSCRIPT = 1;
-	public final int LIST_MANUSCRIPT_VIEW = 2;
-	public final int LIST_CONFERENCE_VIEW = 3;
-	public final int ASSIGN_REVIEWER = 4;
+	public static final int SUBMIT_MANUSCRIPT = 1;
+	public static final int LIST_MANUSCRIPT_VIEW = 2;
+	public static final int LIST_CONFERENCE_VIEW = 3;
+	public static final int ASSIGN_REVIEWER = 4;
 
 	private int myState;
 	private String myUserType;
 	private String myUserName;
 	private User myUser;
 	private Scanner myScanner;
-
-	//	private int myUserChoice;
-
-
 	private String myUserChoice;
 
 	public UI() {
