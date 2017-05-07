@@ -5,14 +5,18 @@
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.TreeMap;
 import java.util.UUID;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import model.Author;
 import model.Manuscript;
 import model.ManuscriptDatabase;
+import model.Reviewer;
 
 /**
  * @author BlueAccords
@@ -36,7 +40,23 @@ public class ManuscriptDatabaseTest {
 	 */
 	@Test
 	public void testGetAllManuscripts() {
-		fail("Not yet implemented");
+		Manuscript validManuscript = new Manuscript("Study of the Sciences", new Date(), new ArrayList<Author>());
+		myManuscriptDatabase.saveManuscriptToDatabase(validManuscript);
+		
+		TreeMap<UUID, Manuscript> validList = myManuscriptDatabase.getAllManuscripts();
+		assertTrue(validList instanceof TreeMap);
+		assertTrue(validList.size() == 1);
+	}
+	
+	
+	@Test
+	public void saveManuscriptToDatabase_forValidManuscript_shouldSucceed() {
+		Manuscript validManuscript = new Manuscript("Study of the Sciences", new Date(), new ArrayList<Author>());
+		myManuscriptDatabase.saveManuscriptToDatabase(validManuscript);
+
+		TreeMap<UUID, Manuscript> validList = myManuscriptDatabase.deserializeManuscriptList();
+		assertTrue("list size should only be 1 and have only 1 Account saved", validList.size() == 1);
+		assertTrue(validList.get(validManuscript.getMyID()).getTitle().equals(validManuscript.getTitle()));
 	}
 
 	/**

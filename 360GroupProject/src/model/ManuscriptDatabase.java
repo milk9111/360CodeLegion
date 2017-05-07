@@ -28,6 +28,42 @@ public class ManuscriptDatabase {
 		return listToReturn;
 	}
 	
+	/**
+	 * This method will saved the passed in Manuscript to the Manuscript database.
+	 * preconditions: Assumes that the Manuscript file already exists.
+	 * @param theManuscript the Manuscript to save to the database
+	 * @return The Manuscript if save is successful.
+	 * else return null if failed
+	 */
+	public Manuscript saveManuscriptToDatabase(Manuscript theManuscript) {
+		TreeMap<UUID, Manuscript> manuscriptList = deserializeManuscriptList();
+
+		// pre conditions to check for uniqueness, limits, ect. are here
+		manuscriptList.put(theManuscript.getMyID(), theManuscript);
+		saveManuscriptListToDatabase(manuscriptList);
+
+		return theManuscript;
+	}
+	
+	
+	/**
+	 * Saves passed in Manuscript list to database 
+	 * @param theManuscriptList the list to save to the database
+	 */
+	public void saveManuscriptListToDatabase(TreeMap<UUID, Manuscript> theManuscriptList) {
+		// TODO: add better error handling to notify client of failure
+	      try {
+	         FileOutputStream fileOut = new FileOutputStream(MANUSCRIPT_SERIALIZED_PATH + MANUSCRIPT_FILE_PATHNAME);
+	         ObjectOutputStream out = new ObjectOutputStream(fileOut);
+	         out.writeObject(theManuscriptList);
+	         out.close();
+	         fileOut.close();
+	         // System.out.printf("Serialized data is saved in " + Account_SERIALIZED_PATH + "accounts.ser");
+	      }catch(IOException i) {
+	         i.printStackTrace();
+	      }
+	}
+	
 	
 	/**
 	 * Deserialize the Manuscript list if it exists

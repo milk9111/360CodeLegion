@@ -1,6 +1,7 @@
 package model;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -19,7 +20,7 @@ import model.Reviewer;
  * This is the Manuscript class. It contains information about the
  * individual manuscript including author(s) and reviews.
  */
-public class Manuscript {
+public class Manuscript implements Serializable {
 	private UUID myID;
 	private HashMap<Reviewer, String> myReviews;
 	private ArrayList<Author> myAuthors;
@@ -44,6 +45,13 @@ public class Manuscript {
 		myTitle = theTitle;
 	}
 	
+	public Manuscript(String theTitle, Date theSubmittedDate, ArrayList<Author> theAuthors) {
+		myID = UUID.randomUUID();
+		myTitle = theTitle;
+		mySubmittedDate = theSubmittedDate;
+		myAuthors = theAuthors;
+	}
+	
 	
 	/**
 	 * Default constructor.
@@ -58,6 +66,13 @@ public class Manuscript {
 		mySubmittedDate = new Date ();
 	}
 	
+	/**
+	 * Returns the manuscripts unique ID
+	 * @return the UUID reprensenting the manuscript's ID
+	 */
+	public UUID getMyID() {
+		return this.myID;
+	}
 	
 	/**
 	 * Returns an ArrayList of all the reviews attached to this
