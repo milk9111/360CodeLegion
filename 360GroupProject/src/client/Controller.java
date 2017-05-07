@@ -162,7 +162,10 @@ public class Controller extends Observable implements Observer {
                     	case "Go Back":
                     		myCurrentState = AUTHOR + LIST_CONFERENCE_VIEW;
                     		break;
-                	}
+						}
+						
+						setChanged();
+						notifyObservers(myCurrentState);
 						break;
 				}
 				
@@ -210,6 +213,9 @@ public class Controller extends Observable implements Observer {
 	                    		myCurrentState = SUBPROGRAM_CHAIR + LIST_CONFERENCE_VIEW;
 	                    		break;
                     	}
+                    	
+                    	setChanged();
+						notifyObservers(myCurrentState);
                     	break;
 				}
 				break;
