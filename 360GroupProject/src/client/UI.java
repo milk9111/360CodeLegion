@@ -92,14 +92,14 @@ public class UI extends Observable implements Observer{
 		System.out.println("\nChoose what type of user you are");
 		System.out.println("1 - Author");
 		System.out.println("2 - SubProgram Chair");
-
-		if (myScanner.next() == "1") {
+		myUserChoice = myScanner.next();
+		if (myUserChoice.equals("1")) {
 			setChanged();
 			notifyObservers("AUTHOR");
 			
 		}
 		
-		else if(myScanner.next() == "2"){
+		else if (myUserChoice.equals("2")){
 			setChanged();
 			notifyObservers("SUBPROGRAM_CHAIR"); 
 			
@@ -182,11 +182,7 @@ public class UI extends Observable implements Observer{
 				subProgramChairManuscriptsView();
 				break;
 				
-			}
-			
-			
-			
-			
+			}	
 			
 		}
 	}
