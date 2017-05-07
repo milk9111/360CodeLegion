@@ -18,7 +18,7 @@ import model.Conference;
  * @version 1 
  *
  */
-public abstract class User {
+public abstract class User implements Serializable {
 	
 	/**
 	 * The User name for the system to recognize the current user.

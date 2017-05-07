@@ -1,6 +1,7 @@
 package model;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
@@ -20,7 +21,7 @@ import model.User;
  * @version 1 
  *
  */
-public class Author extends User {
+public class Author extends User implements Serializable {
 	
 	/**
 	 * The maximum amount of Manuscripts a Author is allowed to submit per Conference.

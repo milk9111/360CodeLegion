@@ -82,13 +82,17 @@ public class ManuscriptDatabaseTest {
 		Account userAccount = new Account("RyanTran");
 		Conference primaryConference = new Conference("Education of Electronics", new Date(), new Date());
 		Author authorRole = new Author(primaryConference);
-		// Manuscript manuA = new Manuscript("Alpha script", new Date, );
-		// init user
-		// init conference
-		// init author
-		// init multiple manuscripts
-		// submit and save manuscripts
-		// get manuscriptings belonging to author
+		Manuscript manuA = new Manuscript("Alpha script", new Date(), authorRole);
+		Manuscript manuB = new Manuscript("Beta script", new Date(), authorRole);
+		Manuscript manuC = new Manuscript("Charlie script", new Date(), authorRole);
+		
+		myManuscriptDatabase.saveManuscriptToDatabase(manuA);
+		myManuscriptDatabase.saveManuscriptToDatabase(manuB);
+		myManuscriptDatabase.saveManuscriptToDatabase(manuC);
+		
+		ArrayList<Manuscript> returnedList = myManuscriptDatabase.getManuscriptsBelongingToAuthor(authorRole);
+		
+		assertTrue(returnedList.size() == 3);
 	}
 
 }

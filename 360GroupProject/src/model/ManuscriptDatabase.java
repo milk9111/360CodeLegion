@@ -112,7 +112,7 @@ public class ManuscriptDatabase {
 	}
 	
 	public ArrayList<Manuscript> getManuscriptsBelongingToAuthor(Author theAuthor) {
-		ArrayList<Manuscript> returnListOfManuscripts = null;
+		ArrayList<Manuscript> returnListOfManuscripts = new ArrayList<Manuscript>();
 		TreeMap<UUID, Manuscript> allManuscripts = this.getAllManuscripts();
 		
 		for (Manuscript manuToCompare : allManuscripts.values()) {
