@@ -21,6 +21,7 @@ public class Account implements Serializable {
     public Account(String theUsername) {
     	this.myID = UUID.randomUUID();
     	this.myUsername = theUsername;
+        this.myAuthors = new TreeMap<UUID, Author>();
     }
     
     public Account(TreeMap<UUID, Author> theAuthors, Reviewer myReviewer, SubprogramChair mySubprogramChair) {
@@ -29,6 +30,7 @@ public class Account implements Serializable {
         this.myReviewer = myReviewer;
         this.mySubprogramChair = mySubprogramChair;
     }
+    
 
     public TreeMap<UUID, Author> getMyAuthor() {
         return this.myAuthors;
