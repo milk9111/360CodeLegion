@@ -82,6 +82,21 @@ public class AccountDatabase {
 	}
 	
 	/**
+	 * This method will accept an account and save it to the serialized account list, updating
+	 * the already existing account within the list.
+	 * preconditions: Assumes the given account already exists within the list.
+	 * @param theAccount the updated Account object to be saved to the database
+	 * @return An Account after it has been successfully saved to the database,
+	 */
+	public Account updateAndSaveAccountToDatabase(Account theAccount) {
+		TreeMap<UUID, Account> accountList = deserializeAccountList();
+		accountList.put(theAccount.getMyID(), theAccount);
+		saveAccountListToDatabase(accountList);
+
+		return accountList.get(theAccount.getMyID());
+	}
+	
+	/**
 	 * This method will check if the given username belongs to an account that is part of the system
 	 * @param theAccountList the account list to check against
 	 * @param theAccount the Account 
