@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -326,7 +327,7 @@ public class UI extends Observable implements Observer{
 		}
 
 		setChanged();
-		notifyObservers("Submit Manuscript," + manuscriptTile + "," + ManuscriptFilePath + "," + dtf.format(localDate) + "," + authorList); 
+		notifyObservers("Submit Manuscript," + manuscriptTile + "," + ManuscriptFilePath + "," + new Date() + "," + authorList); 
 
 
 	}
