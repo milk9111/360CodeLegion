@@ -103,14 +103,18 @@ public class Controller extends Observable implements Observer {
 				notifyObservers(myCurrentState);
 				break;
 			case CHOOSE_USER:
+				System.out.println("in choose user");
 				switch (pieces[0]) {
-					case "Author":
+					case "AUTHOR":
+						System.out.println("in author");
 						myCurrentState = AUTHOR;
 						break;
-					case "Subprogram Chair":
+					case "SUBPROGRAM_CHAIR":
+						System.out.println("in subprogram chair");
 						myCurrentState = SUBPROGRAM_CHAIR;
 						break;
 				}
+				System.out.println("finished CHOOSE_USER");
 				myCurrentState += LIST_CONFERENCE_VIEW;
 				
 				setChanged();
@@ -124,9 +128,14 @@ public class Controller extends Observable implements Observer {
 							manuscriptToSubmit = makeManuscript(pieces);
 							
 							try {
-								(myAccount.getMyAuthor()).addManuscript(myCurrentConference, manuscriptToSubmit);
+								if (myAccount.doesAutorAssociatedWithConferenceExist(myCurrentConference)) {
+									(myAccount.getAuthorAssociatedWithConference(myCurrentConference)).addManuscript(myCurrentConference, manuscriptToSubmit);
+								} else {
+									myAccount.addAuthorRoleToAccount(new Author(myAccount.getMyUsername(), myCurrentConference));
+									(myAccount.getAuthorAssociatedWithConference(myCurrentConference)).addManuscript(myCurrentConference, manuscriptToSubmit);
+								}
+								
 							} catch (Exception e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 							
@@ -221,6 +230,31 @@ public class Controller extends Observable implements Observer {
 				break;
 		}
 	}
+	
+	
+	/**
+	 * Sets the current state to the passed int value. Used for testing
+	 * purposes only.
+	 * 
+	 * @param theNewState The new state to set
+	 * @author Connor Lundberg
+	 * @version 5/6/2017
+	 */
+	public void setState (int theNewState) {
+		myCurrentState = theNewState;
+	}
+	
+	
+	/**
+	 * Returns the current int state. Used for testing purposes only.
+	 * 
+	 * @return The current state
+	 * @author Connor Lundberg
+	 * @version 5/6/2017
+	 */
+	public int getState () {
+		return myCurrentState;
+	}
 
 	
 	/**
@@ -280,7 +314,7 @@ public class Controller extends Observable implements Observer {
 		
 		//Adds the remaining Authors in the list.
 		for (int i = 3; i < thePieces.length; i++) {
-			returnManuscript.addAuthor(new Author(thePieces[i]));
+			returnManuscript.addAuthor(new Author(thePieces[i], myCurrentConference));
 		}
 		
 		return returnManuscript;

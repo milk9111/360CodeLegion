@@ -47,6 +47,15 @@ public class ControllerTest {
 	}
 	
 	
+	@Test
+	public void changeState_testChangeStateForCorrectValuePassedFromObserver () {
+		myPracticeController.setState(Controller.AUTHOR+Controller.LIST_CONFERENCE_VIEW);
+		myControllerTestHelper.makeChange("List Conference View");
+		
+		assertEquals(myPracticeController.getState(), Controller.AUTHOR+Controller.USER_OPTIONS);
+	}
+	
+	
 	public class ControllerTestHelper extends Observable implements Observer {
 		
 		private boolean wasChanged;
@@ -54,6 +63,11 @@ public class ControllerTest {
 		
 		public ControllerTestHelper () {
 			reset();
+		}
+		
+		public void makeChange (String theString) {
+			setChanged();
+			notifyObservers(theString);
 		}
 		
 		public void reset () {
