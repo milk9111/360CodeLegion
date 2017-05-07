@@ -1,6 +1,7 @@
 package model;
 
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,6 +28,7 @@ public class Manuscript implements Serializable {
 	private ArrayList<Author> myAuthors;
 	private Date mySubmittedDate;
 	private String myTitle;
+	private File myFilePath;
 	
 	
 	/**
@@ -38,12 +40,13 @@ public class Manuscript implements Serializable {
 	 * @author Connor Lundberg
 	 * @version 5/6/2017
 	 */
-	public Manuscript (String theTitle, Date theSubmittedDate, HashMap<Reviewer, String> theReviews, ArrayList<Author> theAuthors) {
+	public Manuscript (String theTitle, Date theSubmittedDate, HashMap<Reviewer, String> theReviews, ArrayList<Author> theAuthors, File theFilePath) {
 		myID = UUID.randomUUID();
 		myReviews = (HashMap<Reviewer, String>) theReviews.clone();
 		myAuthors = (ArrayList<Author>) theAuthors.clone();
 		mySubmittedDate = theSubmittedDate;
 		myTitle = theTitle;
+		myFilePath = theFilePath;
 	}
 	
 	public Manuscript(String theTitle, Date theSubmittedDate, ArrayList<Author> theAuthors) {
@@ -60,10 +63,11 @@ public class Manuscript implements Serializable {
 	 * @param theSubmittedDate submission date
 	 * @param theAuthor Author to add to author list for manuscript
 	 */
-	public Manuscript(String theTitle, Date theSubmittedDate, Author theAuthor) {
+	public Manuscript(String theTitle, Date theSubmittedDate, Author theAuthor, File theFilePath) {
 		myID = UUID.randomUUID();
 		myTitle = theTitle;
 		mySubmittedDate = theSubmittedDate;
+		myFilePath = theFilePath;
 		
 		// init author list and add passed in author to list
 		ArrayList<Author> authorList = new ArrayList<Author>();
@@ -83,6 +87,7 @@ public class Manuscript implements Serializable {
 		myReviews = new HashMap<Reviewer, String> ();
 		myAuthors = new ArrayList<Author> ();
 		mySubmittedDate = new Date ();
+		myFilePath = new File("");
 	}
 	
 	/**

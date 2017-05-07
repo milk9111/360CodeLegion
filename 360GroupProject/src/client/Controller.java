@@ -97,7 +97,7 @@ public class Controller extends Observable implements Observer {
 //test print
 //		System.out.println("In controller changeState: " +theNextState);
 
-		//System.out.println("Current state: " + myCurrentState);
+		System.out.println("Current state: " + myCurrentState);
 		
 		String[] pieces = theNextState.split(",");
 		if (myCurrentState < 0) {
@@ -133,8 +133,12 @@ public class Controller extends Observable implements Observer {
 				case AUTHOR:
 					switch (myCurrentState % 10){
 						case SUBMIT_MANUSCRIPT:
+							System.out.println("in submit manuscript");
 	                        Manuscript manuscriptToSubmit;
+	                        System.out.println(pieces[0]);
 							if(pieces[0].equals("Submit Manuscript")){
+								System.out.println("in submit manuscript inner");
+								System.out.println(theNextState);
 								manuscriptToSubmit = makeManuscript(pieces);
 								
 								try {
@@ -150,6 +154,7 @@ public class Controller extends Observable implements Observer {
 								}
 								
 								myCurrentConference.submitManuscript(manuscriptToSubmit);
+								myManuscriptDatabase.saveManuscriptToDatabase(manuscriptToSubmit);
 								
 								myCurrentState = AUTHOR + LIST_MANUSCRIPT_VIEW;
 								setChanged();
@@ -177,7 +182,7 @@ public class Controller extends Observable implements Observer {
 							break;
 						case USER_OPTIONS:
 							switch (pieces[0]) {
-	                    	case "Submit Manuscript":
+	                    	case "SUBMIT_MANUSCRIPT":
 	                    		myCurrentState = AUTHOR + SUBMIT_MANUSCRIPT;
 	                    		break;
 	                    	case "Go Back":
@@ -328,7 +333,7 @@ public class Controller extends Observable implements Observer {
 		Manuscript returnManuscript = new Manuscript();
 		
 		returnManuscript.setTitle(thePieces[1]);
-		returnManuscript.setSubmittedDate(new Date(thePieces[2]));
+		returnManuscript.setSubmittedDate(new Date());
 		
 		//Adds the remaining Authors in the list.
 		for (int i = 3; i < thePieces.length; i++) {
@@ -370,10 +375,10 @@ public class Controller extends Observable implements Observer {
 	 */
 	public void setConference (Conference theNewConference) {
 		if (!myConferenceDatabase.isConferenceInListUnique(myConferenceDatabase.getAllConferences(), theNewConference)) {
-			System.out.println("Found an old conference");
+			//System.out.println("Found an old conference");
 			myCurrentConference = theNewConference;
 		} else {
-			System.out.println("made a new conference");
+			//System.out.println("made a new conference");
 			myConferenceDatabase.saveConferenceToDatabase(theNewConference);
 			myCurrentConference = theNewConference;
 		}
