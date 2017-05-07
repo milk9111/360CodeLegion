@@ -40,6 +40,7 @@ public class UI extends Observable implements Observer{
 	private User myUser;
 	private Scanner myScanner;
 	private String myUserChoice;
+	private Account myAccount;
 
 	public UI() {
 		myState = 0;
@@ -61,7 +62,8 @@ public class UI extends Observable implements Observer{
 			System.out.print("Please enter user name to log in: ");
 			myUserName = myScanner.next();
 			System.out.println();
-			notifyObservers(new Account(myUserName));
+			myAccount = new Account(myUserName);
+			notifyObservers(myAccount);
 			
 	}
 
@@ -78,6 +80,7 @@ public class UI extends Observable implements Observer{
 		System.out.println("1 - Author");
 		System.out.println("2 - SubProgram Chair");
 		myUserChoice = myScanner.next();
+		
 		if (myUserChoice.equals("1")) {
 			//setChanged();
 			notifyObservers("AUTHOR");
@@ -349,6 +352,7 @@ public class UI extends Observable implements Observer{
 	 */
 	private void AuthorListOfManuscriptsView() {
 		System.out.println("Manuscript List Page");
+		
 		//		for (int i = 0; i < )
 	}
 
