@@ -141,14 +141,17 @@ public class UI extends Observable implements Observer{
 			switch (theState) {
 			
 			case AUTHOR:
+				
 				AuthorView();
 				break;
 			
 			case SUBMIT_MANUSCRIPT:
+				
 				AuthorManuscriptSubmissionView();
 				break;
 				
 			case LIST_MANUSCRIPT_VIEW:
+				
 				AuthorListOfManuscriptsView();
 				break;
 			
@@ -217,20 +220,28 @@ public class UI extends Observable implements Observer{
 		myUserChoice = myScanner.next();
 		
 		if (myUserChoice.equals("1")) {
+			
 			notifyObservers("SUBMIT_MANUSCRIPT"); 
+		
 		}
 		
 		else if (myUserChoice.equals("2")) {
+			
 			notifyObservers("LIST_MANUSCRIPT_VIEW"); 
+		
 		}
 		
 		else if (myUserChoice.equals("3")) {
+			
 			notifyObservers("LIST_CONFERENCE_VIEW"); 
+		
 		}
 		
 		else {
+			
 			System.out.println("Invalid choice, please select from the options displayed");
 			AuthorView();
+		
 		}
 
 	}
@@ -260,7 +271,9 @@ public class UI extends Observable implements Observer{
 			moreAuthors = myScanner.next();
 			
 			if (!moreAuthors.equals("0")) {
+				
 				listOfAuthors.add(myScanner.next());
+			
 			} 
 			
 		}
@@ -276,6 +289,67 @@ public class UI extends Observable implements Observer{
 		
 		notifyObservers("Submit Manuscript," + manuscriptTile + "," + ManuscriptFilePath + "," + dtf.format(localDate) + "," + authorList); 
 
+
+	}
+	
+	/**
+	 * Method to Display Submit Maunscript Failure to User and let them decide if they want to go back
+	 * to the Author main page or the manusscript submission page.
+	 * 
+	 * @author Casey Anderson
+	 */
+	private void authorHasToManySubmittedManuscriptsErrorView() {
+		
+		System.out.println("Sorry one of the current Authors has the maximum allowed number of manuscripts");
+		System.out.println("1 - to go back to Manuscript Submission Page");
+		System.out.println("2 - to go back to Author Main Page");
+		myUserChoice = myScanner.next();
+		
+		if (myUserChoice.equals("1")) {
+			
+			notifyObservers("SUBMIT_MANUSCRIPT");
+		
+		}
+		
+		else if (myUserChoice.equals("2")) {
+			
+			notifyObservers("AUTHOR");
+		
+		}
+			
+		else {
+			
+			System.out.println("Invalid choice, please select from the options displayed");
+			authorHasToManySubmittedManuscriptsErrorView();
+		
+		}
+
+	}
+	
+	/**
+	 * Method to Display to the User that the Manuscript submission failed due to the Manuscript
+	 * Dead line being expired.
+	 * 
+	 * @author Casey Anderson
+	 */
+	private void ManuscriptDeadLinePastErrorView() {
+		
+		System.out.println("Sorry The Manuscript Dead Line has already past");
+		System.out.println("1 - to go back to Author Main Page");
+		myUserChoice = myScanner.next();
+		
+	    if (myUserChoice.equals("1")) {
+			
+			notifyObservers("AUTHOR");
+		
+		}
+			
+		else {
+			
+			System.out.println("Invalid choice, please select from the options displayed");
+			ManuscriptDeadLinePastErrorView();
+		
+		}
 
 	}
 
@@ -320,6 +394,38 @@ public class UI extends Observable implements Observer{
 
 	}
 
+	/**
+	 * Method to Display to the User that the Manuscript submission failed due to the Manuscript
+	 * Dead line being expired.
+	 * 
+	 * @author Casey Anderson
+	 */
+	private void ReviewerIsAuthorErrorView() {
+		
+		System.out.println("Reviewer Not Assigned - because Reviewer is Author on Manuscript being assigned");
+		System.out.println("1 - to go back to Assign a Reviewer Page");
+		System.out.println("2 - to go back to SubProgram Chair Main Page");	
+		myUserChoice = myScanner.next();
+		
+	    if (myUserChoice.equals("1")) {
+			
+			notifyObservers("ASSIGN_REVIEWER");
+		
+		}
+	    
+	    else if (myUserChoice.equals("2"))
+	    	
+	    	notifyObservers("SUBPROGRAM_CHAIR");
+			
+		else {
+			
+			System.out.println("Invalid choice, please select from the options displayed");
+			ReviewerIsAuthorErrorView();
+		
+		}
+
+	}
+	
 	private void subProgramChairManuscriptsView() {
 		//make a call to database to get myAssignedManuscripts list from SPC
 		//display index + 1 and Manuscript title 
