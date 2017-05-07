@@ -1,3 +1,4 @@
+import model.Account;
 import model.Author;
 import model.Conference;
 import model.Manuscript;
@@ -10,6 +11,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.TreeMap;
 import java.util.UUID;
 
 import org.junit.Before;
@@ -28,6 +30,7 @@ public class AuthorTest {
 	private Author myCoAuthor;
 	private Conference myConference;
 	private ArrayList<UUID> myListOfAuthors;
+	private TreeMap<UUID, Account> myListOfAccountAuthors;
 
 	/**
 	 * @author Casey Anderson
@@ -39,6 +42,7 @@ public class AuthorTest {
 		myAuthor = new Author("simpson@ieee.org", myConference);
 		myCoAuthor = new Author("fleegle@uw.edu", myConference);
 		myListOfAuthors = new ArrayList<UUID>();
+		myListOfAccountAuthors = new TreeMap<UUID, Account>();
 	}
 
 	/**
@@ -66,6 +70,7 @@ public class AuthorTest {
 		Manuscript manuscript = new Manuscript("Old Yeller", date, mapOfReviewers, myListOfAuthors);
 		ArrayList<Reviewer> reviewerList = new ArrayList<Reviewer>();
 		Conference conference = new Conference("RSA", date, date, reviewerList);
+		this.myListOfAccountAuthors.put(, value)
 		myAuthor.addManuscript(conference, manuscript);
 		myAuthor.addManuscript(conference, manuscript);
 		myAuthor.addManuscript(conference, manuscript);

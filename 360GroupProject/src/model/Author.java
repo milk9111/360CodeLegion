@@ -38,6 +38,7 @@ public class Author extends User implements Serializable {
 	// TODO: refactor this to be conference IDs and Manuscript IDs
 	/**
 	 * Map of the Manuscripts already submitted to each conference.
+	 * Key: Conference ID, HashSet: List of Manuscripts author has submitted to that conference
 	 */
 	private Map<UUID,HashSet<UUID>> myManuscriptList;
 	
@@ -111,28 +112,64 @@ public class Author extends User implements Serializable {
 	
 	/**
 	 * Adds manuscript to a conference.
+	 * WILL SAVE/UPDATE accounts that are authors of the manuscript to be saved
 	 * @param theConference The conference that the manuscript is to be added to.
 	 * @param theManuscript The manuscript to be added to Conference.
 	 * @throws illegalArgumentException
 	 */
 	public void addManuscript(Conference theConference, Manuscript theManuscript, TreeMap<UUID, Account> theAccountList) throws Exception {	
+		ArrayList<Account> acctsWithAuthorsBelongingToConf = new ArrayList<Account>();
 		
 		if (!isAuthorAtManuscriptLimit(theConference, theManuscript, theAccountList)) {
 			
+			// iterate through all accounts and create a list of accounts with authors connected to the
+			// passed in conference
+			for(Account theAcct : theAccountList.values()) {
+				// check if an account has an author associated with the passed in conference
+				// if true, add that account to a relevant list
+				if(theAcct.getMyAuthorList().containsKey(theConference.getMyID())) {
+					acctsWithAuthorsBelongingToConf.add(theAcct);
+				}
+			}
+			
+			// Iterate through each Author attached to the manuscript to be submitted
 			for (int i = 0; i < theManuscript.getAuthors().size(); i++) {			
 				
-				if (theManuscript.getAuthors().get(i).getManuscriptMap().containsKey(theConference)) {
-					
-					theManuscript.getAuthors().get(i).getManuscriptMap().get(theConference).add(theManuscript.getMyID());
-				
-				} else {
-					
-					HashSet<UUID> ManuscriptList = new HashSet<>();
-					ManuscriptList.add(theManuscript.getMyID());
-					if(theManuscript.getAuthors().get(i).getManuscriptMap() == null) {
-						theManuscript.getAuthors().get(i).getManuscriptMap().put(theConference.getMyID(), ManuscriptList);
+				// If the author already has manuscripts in general, already submitted to the passed in conference
+				// parameter then the new manuscript to be submitted will be appended onto that list with the conference
+				// as the key
+				for(Account aAcct : acctsWithAuthorsBelongingToConf) {
+					Author authorOfAcct = (Author) aAcct.getMyAuthorList().get(theConference.getMyID());
+
+					// checks if the current iteration's account's author matches a manuscript author
+					if(theManuscript.getAuthors().contains(authorOfAcct.getMyID())) {
+
+						// after confirming that the account's author is included within the manuscript's list of authors
+						// Check if the author has already submitted any manuscripts to the passed in conference.
+						// If they have, then append the submitted manuscript to the end of their manuscript list
+						// where the current conference is the key
+						if(authorOfAcct.getManuscriptMap().containsKey(theConference.getMyID())) {
+							// Adds the manuscript's ID to..
+							// the account -> author role linked to conference argument ->
+							// author's manuscript map -> manuscript mapping with conference argument as key -> hashset of
+							// given argument's manuscripts 
+							authorOfAcct.getManuscriptMap().get(theConference.getMyID()).add(theManuscript.getMyID());
+							
+							// update account with changed author
+							aAcct.addAuthorRoleToAccount(authorOfAcct);
+							
+							// save Account to database
+							new AccountDatabase().updateAndSaveAccountToDatabase(aAcct);
+							
+							// TODO: Save manuscript ID to conference as well
+						} else {
+							HashSet<UUID> manuHashList = new HashSet<UUID>();
+							manuHashList.add(theManuscript.getMyID());
+							authorOfAcct.getManuscriptMap().put(theConference.getMyID(), manuHashList);
+						}
 					}
 				}
+				
 			}
 			
 		} else {

@@ -61,7 +61,7 @@ public class Account implements Serializable {
     public void addAuthorRoleToAccount(Author theAuthor) {
         this.myAuthors.put(theAuthor.getMyAssociatedConference().getMyID(), theAuthor);
     }
-    
+        
     /**
      * Returns the author associated with the conference parameter
      * @param theConference conference who's id we are checking to see if the author belongs to it
