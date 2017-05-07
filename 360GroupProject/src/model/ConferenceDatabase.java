@@ -15,8 +15,11 @@ import java.util.UUID;
 public class ConferenceDatabase {
 
 	private TreeMap<UUID, Conference> myConferenceList;
-
-	private final String CONFERENCE_SERIALIZED_PATH = "360GroupProject/src/model/serializedModel/";
+	
+	/**
+	 * serialized folder to prevent error from being thrown.
+	 */
+	private final String CONFERENCE_SERIALIZED_PATH = "/C:/serializedModel/";
 	private final String CONFERENCE_FILE_PATHNAME = "conferences.ser";
 
 	public void ConferenceDatabase() {

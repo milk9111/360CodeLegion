@@ -20,7 +20,10 @@ public class AccountDatabase {
 
 	private TreeMap<UUID, Account> myAccountList;
 	
-	private final String Account_SERIALIZED_PATH = "360GroupProject/src/model/serializedModel/";
+	/**
+	 * serialized folder to prevent error from being thrown.
+	 */
+	private final String Account_SERIALIZED_PATH = "/C:/serializedModel/";
 	
 	public void AccountDatabase() {
 		myAccountList = null;
@@ -191,6 +194,7 @@ public class AccountDatabase {
 	         out.close();
 	         fileOut.close();
 	         // System.out.printf("Serialized data is saved in " + Account_SERIALIZED_PATH + "accounts.ser");
+	         // any ideas?
 	      }catch(IOException i) {
 	         i.printStackTrace();
 	      }
