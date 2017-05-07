@@ -151,8 +151,8 @@ public class Manuscript implements Serializable {
 	 * @author Connor Lundberg
 	 * @version 5/6/2017
 	 */
-	public ArrayList<Author> getAuthors () {
-		return (ArrayList<Author>) myAuthorsIDs.clone();
+	public ArrayList<UUID> getAuthors () {
+		return (ArrayList<UUID>) myAuthorsIDs.clone();
 	}
 	
 	
