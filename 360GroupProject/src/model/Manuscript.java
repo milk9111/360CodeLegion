@@ -24,7 +24,8 @@ public class Manuscript implements Serializable {
 	private UUID myID;
 	private HashMap<Reviewer, String> myReviews;
 	// TODO: Refactor to list of author UUIDs instead, maybe TreeMap of Author/User UUID, Authors
-	private ArrayList<Author> myAuthors;
+	//private ArrayList<Author> myAuthors;
+	private ArrayList<UUID> myAuthorsIDs;
 	private Date mySubmittedDate;
 	private String myTitle;
 	
@@ -38,19 +39,19 @@ public class Manuscript implements Serializable {
 	 * @author Connor Lundberg
 	 * @version 5/6/2017
 	 */
-	public Manuscript (String theTitle, Date theSubmittedDate, HashMap<Reviewer, String> theReviews, ArrayList<Author> theAuthors) {
+	public Manuscript (String theTitle, Date theSubmittedDate, HashMap<Reviewer, String> theReviews, ArrayList<UUID> theAuthorsIDs) {
 		myID = UUID.randomUUID();
 		myReviews = (HashMap<Reviewer, String>) theReviews.clone();
-		myAuthors = (ArrayList<Author>) theAuthors.clone();
+		myAuthorsIDs = (ArrayList<UUID>) theAuthorsIDs.clone();
 		mySubmittedDate = theSubmittedDate;
 		myTitle = theTitle;
 	}
 	
-	public Manuscript(String theTitle, Date theSubmittedDate, ArrayList<Author> theAuthors) {
+	public Manuscript(String theTitle, Date theSubmittedDate, ArrayList<UUID> theAuthorsIDs) {
 		myID = UUID.randomUUID();
 		myTitle = theTitle;
 		mySubmittedDate = theSubmittedDate;
-		myAuthors = theAuthors;
+		myAuthorsIDs = theAuthorsIDs;
 	}
 	
 	/**
@@ -66,9 +67,9 @@ public class Manuscript implements Serializable {
 		mySubmittedDate = theSubmittedDate;
 		
 		// init author list and add passed in author to list
-		ArrayList<Author> authorList = new ArrayList<Author>();
-		authorList.add(theAuthor);
-		myAuthors = authorList;
+		ArrayList<UUID> authorIDList = new ArrayList<UUID>();
+		authorIDList.add(theAuthor.getMyID());
+		myAuthorsIDs = authorIDList;
 	}
 	
 	
@@ -81,7 +82,7 @@ public class Manuscript implements Serializable {
 	public Manuscript () {
 		myID = UUID.randomUUID();
 		myReviews = new HashMap<Reviewer, String> ();
-		myAuthors = new ArrayList<Author> ();
+		myAuthorsIDs = new ArrayList<UUID> ();
 		mySubmittedDate = new Date ();
 	}
 	
@@ -151,7 +152,7 @@ public class Manuscript implements Serializable {
 	 * @version 5/6/2017
 	 */
 	public ArrayList<Author> getAuthors () {
-		return (ArrayList<Author>) myAuthors.clone();
+		return (ArrayList<Author>) myAuthorsIDs.clone();
 	}
 	
 	
@@ -161,8 +162,8 @@ public class Manuscript implements Serializable {
 	 * @author Connor Lundberg
 	 * @version 5/1/2017
 	 */
-	public void setAuthors(List<Author> theAuthors) {
-		myAuthors = (ArrayList<Author>) theAuthors;
+	public void setAuthors(List<UUID> theAuthors) {
+		this.myAuthorsIDs = (ArrayList<UUID>) theAuthors;
 	}
 	
 	
@@ -174,7 +175,7 @@ public class Manuscript implements Serializable {
 	 * @version 5/6/2017
 	 */
 	public void addAuthor(Author theAuthor) {
-		myAuthors.add(theAuthor);
+		myAuthorsIDs.add(theAuthor.getMyID());
 	}
 	
 	
@@ -241,18 +242,6 @@ public class Manuscript implements Serializable {
 		myReviews.replace(theReviewer, theReview);
 	}
 	
-	
-	/**
-	 * Submits a manuscript then returns it upon success.
-	 * 
-	 * @return A copy of the manuscript
-	 * @author Connor Lundberg
-	 * @version 5/6/2017
-	 */
-	public Manuscript submitManuscript () {
-		return new Manuscript(this.myTitle, this.mySubmittedDate, this.myReviews, this.myAuthors);
-	}
-	
 
 	/**
 	 * this method returns a boolean indicating if the passed in author exists within the manuscript's
@@ -263,8 +252,8 @@ public class Manuscript implements Serializable {
 	public boolean doesAuthorBelongToManuscript(Author theAuthor) {
 		boolean authorBelongsToManuscript = false;
 		
-		for(Author anAuthor : this.myAuthors) {
-			if(anAuthor.getMyID().equals(theAuthor.getMyID())) {
+		for(UUID anAuthorID : this.myAuthorsIDs) {
+			if(anAuthorID.equals(theAuthor.getMyID())) {
 				authorBelongsToManuscript = true;
 			}
 		}

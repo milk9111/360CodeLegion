@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import model.Conference;
 import model.Manuscript;
@@ -80,9 +81,9 @@ public class Author extends User implements Serializable {
 	 * @param theAuthors A List of the Authors who are submitting the manuscript.
 	 * @return The Manuscript containing all the new information.
 	 */
-	public Manuscript createManuscript(String theTitle, Date theSubmittedDate, HashMap<Reviewer, String> theReviews, ArrayList<Author> theAuthors) {
+	public Manuscript createManuscript(String theTitle, Date theSubmittedDate, HashMap<Reviewer, String> theReviews, ArrayList<UUID> theAuthorsIDs) {
 		
-		return new Manuscript(theTitle, theSubmittedDate, theReviews, theAuthors) ;
+		return new Manuscript(theTitle, theSubmittedDate, theReviews, theAuthorsIDs) ;
 	
 	}
 	

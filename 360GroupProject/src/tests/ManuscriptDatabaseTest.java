@@ -42,7 +42,7 @@ public class ManuscriptDatabaseTest {
 	 */
 	@Test
 	public void testGetAllManuscripts() {
-		Manuscript validManuscript = new Manuscript("Study of the Sciences", new Date(), new ArrayList<Author>());
+		Manuscript validManuscript = new Manuscript("Study of the Sciences", new Date(), new ArrayList<UUID>());
 		myManuscriptDatabase.saveManuscriptToDatabase(validManuscript);
 		
 		TreeMap<UUID, Manuscript> validList = myManuscriptDatabase.getAllManuscripts();
@@ -53,7 +53,7 @@ public class ManuscriptDatabaseTest {
 	
 	@Test
 	public void saveManuscriptToDatabase_forValidManuscript_shouldSucceed() {
-		Manuscript validManuscript = new Manuscript("Study of the Sciences", new Date(), new ArrayList<Author>());
+		Manuscript validManuscript = new Manuscript("Study of the Sciences", new Date(), new ArrayList<UUID>());
 		myManuscriptDatabase.saveManuscriptToDatabase(validManuscript);
 
 		TreeMap<UUID, Manuscript> validList = myManuscriptDatabase.deserializeManuscriptList();
