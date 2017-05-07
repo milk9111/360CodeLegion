@@ -205,7 +205,9 @@ public class Controller extends Observable implements Observer {
 							notifyObservers(myCurrentState);
 	                        break;
 	                    case LIST_CONFERENCE_VIEW:
-							myCurrentConference = findConference(theNextState, myAccount.getMySubprogramChair().getConferenceList());
+	                    	TreeMap<UUID, Conference> currentConferenceList = this.myConferenceDatabase.deserializeConferenceList();
+							myCurrentConference = findConference(theNextState,
+																 myAccount.getAllConferencesOfAccountSubprogramChairList(currentConferenceList));
 							
 							myCurrentState = SUBPROGRAM_CHAIR + USER_OPTIONS;
 							setChanged();
