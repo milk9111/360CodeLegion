@@ -22,6 +22,8 @@ public class UI extends Observable implements Observer{
 
 
 	//View States
+	public static final int LOG_IN_STATE = -2;
+	public static final int CHOOSE_USER = -1;
 	public static final int AUTHOR = 0;
 	public static final int REVIEWER = 10;
 	public static final int SUBPROGRAM_CHAIR = 20;
@@ -46,15 +48,6 @@ public class UI extends Observable implements Observer{
 		myUserChoice = "";
 		myScanner = new Scanner(System.in);
 	}
-
-	/**
-	 * The start point for the program.
-	 * 
-	 * @param theArgs command line arguments - ignored
-	 */
-	public static void main(final String[] theArgs) {
-		new UI().start();
-	}
 	
 	/**
 	 * Login prompt.  Displays prompt and scans input, compares to list of existing users.
@@ -63,7 +56,7 @@ public class UI extends Observable implements Observer{
 	 * @author Casey Anderson, Morgan Blackmore
 	 * 
 	 */
-	private void start() {
+	private void login() {
 		
 		boolean validUserName = false;
 		
@@ -136,6 +129,14 @@ public class UI extends Observable implements Observer{
 			displayHeader();
 			
 			switch (theState) {
+			
+			case LOG_IN_STATE:
+				login();
+				break;
+				
+			case CHOOSE_USER:
+				chooseUserTypeMenuView();
+				break;
 			
 			case AUTHOR:
 				
@@ -468,8 +469,6 @@ public class UI extends Observable implements Observer{
 		
 
 	}
-
-
 
 	public void removeListener(InvalidationListener listener) {
 		
