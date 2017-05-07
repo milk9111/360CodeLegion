@@ -93,6 +93,9 @@ public class Controller extends Observable implements Observer {
 	 * @param theNextState The next state the program will be in.
 	 */
 	private void changeState (String theNextState) {
+		//temp testers:
+		System.out.println("In controller changeState: " +theNextState);
+		
 		String[] pieces = theNextState.split(",");
 		
 		switch ((myCurrentState / 10) * 10) {
