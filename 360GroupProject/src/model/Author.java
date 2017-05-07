@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.UUID;
 import model.Conference;
 import model.Manuscript;
@@ -114,9 +115,9 @@ public class Author extends User implements Serializable {
 	 * @param theManuscript The manuscript to be added to Conference.
 	 * @throws illegalArgumentException
 	 */
-	public void addManuscript(Conference theConference, Manuscript theManuscript) throws Exception {	
+	public void addManuscript(Conference theConference, Manuscript theManuscript, TreeMap<UUID, Account> theAccountList) throws Exception {	
 		
-		if (!isAuthorAtManuscriptLimit(theConference, theManuscript)) {
+		if (!isAuthorAtManuscriptLimit(theConference, theManuscript, theAccountList)) {
 			
 			for (int i = 0; i < theManuscript.getAuthors().size(); i++) {			
 				
@@ -149,7 +150,7 @@ public class Author extends User implements Serializable {
 	 */
 	public int getNumberOfManuscriptsSubmitted(Conference theConference) {
 		
-		return myManuscriptList.get(theConference).size();
+		return myManuscriptList.get(theConference.getMyID()).size();
 	
 	}
 	
@@ -158,7 +159,6 @@ public class Author extends User implements Serializable {
 	 * @return A Map with the value of A List of Manuscripts and the key the Conference they are submitted to.
 	 */
 	private Map<UUID,HashSet<UUID>> getManuscriptMap() {
-		
 		return myManuscriptList;
 		
 	}
@@ -169,25 +169,25 @@ public class Author extends User implements Serializable {
 	 * @param theManuscript The Manuscript which is trying to be submitted.
 	 * @return A boolean Value indicating if the any Author has Already submitted their limit of Manuscripts.
 	 */
-	private boolean isAuthorAtManuscriptLimit(Conference theConference, Manuscript theManuscript) {
+	private boolean isAuthorAtManuscriptLimit(Conference theConference, Manuscript theManuscript,
+											  TreeMap<UUID, Account> theGlobalAccountList) {
 		
-		boolean auhorAlreadyHas5Manuscripts = false;
+		boolean authorAlreadyHasMaxManuscripts = false;
 		
-		for (int i = 0; i < theManuscript.getAuthors().size(); i++) {
+		for(Account acctToCompare : theGlobalAccountList.values()) {
+			Author currentAcctAuthor = acctToCompare.getAuthorAssociatedWithConference(theConference);
 			
-			if (theManuscript.getAuthors().get(i).getManuscriptMap().containsKey(theConference)) {
+			// Checks to see if the manuscript contains an author id equivalent to the current iteration's account's 
+			// author associated with the conference parameter id
+			if(theManuscript.getAuthors().contains(currentAcctAuthor.getMyID())) {
 				
-				if (theManuscript.getAuthors().get(i).getNumberOfManuscriptsSubmitted(theConference) >= MAX_MANUSCRIPT_ALLOWED) {
-					
-					auhorAlreadyHas5Manuscripts = true;
-				
+				if(currentAcctAuthor.getNumberOfManuscriptsSubmitted(theConference) >= MAX_MANUSCRIPT_ALLOWED) { 
+					authorAlreadyHasMaxManuscripts = true;
 				}
-			
 			}
-		
 		}
 		
-		return auhorAlreadyHas5Manuscripts;
+		return authorAlreadyHasMaxManuscripts;
 	
 	}
 
