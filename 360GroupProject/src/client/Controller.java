@@ -100,6 +100,7 @@ public class Controller extends Observable implements Observer {
 		
 		switch ((myCurrentState / 10) * 10) {
 			case LOG_IN_STATE:
+				System.out.println("in LOG_IN_STATE");
 				myCurrentState = CHOOSE_USER;
 				
 				setChanged();
@@ -371,6 +372,7 @@ public class Controller extends Observable implements Observer {
 	 */
 	@Override
 	public void update(Observable arg0, Object arg1) {
+		System.out.println("received something in update");
 		if (arg1 instanceof String) {
 			changeState ((String) arg1);
 		} else if (arg1 instanceof Account) {
