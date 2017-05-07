@@ -72,7 +72,7 @@ public class AccountTest {
 	}
 
 	/**
-	 * Test method for {@link model.Account#getAllConferencesOfAccountSubprogramChairList(java.util.TreeMap)}.
+	 * Test method for {@link model.Account#getAllConferencesAssociatedWithMySubprogramChairList(java.util.TreeMap)}.
 	 */
 	@Test
 	public void testGetAllConferencesOfAccountSubprogramChairList() {
@@ -108,7 +108,7 @@ public class AccountTest {
 		
 		Account mainAcct = acctDBList.get(myAccount.getMyID());
 
-		ArrayList<Conference> associatedConfList = mainAcct.getAllConferencesOfAccountSubprogramChairList(confDBList);
+		ArrayList<Conference> associatedConfList = mainAcct.getAllConferencesAssociatedWithMySubprogramChairList(confDBList);
 		assertTrue(associatedConfList.size() == 4);
 		
 		boolean conferenceFound = false;

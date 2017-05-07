@@ -106,7 +106,7 @@ public class Account implements Serializable {
      * @return All conferences that are related to a subprogram chair user type belonging to the account
      * May also return an empty ArrayList if no conferences available
      */
-    public ArrayList<Conference> getAllConferencesOfAccountSubprogramChairList(TreeMap<UUID, Conference> theConfList) {
+    public ArrayList<Conference> getAllConferencesAssociatedWithMySubprogramChairList(TreeMap<UUID, Conference> theConfList) {
     	ArrayList<Conference> returnList = new ArrayList<Conference>();
     	
     	for(UUID aConferenceID : this.mySubprogramChairs.keySet()) {
@@ -117,6 +117,19 @@ public class Account implements Serializable {
     	
     	return returnList;
     }
+    
+    public ArrayList<Conference> getAllConferencesAssociatedWithMyAuthorList(TreeMap<UUID, Conference> theConfList) {
+    	ArrayList<Conference> returnList = new ArrayList<Conference>();
+    	
+    	for(UUID aConferenceID : this.myAuthors.keySet()) {
+    		if(theConfList.containsKey(aConferenceID)) {
+    			returnList.add(theConfList.get(aConferenceID));
+    		}
+    	}
+    	
+    	return returnList;
+    }
+
     
     /**
      * Adds a given subprogram chair, and its associated conference to the account's subprogram chair role list

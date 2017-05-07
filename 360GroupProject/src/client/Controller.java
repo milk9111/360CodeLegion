@@ -166,7 +166,9 @@ public class Controller extends Observable implements Observer {
 							break;
 						case LIST_CONFERENCE_VIEW:
 							if (pieces[0].equals("List Conference View")) {
-								myCurrentConference = findConference(theNextState, myAccount.getMySubprogramChair().getConferenceList());
+								TreeMap<UUID, Conference> currentConferenceList = this.myConferenceDatabase.deserializeConferenceList();
+								myCurrentConference = findConference(theNextState, 
+										myAccount.getAllConferencesAssociatedWithMyAuthorList(currentConferenceList));
 								
 								myCurrentState = AUTHOR + USER_OPTIONS;
 								setChanged();
@@ -207,7 +209,7 @@ public class Controller extends Observable implements Observer {
 	                    case LIST_CONFERENCE_VIEW:
 	                    	TreeMap<UUID, Conference> currentConferenceList = this.myConferenceDatabase.deserializeConferenceList();
 							myCurrentConference = findConference(theNextState,
-																 myAccount.getAllConferencesOfAccountSubprogramChairList(currentConferenceList));
+									myAccount.getAllConferencesAssociatedWithMySubprogramChairList(currentConferenceList));
 							
 							myCurrentState = SUBPROGRAM_CHAIR + USER_OPTIONS;
 							setChanged();
