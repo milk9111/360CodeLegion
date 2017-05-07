@@ -93,9 +93,8 @@ public class Controller extends Observable implements Observer {
 	 * @param theNextState The next state the program will be in.
 	 */
 	private void changeState (String theNextState) {
-		//temp testers:
+//test print
 		System.out.println("In controller changeState: " +theNextState);
-		
 		String[] pieces = theNextState.split(",");
 		
 		switch ((myCurrentState / 10) * 10) {
@@ -124,6 +123,12 @@ public class Controller extends Observable implements Observer {
 				notifyObservers(myCurrentState);
 				break;
 			case AUTHOR:
+				//test print
+				System.out.println("In controller changeState case Author");
+				myCurrentState = AUTHOR;
+				setChanged();
+				notifyObservers(myCurrentState);
+				
 				switch (myCurrentState % 10){
 					case SUBMIT_MANUSCRIPT:
                         Manuscript manuscriptToSubmit;
