@@ -9,6 +9,7 @@ import java.util.Observer;
 import java.util.Scanner;
 
 import javafx.beans.InvalidationListener;
+import model.Account;
 import model.User;
 
 /**
@@ -475,8 +476,8 @@ public class UI extends Observable implements Observer{
 	}
 	
 	public void update(Observable arg0, Object arg1) {
-		// TODO Auto-generated method stub
-
+		if (arg1 instanceof Integer) {
+			changeState((int) arg1);		
 	}
 
 }
