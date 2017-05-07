@@ -35,13 +35,23 @@ public class Controller extends Observable implements Observer {
 	private int myCurrentState;
 
 	private Account myAccount;
+	
 	private AccountDatabase myAccountDatabase;
+	private ManuscriptDatabase myManuscriptDatabase;
+	public ConferenceDatabase myConferenceDatabase;
 
 	private Conference myCurrentConference;
 	private Manuscript myCurrentManuscript;
 	private Reviewer myCurrentReviewer;
 	
 
+	/**
+	 * The Controller constructor. This takes no arguments and sets all of
+	 * the fields.
+	 * 
+	 * @author Connor Lundberg
+	 * @version 5/6/2017
+	 */
 	public Controller () {
 		myCurrentState = AUTHOR;
 		myAccount = new Account(null);
@@ -50,6 +60,10 @@ public class Controller extends Observable implements Observer {
 		myCurrentReviewer = new Reviewer(null, null);
 		myAccountDatabase = new AccountDatabase();
 		myAccountDatabase.createEmptySerializedAccountList();
+		myManuscriptDatabase = new ManuscriptDatabase();
+		myManuscriptDatabase.createEmptySerializedManuscriptList();
+		myConferenceDatabase = new ConferenceDatabase();
+		myConferenceDatabase.createEmptySerializedConferenceList();
 	}
 	
 	
@@ -63,7 +77,8 @@ public class Controller extends Observable implements Observer {
 	 */
 	public void startProgram () {
 		myCurrentState = LOG_IN_STATE;
-		changeState (null);
+		setChanged();
+		notifyObservers(myCurrentState);
 	}
 	
 	
@@ -81,6 +96,12 @@ public class Controller extends Observable implements Observer {
 		String[] pieces = theNextState.split(",");
 		
 		switch ((myCurrentState / 10) * 10) {
+			case LOG_IN_STATE:
+				myCurrentState = CHOOSE_USER;
+				
+				setChanged();
+				notifyObservers(myCurrentState);
+				break;
 			case AUTHOR:
 				switch (myCurrentState % 10){
 					case SUBMIT_MANUSCRIPT:
@@ -226,12 +247,41 @@ public class Controller extends Observable implements Observer {
 	}
 	
 	
+	/**
+	 * Sets the new Account. This checks if theNewAccount is a valid Account within
+	 * the AccountDatabase. If so, then it will set the current Account to theNewAccount,
+	 * otherwise it will add theNewAccount to the AccountDatabase.
+	 * 
+	 * @param theNewAccount The new Account to set.
+	 * @author Connor Lundberg
+	 * @version 5/6/2017
+	 */
 	private void setAccount (Account theNewAccount) {
 		if (myAccountDatabase.isUsernameInListValid(myAccountDatabase.getAllAccounts(), theNewAccount.getMyUsername())) {
 			myAccount = theNewAccount;
 		} else {
 			myAccountDatabase.saveAccountToDatabase(theNewAccount);
 			myAccount = theNewAccount;
+		}
+	}
+	
+	
+	/**
+	 * Sets the new Conference. This checks if theNewConference is a valid Conference within
+	 * the ConferenceDatabase. If so, then it will set the current Conference to theNewConference,
+	 * otherwise it will add theNewConference to the ConferenceDatabase. *A new Conference should
+	 * not be added in any case other than with the Program Chair.
+	 * 
+	 * @param theNewConference The new Conference to set.
+	 * @author Connor Lundberg
+	 * @version 5/6/2017
+	 */
+	private void setConference (Conference theNewConference) {
+		if (myConferenceDatabase.isConferenceInListUnique(myConferenceDatabase.getAllConferences(), theNewConference)) {
+			myCurrentConference = theNewConference;
+		} else {
+			myConferenceDatabase.saveConferenceToDatabase(theNewConference);
+			myCurrentConference = theNewConference;
 		}
 	}
 
@@ -248,6 +298,8 @@ public class Controller extends Observable implements Observer {
 			changeState ((String) arg1);
 		} else if (arg1 instanceof Account) {
 			setAccount((Account) arg1);
+		} else if (arg1 instanceof Conference) {
+			setConference((Conference) arg1);
 		}
 	}
 		
