@@ -1,8 +1,10 @@
 package model;
 
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.TreeMap;
 import java.util.UUID;
 
@@ -53,6 +55,23 @@ public class ManuscriptDatabase {
 		}
 
 		return manuscriptListToReturn;
+	}
+	
+	/**
+	 * Creates and serializes and empty treemap of manuscripts
+	 */
+	public void createEmptySerializedManuscriptList() {
+		TreeMap<UUID, Manuscript> emptyManuscriptList = new TreeMap<UUID, Manuscript>();
+
+		try {
+			FileOutputStream fileOut = new FileOutputStream(MANUSCRIPT_SERIALIZED_PATH + MANUSCRIPT_FILE_PATHNAME);
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			out.writeObject(emptyManuscriptList);
+			out.close();
+			fileOut.close();
+		}catch(IOException i) {
+			i.printStackTrace();
+		}
 	}
 
 }
