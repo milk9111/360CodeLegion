@@ -95,7 +95,7 @@ public class Controller extends Observable implements Observer {
 	 */
 	private void changeState (String theNextState) {
 //test print
-		//System.out.println("In controller changeState: " +theNextState);
+//		System.out.println("In controller changeState: " +theNextState);
 
 		//System.out.println("Current state: " + myCurrentState);
 		
@@ -200,6 +200,9 @@ public class Controller extends Observable implements Observer {
 					
 					switch (myCurrentState % 10){
 	                    case ASSIGN_REVIEWER:
+	                    	//test print
+	    					System.out.println("in ASSIGN_REVIEWER");
+
 							myCurrentReviewer = findReviewer(theNextState, myCurrentConference.getPastReviewers());
 	
 	                        myCurrentState = SUBPROGRAM_CHAIR + LIST_ASSIGNED_REVIEWERS_VIEW;
