@@ -52,6 +52,24 @@ public class Manuscript implements Serializable {
 		myAuthors = theAuthors;
 	}
 	
+	/**
+	 * constructor that Automatically inits an author list and adds the given author to the list
+	 * to set as the author list
+	 * @param theTitle title of manuscript
+	 * @param theSubmittedDate submission date
+	 * @param theAuthor Author to add to author list for manuscript
+	 */
+	public Manuscript(String theTitle, Date theSubmittedDate, Author theAuthor) {
+		myID = UUID.randomUUID();
+		myTitle = theTitle;
+		mySubmittedDate = theSubmittedDate;
+		
+		// init author list and add passed in author to list
+		ArrayList<Author> authorList = new ArrayList<Author>();
+		authorList.add(theAuthor);
+		myAuthors = authorList;
+	}
+	
 	
 	/**
 	 * Default constructor.
