@@ -131,17 +131,15 @@ public class UI extends Observable implements Observer{
 	 * 
 	 */
 	public void changeState(int theState) {
-		//test print
-//		System.out.println("UI changeState method.");
-//		System.out.println("UI changeState method: theState: " +theState);
 
 		if (theState == LOG_IN_STATE){
 			login();
 		}
 
 		if (theState == CHOOSE_USER) {
-//			System.out.println("UI changeState method CHOOSE_USER");
+			
 			chooseUserTypeMenuView();
+		
 		}
 
 		if (theState >=0 && theState < 10) {
@@ -474,8 +472,34 @@ public class UI extends Observable implements Observer{
 		}
 		
 		System.out.print("Please enter choice: ");
-
+		
+		while (!myScanner.hasNextInt()) {
+			
+			myScanner.next();
+			System.out.println("Invalid choice, please select from the options displayed");
+			System.out.print("Please enter choice: ");
+			
+		}
+		
 		conferenceChoice = myScanner.nextInt();
+		
+		while (conferenceChoice < 1 || conferenceChoice > listOfConferences.length) {
+			
+			System.out.println("Invalid choice, please select from the options displayed");
+			System.out.print("Please enter choice: ");
+			
+			while (!myScanner.hasNextInt()) {
+				
+				myScanner.next();
+				System.out.println("Invalid choice, please select from the options displayed");
+				System.out.print("Please enter choice: ");
+				
+			}
+			
+			conferenceChoice = myScanner.nextInt();
+			
+		}
+		
 		setChanged();
 		notifyObservers(listOfConferences[conferenceChoice - 1]);
 		setChanged();
