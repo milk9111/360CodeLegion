@@ -57,7 +57,7 @@ public class Account implements Serializable {
      */
     public void addAuthorRoleToAccount(Author theAuthor) {
        this.myAuthor = theAuthor;
-       new AccountDatabase().saveAccountToDatabase(this);
+       new AccountDatabase().updateAndSaveAccountToDatabase(this);
     }
     
     public HashSet<UUID> getManuscriptsOfAccountAssociatedWithConference(Conference theConference) {
@@ -135,7 +135,7 @@ public class Account implements Serializable {
      */
     public void addSubprogramChairRoleToAccount(SubprogramChair theSubprogramChair) {
         this.mySubprogramChair = theSubprogramChair;
-        new AccountDatabase().saveAccountToDatabase(this);
+        new AccountDatabase().updateAndSaveAccountToDatabase(this);
     }
 
     /**
