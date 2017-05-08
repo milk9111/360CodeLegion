@@ -129,6 +129,7 @@ public class Controller extends Observable implements Observer {
 			switch ((myCurrentState / 10) * 10) {
 				case AUTHOR:
 					switch (myCurrentState % 10){
+						
 						case SUBMIT_MANUSCRIPT:
 							Manuscript manuscriptToSubmit;
 							if(pieces[0].equals(UI.NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_SUBMIT_MANUSCRIPT_VIEW)){
@@ -172,6 +173,11 @@ public class Controller extends Observable implements Observer {
 								setChanged();
 								notifyObservers(myCurrentState);
 							}
+							else if (pieces[0].equals(UI.NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_MAIN_VIEW)) {
+								myCurrentState = AUTHOR;
+								setChanged();
+								notifyObservers(myCurrentState);
+							}
 							break;
 						case LIST_CONFERENCE_VIEW:
 							if (pieces[0].equals(UI.NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_CONFERENCE_LIST_VIEW)) {
@@ -182,6 +188,9 @@ public class Controller extends Observable implements Observer {
 							break;
 						case USER_OPTIONS:
 							switch (pieces[0]) {
+							case UI.NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_MAIN_VIEW:
+								myCurrentState = AUTHOR;
+	                    		break;
 	                    	case UI.NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_SUBMIT_MANUSCRIPT_VIEW:
 	                    		myCurrentState = AUTHOR + SUBMIT_MANUSCRIPT;
 	                    		break;
