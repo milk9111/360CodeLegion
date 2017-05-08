@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import model.Account;
 import model.AccountDatabase;
+import model.Author;
 import model.Conference;
 import model.ConferenceDatabase;
 import model.Manuscript;
@@ -38,15 +39,26 @@ public class Driver {
 		Conference conference1 = new Conference("National Heroes Without Borders Conference", new Date("5/9/2017"), new Date("5/9/2017"), reviewers1);
 		
 		
-		Manuscript manu1 = new Manuscript("Is Krypton Really Dead?", new Date(), null, conference1);
-		Manuscript manu2 = new Manuscript("The Effects of Cartoon Violence on Adolescents", new Date(), null, conference2);
+		Account author1 = new Account("Kal-El");
+		author1.addAuthorRoleToAccount(new Author("Kal-El", conference1));
+		Account author2 = new Account("Mr. Mackey");
+		author2.addAuthorRoleToAccount(new Author("Mr. Mackey", conference2));
+		
+		ArrayList<UUID> authorList1 = new ArrayList<UUID>();
+		authorList1.add(author1.getMyAuthor().getMyID());
+		
+		ArrayList<UUID> authorList2 = new ArrayList<UUID>();
+		authorList2.add(author2.getMyAuthor().getMyID());
+		
+		Manuscript manu1 = new Manuscript("Is Krypton Really Dead?", new Date(), authorList1, conference1);
+		Manuscript manu2 = new Manuscript("The Effects of Cartoon Violence on Adolescents", new Date(), authorList2, conference2);
 		
 		AccountDatabase adb = new AccountDatabase();
 		ManuscriptDatabase mdb = new ManuscriptDatabase();
 		ConferenceDatabase cdb = new ConferenceDatabase();
 		
+		//Need to sign into one of the these accounts in order to present subprogram chair.
 		Account acc1 = new Account("tester1");
-		//System.out.println(acc1.getMyID());
 		Account acc2 = new Account("tester2");
 		
 		acc1.addSubprogramChairRoleToAccount(new SubprogramChair(conference1));
@@ -57,6 +69,8 @@ public class Driver {
 		
 		adb.saveNewAccountToDatabase(acc1);
 		adb.saveNewAccountToDatabase(acc2);
+		adb.saveNewAccountToDatabase(author1);
+		adb.saveNewAccountToDatabase(author2);
 		
 		cdb.saveConferenceToDatabase(conference1);
 		cdb.saveConferenceToDatabase(conference2);

@@ -660,9 +660,9 @@ public class UI extends Observable implements Observer{
 	
 	
 	private void printReviewers (List<Reviewer> theReviewers) {
-		System.out.print("{" + theReviewers.get(0));
+		System.out.print("{" + theReviewers.get(0).getUsername());
 		for (int i = 1; i < theReviewers.size(); i++) {
-			System.out.print(" " + theReviewers.get(i));
+			System.out.print(", " + theReviewers.get(i).getUsername());
 		}
 		System.out.print("}\n");
 	}

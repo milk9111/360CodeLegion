@@ -48,6 +48,7 @@ public class SubprogramChair extends User implements Serializable {
     	super(theUsername, theConference);
         this.myAssignedManuscripts = new HashMap<UUID, HashSet<UUID>>();
         this.myManuscripts = new ArrayList<Manuscript>();
+        this.myReviewers = new ArrayList<ArrayList<Reviewer>>();
         super.myConferenceList = new ArrayList<Conference>();
     }
     
@@ -59,6 +60,7 @@ public class SubprogramChair extends User implements Serializable {
     	super(theConference);
     	this.myAssignedManuscripts = new HashMap<UUID, HashSet<UUID>>();
     	this.myManuscripts = new ArrayList<Manuscript>();
+    	this.myReviewers = new ArrayList<ArrayList<Reviewer>>();
         super.myConferenceList = new ArrayList<Conference>();
     }
     
@@ -72,6 +74,7 @@ public class SubprogramChair extends User implements Serializable {
      */
     public void assignManuscriptToSubChair (Manuscript theManuscript) {
     	myManuscripts.add(theManuscript);
+    	myReviewers.add(new ArrayList<Reviewer>());
     }
     
     
@@ -97,6 +100,8 @@ public class SubprogramChair extends User implements Serializable {
      * @version 5/8/2017
      */
     public void addReviewer (Reviewer theReviewer, int theManuscriptListPos) {
+    	System.out.println(myReviewers == null);
+    	System.out.println(myReviewers.get(theManuscriptListPos) == null);
     	myReviewers.get(theManuscriptListPos).add(theReviewer);
     }
     
@@ -129,6 +134,7 @@ public class SubprogramChair extends User implements Serializable {
     			manuscriptPos = i;
     		}
     	}
+    	System.out.println(manuscriptPos);
     	return manuscriptPos;
     }
     
