@@ -25,29 +25,12 @@ import model.ManuscriptDatabase;
 
 public class UI extends Observable implements Observer{
 
-
-	//View States
-	public static final int FAIL_REVIEWER_IS_AUTHOR_ON_MANUSCRIPT= -5;
-	public static final int FAIL_SUBMITED_PAST_DEADLINE = -4;
-	public static final int FAIL_AUTHOR_HAS_TO_MANY_MANUSCRIPTS = -3;
-	public static final int LOG_IN_STATE = -2;
-	public static final int CHOOSE_USER = -1;
-
-	public static final int AUTHOR = 0;
-	public static final int REVIEWER = 10;
-	public static final int SUBPROGRAM_CHAIR = 20;
-
 	//Action States
 	public static final String NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_CONFERENCE_LIST_VIEW = "LIST_CONFERENCE_VIEW";
 	public static final String NOTIFY_CONTROLLER_TO_CHANGE_TO_LOGGIN_VIEW = "LOG_IN_STATE";
 	public static final String NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_SUBMIT_MANUSCRIPT_VIEW = "SUBMIT_MANUSCRIPT";
 	public static final String NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_MANUSCRIPT_LIST_VIEW = "LIST_MANUSCRIPT_VIEW";
 	public static final String NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_MAIN_VIEW = "AUTHOR";
-	public static final int SUBMIT_MANUSCRIPT = 1;
-	public static final int LIST_MANUSCRIPT_VIEW = 2;
-	public static final int LIST_CONFERENCE_VIEW = 3;
-	public static final int ASSIGN_REVIEWER = 4;
-	public static final int LIST_ASSIGNED_REVIEWERS_VIEW = 5;
 
 	private String myUserType;
 	private String myUserName;
@@ -135,29 +118,29 @@ public class UI extends Observable implements Observer{
 	 */
 	public void changeState(int theState) {
 
-		if (theState == LOG_IN_STATE){
+		if (theState == Controller.LOG_IN_STATE){
 			login();
 		}
 
-		else if (theState == CHOOSE_USER) {
+		else if (theState == Controller.CHOOSE_USER) {
 			
 			chooseUserTypeMenuView();
 		
 		}
 
-		else if (theState == FAIL_AUTHOR_HAS_TO_MANY_MANUSCRIPTS) {
+		else if (theState == Controller.FAIL_AUTHOR_HAS_TO_MANY_MANUSCRIPTS) {
 			
 			authorHasToManySubmittedManuscriptsErrorView();
 		
 		}
 
-		else if (theState == FAIL_SUBMITED_PAST_DEADLINE) {
+		else if (theState == Controller.FAIL_SUBMITED_PAST_DEADLINE) {
 			
 			ManuscriptDeadLinePastErrorView();
 		
 		}
 
-		else if (theState == FAIL_REVIEWER_IS_AUTHOR_ON_MANUSCRIPT) {
+		else if (theState == Controller.FAIL_REVIEWER_IS_AUTHOR_ON_MANUSCRIPT) {
 			
 			ReviewerIsAuthorErrorView();
 		
@@ -170,22 +153,22 @@ public class UI extends Observable implements Observer{
 
 			switch (theState) {
 
-			case AUTHOR:
+			case Controller.AUTHOR:
 
 				AuthorView();
 				break;
 
-			case SUBMIT_MANUSCRIPT:
+			case Controller.SUBMIT_MANUSCRIPT:
 
 				AuthorManuscriptSubmissionView();
 				break;
 
-			case LIST_MANUSCRIPT_VIEW:
+			case Controller.LIST_MANUSCRIPT_VIEW:
 
 				AuthorListOfManuscriptsView();
 				break;
 
-			case LIST_CONFERENCE_VIEW:
+			case Controller.LIST_CONFERENCE_VIEW:
 				
 				ListOfConferenceView();
 				break;
@@ -201,23 +184,23 @@ public class UI extends Observable implements Observer{
 			switch (theState % 20) {
 
 
-			case (SUBPROGRAM_CHAIR):
+			case (Controller.SUBPROGRAM_CHAIR):
 
 			subProgramChairView();
 			break;
 
-			case (LIST_CONFERENCE_VIEW):
+			case (Controller.LIST_CONFERENCE_VIEW):
 				subProgramChairConferenceView();
 				
 
 			break;
 
-			case (ASSIGN_REVIEWER):
+			case (Controller.ASSIGN_REVIEWER):
 
 			subProgramChairAssignReviewerView(); 
 			break;
 
-			case(LIST_MANUSCRIPT_VIEW):
+			case(Controller.LIST_MANUSCRIPT_VIEW):
 				subProgramChairManuscriptsView();
 			break;
 
@@ -335,7 +318,7 @@ public class UI extends Observable implements Observer{
 		}
 
 		setChanged();
-		notifyObservers("Submit Manuscript," + manuscriptTile + "," + ManuscriptFilePath + "," + new Date() + "," + authorList); 
+		notifyObservers(NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_SUBMIT_MANUSCRIPT_VIEW + "," + manuscriptTile + "," + ManuscriptFilePath + "," + new Date() + "," + authorList); 
 
 
 	}
@@ -448,18 +431,20 @@ public class UI extends Observable implements Observer{
 	private void AuthorListOfManuscriptsView() {
 		
 		//int manuscriptChoice;
-		System.out.println("Manuscript List Page");
+		System.out.println("Manuscript List Page: ");
 		System.out.println(myAccount.getMyID());
 		System.out.println(myAccount.getMyAuthor());
 		ArrayList<Manuscript> manuscriptList = new ManuscriptDatabase().getManuscriptsBelongingToAuthor(myAccount.getMyAuthor());
 		
+		System.out.println("size of manu list" + manuscriptList.size());
 		for (int i = 0; i < manuscriptList.size(); i++) {
 			
 			System.out.println("" + (i + 1) + ". " + manuscriptList.get(i).getTitle());
 			
 		}
 		
-		System.out.println("Please enter \"1\" to go back to Athors main page");
+		System.out.println("Please enter \"1\" to go back to Authors main page");
+		System.out.print("Please enter choice: ");
 		myUserChoice = myScanner.next();
 		
 		if (myUserChoice.equals("1")) {
@@ -532,7 +517,7 @@ public class UI extends Observable implements Observer{
 		setChanged();
 		notifyObservers(listOfConferences[conferenceChoice - 1]);
 		setChanged();
-		notifyObservers("List Conference View," + listOfConferences[conferenceChoice - 1].getMyName());
+		notifyObservers(NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_CONFERENCE_LIST_VIEW + "," + listOfConferences[conferenceChoice - 1].getMyName());
 
 	}
 

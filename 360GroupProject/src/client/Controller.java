@@ -17,6 +17,9 @@ import model.*;
 public class Controller extends Observable implements Observer {
 
 	//View States
+	public static final int FAIL_REVIEWER_IS_AUTHOR_ON_MANUSCRIPT= -5;
+	public static final int FAIL_SUBMITED_PAST_DEADLINE = -4;
+	public static final int FAIL_AUTHOR_HAS_TO_MANY_MANUSCRIPTS = -3;
     public static final int LOG_IN_STATE = -2;
     public static final int CHOOSE_USER = -1;
 	public static final int AUTHOR = 0;
@@ -139,7 +142,7 @@ public class Controller extends Observable implements Observer {
 							//System.out.println("in submit manuscript");
 	                        Manuscript manuscriptToSubmit;
 	                        //System.out.println(pieces[0]);
-							if(pieces[0].equals("Submit Manuscript")){
+							if(pieces[0].equals(UI.NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_SUBMIT_MANUSCRIPT_VIEW)){
 								//System.out.println("in submit manuscript inner");
 								//System.out.println(theNextState);
 								manuscriptToSubmit = makeManuscript(pieces);
@@ -174,14 +177,14 @@ public class Controller extends Observable implements Observer {
 	
 							break;
 						case LIST_MANUSCRIPT_VIEW:
-							if (pieces[0].equals("List Manuscript View")) {
+							if (pieces[0].equals(UI.NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_MANUSCRIPT_LIST_VIEW)) {
 								myCurrentState = AUTHOR + USER_OPTIONS;
 								setChanged();
 								notifyObservers(myCurrentState);
 							}
 							break;
 						case LIST_CONFERENCE_VIEW:
-							if (pieces[0].equals("List Conference View")) {
+							if (pieces[0].equals(UI.NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_CONFERENCE_LIST_VIEW)) {
 								//TreeMap<UUID, Conference> currentConferenceList = this.myConferenceDatabase.deserializeConferenceList();
 								//System.out.println(currentConferenceList.values());
 								//System.out.println(myAccount.getAllConferencesAssociatedWithMyAuthorList(currentConferenceList));
@@ -197,13 +200,13 @@ public class Controller extends Observable implements Observer {
 							break;
 						case USER_OPTIONS:
 							switch (pieces[0]) {
-	                    	case "SUBMIT_MANUSCRIPT":
+	                    	case UI.NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_SUBMIT_MANUSCRIPT_VIEW:
 	                    		myCurrentState = AUTHOR + SUBMIT_MANUSCRIPT;
 	                    		break;
-	                    	case "LIST_MANUSCRIPT_VIEW":
+	                    	case UI.NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_MANUSCRIPT_LIST_VIEW:
 	                    		myCurrentState = AUTHOR + LIST_MANUSCRIPT_VIEW;
 	                    		break;
-	                    	case "LIST_CONFERENCE_VIEW":
+	                    	case UI.NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_CONFERENCE_LIST_VIEW:
 	                    		myCurrentState = AUTHOR + LIST_CONFERENCE_VIEW;
 	                    		break;
 							}
@@ -270,7 +273,7 @@ public class Controller extends Observable implements Observer {
 					break;
 			}
 		}
-		
+
 		myAccountDatabase.updateAndSaveAccountToDatabase(myAccount);	/*final save of the account at the end of the state.*/
 	}
 	
@@ -354,6 +357,7 @@ public class Controller extends Observable implements Observer {
 	 * @version 5/6/2017
 	 */
 	private Manuscript makeManuscript (String[] thePieces) {
+		TreeMap<UUID, Account> currentAcctList = this.myAccountDatabase.getAllAccounts();
 		Manuscript returnManuscript = new Manuscript();
 		
 		returnManuscript.setTitle(thePieces[1]);
@@ -363,7 +367,16 @@ public class Controller extends Observable implements Observer {
 		
 		//Adds the remaining Authors in the list.
 		for (int i = 4; i < thePieces.length; i++) {
-			returnManuscript.addAuthor(new Author(thePieces[i], myCurrentConference));
+
+			// Validate each username against the account database to see if a user already exists with that username
+			boolean usernameDoesNotExist = this.myAccountDatabase.isUsernameInListValid(currentAcctList, thePieces[i]);
+			
+			if(usernameDoesNotExist) {
+				returnManuscript.addAuthor(new Author(thePieces[i], myCurrentConference));
+			} else {
+				Author existingAuthor = this.myAccountDatabase.getAccountByUsername(currentAcctList, thePieces[i]).getMyAuthor();
+				returnManuscript.addAuthor(existingAuthor);
+			}
 		}
 		
 		return returnManuscript;

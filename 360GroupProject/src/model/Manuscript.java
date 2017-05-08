@@ -45,7 +45,7 @@ public class Manuscript implements Serializable {
 			ArrayList<UUID> theAuthorsIDs,File theFilePath) {
 		myID = UUID.randomUUID();
 		myReviews = (HashMap<Reviewer, String>) theReviews.clone();
-		myAuthorsIDs = (ArrayList<UUID>) theAuthorsIDs.clone();
+		this.myAuthorsIDs = (ArrayList<UUID>) theAuthorsIDs.clone();
 		mySubmittedDate = theSubmittedDate;
 		myTitle = theTitle;
 		myFilePath = theFilePath;
@@ -181,7 +181,7 @@ public class Manuscript implements Serializable {
 	 * @version 5/6/2017
 	 */
 	public void addAuthor(Author theAuthor) {
-		myAuthorsIDs.add(theAuthor.getMyID());
+		this.myAuthorsIDs.add(theAuthor.getMyID());
 	}
 	
 	
