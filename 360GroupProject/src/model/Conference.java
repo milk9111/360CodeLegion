@@ -109,9 +109,9 @@ public class Conference implements Serializable {
     	// TODO: change to add manuscript IDs isnead of objects
         if(isWithinSubmissionDeadline()) {
             myManuscripts.add(theManuscript);
-            System.out.println("Adding to manuscript list");
+           // System.out.println("Adding to manuscript list");
         } else{
-            System.out.println("You're past the date bro.");
+            //System.out.println("You're past the date bro.");
         }
     }
 
