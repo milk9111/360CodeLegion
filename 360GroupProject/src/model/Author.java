@@ -100,7 +100,7 @@ public class Author extends User implements Serializable {
 	 * @param theConference The Conference to get the list of Manuscripts from.
 	 * @return A ArrayList of Manuscripts the Author has already submitted.
 	 */
-	public HashSet<UUID> getManuscript(Conference theConference) {
+	public HashSet<UUID> getManuscriptsAssociatedWithConference(Conference theConference) {
 		
 		return myManuscriptList.get(theConference.getMyID());
 	
@@ -190,14 +190,30 @@ public class Author extends User implements Serializable {
 	}
 
 	/**
-	 * This will return a list of conferences the author can view/take actions upon
+	 * This will return a list of conferences IDs the author can view/take actions upon
 	 * @return a list of viewable/actionable conferences relevant to the author
+	 */
+	public Set<UUID> getMyListOfConferenceIDs() {
+		return this.myManuscriptList.keySet();
+	}
+	
+	
+	/**
+	 * checks whether or not the passed in conference has manuscripts turned into it by the author
+	 * @param theConference
+	 * @return
+	 */
+	public boolean isConferenceAssociatedWithAuthor(Conference theConference) {
+		return this.myManuscriptList.containsKey(theConference.getMyID());
+	}
+
+	/**
+	 * DO NOT USE.
 	 */
 	@Override
 	public List<Conference> getConferenceList() {
-		
-		return super.myConferenceList;
-	
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
