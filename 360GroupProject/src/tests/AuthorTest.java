@@ -66,7 +66,7 @@ public class AuthorTest {
 		this.myAccountDatabase.saveNewAccountToDatabase(myAccount);
 		myAccount.addAuthorRoleToAccount(myAuthor);
 		
-		assertTrue(myAccount.getMyAuthor().getUsername().equals(myAuthor.getUsername()));
+		assertTrue("account's author ID should be equal to temp author", myAccount.getMyAuthor().getMyID().equals(myAuthor.getMyID()));
 		
 		// init manuscript
 		Manuscript validManuscript = new Manuscript("All is gone", new Date(), myAuthor, new File("/C:/serializedModel/testFile.txt"));
@@ -74,10 +74,10 @@ public class AuthorTest {
 			myAuthor.addManuscript(myConference, validManuscript);
 			
 			ArrayList<Manuscript> savedManuList = this.myManuscriptDatabase.getManuscriptsBelongingToAuthor(myAuthor);
-			assertTrue(savedManuList.size() > 0);
+			assertTrue("Returned Manuscript should be 1, indicating the new manuscript was saved", savedManuList.size() > 0);
 		} catch (Exception e) {
 			e.printStackTrace();
-			assertTrue(e.getMessage() == null);
+			assertTrue("No error message should exist", e.getMessage() == null);
 		}
 	}
 	
