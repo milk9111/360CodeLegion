@@ -18,7 +18,7 @@ import model.Account;
  * This class will hold fields and methods representing interaction with the Account database
  * which is persisted as a serialized object
  */
-public class AccountDatabase implements Serializable {
+public class AccountDatabase {
 
 	private TreeMap<UUID, Account> myAccountList;
 	
@@ -221,6 +221,26 @@ public class AccountDatabase implements Serializable {
 		
 		return listToReturn;
 		
+	}
+	
+	/**
+	 * Gets an account by their reviewer
+	 * @param theReviewer
+	 * @return
+	 */
+	public Account getAccountByReviewer(Reviewer theReviewer) {
+		Account returnAccount = null;
+		TreeMap<UUID, Account> accountList = deserializeAccountList();
+
+		for(Account anAcct : accountList.values()) {
+			if(anAcct.getMyReviewer() != null) {
+				if(anAcct.getMyReviewer().getMyID().equals(theReviewer.getMyID())) {
+					returnAccount = anAcct;
+				}
+			}
+		}
+		
+		return returnAccount;
 	}
 	
 	public void printContents() {

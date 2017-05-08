@@ -1,17 +1,24 @@
 
 import static org.junit.Assert.*;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.TreeMap;
 import java.util.UUID;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import model.Account;
+import model.AccountDatabase;
 import model.Author;
 import model.Conference;
+import model.ConferenceDatabase;
 import model.Manuscript;
+import model.ManuscriptDatabase;
 import model.Reviewer;
 import model.User;
 
@@ -25,6 +32,7 @@ public class ReviewerTest {
 	private List<Manuscript> myManuscriptList;
 	private List<Conference> myEmptyConferenceList;
 	private Conference myConference;
+	private Account myAccount;
 	
 	@Before
 	public void setup() throws Exception{
@@ -43,11 +51,34 @@ public class ReviewerTest {
 		myManuscriptList.add(myTestManuscript);
 		
 		
-		myTestReviewer = new Reviewer("Roger Ebert", myEmptyConferenceList, myManuscriptList);
+		myTestReviewer = new Reviewer(myTestManuscript, myConference);
 		
-		
-		
+		myAccount = new Account("Snowberry");
+		new AccountDatabase().createEmptySerializedAccountList();
+		new ManuscriptDatabase().createEmptySerializedManuscriptList();
+		new ConferenceDatabase().createEmptySerializedConferenceList();
 	}
+	
+	@Test
+	public void assignManuscript_ForValidManuscript_shouldSucceed() {
+		// inti Author and save to Account
+		new AccountDatabase().saveNewAccountToDatabase(myAccount);
+		Author newAuthor = new Author(myConference);
+		myAccount.addAuthorRoleToAccount(newAuthor);
+
+		Manuscript newManu = new Manuscript("New Manu Title", new Date(), myAccount.getMyAuthor(), new File(""), myConference);
+		Reviewer newReviewer = new Reviewer(myConference);
+		myAccount.setReviewer(newReviewer);
+		assertTrue(myAccount.getMyReviewer().getMyID().equals(newReviewer.getMyID()));
+		
+		// assign manuscript
+		Reviewer updatedReviewer = myAccount.getMyReviewer();
+		assertTrue("manuscript should be assigned", updatedReviewer.assignManuscript(newManu));
+		TreeMap<UUID, HashSet<UUID>> mapOfReviewerAndConf = myAccount.getMyReviewer().getMyAssignedManuscriptsAndConferenceList();
+
+		assertTrue(mapOfReviewerAndConf.get(myConference.getMyID()).size() > 0);
+	}
+	
 	/**
 	 * Test that constructor instantiates a Reviewer.
 	 */
