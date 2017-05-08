@@ -101,7 +101,7 @@ public class ReviewerTest {
 
 		assertTrue("assignManuscript method should return true.", myTestReviewer.assignManuscript(myTestManuscript));
 		
-		assertEquals("A successful assignment should increase assignedManuscriptList from 1 to 2", myTestReviewer.getAssignedManuscriptList().size(), 2);
+		assertEquals("A successful assignment should increase assignedManuscriptList from 1 to 2", myTestReviewer.getMyAssignedManuscriptsAndConferenceList().size(), 2);
 
 	}
 	
@@ -117,11 +117,11 @@ public class ReviewerTest {
 		myTestManuscript.setAuthors(myAuthorList);
 		myManuscriptList.clear();
 		myManuscriptList.add(0, myTestManuscript);
-		myTestReviewer = new Reviewer("Roger Ebert", myEmptyConferenceList, myManuscriptList);
+		myTestReviewer = new Reviewer("Roger Ebert", (ArrayList<Conference>) myEmptyConferenceList);
 		
 		assertFalse("Reviewer cannot be assigned a paper when is an author", myTestReviewer.assignManuscript(myTestManuscript));
 		
-		assertEquals("Reviewer AssignedManuscriptList should stay at 1",myTestReviewer.getAssignedManuscriptList().size(), 1);
+		assertEquals("Reviewer AssignedManuscriptList should stay at 1",myTestReviewer.getMyAssignedManuscriptsAndConferenceList().size(), 1);
 		
 	}
 	
@@ -136,10 +136,10 @@ public class ReviewerTest {
 		myTestManuscript.setAuthors(myAuthorList);
 		myManuscriptList.clear();
 		myManuscriptList.add(0, myTestManuscript);
-		myTestReviewer = new Reviewer("Roger Ebert", myEmptyConferenceList, myManuscriptList);
+		myTestReviewer = new Reviewer("Roger Ebert", (ArrayList<Conference>) myEmptyConferenceList);
 
 		assertFalse("Reviewer cannot be assigned a paper when is an author", myTestReviewer.assignManuscript(myTestManuscript));
-		assertEquals(myTestReviewer.getAssignedManuscriptList().size(), 1);
+		assertEquals(myTestReviewer.getMyAssignedManuscriptsAndConferenceList().size(), 1);
 	}
 	
 	/**
@@ -151,10 +151,10 @@ public class ReviewerTest {
 		
 		myManuscriptList.add(myTestManuscript);
 
-		myTestReviewer = new Reviewer("Roger Ebert", myEmptyConferenceList, myManuscriptList);
+		myTestReviewer = new Reviewer("Roger Ebert", (ArrayList<Conference>) myEmptyConferenceList);
 
 		assertTrue("Should add to assigned Man List" , myTestReviewer.assignManuscript(myTestManuscript));
-		assertEquals("Reviewer AssignedManuscriptList should stay at 1", myTestReviewer.getAssignedManuscriptList().size(), 3);
+		assertEquals("Reviewer AssignedManuscriptList should stay at 1", myTestReviewer.getMyAssignedManuscriptsAndConferenceList().size(), 3);
 
 	}
 	
@@ -168,7 +168,7 @@ public class ReviewerTest {
 			myManuscriptList.add(myTestManuscript);
 		}
 		assertTrue("Should add to AssignedManuscriptList" , myTestReviewer.assignManuscript(myTestManuscript));
-		assertEquals("AssignedManuscriptList should reach MAX capacity", myTestReviewer.getAssignedManuscriptList().size(), MAX_CAPACITY);
+		assertEquals("AssignedManuscriptList should reach MAX capacity", myTestReviewer.getMyAssignedManuscriptsAndConferenceList().size(), MAX_CAPACITY);
 
 
 		
@@ -185,7 +185,7 @@ public class ReviewerTest {
 		}
 		
 		assertFalse("Should not add to assigned Man List" , myTestReviewer.assignManuscript(myTestManuscript));
-		assertEquals(myTestReviewer.getAssignedManuscriptList().size(), MAX_CAPACITY);
+		assertEquals(myTestReviewer.getMyAssignedManuscriptsAndConferenceList().size(), MAX_CAPACITY);
 
 		
 	}
