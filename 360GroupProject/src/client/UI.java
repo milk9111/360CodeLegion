@@ -240,7 +240,7 @@ public class UI extends Observable implements Observer{
 	private void displayHeader() {
 
 		System.out.println();
-		System.out.println(myUserName + " - " + myUserType);
+		System.out.println(myUserName + " - " + myUserType + "\n");
 
 	}
 
@@ -663,10 +663,11 @@ public class UI extends Observable implements Observer{
 		
 		mySelectedReviewer = reviewerArray[reviewerChoice];
 		
-		System.out.println(mySelectedReviewer.getUsername());
-		
+		System.out.println("You selected " + mySelectedReviewer.getUsername());
+	//	setChanged();
+	//	notifyObservers(mySelectedReviewer.getUsername());
 		setChanged();
-		notifyObservers(mySelectedReviewer);
+		notifyObservers("LIST_REVIEWERS_VIEW" + "," + mySelectedReviewer.getUsername() );
 		
 		
 		
