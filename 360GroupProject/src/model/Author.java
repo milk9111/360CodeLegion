@@ -19,7 +19,7 @@ import model.User;
 /**
  * This class is representing an Author user type with all the functionality they are entitled.
  * 
- * @author Casey Anderson
+ * @author Casey Anderson, Ryan Tran
  * @version 1 
  *
  */
@@ -35,12 +35,12 @@ public class Author extends User implements Serializable {
 	 */
 	private ArrayList<File> myReviewList;
 	
-	// TODO: refactor this to be conference IDs and Manuscript IDs
 	/**
 	 * Map of the Manuscripts already submitted to each conference.
 	 * Key: Conference ID, HashSet: List of Manuscripts author has submitted to that conference
 	 */
 	private Map<UUID,HashSet<UUID>> myManuscriptList;
+	
 	
 	/**
 	 * Constructor for Author class.
@@ -161,6 +161,8 @@ public class Author extends User implements Serializable {
 							// update account with changed author
 							aAcct.addAuthorRoleToAccount(authorOfAcct);
 							
+							System.out.println(aAcct);
+							
 							// save Account to database
 							new AccountDatabase().updateAndSaveAccountToDatabase(aAcct);
 							
@@ -213,8 +215,6 @@ public class Author extends User implements Serializable {
 											  TreeMap<UUID, Account> theGlobalAccountList) {
 		
 		boolean authorAlreadyHasMaxManuscripts = false;
-		System.out.println(theGlobalAccountList);
-		System.out.println("global list^");
 		
 		for(Account acctToCompare : theGlobalAccountList.values()) {
 			Author currentAcctAuthor = acctToCompare.getAuthorAssociatedWithConference(theConference);
@@ -226,10 +226,6 @@ public class Author extends User implements Serializable {
 			
 			// Checks to see if the manuscript contains an author id equivalent to the current iteration's account's 
 			// author associated with the conference parameter id
-			System.out.println("inside isAuthorAtLimit");
-			System.out.println(theManuscript.getAuthors());
-			System.out.println("divider====");
-			System.out.println(currentAcctAuthor);
 			if(theManuscript.getAuthors().contains(currentAcctAuthor.getMyID())) {
 				
 				if(currentAcctAuthor.getNumberOfManuscriptsSubmitted(theConference) >= MAX_MANUSCRIPT_ALLOWED) { 

@@ -45,6 +45,7 @@ public class AuthorTest {
 	@Before
 	public void setUp() {
 		myAccountDatabase = new AccountDatabase();
+		myAccountDatabase.createEmptySerializedAccountList();
 		myAccount = new Account("Chase");
 		myCoAuthAccount = new Account("Steven");
 		myConference = new Conference("Alchemy Conference", new Date(), new Date());
@@ -81,6 +82,7 @@ public class AuthorTest {
 		Conference conference = new Conference("RSA", date, date, reviewerList);
 		myAccount.addAuthorRoleToAccount(myAuthor);
 
+		assertTrue(myAccount.getMyAuthorList().size() > 0);
 		myAccountDatabase.saveAccountToDatabase(myAccount);
 		this.myListOfAccountAuthors.put(myAccount.getMyID(), myAccount);
 		
@@ -95,7 +97,12 @@ public class AuthorTest {
 		Manuscript fithManuscript = new Manuscript("Nano Tech", date, mapOfReviewers, myListOfAuthors, new File(""));
 		myAuthor.addManuscript(conference, fithManuscript, myListOfAccountAuthors);
 		
+		// save changes to DB
+		myAccount.addAuthorRoleToAccount(myAuthor);
+		myAccountDatabase.updateAndSaveAccountToDatabase(myAccount);
+
 		TreeMap<UUID, Account> allAccts = new AccountDatabase().getAllAccounts();
+		assertTrue(allAccts.size() > 0);
 		//myAuthor = new AccountDatabase().getAllAccounts().get(myAccount.getMyID()).getAuthorAssociatedWithConference(conference);
 		assertTrue("ManuScript was not added to list properly", myAuthor.getManuscript(conference).contains(fithManuscript.getMyID()));
 	}
