@@ -529,10 +529,11 @@ public class UI extends Observable implements Observer{
 		}
 
 		//
-		mySelectedConference =  new ConferenceDatabase().getSingleConference(listOfConferences[conferenceChoice - 1].getMyID());
+		//mySelectedConference =  new ConferenceDatabase().getSingleConference(listOfConferences[conferenceChoice - 1].getMyID());
 
 
-		mySelectedConference =  new ConferenceDatabase().getSingleConference(listOfConferences[conferenceChoice - 1].getMyID());				
+		//mySelectedConference =  new ConferenceDatabase().getSingleConference(listOfConferences[conferenceChoice - 1].getMyID());	
+		mySelectedConference = listOfConferences[conferenceChoice - 1];
 		setChanged();
 		notifyObservers(listOfConferences[conferenceChoice - 1]);
 		setChanged();
@@ -648,7 +649,8 @@ public class UI extends Observable implements Observer{
 	private void subProgramChairAssignReviewerView() {
 		int reviewerChoice;
 		System.out.println("You chose to assign a Reviewer");
-
+		System.out.println(mySelectedConference == null);
+		System.out.println(mySelectedConference.getPastReviewers() == null);
 		Reviewer[] reviewerArray = mySelectedConference.getPastReviewers().toArray(new Reviewer[mySelectedConference.getPastReviewers().size()]);
 		
 		for (int i = 0; i < reviewerArray.length; i++) {

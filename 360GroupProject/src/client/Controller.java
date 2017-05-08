@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 import model.*;
 
 /**
- * The system controller that handles the different states of the 
+ * The //System controller that handles the different states of the 
  * program. It is the bridge between the UI and the Model. 
  * 
  * @author Connor Lundberg
@@ -32,10 +32,11 @@ public class Controller extends Observable implements Observer {
 	public static final int LIST_MANUSCRIPT_VIEW = 2;
 	public static final int LIST_CONFERENCE_VIEW = 3;
 	public static final int ASSIGN_REVIEWER = 4;
+	public static final int ASSIGN_MANUSCRIPT = 6;
 	public static final int LIST_ASSIGNED_REVIEWERS_VIEW = 5;
 
 	
-	//Objects we are adding in the system. We are saving them because we need persistence between states.
+	//Objects we are adding in the //System. We are saving them because we need persistence between states.
 	private int myCurrentState;
 
 	private Account myAccount;
@@ -134,7 +135,7 @@ public class Controller extends Observable implements Observer {
 							Manuscript manuscriptToSubmit;
 							if(pieces[0].equals(UI.NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_SUBMIT_MANUSCRIPT_VIEW)){
 								manuscriptToSubmit = makeManuscript(pieces);
-								System.out.println(myCurrentConference);
+								//System.out.println(myCurrentConference);
 								/*try {
 									if (myAccount.doesAuthorAssociatedWithConferenceExist(myCurrentConference)) {
 										(myAccount.getMyAuthor()).addManuscript(myCurrentConference, manuscriptToSubmit);
@@ -153,16 +154,16 @@ public class Controller extends Observable implements Observer {
 								myCurrentConference.submitManuscript(manuscriptToSubmit);
 								myManuscriptDatabase.saveManuscriptToDatabase(manuscriptToSubmit);
 								
-								System.out.println(myManuscriptDatabase.getAllManuscripts().size());
+								//System.out.println(myManuscriptDatabase.getAllManuscripts().size());
 								for (Manuscript m : myManuscriptDatabase.getAllManuscripts().values()) {
 									for (UUID a : m.getAuthors()) {
-										System.out.println(a);
+										//System.out.println(a);
 									}
 								}
-								System.out.println(myAccount.getMyAuthor().getMyID());
-								System.out.println(myManuscriptDatabase.getManuscriptsBelongingToAuthor(myAccount.getMyAuthor()).size());
+								//System.out.println(myAccount.getMyAuthor().getMyID());
+								//System.out.println(myManuscriptDatabase.getManuscriptsBelongingToAuthor(myAccount.getMyAuthor()).size());
 								for (Manuscript m : myManuscriptDatabase.getManuscriptsBelongingToAuthor(myAccount.getMyAuthor())) {
-									System.out.println(m.getTitle());
+									//System.out.println(m.getTitle());
 								}
 
 								myCurrentState = AUTHOR + LIST_MANUSCRIPT_VIEW;
@@ -222,11 +223,13 @@ public class Controller extends Observable implements Observer {
 					switch (myCurrentState % 10){
 	                    case ASSIGN_REVIEWER:
 							myCurrentReviewer = findReviewer(theNextState, myCurrentConference.getPastReviewers());
-	
-	                        myCurrentState = SUBPROGRAM_CHAIR + LIST_ASSIGNED_REVIEWERS_VIEW;
+							
+	                        myCurrentState = SUBPROGRAM_CHAIR + ASSIGN_MANUSCRIPT;
 	                        setChanged();
 							notifyObservers(myCurrentState);
 	                        break;
+	                    case ASSIGN_MANUSCRIPT:
+	                    	break;
 	                    case LIST_CONFERENCE_VIEW:
 	                    	TreeMap<UUID, Conference> currentConferenceList = this.myConferenceDatabase.deserializeConferenceList();
 							myCurrentConference = findConference(theNextState,
@@ -307,11 +310,11 @@ public class Controller extends Observable implements Observer {
 	 * @version 5/6/2017
 	 */
     private Conference findConference(String theNextState, List<Conference> conferenceList) {
-    	//System.out.println(conferenceList.size());
-    	//System.out.println();
+    	////System.out.println(conferenceList.size());
+    	////System.out.println();
 	    for(Conference c: conferenceList){
-	    //	System.out.println(c.getMyName());
-	    //	System.out.println(theNextState);
+	    //	//System.out.println(c.getMyName());
+	    //	//System.out.println(theNextState);
 	        if(theNextState.contains(c.getMyName())){
 	            return c;
             }
@@ -365,14 +368,14 @@ public class Controller extends Observable implements Observer {
 			boolean usernameDoesExist = this.myAccountDatabase.doesUsernameExistInDB(currentAcctList, thePieces[i]);
 			
 			if(usernameDoesExist) {
-				System.out.println("in here");
+				//System.out.println("in here");
 				Author existingAuthor = this.myAccountDatabase.getAccountByUsername(currentAcctList, thePieces[i]).getMyAuthor();
 				returnManuscript.addAuthor(existingAuthor);
-				System.out.println(existingAuthor.getMyID());
-				System.out.println(myAccount.getMyAuthor().getMyID());
-				System.out.println();
+				//System.out.println(existingAuthor.getMyID());
+				//System.out.println(myAccount.getMyAuthor().getMyID());
+				//System.out.println();
 			} else {
-				System.out.println("or here");
+				//System.out.println("or here");
 				Account newAccount = new Account(thePieces[i]);
 				this.myAccountDatabase.saveNewAccountToDatabase(newAccount);
 				Author newAuthor = new Author(thePieces[i], this.myCurrentConference);
@@ -401,7 +404,7 @@ public class Controller extends Observable implements Observer {
 			myAccountDatabase.saveNewAccountToDatabase(theNewAccount);
 			myAccount = theNewAccount;
 		}
-		System.out.println("setting Account");
+		//System.out.println("setting Account");
 		myAccountDatabase.updateAndSaveAccountToDatabase(myAccount);
 		printAccounts();
 	}
@@ -409,15 +412,15 @@ public class Controller extends Observable implements Observer {
 	
 	private void printAccounts () {
 		if (myAccountDatabase.getAllAccounts().size() < 1) {
-			System.out.println();
-			System.out.println("AccountDatabase is empty");
-			System.out.println();
+			//System.out.println();
+			//System.out.println("AccountDatabase is empty");
+			//System.out.println();
 		} else {
-			System.out.println();
+			//System.out.println();
 			for (Account ac : myAccountDatabase.getAllAccounts().values()) {
-				System.out.println(ac.getMyUsername());
+				//System.out.println(ac.getMyUsername());
 			}
-			System.out.println();
+			//System.out.println();
 		}
 	}
 	
@@ -434,16 +437,16 @@ public class Controller extends Observable implements Observer {
 	 */
 	public void setConference (Conference theNewConference) {
 		if (!myConferenceDatabase.isConferenceInListUnique(myConferenceDatabase.getAllConferences(), theNewConference)) {
-			//System.out.println("Found an old conference");
+			////System.out.println("Found an old conference");
 			myCurrentConference = theNewConference;
-			//System.out.println(myCurrentConference.getMyName());
+			////System.out.println(myCurrentConference.getMyName());
 		} else {
-			//System.out.println("made a new conference");
+			////System.out.println("made a new conference");
 			myConferenceDatabase.saveConferenceToDatabase(theNewConference);
 			myCurrentConference = theNewConference;
 		}
 		
-		//System.out.println("at end: " + myCurrentConference);
+		////System.out.println("at end: " + myCurrentConference);
 	}
 	
 	
@@ -460,8 +463,8 @@ public class Controller extends Observable implements Observer {
 	 */
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		//System.out.println("received something in update");
-		//System.out.println(myCurrentConference);
+		////System.out.println("received something in update");
+		////System.out.println(myCurrentConference);
 		if (arg1 instanceof String) {
 			changeState ((String) arg1);
 		} else if (arg1 instanceof Account) {
