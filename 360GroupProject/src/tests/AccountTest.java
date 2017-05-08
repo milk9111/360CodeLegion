@@ -64,7 +64,7 @@ public class AccountTest {
 	}
 
 	/**
-	 * Test method for {@link model.Account#doesAutorAssociatedWithConferenceExist(model.Conference)}.
+	 * Test method for {@link model.Account#doesAuthorAssociatedWithConferenceExist(model.Conference)}.
 	 */
 	@Test
 	public void testDoesAutorAssociatedWithConferenceExist() {
