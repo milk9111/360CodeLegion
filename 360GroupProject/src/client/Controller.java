@@ -129,6 +129,7 @@ public class Controller extends Observable implements Observer {
 			switch ((myCurrentState / 10) * 10) {
 				case AUTHOR:
 					switch (myCurrentState % 10){
+						
 						case SUBMIT_MANUSCRIPT:
 							Manuscript manuscriptToSubmit;
 							if(pieces[0].equals(UI.NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_SUBMIT_MANUSCRIPT_VIEW)){
@@ -137,23 +138,28 @@ public class Controller extends Observable implements Observer {
 								try {
 									if (myAccount.doesAuthorAssociatedWithConferenceExist(myCurrentConference)) {
 										(myAccount.getMyAuthor()).addManuscript(myCurrentConference, manuscriptToSubmit);
+										
 									} else {
 										myAccount.addAuthorRoleToAccount(new Author(myCurrentConference));
 										(myAccount.getMyAuthor()).addManuscript(myCurrentConference, manuscriptToSubmit);
+										
 									}
 									
 								} catch (Exception e) {
-									e.printStackTrace();
+									myCurrentState = FAIL_AUTHOR_HAS_TO_MANY_MANUSCRIPTS;
+									setChanged();
+									notifyObservers(myCurrentState);
+									break;
 								}
+								
 								
 								myCurrentConference.submitManuscript(manuscriptToSubmit);
 								myManuscriptDatabase.saveManuscriptToDatabase(manuscriptToSubmit);
-								
-								System.out.println(myManuscriptDatabase.getAllManuscripts().size());
-								System.out.println(myManuscriptDatabase.getManuscriptsBelongingToAuthor(myAccount.getMyAuthor()).size());
-								for (Manuscript m : myManuscriptDatabase.getManuscriptsBelongingToAuthor(myAccount.getMyAuthor())) {
-									System.out.println(m.getTitle());
-								}
+								//System.out.println(myManuscriptDatabase.getAllManuscripts().size());
+								//System.out.println(myManuscriptDatabase.getManuscriptsBelongingToAuthor(myAccount.getMyAuthor()).size());
+								//for (Manuscript m : myManuscriptDatabase.getManuscriptsBelongingToAuthor(myAccount.getMyAuthor())) {
+									//System.out.println(m.getTitle());
+								//}
 								myCurrentState = AUTHOR + LIST_MANUSCRIPT_VIEW;
 								setChanged();
 								notifyObservers(myCurrentState);
@@ -163,6 +169,11 @@ public class Controller extends Observable implements Observer {
 						case LIST_MANUSCRIPT_VIEW:
 							if (pieces[0].equals(UI.NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_MANUSCRIPT_LIST_VIEW)) {
 								myCurrentState = AUTHOR + USER_OPTIONS;
+								setChanged();
+								notifyObservers(myCurrentState);
+							}
+							else if (pieces[0].equals(UI.NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_MAIN_VIEW)) {
+								myCurrentState = AUTHOR;
 								setChanged();
 								notifyObservers(myCurrentState);
 							}
@@ -176,6 +187,9 @@ public class Controller extends Observable implements Observer {
 							break;
 						case USER_OPTIONS:
 							switch (pieces[0]) {
+							case UI.NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_MAIN_VIEW:
+								myCurrentState = AUTHOR;
+	                    		break;
 	                    	case UI.NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_SUBMIT_MANUSCRIPT_VIEW:
 	                    		myCurrentState = AUTHOR + SUBMIT_MANUSCRIPT;
 	                    		break;
@@ -342,16 +356,27 @@ public class Controller extends Observable implements Observer {
 		for (int i = 4; i < thePieces.length; i++) {
 
 			// Validate each username against the account database to see if a user already exists with that username
-			boolean usernameDoesNotExist = this.myAccountDatabase.isUsernameInListValid(currentAcctList, thePieces[i]);
+			boolean usernameDoesNotExist = this.myAccountDatabase.doesUsernameExistInDB(currentAcctList, thePieces[i]);
 			
 			if(usernameDoesNotExist) {
+				Account newAccount = new Account(thePieces[i]);
+				this.myAccountDatabase.saveNewAccountToDatabase(newAccount);
+				
 				Author newAuthor = new Author(thePieces[i], this.myCurrentConference);
-				this.myAccount.addAuthorRoleToAccount(newAuthor);
-				this.myAccountDatabase.updateAndSaveAccountToDatabase(this.myAccount);
-				returnManuscript.addAuthor(new Author(thePieces[i], myCurrentConference));
+				newAccount.addAuthorRoleToAccount(newAuthor);
+				returnManuscript.addAuthor(newAuthor);
 			} else {
-				Author existingAuthor = this.myAccountDatabase.getAccountByUsername(currentAcctList, thePieces[i]).getMyAuthor();
-				returnManuscript.addAuthor(existingAuthor);
+				// get current account's author, if applicable
+				Account existingAccount = this.myAccountDatabase.getAccountByUsername(currentAcctList, thePieces[i]);
+
+				// if acct does not have an author role yet, add a new one for them
+				if(existingAccount.getMyAuthor() == null) {
+					Author newAuthor = new Author(this.myCurrentConference);
+					existingAccount.addAuthorRoleToAccount(newAuthor);
+					returnManuscript.addAuthor(newAuthor);
+				} else {
+					returnManuscript.addAuthor(existingAccount.getMyAuthor());
+				}
 			}
 		}
 		
@@ -369,7 +394,7 @@ public class Controller extends Observable implements Observer {
 	 * @version 5/6/2017
 	 */
 	private void setAccount (Account theNewAccount) {
-		if (myAccountDatabase.isUsernameInListValid(myAccountDatabase.getAllAccounts(), theNewAccount.getMyUsername())) {
+		if (myAccountDatabase.doesUsernameExistInDB(myAccountDatabase.getAllAccounts(), theNewAccount.getMyUsername())) {
 			myAccount = theNewAccount;
 		} else {
 			myAccountDatabase.saveNewAccountToDatabase(theNewAccount);
