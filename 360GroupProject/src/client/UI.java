@@ -38,8 +38,10 @@ public class UI extends Observable implements Observer{
 	public static final int SUBPROGRAM_CHAIR = 20;
 
 	//Action States
-	public static final String SUBMIT_MANUSCRIPT_TO_CONTROLLER = "SUBMIT_MANUSCRIPT";
-	public static final String VIEW_MANUSCRIPT_FROM_CONTROLLER = "LIST_MANUSCRIPT_VIEW";
+	public static final String NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_CONFERENCE_LIST_VIEW = "LIST_CONFERENCE_VIEW";
+	public static final String NOTIFY_CONTROLLER_TO_CHANGE_TO_LOGGIN_VIEW = "LOG_IN_STATE";
+	public static final String NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_SUBMIT_MANUSCRIPT_VIEW = "SUBMIT_MANUSCRIPT";
+	public static final String NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_MANUSCRIPT_LIST_VIEW = "LIST_MANUSCRIPT_VIEW";
 	public static final String NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_MAIN_VIEW = "AUTHOR";
 	public static final int SUBMIT_MANUSCRIPT = 1;
 	public static final int LIST_MANUSCRIPT_VIEW = 2;
@@ -79,7 +81,7 @@ public class UI extends Observable implements Observer{
 		setChanged();
 		notifyObservers(myAccount);
 		setChanged();
-		notifyObservers("LOG_IN_STATE");
+		notifyObservers(NOTIFY_CONTROLLER_TO_CHANGE_TO_LOGGIN_VIEW);
 
 	}
 
@@ -244,21 +246,21 @@ public class UI extends Observable implements Observer{
 		if (myUserChoice.equals("1")) {
 
 			setChanged();
-			notifyObservers("SUBMIT_MANUSCRIPT"); 
+			notifyObservers(NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_SUBMIT_MANUSCRIPT_VIEW); 
 
 		}
 
 		else if (myUserChoice.equals("2")) {
 
 			setChanged();
-			notifyObservers("LIST_MANUSCRIPT_VIEW"); 
+			notifyObservers(NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_MANUSCRIPT_LIST_VIEW); 
 
 		}
 
 		else if (myUserChoice.equals("3")) {
 
 			setChanged();
-			notifyObservers("LIST_CONFERENCE_VIEW"); 
+			notifyObservers(NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_CONFERENCE_LIST_VIEW); 
 
 		}
 
@@ -334,7 +336,7 @@ public class UI extends Observable implements Observer{
 		if (myUserChoice.equals("1")) {
 
 			setChanged();
-			notifyObservers(SUBMIT_MANUSCRIPT_TO_CONTROLLER);
+			notifyObservers(NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_SUBMIT_MANUSCRIPT_VIEW);
 
 		}
 
@@ -536,12 +538,12 @@ public class UI extends Observable implements Observer{
 		case ("2"):
 			
 			setChanged();
-			notifyObservers("LIST_CONFERENCE_VIEW"); 
+			notifyObservers(NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_CONFERENCE_LIST_VIEW); 
 			break;
 		
 		case ("3"):
 			setChanged();
-			notifyObservers("LIST_MANUSCRIPT_VIEW"); 
+			notifyObservers(NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_MANUSCRIPT_LIST_VIEW); 
 			break;
 			
 		}
