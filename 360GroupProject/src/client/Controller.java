@@ -239,21 +239,23 @@ public class Controller extends Observable implements Observer {
 	                        break;
 	                    case ASSIGN_MANUSCRIPT:
 	                    	//System.out.println(pieces[1]);
+	                    	
 	                    	UUID key = UUID.fromString(pieces[1]);
 	                    	//System.out.println(key.toString());
+	                    	System.out.println(myManuscriptDatabase == null);
+	                    	System.out.println(myManuscriptDatabase.getAllManuscripts() == null);
+	                    	System.out.println(myManuscriptDatabase.getAllManuscripts().get(key) == null);
 	                    	myCurrentReviewer.assignManuscript(myManuscriptDatabase.getAllManuscripts().get(key));
+	                    	System.out.println("got here");
 	                    	myAccount.getMySubprogramChair().addReviewer(myCurrentReviewer, myAccount.getMySubprogramChair()
 	                    			.findManuscriptPos(myManuscriptDatabase.getAllManuscripts().get(key)));
+	                    	System.out.println("got here2");
 	                    	myCurrentState = SUBPROGRAM_CHAIR + LIST_MANUSCRIPT_VIEW;
 	                    	//System.out.println(myCurrentReviewer.getAssignedManuscriptList().get(0).getTitle());
 	                    	setChanged();
 	                    	notifyObservers(myCurrentState);
 	                    	break;
 	                    case LIST_CONFERENCE_VIEW:
-	                    	//TreeMap<UUID, Conference> currentConferenceList = this.myConferenceDatabase.deserializeConferenceList();
-							//myCurrentConference = findConference(theNextState,
-							//		myAccount.getAllConferencesAssociatedWithMySubprogramChairList(currentConferenceList));
-							
 							myCurrentState = SUBPROGRAM_CHAIR + USER_OPTIONS;
 							setChanged();
 							notifyObservers(myCurrentState);
@@ -278,6 +280,8 @@ public class Controller extends Observable implements Observer {
 		                    	case UI.NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_CONFERENCE_LIST_VIEW:
 		                    		myCurrentState = SUBPROGRAM_CHAIR + LIST_CONFERENCE_VIEW;
 		                    		break;
+		                    	case UI.NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_MANUSCRIPT_LIST_VIEW:
+		                    		myCurrentState = SUBPROGRAM_CHAIR + LIST_MANUSCRIPT_VIEW;
 	                    	}
 	                    	
 	                    	setChanged();

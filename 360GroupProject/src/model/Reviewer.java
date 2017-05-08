@@ -96,6 +96,7 @@ public class Reviewer extends User implements Serializable {
 	 * @return true if over limit.
 	 */
 	private boolean isOverReviewLimit(UUID theConferenceID) {
+		System.out.println("over limit");
 		boolean isOver = false;
 		if (this.myConferencesAndAssignedManuscriptsList.get(theConferenceID).size() >= MAX_REVIEWS) {
 			isOver = true;
@@ -111,19 +112,19 @@ public class Reviewer extends User implements Serializable {
 	 */
 	private boolean isReviewerAnAuthor(Manuscript theManuscript) {
 		boolean isAuthor = false;
-
 		TreeMap<UUID, Account> acctList = new AccountDatabase().deserializeAccountList();
 		ArrayList<Account> validAccountList = new ArrayList<Account>();
-		
 		
 		List<UUID> authorlist = theManuscript.getAuthors();
 		
 		for(Account anAcct : acctList.values()) {
-			if(anAcct.getMyReviewer().getMyID().equals(this.getMyID())) {
-				validAccountList.add(anAcct);
+			if (anAcct.getMyReviewer() != null) {
+				if(anAcct.getMyReviewer().getMyID().equals(this.getMyID())) {
+					validAccountList.add(anAcct);
+				}
 			}
 		}
-		
+
 		for(Account anAcct : validAccountList) {
 			if(theManuscript.doesAuthorBelongToManuscript(anAcct.getMyAuthor())) {
 				isAuthor = true;
