@@ -158,6 +158,7 @@ public class Account implements Serializable {
 
     public void setReviewer(Reviewer theReviewer) {
     	this.myReviewer = theReviewer;
+        new AccountDatabase().updateAndSaveAccountToDatabase(this);
     }
     
     public String getMyUsername() {
