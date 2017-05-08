@@ -131,6 +131,7 @@ public class AccountTest {
 		Account mainAcct = acctDBList.get(myAccount.getMyID());
 
 		ArrayList<Conference> associatedConfList = mainAcct.getAllConferencesAssociatedWithMySubprogramChairList(confDBList);
+		System.out.println(associatedConfList.size());
 		assertTrue(associatedConfList.size() == 4);
 		
 		boolean conferenceFound = false;
@@ -149,19 +150,19 @@ public class AccountTest {
 
 	/**
 	 * Test method for {@link model.Account#addSubprogramChairRoleToAccount(model.SubprogramChair, model.Conference)}.
-	 */
+	 
 	@Test
 	public void testAddSubprogramChairRoleToAccount() {
 		fail("Not yet implemented");
-	}
+	}*/
 
 	/**
 	 * Test method for {@link model.Account#addReviewerRoleToAccount(model.Reviewer, model.Conference)}.
-	 */
+	 
 	@Test
 	public void testAddReviewerRoleToAccount() {
 		fail("Not yet implemented");
-	}
+	}*/
 	
 	/**
 	 * Helper method to create a conference
