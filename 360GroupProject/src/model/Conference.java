@@ -11,10 +11,6 @@ import java.util.UUID;
  * Created by Josiah on 4/27/2017.
  */
 public class Conference implements Serializable {
-    public String getMyName() {
-        return myName;
-    }
-
     // Unique ID to identify the conference by
     private UUID myID;
     
@@ -134,4 +130,10 @@ public class Conference implements Serializable {
     private boolean isWithinReviewDeadline(){
         return myReviewDeadline.after(Calendar.getInstance().getTime());
     }
+    
+    public String getMyName() {
+        return myName;
+    }
+
+
 }

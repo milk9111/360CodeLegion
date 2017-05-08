@@ -1,6 +1,7 @@
 package model;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
@@ -13,7 +14,7 @@ import java.util.UUID;
  * @author Morgan Blackmore
  * @version 4/27/17
  */
-public class Reviewer extends User {
+public class Reviewer extends User implements Serializable {
 	/** Constant: maximum number of reviews allowed for a reviewer. */
 	private static final int MAX_REVIEWS = 8;
 
