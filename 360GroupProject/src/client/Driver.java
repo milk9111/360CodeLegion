@@ -150,9 +150,9 @@ public class Driver {
 		}
 
 		for(Account theAcct : adb.getAllAccounts().values()) {
-			System.out.println(theAcct.getMyUsername());
+			//System.out.println(theAcct.getMyUsername());
 			if(theAcct.getMyAuthor() != null) {
-				System.out.println(theAcct.getMyAuthor().getNumberOfManuscriptsSubmitted(conf_1b));
+				//System.out.println(theAcct.getMyAuthor().getNumberOfManuscriptsSubmitted(conf_1b));
 			}
 		}
 		
