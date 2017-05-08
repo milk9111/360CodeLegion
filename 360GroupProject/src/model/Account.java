@@ -25,7 +25,7 @@ public class Account implements Serializable {
      * Map of Key: Conference Ids, Value: Subprogram Chair Object
      * Map representing relationships between a conference and subprogram chair
      */
-    private TreeMap<UUID, SubprogramChair> mySubprogramChairs;
+    private SubprogramChair mySubprogramChair;
     private UUID myID;
     private String myUsername;
     
@@ -34,15 +34,15 @@ public class Account implements Serializable {
     	this.myUsername = theUsername;
         this.myAuthor = null;
         this.myReviewer = null;
-        this.mySubprogramChairs = new TreeMap<UUID, SubprogramChair>();
+        this.mySubprogramChair = null;
         this.myConferenceDatabase = new ConferenceDatabase();
     }
     
-    public Account(Author theAuthor, Reviewer theReviewer, TreeMap<UUID, SubprogramChair> theSubprogramChairs) {
+    public Account(Author theAuthor, Reviewer theReviewer, SubprogramChair theSubprogramChair) {
     	this.myID = UUID.randomUUID();
         this.myAuthor = theAuthor;
         this.myReviewer = theReviewer;
-        this.mySubprogramChairs = theSubprogramChairs;
+        this.mySubprogramChair = theSubprogramChair;
         this.myConferenceDatabase = new ConferenceDatabase();
     }
     
@@ -98,7 +98,7 @@ public class Account implements Serializable {
     public ArrayList<Conference> getAllConferencesAssociatedWithMySubprogramChairList(TreeMap<UUID, Conference> theConfList) {
     	ArrayList<Conference> returnList = new ArrayList<Conference>();
     	
-    	for(UUID aConferenceID : this.mySubprogramChairs.keySet()) {
+    	for(UUID aConferenceID : this.mySubprogramChair.getMyAssignedManuscriptsMap().keySet()) {
     		if(theConfList.containsKey(aConferenceID)) {
     			returnList.add(theConfList.get(aConferenceID));
     		}
@@ -133,8 +133,8 @@ public class Account implements Serializable {
      * @param theSubprogramChair the subprogram chair to add to the account's subchair list
      * @param theConference the conference to associate the subchair with
      */
-    public void addSubprogramChairRoleToAccount(SubprogramChair theSubprogramChair, Conference theConference) {
-        this.mySubprogramChairs.put(theConference.getMyID(), theSubprogramChair);
+    public void addSubprogramChairRoleToAccount(SubprogramChair theSubprogramChair) {
+        this.mySubprogramChair = theSubprogramChair;
         new AccountDatabase().saveAccountToDatabase(this);
     }
 
@@ -142,8 +142,8 @@ public class Account implements Serializable {
      * Gets a list of the account's subprogram user roles with associated conferences as key
      * @return a treeMap consisting of the account's subprogram chair types and their associated conferences as keys
      */
-    public TreeMap<UUID, SubprogramChair> getMySubprogramChairList() {
-        return this.mySubprogramChairs;
+    public SubprogramChair getMySubprogramChair() {
+        return this.mySubprogramChair;
     }
 
 

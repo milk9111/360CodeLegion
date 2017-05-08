@@ -2,7 +2,10 @@ package model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
 import java.util.UUID;
 
@@ -19,7 +22,7 @@ public class SubprogramChair extends User implements Serializable {
     /**
      * List manuscripts assigned to the subprogram chair
      */
-    private List<UUID> myAssignedManuscripts;
+    private Map<UUID, HashSet<UUID>> myAssignedManuscripts;
 
 
     /**
@@ -28,7 +31,7 @@ public class SubprogramChair extends User implements Serializable {
      */
     public SubprogramChair(String theUsername, Conference theConference) {
     	super(theUsername, theConference);
-        this.myAssignedManuscripts = new ArrayList<UUID>();
+        this.myAssignedManuscripts = new HashMap<UUID, HashSet<UUID>>();
         super.myConferenceList = new ArrayList<Conference>();
     }
     
@@ -38,7 +41,7 @@ public class SubprogramChair extends User implements Serializable {
      */
     public SubprogramChair(Conference theConference) {
     	super(theConference);
-    	this.myAssignedManuscripts = new ArrayList<UUID>();
+    	this.myAssignedManuscripts = new HashMap<UUID, HashSet<UUID>>();
         super.myConferenceList = new ArrayList<Conference>();
     }
     
@@ -69,9 +72,13 @@ public class SubprogramChair extends User implements Serializable {
      */
     public boolean isManuscriptWithinMyAssignedManuscripts(Manuscript theManuscript) {
     	boolean doesExist = false;
+    	if(this.myAssignedManuscripts == null || 
+    	   this.myAssignedManuscripts.size() == 0) {
+    		return false;
+    	}
 
-    	for(UUID myManuID : this.myAssignedManuscripts) {
-    		if(myManuID.equals(theManuscript.getMyID())) {
+    	for(HashSet<UUID> myManuList : this.myAssignedManuscripts.values()) {
+    		if(myManuList.contains(theManuscript.getMyID())) {
     			doesExist = true;
     		}
     	}
@@ -87,6 +94,14 @@ public class SubprogramChair extends User implements Serializable {
     public List<Reviewer> getReviewers() {
     	// Queries the system wide database for a list of all reviewers
         return Database.getReviewersList();
+    }
+    
+    /**
+     * Returns the subprog chair's list of assigned manuscripts
+     * @return
+     */
+    public HashMap<UUID, HashSet<UUID>> getMyAssignedManuscriptsMap() {
+    	return this.getMyAssignedManuscriptsMap();
     }
 
     /**
