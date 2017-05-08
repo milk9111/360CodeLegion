@@ -3,6 +3,7 @@ package model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.TreeMap;
 import java.util.UUID;
@@ -18,8 +19,12 @@ public class Reviewer extends User implements Serializable {
 	/** Constant: maximum number of reviews allowed for a reviewer. */
 	private static final int MAX_REVIEWS = 8;
 
-	/** List of the Assigned Manuscripts to this reviewers. */
-	private List<Manuscript> myAssignedManuscriptList;
+	
+	/**
+	 * List of assigned manuscripts, mapped to a conference id.
+	 * key: conference id, value: list of manuscript ids for which the reviewer is assigned
+	 */
+	private TreeMap<UUID, HashSet<UUID>> myConferencesAndAssignedManuscriptsList;
 	
 	/**
 	 * Constructor for Reviewer.
@@ -28,25 +33,16 @@ public class Reviewer extends User implements Serializable {
 	 */
 	public Reviewer(String theName, ArrayList<Conference> theConferenceList){
 		super(theName, theConferenceList);
-		this.myAssignedManuscriptList = new ArrayList<Manuscript>();
+
 		
 	}
 	
-	/**
-	 * Constructor for Reviewer with assigned manuscripts list.
-	 * 
-	 * @author Morgan Blackmore
-	 */
-	public Reviewer(String theName, List<Conference> theConferenceList, List<Manuscript> theManuscripts){
-		super(theName, theConferenceList);
-		this.myAssignedManuscriptList = theManuscripts;
-		
-	}
-	
-	public Reviewer(Manuscript theAssignedManuscript, Conference theConference) {
+	public Reviewer(Manuscript theManuscript, Conference theConference) {
 		super(theConference);
-		this.myAssignedManuscriptList = new ArrayList<Manuscript>();
-		this.myAssignedManuscriptList.add(theAssignedManuscript);
+		this.myConferencesAndAssignedManuscriptsList = new TreeMap<UUID, HashSet<UUID>>();
+		HashSet<UUID> listOfManuIDs = new HashSet<UUID>();
+		listOfManuIDs.add(theManuscript.getMyID());
+		this.myConferencesAndAssignedManuscriptsList.put(theConference.getMyID(), listOfManuIDs);
 	}
 	
 	/**
@@ -72,7 +68,7 @@ public class Reviewer extends User implements Serializable {
 			wasAssigned = false;			
 
 		} else {
-		myAssignedManuscriptList.add(theManuscript);
+			myAssignedManuscriptList.add(theManuscript);
 		}
 		
 		return wasAssigned;
