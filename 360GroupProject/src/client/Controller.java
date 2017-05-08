@@ -144,16 +144,16 @@ public class Controller extends Observable implements Observer {
 
 								// handle case where paper is past submission deadline
 								if(manuscriptToSubmit == null) {
-									myCurrentState = AUTHOR;
+									myCurrentState = FAIL_SUBMITED_PAST_DEADLINE;
 									// TODO: Refactor this error message to print via its own separate view
-									System.out.println("\nToo Late. The Manuscript was submitted past the submission deadline");
+									//System.out.println("\nToo Late. The Manuscript was submitted past the submission deadline");
 									setChanged();
 									notifyObservers(myCurrentState);
 									break;
 								// handle max limitcase
 								} else if(manuscriptListToTest.size() >= 5) {
-									myCurrentState = AUTHOR;
-									System.out.println("\nMax limit of Manuscripts Hit. Cannot submit more than 5 manuscripts per conference");
+									myCurrentState = FAIL_AUTHOR_HAS_TO_MANY_MANUSCRIPTS;
+									//System.out.println("\nMax limit of Manuscripts Hit. Cannot submit more than 5 manuscripts per conference");
 									setChanged();
 									notifyObservers(myCurrentState);
 									break;
@@ -260,14 +260,14 @@ public class Controller extends Observable implements Observer {
 	                    	
 	                    	UUID key = UUID.fromString(pieces[1]);
 	                    	//System.out.println(key.toString());
-	                    	System.out.println(myManuscriptDatabase == null);
-	                    	System.out.println(myManuscriptDatabase.getAllManuscripts() == null);
-	                    	System.out.println(myManuscriptDatabase.getAllManuscripts().get(key) == null);
+	                    	//System.out.println(myManuscriptDatabase == null);
+	                    	//System.out.println(myManuscriptDatabase.getAllManuscripts() == null);
+	                    	//System.out.println(myManuscriptDatabase.getAllManuscripts().get(key) == null);
 	                    	myCurrentReviewer.assignManuscript(myManuscriptDatabase.getAllManuscripts().get(key));
-	                    	System.out.println("got here");
+	                    	//System.out.println("got here");
 	                    	myAccount.getMySubprogramChair().addReviewer(myCurrentReviewer, myAccount.getMySubprogramChair()
 	                    			.findManuscriptPos(myManuscriptDatabase.getAllManuscripts().get(key)));
-	                    	System.out.println("got here2");
+	                    	//System.out.println("got here2");
 	                    	myCurrentState = SUBPROGRAM_CHAIR + LIST_MANUSCRIPT_VIEW;
 	                    	//System.out.println(myCurrentReviewer.getAssignedManuscriptList().get(0).getTitle());
 	                    	setChanged();
@@ -311,7 +311,7 @@ public class Controller extends Observable implements Observer {
 		}
 
 		myAccountDatabase.updateAndSaveAccountToDatabase(myAccount);	/*final save of the account at the end of the state.*/
-		printAccounts();
+		//printAccounts();
 	}
 	
 	
@@ -375,8 +375,8 @@ public class Controller extends Observable implements Observer {
 	 * @version 5/6/2017
 	 */
     private Reviewer findReviewer(String theNextState, List<Reviewer> pastReviewers) {
-    	System.out.println("above");
-    	System.out.println(theNextState);
+    	//System.out.println("above");
+    	//System.out.println(theNextState);
 		for(Reviewer r: pastReviewers){
 			if(theNextState.contains(r.getUsername())){
 				return r;
