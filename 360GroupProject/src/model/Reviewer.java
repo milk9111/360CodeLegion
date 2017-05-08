@@ -79,9 +79,9 @@ public class Reviewer extends User implements Serializable {
 	 * @author Morgan Blackmore
 	 * @return true if over limit.
 	 */
-	private boolean isOverReviewLimit() {
+	private boolean isOverReviewLimit(Conference theConference) {
 		boolean isOver = false;
-		if (myAssignedManuscriptList.size() >= MAX_REVIEWS) {
+		if (this.myConferencesAndAssignedManuscriptsList.get(theConference.getMyID()).size() >= MAX_REVIEWS) {
 			isOver = true;
 		} 
 		
@@ -90,7 +90,7 @@ public class Reviewer extends User implements Serializable {
 	
 	/**
 	 * Compares if the assigned reviewer is an author of this paper.
-	 * 
+	 * preconditions: Reviewer object in question is already saved to an account
 	 * @return true if reviewer is an author.
 	 */
 	private boolean isReviewerAnAuthor(Manuscript theManuscript) {
@@ -100,7 +100,6 @@ public class Reviewer extends User implements Serializable {
 		ArrayList<Account> validAccountList = new ArrayList<Account>();
 		
 		
-		String reviewerName = getUsername();
 		List<UUID> authorlist = theManuscript.getAuthors();
 		
 		for(Account anAcct : acctList.values()) {
@@ -122,12 +121,12 @@ public class Reviewer extends User implements Serializable {
 	
 
 
-	public List<Manuscript> getAssignedManuscriptList() {
-		return myAssignedManuscriptList;
+	public TreeMap<UUID, HashSet<UUID>> getMyAssignedManuscriptsAndConferenceList() {
+		return this.myConferencesAndAssignedManuscriptsList;
 	}
 
-	public void setAssignedManuscriptList(List<Manuscript> theAssignedManuscriptList) {
-		this.myAssignedManuscriptList = theAssignedManuscriptList;
+	public void setAssignedManuscriptList(TreeMap<UUID, HashSet<UUID>> theList) {
+		this.myConferencesAndAssignedManuscriptsList = theList;
 	}
 
 
