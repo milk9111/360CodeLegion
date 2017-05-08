@@ -549,9 +549,7 @@ public class UI extends Observable implements Observer{
 	 * Calls db to get conference list for subprogramChair
 	 */
 	private void subProgramChairConferenceView() {
-		//test print
-		System.out.println("subProgramChairConferenceView");
-		System.out.println("To assign a reviewer, first select a conference from the list below.");
+		System.out.println("To assign a reviewer, first select a conference from the list below:\n");
 		
 		ListOfConferenceView();
 		//make a call to database to get myAssignedConferences for SPC
