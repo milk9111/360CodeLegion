@@ -523,7 +523,12 @@ public class UI extends Observable implements Observer{
 
 		}
 
-		mySelectedConference = listOfConferences[conferenceChoice - 1];
+		//
+		//mySelectedConference =  new ConferenceDatabase().getSingleConference(listOfConferences[conferenceChoice - 1].getMyID());
+
+
+		mySelectedConference =  new ConferenceDatabase().getSingleConference(listOfConferences[conferenceChoice - 1].getMyID());	
+		//mySelectedConference = listOfConferences[conferenceChoice - 1];
 		setChanged();
 		notifyObservers(listOfConferences[conferenceChoice - 1]);
 		setChanged();
@@ -627,7 +632,7 @@ public class UI extends Observable implements Observer{
 		setChanged();
 		notifyObservers(listOfConferences[conferenceChoice - 1]);
 		setChanged();
-		notifyObservers("LIST_CONFERENCE_VIEW" + "," + listOfConferences[conferenceChoice - 1].getMyName());
+		notifyObservers(NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_CONFERENCE_LIST_VIEW + "," + listOfConferences[conferenceChoice - 1].getMyName());
 
 
 
@@ -653,11 +658,23 @@ public class UI extends Observable implements Observer{
 		
 		mySelectedReviewer = reviewerArray[reviewerChoice];
 		
+<<<<<<< HEAD
 		System.out.println("You selected " + mySelectedReviewer.getUsername());
 		setChanged();
 		notifyObservers(mySelectedReviewer.getUsername());
 //		setChanged();
 //		notifyObservers("LIST_MANUSCRIPT_VIEW" + "," + mySelectedReviewer.getUsername() );
+=======
+		//System.out.println("You selected " + mySelectedReviewer.getUsername());
+		String s = "LIST_MANUSCRIPT_VIEW," + mySelectedReviewer.getUsername();
+		//System.out.println(s);
+		setChanged();
+		notifyObservers(s);
+	//	setChanged();
+	//	notifyObservers(mySelectedReviewer.getUsername());
+	//	setChanged();
+//	notifyObservers("LIST_MANUSCRIPT_VIEW" + "," + mySelectedReviewer.getUsername() );
+>>>>>>> 5b3b1d8621e00916d017dd96f58d25fc10db8475
 		
 		
 		
