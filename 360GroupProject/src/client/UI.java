@@ -42,6 +42,11 @@ public class UI extends Observable implements Observer{
 	private Conference mySelectedConference;
 	private Manuscript mySelectedManuscript;
 	
+	/**
+	 * Constructor for UI class to initialize fields.
+	 * 
+	 * @author Casey Anderson
+	 */
 	public UI() {
 		
 		myUserType = "";
@@ -56,12 +61,11 @@ public class UI extends Observable implements Observer{
 	 * If valid, updates this UI user fields and proceeds to top menuL chooseUserTypeMenuView 
 	 * 
 	 * @author Casey Anderson, Morgan Blackmore
-	 * 
 	 */
 	private void login() {
 		
 
-		System.out.print("\nPlease enter a user name to log in: ");
+		System.out.print("Please enter a user name to log in: ");
 		myUserName = myScanner.next();
 		System.out.println();
 		myAccount = new Account(myUserName);
@@ -235,7 +239,7 @@ public class UI extends Observable implements Observer{
 	}
 
 	/**
-	 * Method to display the current Author option to the user gather their selection and send it to the Controller.
+	 * Method to display the current Author option to the user and gather their selection and send it to the Controller.
 	 * 
 	 * @author Casey Anderson
 	 */
@@ -280,7 +284,7 @@ public class UI extends Observable implements Observer{
 
 	/**
 	 * Method to display the Manuscript submission page to user and gather information from user to submit their
-	 * Manuscript and send collected information to the Controller.
+	 * Manuscript and send the collected information to the Controller.
 	 * 
 	 * @author Casey Anderson
 	 */
@@ -322,12 +326,11 @@ public class UI extends Observable implements Observer{
 		setChanged();
 		notifyObservers(NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_SUBMIT_MANUSCRIPT_VIEW + "," + manuscriptTile + "," + ManuscriptFilePath + "," + new Date() + "," + authorList); 
 
-
 	}
 
 	/**
-	 * Method to Display Submit Maunscript Failure to User and let them decide if they want to go back
-	 * to the Author main page or the manusscript submission page.
+	 * Method to Display Submit Manuscript Failure to Author and let them decide if they want to go back
+	 * to the Author main page or the manuscript submission page.
 	 * 
 	 * @author Casey Anderson
 	 */
@@ -362,7 +365,7 @@ public class UI extends Observable implements Observer{
 	}
 
 	/**
-	 * Method to Display to the User that the Manuscript submission failed due to the Manuscript
+	 * Method to Display to the Author that the Manuscript submission failed due to the Manuscript
 	 * Dead line being expired.
 	 * 
 	 * @author Casey Anderson
@@ -390,8 +393,8 @@ public class UI extends Observable implements Observer{
 	}
 
 	/**
-	 * Method to Display to the User that the Manuscript submission failed due to the Manuscript
-	 * Dead line being expired.
+	 * Method to Display to the Subprogram Chair that the Assign Reviewer has failed
+	 * due to Reviewer being an Author on Manuscript.
 	 * 
 	 * @author Casey Anderson
 	 */
@@ -426,7 +429,7 @@ public class UI extends Observable implements Observer{
 	}
 
 	/**
-	 * Method to display all of the current Authors Manuscripts they have already submitted.
+	 * Method to display all of the current Authors Manuscripts that they have already submitted.
 	 * 
 	 * @author Casey Anderson
 	 */
@@ -468,7 +471,7 @@ public class UI extends Observable implements Observer{
 	}
 
 	/**
-	 * Method to display all of the current Conferences for user to select from and pass to Controller.
+	 * Method to display all of the current Conferences for the user to select from and pass to Controller.
 	 * 
 	 * @author Casey Anderson
 	 */
@@ -513,9 +516,8 @@ public class UI extends Observable implements Observer{
 			conferenceChoice = myScanner.nextInt();
 			
 		}
-		//
-		mySelectedConference =  new ConferenceDatabase().getSingleConference(listOfConferences[conferenceChoice - 1].getMyID());
-				
+	
+		mySelectedConference =  new ConferenceDatabase().getSingleConference(listOfConferences[conferenceChoice - 1].getMyID());				
 		setChanged();
 		notifyObservers(listOfConferences[conferenceChoice - 1]);
 		setChanged();

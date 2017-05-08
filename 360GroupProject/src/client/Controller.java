@@ -138,13 +138,11 @@ public class Controller extends Observable implements Observer {
 								try {
 									if (myAccount.doesAuthorAssociatedWithConferenceExist(myCurrentConference)) {
 										(myAccount.getMyAuthor()).addManuscript(myCurrentConference, manuscriptToSubmit);
-										myCurrentConference.submitManuscript(manuscriptToSubmit);
-										myManuscriptDatabase.saveManuscriptToDatabase(manuscriptToSubmit);
+										
 									} else {
 										myAccount.addAuthorRoleToAccount(new Author(myCurrentConference));
 										(myAccount.getMyAuthor()).addManuscript(myCurrentConference, manuscriptToSubmit);
-										myCurrentConference.submitManuscript(manuscriptToSubmit);
-										myManuscriptDatabase.saveManuscriptToDatabase(manuscriptToSubmit);
+										
 									}
 									
 								} catch (Exception e) {
@@ -155,7 +153,8 @@ public class Controller extends Observable implements Observer {
 								}
 								
 								
-								
+								myCurrentConference.submitManuscript(manuscriptToSubmit);
+								myManuscriptDatabase.saveManuscriptToDatabase(manuscriptToSubmit);
 								//System.out.println(myManuscriptDatabase.getAllManuscripts().size());
 								//System.out.println(myManuscriptDatabase.getManuscriptsBelongingToAuthor(myAccount.getMyAuthor()).size());
 								//for (Manuscript m : myManuscriptDatabase.getManuscriptsBelongingToAuthor(myAccount.getMyAuthor())) {
