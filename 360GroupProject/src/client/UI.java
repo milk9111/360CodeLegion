@@ -45,21 +45,19 @@ public class UI extends Observable implements Observer{
 	public static final int ASSIGN_REVIEWER = 4;
 	public static final int LIST_ASSIGNED_REVIEWERS_VIEW = 5;
 
-
-	//private int myState;
 	private String myUserType;
 	private String myUserName;
-	//private User myUser;
 	private Scanner myScanner;
 	private String myUserChoice;
 	private Account myAccount;
 
 	public UI() {
-		//myState = 0;
+		
 		myUserType = "";
 		myUserName = "";
 		myUserChoice = "";
 		myScanner = new Scanner(System.in);
+		
 	}
 
 	/**
@@ -78,7 +76,6 @@ public class UI extends Observable implements Observer{
 		myAccount = new Account(myUserName);
 		setChanged();
 		notifyObservers(myAccount);
-		//myState = LOG_IN_STATE;
 		setChanged();
 		notifyObservers("LOG_IN_STATE");
 
@@ -148,15 +145,6 @@ public class UI extends Observable implements Observer{
 			displayHeader();
 
 			switch (theState) {
-			//I don't think we want these cases inside the Author block.  A user is not an Author until after
-			// they choose from chooserUserTypeMenu
-			//			case LOG_IN_STATE:
-			//				login();
-			//				break;
-			//				
-			//			case CHOOSE_USER:
-			//				chooseUserTypeMenuView();
-			//				break;
 
 			case AUTHOR:
 
@@ -174,6 +162,7 @@ public class UI extends Observable implements Observer{
 				break;
 
 			case LIST_CONFERENCE_VIEW:
+				
 				ListOfConferenceView();
 				break;
 
@@ -184,8 +173,6 @@ public class UI extends Observable implements Observer{
 
 			setUserType("SubProgram Chair");
 			displayHeader();
-			//test print
-//			System.out.println("UI changeState in SPC block: " +theState);
 
 			switch (theState % 20) {
 
@@ -202,8 +189,7 @@ public class UI extends Observable implements Observer{
 			break;
 
 			case (ASSIGN_REVIEWER):
-				//test print
-//				System.out.println("In UI changeState: Case ASSIGN_REVIEWER");
+
 			subProgramChairAssignReviewerView(); 
 			break;
 
@@ -512,28 +498,34 @@ public class UI extends Observable implements Observer{
 	 * 
 	 * @author Morgan Blackmore
 	 */
-	private void subProgramChairView(){
-		System.out.println("SubProgram Chair Options");
+	private void subProgramChairView() {
+		
+		System.out.println("SubProgram Chair Page:\n");
 		System.out.println("1 - Assign a Reviewer");
 		System.out.println("2 - Select a Conference");
 		System.out.println("3 - Select a Manuscript");
 		myUserChoice = myScanner.next();
 
-		switch (myUserChoice){
+		switch (myUserChoice) {
+		
 		case ("1"):
+			
 			setChanged();
-		notifyObservers("ASSIGN_REVIEWER"); 
-		break;
+			notifyObservers("ASSIGN_REVIEWER"); 
+			break;
+			
 		case ("2"):
+			
 			setChanged();
-		notifyObservers("LIST_CONFERENCE_VIEW"); 
-		break;
+			notifyObservers("LIST_CONFERENCE_VIEW"); 
+			break;
+		
 		case ("3"):
 			setChanged();
-		notifyObservers("LIST_MANUSCRIPT_VIEW"); 
-		break;
+			notifyObservers("LIST_MANUSCRIPT_VIEW"); 
+			break;
+			
 		}
-
 
 	}
 
@@ -581,11 +573,12 @@ public class UI extends Observable implements Observer{
 
 	}
 
-	public void removeListener(InvalidationListener listener) {
-
-	}
-
-
+	/**
+	 * Used to talk to the Controller while staying decoupled.
+	 * 
+	 * @author Casey Anderson
+	 */
+	@Override
 	public void update(Observable arg0, Object theArg) {
 
 		if (theArg instanceof Integer) {
