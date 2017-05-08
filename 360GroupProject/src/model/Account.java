@@ -135,6 +135,7 @@ public class Account implements Serializable {
      */
     public void addSubprogramChairRoleToAccount(SubprogramChair theSubprogramChair, Conference theConference) {
         this.mySubprogramChairs.put(theConference.getMyID(), theSubprogramChair);
+        new AccountDatabase().saveAccountToDatabase(this);
     }
 
     /**
