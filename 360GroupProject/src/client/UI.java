@@ -40,6 +40,7 @@ public class UI extends Observable implements Observer{
 	//Action States
 	public static final String SUBMIT_MANUSCRIPT_TO_CONTROLLER = "SUBMIT_MANUSCRIPT";
 	public static final String VIEW_MANUSCRIPT_FROM_CONTROLLER = "LIST_MANUSCRIPT_VIEW";
+	public static final String NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_MAIN_VIEW = "AUTHOR";
 	public static final int SUBMIT_MANUSCRIPT = 1;
 	public static final int LIST_MANUSCRIPT_VIEW = 2;
 	public static final int LIST_CONFERENCE_VIEW = 3;
@@ -101,7 +102,7 @@ public class UI extends Observable implements Observer{
 		if (myUserChoice.equals("1")) {
 			
 			setChanged();
-			notifyObservers("AUTHOR");
+			notifyObservers(NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_MAIN_VIEW);
 
 		}
 
@@ -142,7 +143,7 @@ public class UI extends Observable implements Observer{
 
 		else if (theState >=0 && theState < 10) {
 
-			setUserType("Author");
+			setUserType(NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_MAIN_VIEW);
 			displayHeader();
 
 			switch (theState) {
@@ -340,7 +341,7 @@ public class UI extends Observable implements Observer{
 		else if (myUserChoice.equals("2")) {
 
 			setChanged();
-			notifyObservers("AUTHOR");
+			notifyObservers(NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_MAIN_VIEW);
 
 		}
 
@@ -368,7 +369,7 @@ public class UI extends Observable implements Observer{
 		if (myUserChoice.equals("1")) {
 
 			setChanged();
-			notifyObservers("AUTHOR");
+			notifyObservers(NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_MAIN_VIEW);
 
 		}
 
@@ -433,6 +434,21 @@ public class UI extends Observable implements Observer{
 		for (int i = 0; i < manuscriptList.size(); i++) {
 			
 			System.out.println("" + (i + 1) + ". " + manuscriptList.get(i).getTitle());
+			
+		}
+		
+		System.out.println("Please enter \"1\" to go back to Athors main page");
+		myUserChoice = myScanner.next();
+		
+		if (myUserChoice.equals("1")) {
+			setChanged();
+			notifyObservers(NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_MAIN_VIEW);
+		}
+		
+		else {
+			
+			System.out.println("Invalid choice, please select from the options displayed");
+			AuthorListOfManuscriptsView();
 			
 		}
 		
