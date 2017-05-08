@@ -128,7 +128,7 @@ public class UI extends Observable implements Observer{
 	 */
 	public void changeState(int theState) {
 		//test print
-	//	System.out.println("UI changeState: theState:" + theState);
+		System.out.println("UI changeState: theState:" + theState);
 
 		if (theState == Controller.LOG_IN_STATE){
 			login();
@@ -639,8 +639,6 @@ public class UI extends Observable implements Observer{
 	private void subProgramChairAssignReviewerView() {
 		int reviewerChoice;
 		System.out.println("You chose to assign a Reviewer");
-		System.out.println(mySelectedConference == null);
-		System.out.println(mySelectedConference.getPastReviewers() == null);
 		Reviewer[] reviewerArray = mySelectedConference.getPastReviewers().toArray(new Reviewer[mySelectedConference.getPastReviewers().size()]);
 		
 		for (int i = 0; i < reviewerArray.length; i++) {
@@ -656,8 +654,8 @@ public class UI extends Observable implements Observer{
 		mySelectedReviewer = reviewerArray[reviewerChoice];
 		
 		System.out.println("You selected " + mySelectedReviewer.getUsername());
-//		setChanged();
-//		notifyObservers(mySelectedReviewer.getUsername());
+		setChanged();
+		notifyObservers(mySelectedReviewer.getUsername());
 //		setChanged();
 //		notifyObservers("LIST_MANUSCRIPT_VIEW" + "," + mySelectedReviewer.getUsername() );
 		
