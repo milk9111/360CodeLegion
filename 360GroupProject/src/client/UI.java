@@ -128,7 +128,7 @@ public class UI extends Observable implements Observer{
 	 */
 	public void changeState(int theState) {
 		//test print
-		System.out.println("UI changeState: theState:" + theState);
+//		System.out.println("UI changeState: theState:" + theState);
 
 		if (theState == Controller.LOG_IN_STATE){
 			login();
@@ -658,15 +658,15 @@ public class UI extends Observable implements Observer{
 		
 		mySelectedReviewer = reviewerArray[reviewerChoice];
 		
-<<<<<<< HEAD
+
 		System.out.println("You selected " + mySelectedReviewer.getUsername());
 		setChanged();
 		notifyObservers(mySelectedReviewer.getUsername());
 //		setChanged();
 //		notifyObservers("LIST_MANUSCRIPT_VIEW" + "," + mySelectedReviewer.getUsername() );
-=======
+
 		//System.out.println("You selected " + mySelectedReviewer.getUsername());
-		String s = "LIST_MANUSCRIPT_VIEW," + mySelectedReviewer.getUsername();
+		String s = "LIST_MANUSCRIPT_VIEW," + mySelectedReviewer.getMyID();
 		//System.out.println(s);
 		setChanged();
 		notifyObservers(s);
@@ -674,7 +674,6 @@ public class UI extends Observable implements Observer{
 	//	notifyObservers(mySelectedReviewer.getUsername());
 	//	setChanged();
 //	notifyObservers("LIST_MANUSCRIPT_VIEW" + "," + mySelectedReviewer.getUsername() );
->>>>>>> 5b3b1d8621e00916d017dd96f58d25fc10db8475
 		
 		
 		
