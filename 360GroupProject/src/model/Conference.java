@@ -110,9 +110,9 @@ public class Conference implements Serializable {
         if(isWithinSubmissionDeadline()) {
             myManuscripts.add(theManuscript);
             new ConferenceDatabase().saveConferenceToDatabase(this);
-            System.out.println("Adding to manuscript list");
+            //System.out.println("Adding to manuscript list");
         } else{
-            System.out.println("You're past the date bro.");
+            //System.out.println("You're past the date bro.");
         }
     }
 
