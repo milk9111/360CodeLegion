@@ -81,9 +81,9 @@ public class Account implements Serializable {
      * @param theConference Conference to check 
      * @return
      */
-    public boolean doesAutorAssociatedWithConferenceExist(Conference theConference) {
+    public boolean doesAuthorAssociatedWithConferenceExist(Conference theConference) {
     	boolean isAuthorAssociated = false;
-
+    	
     	for(Author anAuthor : this.myAuthors.values()) {
     		if(anAuthor.getMyAssociatedConference().getMyID().equals(theConference.getMyID())) {
     			isAuthorAssociated = true;

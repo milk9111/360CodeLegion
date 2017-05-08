@@ -46,16 +46,16 @@ public class UI extends Observable implements Observer{
 	public static final int LIST_ASSIGNED_REVIEWERS_VIEW = 5;
 
 
-	private int myState;
+	//private int myState;
 	private String myUserType;
 	private String myUserName;
-	private User myUser;
+	//private User myUser;
 	private Scanner myScanner;
 	private String myUserChoice;
 	private Account myAccount;
 
 	public UI() {
-		myState = 0;
+		//myState = 0;
 		myUserType = "";
 		myUserName = "";
 		myUserChoice = "";
@@ -70,20 +70,17 @@ public class UI extends Observable implements Observer{
 	 * 
 	 */
 	private void login() {
-
-		System.out.print("Please enter user name to log in: ");
+		
+		System.out.println("Loggin Page:");
+		System.out.print("\nPlease enter user name to log in: ");
 		myUserName = myScanner.next();
 		System.out.println();
 		myAccount = new Account(myUserName);
 		setChanged();
 		notifyObservers(myAccount);
-
-		myState = LOG_IN_STATE;
+		//myState = LOG_IN_STATE;
 		setChanged();
 		notifyObservers("LOG_IN_STATE");
-
-
-
 
 	}
 
@@ -96,22 +93,24 @@ public class UI extends Observable implements Observer{
 	 */
 	private void chooseUserTypeMenuView() {
 
+		System.out.println("User Type Page:");
 		System.out.println("\nChoose what type of user you are");
 		System.out.println("1 - Author");
 		System.out.println("2 - SubProgram Chair");
+		System.out.print("Please enter choice: ");
 		myUserChoice = myScanner.next();
 
 		if (myUserChoice.equals("1")) {
+			
 			setChanged();
 			notifyObservers("AUTHOR");
-			//	AuthorView();
 
 		}
 
 		else if (myUserChoice.equals("2")){
+			
 			setChanged();
 			notifyObservers("SUBPROGRAM_CHAIR"); 
-			//	subProgramChairView();
 
 		} 
 
@@ -132,17 +131,15 @@ public class UI extends Observable implements Observer{
 	 * 
 	 */
 	public void changeState(int theState) {
-		//test print
-//		System.out.println("UI changeState method.");
-//		System.out.println("UI changeState method: theState: " +theState);
 
 		if (theState == LOG_IN_STATE){
 			login();
 		}
 
 		if (theState == CHOOSE_USER) {
-//			System.out.println("UI changeState method CHOOSE_USER");
+			
 			chooseUserTypeMenuView();
+		
 		}
 
 		if (theState >=0 && theState < 10) {
@@ -231,14 +228,14 @@ public class UI extends Observable implements Observer{
 	}
 
 	/**
-	 * Method to diplay header on every page so user can see their myUserName and myUserType.
+	 * Method to display header on every page so user can see their myUserName and myUserType.
 	 * 
 	 * @author Casey Anderson
 	 */
 	private void displayHeader() {
 
-		System.out.println(myUserName + " - " + myUserType);
 		System.out.println();
+		System.out.println(myUserName + " - " + myUserType);
 
 	}
 
@@ -249,10 +246,11 @@ public class UI extends Observable implements Observer{
 	 */
 	private void AuthorView() {
 
-		System.out.println("Author Main Page:");
+		System.out.println("Author Main Page:\n");
 		System.out.println("1 - Submit new Manuscript.");
 		System.out.println("2 - View currently submitted Manuscripts.");
 		System.out.println("3 - View current list of Conferences.");
+		System.out.print("Please enter choice: ");
 		myUserChoice = myScanner.next();
 
 		if (myUserChoice.equals("1")) {
@@ -295,29 +293,29 @@ public class UI extends Observable implements Observer{
 
 		String manuscriptTile;
 		String authorList = "";
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-		LocalDate localDate = LocalDate.now();
+		//DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+		//LocalDate localDate = LocalDate.now();
 		String moreAuthors = "";
 		List<String> listOfAuthors = new ArrayList<String>();
 		String ManuscriptFilePath;
-		System.out.println("Manuscript Submission Page");
-		System.out.println("Please enter title of Manuscript: ");
+		System.out.println("Manuscript Submission Page: \n");
+		System.out.print("Please enter title of Manuscript: ");
 		manuscriptTile = myScanner.next();
 
 		while (!moreAuthors.equals("0")) {
 
-			System.out.println("Please Enter name of Author or CoAuthor for Manuscript or \"0\" when done: ");
+			System.out.print("Please Enter name of Author or CoAuthor for Manuscript or \"0\" when done: ");
 			moreAuthors = myScanner.next();
 
 			if (!moreAuthors.equals("0")) {
 
-				listOfAuthors.add(myScanner.next());
+				listOfAuthors.add(moreAuthors);
 
 			} 
 
 		}
 
-		System.out.println("Please Enter file path of Manuscript: ");
+		System.out.print("Please Enter file path of Manuscript: ");
 		ManuscriptFilePath = myScanner.next();	
 
 		for (int i = 0; i < listOfAuthors.size(); i++) {
@@ -441,7 +439,7 @@ public class UI extends Observable implements Observer{
 		
 		int manuscriptChoice;
 		System.out.println("Manuscript List Page");
-		ArrayList<Manuscript> manuscriptList = new ManuscriptDatabase().getManuscriptsBelongingToAuthor(myUserName);
+		ArrayList<Manuscript> manuscriptList = new ManuscriptDatabase().getManuscriptsBelongingToAuthor(myAccount.getMyAuthorList().get(myAccount.getMyID()));
 		
 		for (int i = 0; i < manuscriptList.size(); i++) {
 			
@@ -463,7 +461,7 @@ public class UI extends Observable implements Observer{
 	private void ListOfConferenceView() { 
 
 		int conferenceChoice;
-		System.out.println("Conference List Page");
+		System.out.println("Conference List Page:\n");
 		TreeMap<UUID, Conference> conferenceMap = new ConferenceDatabase().getAllConferences();
 		Conference[] listOfConferences = conferenceMap.values().toArray(new Conference[conferenceMap.values().size()]);
 
@@ -472,8 +470,36 @@ public class UI extends Observable implements Observer{
 			System.out.println("" + (i + 1) + " - " + listOfConferences[i].getMyName());
 			
 		}
-
+		
+		System.out.print("Please enter choice: ");
+		
+		while (!myScanner.hasNextInt()) {
+			
+			myScanner.next();
+			System.out.println("Invalid choice, please select from the options displayed");
+			System.out.print("Please enter choice: ");
+			
+		}
+		
 		conferenceChoice = myScanner.nextInt();
+		
+		while (conferenceChoice < 1 || conferenceChoice > listOfConferences.length) {
+			
+			System.out.println("Invalid choice, please select from the options displayed");
+			System.out.print("Please enter choice: ");
+			
+			while (!myScanner.hasNextInt()) {
+				
+				myScanner.next();
+				System.out.println("Invalid choice, please select from the options displayed");
+				System.out.print("Please enter choice: ");
+				
+			}
+			
+			conferenceChoice = myScanner.nextInt();
+			
+		}
+		
 		setChanged();
 		notifyObservers(listOfConferences[conferenceChoice - 1]);
 		setChanged();
