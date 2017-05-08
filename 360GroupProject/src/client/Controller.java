@@ -146,13 +146,13 @@ public class Controller extends Observable implements Observer {
 								System.out.println(myCurrentConference);
 								try {
 									if (myAccount.doesAuthorAssociatedWithConferenceExist(myCurrentConference)) {
-										myAccount.getMyAuthor().addManuscript(myCurrentConference, manuscriptToSubmit);
+										(myAccount.getMyAuthor()).addManuscript(myCurrentConference, manuscriptToSubmit);
 									} else {
 										//System.out.println(myAccount.getAuthorAssociatedWithConference(myCurrentConference).getMyAssociatedConference());
 										//System.out.println(myCurrentConference);
 										//System.out.println("else entered");
 										myAccount.addAuthorRoleToAccount(new Author(myCurrentConference));
-										myAccount.getMyAuthor().addManuscript(myCurrentConference, manuscriptToSubmit);
+										(myAccount.getMyAuthor()).addManuscript(myCurrentConference, manuscriptToSubmit);
 									}
 									
 								} catch (Exception e) {
