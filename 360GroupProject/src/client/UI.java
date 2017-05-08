@@ -445,12 +445,7 @@ public class UI extends Observable implements Observer{
 		System.out.println("Manuscript List Page: ");
 		System.out.println(myAccount.getMyID());
 		System.out.println(myAccount.getMyAuthor());
-		ArrayList<Manuscript> manuscriptList = new ManuscriptDatabase().getManuscriptsBelongingToAuthor(myAccount.getMyAuthor());
-
-
-		System.out.println("size of manu list" + manuscriptList.size());
-
-		
+		ArrayList<Manuscript> manuscriptList = new ManuscriptDatabase().getManuscriptsBelongingToAuthor(myAccount.getMyAuthor());	
 		System.out.println("Number of Manuscripts submitted - " + manuscriptList.size());
 
 		for (int i = 0; i < manuscriptList.size(); i++) {
@@ -528,11 +523,6 @@ public class UI extends Observable implements Observer{
 
 		}
 
-		//
-		//mySelectedConference =  new ConferenceDatabase().getSingleConference(listOfConferences[conferenceChoice - 1].getMyID());
-
-
-		//mySelectedConference =  new ConferenceDatabase().getSingleConference(listOfConferences[conferenceChoice - 1].getMyID());	
 		mySelectedConference = listOfConferences[conferenceChoice - 1];
 		setChanged();
 		notifyObservers(listOfConferences[conferenceChoice - 1]);
@@ -666,10 +656,10 @@ public class UI extends Observable implements Observer{
 		mySelectedReviewer = reviewerArray[reviewerChoice];
 		
 		System.out.println("You selected " + mySelectedReviewer.getUsername());
-	//	setChanged();
-	//	notifyObservers(mySelectedReviewer.getUsername());
-	//	setChanged();
-//	notifyObservers("LIST_MANUSCRIPT_VIEW" + "," + mySelectedReviewer.getUsername() );
+//		setChanged();
+//		notifyObservers(mySelectedReviewer.getUsername());
+//		setChanged();
+//		notifyObservers("LIST_MANUSCRIPT_VIEW" + "," + mySelectedReviewer.getUsername() );
 		
 		
 		
