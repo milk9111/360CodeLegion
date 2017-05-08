@@ -133,13 +133,13 @@ public class UI extends Observable implements Observer{
 			login();
 		}
 
-		if (theState == CHOOSE_USER) {
+		else if (theState == CHOOSE_USER) {
 			
 			chooseUserTypeMenuView();
 		
 		}
 
-		if (theState >=0 && theState < 10) {
+		else if (theState >=0 && theState < 10) {
 
 			setUserType("Author");
 			displayHeader();
