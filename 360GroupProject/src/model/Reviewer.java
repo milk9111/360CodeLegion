@@ -33,6 +33,7 @@ public class Reviewer extends User implements Serializable {
 	 */
 	public Reviewer(String theName, ArrayList<Conference> theConferenceList){
 		super(theName, theConferenceList);
+		myConferencesAndAssignedManuscriptsList = new TreeMap<UUID, HashSet<UUID>>();
 
 		
 	}
@@ -109,7 +110,6 @@ public class Reviewer extends User implements Serializable {
 	 * @return true if over limit.
 	 */
 	private boolean isOverReviewLimit(UUID theConferenceID) {
-		System.out.println("over limit");
 		// check to see if conference exists within reviewer list of confs or not
 		if(this.isReviewerAssignedToConference(theConferenceID)) {
 			return false;

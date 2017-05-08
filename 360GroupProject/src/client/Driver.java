@@ -52,7 +52,7 @@ public class Driver {
 		authorList2.add(author2.getMyAuthor().getMyID());
 		
 		Manuscript manu1 = new Manuscript("Is Krypton Really Dead?", new Date(), authorList1, conference1);
-		Manuscript manu2 = new Manuscript("The Effects of Cartoon Violence on Adolescents", new Date(), authorList2, conference2);
+		Manuscript manu2 = new Manuscript("The Effects of Cartoon Violence on Adolescent Pitbulls", new Date(), authorList2, conference2);
 		
 		AccountDatabase adb = new AccountDatabase();
 		ManuscriptDatabase mdb = new ManuscriptDatabase();
