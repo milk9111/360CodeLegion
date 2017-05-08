@@ -69,12 +69,16 @@ public class AuthorTest {
 		assertTrue("account's author ID should be equal to temp author", myAccount.getMyAuthor().getMyID().equals(myAuthor.getMyID()));
 		
 		// init manuscript
-		Manuscript validManuscript = new Manuscript("All is gone", new Date(), myAuthor, new File("/C:/serializedModel/testFile.txt"));
+		Manuscript validManuscript = new Manuscript("All is gone", new Date(), myAuthor, new File("/C:/serializedModel/testFile.txt"), myConference);
 		try {
 			myAuthor.addManuscript(myConference, validManuscript);
 			
 			ArrayList<Manuscript> savedManuList = this.myManuscriptDatabase.getManuscriptsBelongingToAuthor(myAuthor);
 			assertTrue("Returned Manuscript should be 1, indicating the new manuscript was saved", savedManuList.size() > 0);
+			
+			Author updatedAuth = this.myAccountDatabase.getAllAccounts().get(myAccount.getMyID()).getMyAuthor();
+			assertTrue(updatedAuth.getMyID().equals(myAuthor.getMyID()));
+			assertTrue(updatedAuth.getMyListOfConferenceIDs().size() > 0);
 		} catch (Exception e) {
 			e.printStackTrace();
 			assertTrue("No error message should exist", e.getMessage() == null);

@@ -5,6 +5,7 @@
 
 import static org.junit.Assert.*;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.TreeMap;
@@ -18,6 +19,7 @@ import model.AccountDatabase;
 import model.Author;
 import model.Conference;
 import model.ConferenceDatabase;
+import model.Manuscript;
 import model.Reviewer;
 import model.SubprogramChair;
 
@@ -64,20 +66,31 @@ public class AccountTest {
 		assertTrue(acctFromDB.getMyAuthor().getMyID().equals(newAuth.getMyID()));
 	}
 
-	/**
-	 * Test method for {@link model.Account#getAuthorAssociatedWithConference(model.Conference)}.
-	 */
-	@Test
-	public void testGetAuthorAssociatedWithConference() {
-		fail("Not yet implemented");
-	}
 
 	/**
 	 * Test method for {@link model.Account#doesAuthorAssociatedWithConferenceExist(model.Conference)}.
 	 */
 	@Test
-	public void testDoesAutorAssociatedWithConferenceExist() {
-		fail("Not yet implemented");
+	public void doesAutorAssociatedWithConferenceExist_forAuthorThatExistsWithAssociation_shouldBeAssociatedAndTrue() {
+		// init account, author, and add manuscript as author
+		Author newAuth = new Author(myConference);
+		this.myAccountDatabase.saveNewAccountToDatabase(myAccount);
+		myAccount.addAuthorRoleToAccount(newAuth);
+		
+		Manuscript newManu = new Manuscript("New Manu Title", new Date(), myAccount.getMyAuthor(), new File(""), myConference);
+
+		try {
+			myAccount.getMyAuthor().addManuscript(this.myConference, newManu);
+			myAccount = this.myAccountDatabase.getAllAccounts().get(myAccount.getMyID());
+			assertTrue("account's list of conf ids should not be empty", this.myAccount.getMyAuthor().getMyListOfConferenceIDs().size() > 0);
+			assertTrue("Account's list of conference ids should contain temp conference id", this.myAccount.getMyAuthor().getMyListOfConferenceIDs().contains(myConference.getMyID()));
+			
+			assertTrue("Author should be associated with conference", this.myAccount.doesAuthorAssociatedWithConferenceExist(myConference));
+		} catch (Exception e) {
+			assertTrue("no exception should be thrown", e == null);
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
