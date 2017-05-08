@@ -112,11 +112,16 @@ public class Controller extends Observable implements Observer {
 				case CHOOSE_USER:
 					switch (pieces[0]) {
 						case UI.NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_MAIN_VIEW:
-							myAccount.addAuthorRoleToAccount(new Author(myAccount.getMyUsername(), myCurrentConference));
+							if (myAccount.getMyAuthor() == null) {
+								myAccount.addAuthorRoleToAccount(new Author(myAccount.getMyUsername(), myCurrentConference));
+							}
 							myCurrentState = AUTHOR;
 							break;
 						case UI.NOTIFY_CONTROLLER_TO_CHANGE_TO_SUBPROGRAM_CHAIR_MAIN_VIEW:
-							myAccount.addSubprogramChairRoleToAccount(new SubprogramChair(myCurrentConference));
+							if (myAccount.getMySubprogramChair() == null) {
+								//System.out.println("making new SPC");
+								myAccount.addSubprogramChairRoleToAccount(new SubprogramChair(myCurrentConference));
+							}
 							myCurrentState = SUBPROGRAM_CHAIR;
 							break;
 					}
@@ -222,19 +227,22 @@ public class Controller extends Observable implements Observer {
 					switch (myCurrentState % 10){
 	                    case ASSIGN_REVIEWER:
 	                    	//System.out.println("before");
-	                    	System.out.println(theNextState);
+	                    	//System.out.println(theNextState);
 	                    	//System.out.println("after");
-	                    	System.out.println(myCurrentConference == null);
-	                    	System.out.println(myCurrentConference.getPastReviewers() == null);
+	                    	//System.out.println(myCurrentConference == null);
+	                    	//System.out.println(myCurrentConference.getPastReviewers() == null);
 							myCurrentReviewer = findReviewer(theNextState, myCurrentConference.getPastReviewers());
-							System.out.println(myCurrentReviewer.getUsername());
+							//System.out.println(myCurrentReviewer.getUsername());
 	                        myCurrentState = SUBPROGRAM_CHAIR + ASSIGN_MANUSCRIPT;
 	                        setChanged();
 							notifyObservers(myCurrentState);
 	                        break;
 	                    case ASSIGN_MANUSCRIPT:
+	                    	//System.out.println(pieces[1]);
 	                    	UUID key = UUID.fromString(pieces[1]);
+	                    	//System.out.println(key.toString());
 	                    	myCurrentReviewer.assignManuscript(myManuscriptDatabase.getAllManuscripts().get(key));
+	                    	//System.out.println(myCurrentReviewer.getAssignedManuscriptList().get(0).getTitle());
 	                    	break;
 	                    case LIST_CONFERENCE_VIEW:
 	                    	//TreeMap<UUID, Conference> currentConferenceList = this.myConferenceDatabase.deserializeConferenceList();
@@ -408,28 +416,32 @@ public class Controller extends Observable implements Observer {
 	 */
 	private void setAccount (Account theNewAccount) {
 		if (myAccountDatabase.doesUsernameExistInDB(myAccountDatabase.getAllAccounts(), theNewAccount.getMyUsername())) {
+			//System.out.println("Account exists");
 			myAccount = theNewAccount;
 		} else {
+			//System.out.println("Account does not exist");
+
 			myAccountDatabase.saveNewAccountToDatabase(theNewAccount);
 			myAccount = theNewAccount;
 		}
 		//System.out.println("setting Account");
 		myAccountDatabase.updateAndSaveAccountToDatabase(myAccount);
-		printAccounts();
+		//System.out.println(myAccount.getMyUsername());
+		//printAccounts();
 	}
 	
 	
 	private void printAccounts () {
 		if (myAccountDatabase.getAllAccounts().size() < 1) {
-			//System.out.println();
-			//System.out.println("AccountDatabase is empty");
-			//System.out.println();
+			System.out.println();
+			System.out.println("AccountDatabase is empty");
+			System.out.println();
 		} else {
-			//System.out.println();
+			System.out.println();
 			for (Account ac : myAccountDatabase.getAllAccounts().values()) {
-				//System.out.println(ac.getMyUsername());
+				System.out.println(ac.getMyUsername());
 			}
-			//System.out.println();
+			System.out.println();
 		}
 	}
 	
@@ -453,9 +465,6 @@ public class Controller extends Observable implements Observer {
 		}
 		//System.out.println("setting Account");
 	//	myConferenceDatabase.updateAndSaveConferenceToDatabase(myCurrentConference);
-	//	System.out.println(myCurrentConference.getMyName());
-		
-		////System.out.println("at end: " + myCurrentConference);
 	}
 	
 	
@@ -475,7 +484,7 @@ public class Controller extends Observable implements Observer {
 		////System.out.println("received something in update");
 		////System.out.println(myCurrentConference);
 		if (arg1 instanceof String) {
-			System.out.println(arg1 == null);
+			//System.out.println(arg1 == null);
 			changeState ((String) arg1);
 		} else if (arg1 instanceof Account) {
 			setAccount((Account) arg1);
