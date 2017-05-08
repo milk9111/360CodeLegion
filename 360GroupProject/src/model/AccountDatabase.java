@@ -92,6 +92,7 @@ public class AccountDatabase implements Serializable {
 
 		boolean isUsernameUnique = isUsernameInListValid(accountList, theAccount.getMyUsername());
 	    if(isUsernameUnique) {
+	    	System.out.println("here");
 	    	accountList.put(theAccount.getMyID(), theAccount);
 	    	saveAccountListToDatabase(accountList);
 
@@ -129,12 +130,16 @@ public class AccountDatabase implements Serializable {
 	 */
 	public boolean isUsernameInListValid(TreeMap<UUID, Account> theAccountList, String theUsername) {
 		boolean UsernameIsUnique = true;
+		System.out.println("user name is valid");
 		for (Account aAccountToCompare : theAccountList.values()) {
+			System.out.println(aAccountToCompare.getMyUsername());
+			System.out.println(theUsername);
 			if (theUsername.equals(aAccountToCompare.getMyUsername())) {
 				UsernameIsUnique = false;
 			}
 		}
-		
+		System.out.println(UsernameIsUnique);
+		System.out.println();
 		return UsernameIsUnique;
 	}
 	

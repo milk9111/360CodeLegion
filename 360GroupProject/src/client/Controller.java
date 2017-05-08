@@ -111,7 +111,7 @@ public class Controller extends Observable implements Observer {
 				case CHOOSE_USER:
 					switch (pieces[0]) {
 						case UI.NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_MAIN_VIEW:
-							myAccount.addAuthorRoleToAccount(new Author(myCurrentConference));
+							myAccount.addAuthorRoleToAccount(new Author(myAccount.getMyUsername(), myCurrentConference));
 							myCurrentState = AUTHOR;
 							break;
 						case UI.NOTIFY_CONTROLLER_TO_CHANGE_TO_SUBPROGRAM_CHAIR_MAIN_VIEW:
@@ -134,7 +134,7 @@ public class Controller extends Observable implements Observer {
 							if(pieces[0].equals(UI.NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_SUBMIT_MANUSCRIPT_VIEW)){
 								manuscriptToSubmit = makeManuscript(pieces);
 								System.out.println(myCurrentConference);
-								try {
+								/*try {
 									if (myAccount.doesAuthorAssociatedWithConferenceExist(myCurrentConference)) {
 										(myAccount.getMyAuthor()).addManuscript(myCurrentConference, manuscriptToSubmit);
 									} else {
@@ -144,12 +144,18 @@ public class Controller extends Observable implements Observer {
 									
 								} catch (Exception e) {
 									e.printStackTrace();
-								}
+								}*/
 								
 								myCurrentConference.submitManuscript(manuscriptToSubmit);
 								myManuscriptDatabase.saveManuscriptToDatabase(manuscriptToSubmit);
 								
 								System.out.println(myManuscriptDatabase.getAllManuscripts().size());
+								for (Manuscript m : myManuscriptDatabase.getAllManuscripts().values()) {
+									for (UUID a : m.getAuthors()) {
+										System.out.println(a);
+									}
+								}
+								System.out.println(myAccount.getMyAuthor().getMyID());
 								System.out.println(myManuscriptDatabase.getManuscriptsBelongingToAuthor(myAccount.getMyAuthor()).size());
 								for (Manuscript m : myManuscriptDatabase.getManuscriptsBelongingToAuthor(myAccount.getMyAuthor())) {
 									System.out.println(m.getTitle());
@@ -248,6 +254,7 @@ public class Controller extends Observable implements Observer {
 		}
 
 		myAccountDatabase.updateAndSaveAccountToDatabase(myAccount);	/*final save of the account at the end of the state.*/
+		printAccounts();
 	}
 	
 	
@@ -343,15 +350,20 @@ public class Controller extends Observable implements Observer {
 
 			// Validate each username against the account database to see if a user already exists with that username
 			boolean usernameDoesNotExist = this.myAccountDatabase.isUsernameInListValid(currentAcctList, thePieces[i]);
-			
+			System.out.println(thePieces[i]);
 			if(usernameDoesNotExist) {
+				System.out.println("or here");
 				Author newAuthor = new Author(thePieces[i], this.myCurrentConference);
 				this.myAccount.addAuthorRoleToAccount(newAuthor);
 				this.myAccountDatabase.updateAndSaveAccountToDatabase(this.myAccount);
 				returnManuscript.addAuthor(new Author(thePieces[i], myCurrentConference));
 			} else {
+				System.out.println("in here");
 				Author existingAuthor = this.myAccountDatabase.getAccountByUsername(currentAcctList, thePieces[i]).getMyAuthor();
 				returnManuscript.addAuthor(existingAuthor);
+				System.out.println(existingAuthor.getMyID());
+				System.out.println(myAccount.getMyAuthor().getMyID());
+				System.out.println();
 			}
 		}
 		
@@ -370,10 +382,30 @@ public class Controller extends Observable implements Observer {
 	 */
 	private void setAccount (Account theNewAccount) {
 		if (myAccountDatabase.isUsernameInListValid(myAccountDatabase.getAllAccounts(), theNewAccount.getMyUsername())) {
-			myAccount = theNewAccount;
-		} else {
+			System.out.println("also here");
 			myAccountDatabase.saveNewAccountToDatabase(theNewAccount);
 			myAccount = theNewAccount;
+		} else {
+			
+			myAccount = myAccountDatabase.getAccountByUsername(myAccountDatabase.getAllAccounts(), theNewAccount.getMyUsername());
+		}
+		System.out.println("setting Account");
+		myAccountDatabase.updateAndSaveAccountToDatabase(myAccount);
+		printAccounts();
+	}
+	
+	
+	private void printAccounts () {
+		if (myAccountDatabase.getAllAccounts().size() < 1) {
+			System.out.println();
+			System.out.println("AccountDatabase is empty");
+			System.out.println();
+		} else {
+			System.out.println();
+			for (Account ac : myAccountDatabase.getAllAccounts().values()) {
+				System.out.println(ac.getMyUsername());
+			}
+			System.out.println();
 		}
 	}
 	
