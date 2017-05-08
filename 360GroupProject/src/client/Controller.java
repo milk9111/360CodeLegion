@@ -98,7 +98,7 @@ public class Controller extends Observable implements Observer {
 //test print
 //		System.out.println("In controller changeState: " +theNextState);
 
-		System.out.println("Current state: " + myCurrentState);
+		//System.out.println("Current state: " + myCurrentState);
 		
 		String[] pieces = theNextState.split(",");
 		if (myCurrentState < 0) {
@@ -141,11 +141,11 @@ public class Controller extends Observable implements Observer {
 	                        //System.out.println(pieces[0]);
 							if(pieces[0].equals("Submit Manuscript")){
 								//System.out.println("in submit manuscript inner");
-								System.out.println(theNextState);
+								//System.out.println(theNextState);
 								manuscriptToSubmit = makeManuscript(pieces);
 								
 								try {
-									if (myAccount.doesAutorAssociatedWithConferenceExist(myCurrentConference)) {
+									if (myAccount.doesAuthorAssociatedWithConferenceExist(myCurrentConference)) {
 										(myAccount.getAuthorAssociatedWithConference(myCurrentConference)).addManuscript(myCurrentConference, manuscriptToSubmit);
 									} else {
 										//System.out.println(myAccount.getAuthorAssociatedWithConference(myCurrentConference).getMyAssociatedConference());
@@ -182,7 +182,7 @@ public class Controller extends Observable implements Observer {
 								//System.out.println(myAccount.getAllConferencesAssociatedWithMyAuthorList(currentConferenceList));
 								myCurrentConference = findConference(theNextState, 
 										myAccount.getAllConferencesAssociatedWithMyAuthorList(currentConferenceList));
-								System.out.println("This is the current conference: " + myCurrentConference);
+								//System.out.println("This is the current conference: " + myCurrentConference);
 								myCurrentState = AUTHOR + USER_OPTIONS;
 								setChanged();
 								notifyObservers(myCurrentState);
@@ -214,7 +214,7 @@ public class Controller extends Observable implements Observer {
 					switch (myCurrentState % 10){
 	                    case ASSIGN_REVIEWER:
 	                    	//test print
-	    					System.out.println("in ASSIGN_REVIEWER");
+	    					//System.out.println("in ASSIGN_REVIEWER");
 
 							myCurrentReviewer = findReviewer(theNextState, myCurrentConference.getPastReviewers());
 	
