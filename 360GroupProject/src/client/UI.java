@@ -45,21 +45,19 @@ public class UI extends Observable implements Observer{
 	public static final int ASSIGN_REVIEWER = 4;
 	public static final int LIST_ASSIGNED_REVIEWERS_VIEW = 5;
 
-
-	//private int myState;
 	private String myUserType;
 	private String myUserName;
-	//private User myUser;
 	private Scanner myScanner;
 	private String myUserChoice;
 	private Account myAccount;
 
 	public UI() {
-		//myState = 0;
+		
 		myUserType = "";
 		myUserName = "";
 		myUserChoice = "";
 		myScanner = new Scanner(System.in);
+		
 	}
 
 	/**
@@ -78,7 +76,6 @@ public class UI extends Observable implements Observer{
 		myAccount = new Account(myUserName);
 		setChanged();
 		notifyObservers(myAccount);
-		//myState = LOG_IN_STATE;
 		setChanged();
 		notifyObservers("LOG_IN_STATE");
 
@@ -131,17 +128,15 @@ public class UI extends Observable implements Observer{
 	 * 
 	 */
 	public void changeState(int theState) {
-		//test print
-//		System.out.println("UI changeState method.");
-//		System.out.println("UI changeState method: theState: " +theState);
 
 		if (theState == LOG_IN_STATE){
 			login();
 		}
 
 		if (theState == CHOOSE_USER) {
-//			System.out.println("UI changeState method CHOOSE_USER");
+			
 			chooseUserTypeMenuView();
+		
 		}
 
 		if (theState >=0 && theState < 10) {
@@ -150,15 +145,6 @@ public class UI extends Observable implements Observer{
 			displayHeader();
 
 			switch (theState) {
-			//I don't think we want these cases inside the Author block.  A user is not an Author until after
-			// they choose from chooserUserTypeMenu
-			//			case LOG_IN_STATE:
-			//				login();
-			//				break;
-			//				
-			//			case CHOOSE_USER:
-			//				chooseUserTypeMenuView();
-			//				break;
 
 			case AUTHOR:
 
@@ -176,6 +162,7 @@ public class UI extends Observable implements Observer{
 				break;
 
 			case LIST_CONFERENCE_VIEW:
+				
 				ListOfConferenceView();
 				break;
 
@@ -186,8 +173,6 @@ public class UI extends Observable implements Observer{
 
 			setUserType("SubProgram Chair");
 			displayHeader();
-			//test print
-//			System.out.println("UI changeState in SPC block: " +theState);
 
 			switch (theState % 20) {
 
@@ -204,8 +189,7 @@ public class UI extends Observable implements Observer{
 			break;
 
 			case (ASSIGN_REVIEWER):
-				//test print
-//				System.out.println("In UI changeState: Case ASSIGN_REVIEWER");
+
 			subProgramChairAssignReviewerView(); 
 			break;
 
@@ -248,10 +232,11 @@ public class UI extends Observable implements Observer{
 	 */
 	private void AuthorView() {
 
-		System.out.println("Author Main Page:");
+		System.out.println("Author Main Page:\n");
 		System.out.println("1 - Submit new Manuscript.");
 		System.out.println("2 - View currently submitted Manuscripts.");
 		System.out.println("3 - View current list of Conferences.");
+		System.out.print("Please enter choice: ");
 		myUserChoice = myScanner.next();
 
 		if (myUserChoice.equals("1")) {
@@ -299,24 +284,24 @@ public class UI extends Observable implements Observer{
 		String moreAuthors = "";
 		List<String> listOfAuthors = new ArrayList<String>();
 		String ManuscriptFilePath;
-		System.out.println("Manuscript Submission Page");
-		System.out.println("Please enter title of Manuscript: ");
+		System.out.println("Manuscript Submission Page: \n");
+		System.out.print("Please enter title of Manuscript: ");
 		manuscriptTile = myScanner.next();
 
 		while (!moreAuthors.equals("0")) {
 
-			System.out.println("Please Enter name of Author or CoAuthor for Manuscript or \"0\" when done: ");
+			System.out.print("Please Enter name of Author or CoAuthor for Manuscript or \"0\" when done: ");
 			moreAuthors = myScanner.next();
 
 			if (!moreAuthors.equals("0")) {
 
-				listOfAuthors.add(myScanner.next());
+				listOfAuthors.add(moreAuthors);
 
 			} 
 
 		}
 
-		System.out.println("Please Enter file path of Manuscript: ");
+		System.out.print("Please Enter file path of Manuscript: ");
 		ManuscriptFilePath = myScanner.next();	
 
 		for (int i = 0; i < listOfAuthors.size(); i++) {
@@ -475,8 +460,34 @@ public class UI extends Observable implements Observer{
 		}
 		
 		System.out.print("Please enter choice: ");
-
+		
+		while (!myScanner.hasNextInt()) {
+			
+			myScanner.next();
+			System.out.println("Invalid choice, please select from the options displayed");
+			System.out.print("Please enter choice: ");
+			
+		}
+		
 		conferenceChoice = myScanner.nextInt();
+		
+		while (conferenceChoice < 1 || conferenceChoice > listOfConferences.length) {
+			
+			System.out.println("Invalid choice, please select from the options displayed");
+			System.out.print("Please enter choice: ");
+			
+			while (!myScanner.hasNextInt()) {
+				
+				myScanner.next();
+				System.out.println("Invalid choice, please select from the options displayed");
+				System.out.print("Please enter choice: ");
+				
+			}
+			
+			conferenceChoice = myScanner.nextInt();
+			
+		}
+		
 		setChanged();
 		notifyObservers(listOfConferences[conferenceChoice - 1]);
 		setChanged();
@@ -489,32 +500,36 @@ public class UI extends Observable implements Observer{
 	 * 
 	 * @author Morgan Blackmore
 	 */
-	private void subProgramChairView(){
-		System.out.println("SubProgram Chair Options");
+	private void subProgramChairView() {
+		
+		System.out.println("SubProgram Chair Page:\n");
 		System.out.println("1 - Assign a Reviewer");
 		System.out.println("2 - Select a Conference");
 		System.out.println("3 - Select a Manuscript");
 		myUserChoice = myScanner.next();
 
-		switch (myUserChoice){
+		switch (myUserChoice) {
+		
 		case ("1"):
+			
 			setChanged();
-		notifyObservers("ASSIGN_REVIEWER"); 
-		break;
+			notifyObservers("ASSIGN_REVIEWER"); 
+			break;
+			
 		case ("2"):
+			
 			setChanged();
-		notifyObservers("LIST_CONFERENCE_VIEW"); 
-		break;
+			notifyObservers("LIST_CONFERENCE_VIEW"); 
+			break;
+		
 		case ("3"):
 			setChanged();
-		notifyObservers("LIST_MANUSCRIPT_VIEW"); 
-		break;
+			notifyObservers("LIST_MANUSCRIPT_VIEW"); 
+			break;
+			
 		}
 
-
 	}
-
-
 
 	private void subProgramChairManuscriptsView() {
 		//make a call to database to get myAssignedManuscripts list from SPC
@@ -554,15 +569,14 @@ public class UI extends Observable implements Observer{
 		//take reviewer and store it
 		//send stored values to controller
 
-
-
 	}
 
-	public void removeListener(InvalidationListener listener) {
-
-	}
-
-
+	/**
+	 * Used to talk to the Controller while staying decoupled.
+	 * 
+	 * @author Casey Anderson
+	 */
+	@Override
 	public void update(Observable arg0, Object theArg) {
 
 		if (theArg instanceof Integer) {
