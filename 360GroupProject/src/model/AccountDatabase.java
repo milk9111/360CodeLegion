@@ -88,7 +88,7 @@ public class AccountDatabase implements Serializable {
 	 * @return A Account after it has been successfully saved to the database,
 	 * else return null if not possible
 	 */
-	public Account saveAccountToDatabase(Account theAccount) {
+	public Account saveNewAccountToDatabase(Account theAccount) {
 		TreeMap<UUID, Account> accountList = deserializeAccountList();
 
 		boolean isUsernameUnique = isUsernameInListValid(accountList, theAccount.getMyUsername());

@@ -374,7 +374,7 @@ public class Controller extends Observable implements Observer {
 		if (myAccountDatabase.isUsernameInListValid(myAccountDatabase.getAllAccounts(), theNewAccount.getMyUsername())) {
 			myAccount = theNewAccount;
 		} else {
-			myAccountDatabase.saveAccountToDatabase(theNewAccount);
+			myAccountDatabase.saveNewAccountToDatabase(theNewAccount);
 			myAccount = theNewAccount;
 		}
 	}
