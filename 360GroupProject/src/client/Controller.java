@@ -147,9 +147,8 @@ public class Controller extends Observable implements Observer {
 									}
 									
 								} catch (Exception e) {
-<<<<<<< HEAD
 									e.printStackTrace();
-								}*/							
+								}	*/						
 								
 								myCurrentConference.submitManuscript(manuscriptToSubmit);
 								myManuscriptDatabase.saveManuscriptToDatabase(manuscriptToSubmit);
