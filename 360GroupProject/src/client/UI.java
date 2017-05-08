@@ -16,6 +16,7 @@ import model.Conference;
 import model.ConferenceDatabase;
 import model.Manuscript;
 import model.ManuscriptDatabase;
+import model.Reviewer;
 
 /**
  * 
@@ -41,14 +42,15 @@ public class UI extends Observable implements Observer{
 	private Account myAccount;
 	private Conference mySelectedConference;
 	private Manuscript mySelectedManuscript;
-	
+	private Reviewer mySelectedReviewer;
+
 	public UI() {
-		
+
 		myUserType = "";
 		myUserName = "";
 		myUserChoice = "";
 		myScanner = new Scanner(System.in);
-		
+
 	}
 
 	/**
@@ -59,7 +61,7 @@ public class UI extends Observable implements Observer{
 	 * 
 	 */
 	private void login() {
-		
+
 
 		System.out.print("\nPlease enter a user name to log in: ");
 		myUserName = myScanner.next();
@@ -81,7 +83,6 @@ public class UI extends Observable implements Observer{
 	 */
 	private void chooseUserTypeMenuView() {
 
-		System.out.println("User Type Page:");
 		System.out.println("\nChoose what type of user you are");
 		System.out.println("1 - Author");
 		System.out.println("2 - SubProgram Chair");
@@ -89,16 +90,16 @@ public class UI extends Observable implements Observer{
 		myUserChoice = myScanner.next();
 
 		if (myUserChoice.equals("1")) {
-			
+
 			setChanged();
 			notifyObservers(NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_MAIN_VIEW);
 
 		}
 
 		else if (myUserChoice.equals("2")){
-			
+
 			setChanged();
-			notifyObservers("SUBPROGRAM_CHAIR"); 
+			notifyObservers(NOTIFY_CONTROLLER_TO_CHANGE_TO_SUBPROGRAM_CHAIR_MAIN_VIEW); 
 
 		} 
 
@@ -119,33 +120,35 @@ public class UI extends Observable implements Observer{
 	 * 
 	 */
 	public void changeState(int theState) {
+		//test print
+		System.out.println("UI changeState: theState:" + theState);
 
 		if (theState == Controller.LOG_IN_STATE){
 			login();
 		}
 
 		else if (theState == Controller.CHOOSE_USER) {
-			
+
 			chooseUserTypeMenuView();
-		
+
 		}
 
 		else if (theState == Controller.FAIL_AUTHOR_HAS_TO_MANY_MANUSCRIPTS) {
-			
+
 			authorHasToManySubmittedManuscriptsErrorView();
-		
+
 		}
 
 		else if (theState == Controller.FAIL_SUBMITED_PAST_DEADLINE) {
-			
+
 			ManuscriptDeadLinePastErrorView();
-		
+
 		}
 
 		else if (theState == Controller.FAIL_REVIEWER_IS_AUTHOR_ON_MANUSCRIPT) {
-			
+
 			ReviewerIsAuthorErrorView();
-		
+
 		}
 
 		else if (theState >=0 && theState < 10) {
@@ -161,53 +164,53 @@ public class UI extends Observable implements Observer{
 				break;
 
 			case Controller.SUBMIT_MANUSCRIPT:
-
+				
 				AuthorManuscriptSubmissionView();
 				break;
-
+				
 			case Controller.LIST_MANUSCRIPT_VIEW:
-
+				
 				AuthorListOfManuscriptsView();
 				break;
-
-			case Controller.LIST_CONFERENCE_VIEW:
 				
-				ListOfConferenceView();
+			case Controller.LIST_CONFERENCE_VIEW:	
+				
+				AuthorListOfConferenceView();
 				break;
-
 			}
 		} 
 
 		else if (theState >= 20){
-
-			setUserType("SubProgram Chair");
+			//test print
+			System.out.println("In SPC block of changeState:");
+			
+			setUserType("Subprogram Chair");
 			displayHeader();
-
-			switch (theState % 20) {
-
-
-			case (Controller.SUBPROGRAM_CHAIR):
-
-			subProgramChairView();
-			break;
-
-			case (Controller.LIST_CONFERENCE_VIEW):
-				subProgramChairConferenceView();
+			
+			if (theState == 20) {
+				subProgramChairView();
 				
+			} else {
+				switch (theState % 20) {
 
-			break;
+				case (Controller.LIST_CONFERENCE_VIEW):
+					
+					subProgramChairConferenceView();
+					break;
 
-			case (Controller.ASSIGN_REVIEWER):
+				case (Controller.ASSIGN_REVIEWER):
 
-			subProgramChairAssignReviewerView(); 
-			break;
+					subProgramChairAssignReviewerView(); 
+					break;
 
-			case(Controller.LIST_MANUSCRIPT_VIEW):
-				subProgramChairManuscriptsView();
-			break;
+				case(Controller.LIST_MANUSCRIPT_VIEW):
+					
+					subProgramChairManuscriptsView();
+					break;
 
-			}	
+				}	
 
+			}
 		}
 	}
 
@@ -431,40 +434,40 @@ public class UI extends Observable implements Observer{
 	 * @author Casey Anderson
 	 */
 	private void AuthorListOfManuscriptsView() {
-		
+
 		//int manuscriptChoice;
 		System.out.println("Manuscript List Page: ");
 		System.out.println(myAccount.getMyID());
 		System.out.println(myAccount.getMyAuthor());
 		ArrayList<Manuscript> manuscriptList = new ManuscriptDatabase().getManuscriptsBelongingToAuthor(myAccount.getMyAuthor());
-		
+
 		System.out.println("size of manu list" + manuscriptList.size());
 		for (int i = 0; i < manuscriptList.size(); i++) {
-			
+
 			System.out.println("" + (i + 1) + ". " + manuscriptList.get(i).getTitle());
-			
+
 		}
-		
+
 		System.out.println("Please enter \"1\" to go back to Authors main page");
 		System.out.print("Please enter choice: ");
 		myUserChoice = myScanner.next();
-		
+
 		if (myUserChoice.equals("1")) {
 			setChanged();
 			notifyObservers(NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_MAIN_VIEW);
 		}
-		
+
 		else {
-			
+
 			System.out.println("Invalid choice, please select from the options displayed");
 			AuthorListOfManuscriptsView();
-			
+
 		}
-		
+
 		//manuscriptChoice = myScanner.nextInt();
 		//setChanged();
 		//notifyObservers(manuscriptList.get(manuscriptChoice - 1));
-		
+
 	}
 
 	/**
@@ -472,7 +475,7 @@ public class UI extends Observable implements Observer{
 	 * 
 	 * @author Casey Anderson
 	 */
-	private void ListOfConferenceView() { 
+	private void AuthorListOfConferenceView() { 
 
 		int conferenceChoice;
 		System.out.println("Conference List Page:\n");
@@ -482,40 +485,40 @@ public class UI extends Observable implements Observer{
 		for (int i = 0; i < listOfConferences.length; i++) {
 
 			System.out.println("" + (i + 1) + " - " + listOfConferences[i].getMyName());
-			
+
 		}
-		
+
 		System.out.print("Please enter choice: ");
-		
+
 		while (!myScanner.hasNextInt()) {
-			
+
 			myScanner.next();
 			System.out.println("Invalid choice, please select from the options displayed");
 			System.out.print("Please enter choice: ");
-			
+
 		}
-		
+
 		conferenceChoice = myScanner.nextInt();
-		
+
 		while (conferenceChoice < 1 || conferenceChoice > listOfConferences.length) {
-			
+
 			System.out.println("Invalid choice, please select from the options displayed");
 			System.out.print("Please enter choice: ");
-			
+
 			while (!myScanner.hasNextInt()) {
-				
+
 				myScanner.next();
 				System.out.println("Invalid choice, please select from the options displayed");
 				System.out.print("Please enter choice: ");
-				
+
 			}
-			
+
 			conferenceChoice = myScanner.nextInt();
-			
+
 		}
 		//
 		mySelectedConference =  new ConferenceDatabase().getSingleConference(listOfConferences[conferenceChoice - 1].getMyID());
-				
+
 		setChanged();
 		notifyObservers(listOfConferences[conferenceChoice - 1]);
 		setChanged();
@@ -529,32 +532,29 @@ public class UI extends Observable implements Observer{
 	 * @author Morgan Blackmore
 	 */
 	private void subProgramChairView() {
-		
-		System.out.println("SubProgram Chair Page:\n");
+
+		System.out.println("You selected: " + mySelectedConference.getMyName() + "\n");
+		System.out.println("What would you like to do next?");
 		System.out.println("1 - Assign a Reviewer");
-		System.out.println("2 - Select a Conference");
-		System.out.println("3 - Select a Manuscript");
+		System.out.println("2 - View a Manuscript");
+
 		myUserChoice = myScanner.next();
 
 		switch (myUserChoice) {
-		
+
 		case ("1"):
-			
+
 			setChanged();
 			notifyObservers("ASSIGN_REVIEWER"); 
 			break;
-			
+
 		case ("2"):
-			
+
 			setChanged();
-			notifyObservers(NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_CONFERENCE_LIST_VIEW); 
+			notifyObservers("LIST_MANUSCRIPT_VIEW"); 
 			break;
-		
-		case ("3"):
-			setChanged();
-			notifyObservers(NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_MANUSCRIPT_LIST_VIEW); 
-			break;
-			
+
+
 		}
 
 	}
@@ -562,9 +562,9 @@ public class UI extends Observable implements Observer{
 	private void subProgramChairManuscriptsView() {
 		ArrayList<Manuscript> manuscriptList = new ManuscriptDatabase().getManuscriptsBelongingToAuthor(myAccount.getMyAuthor());
 		for (int i = 0; i < manuscriptList.size(); i++) {
-			
+
 			System.out.println("" + (i + 1) + " - " + manuscriptList.get(i).getTitle());
-			
+
 		}
 		//make a call to database to get myAssignedManuscripts list from SPC
 		//display index + 1 and Manuscript title 
@@ -576,7 +576,7 @@ public class UI extends Observable implements Observer{
 	 * Calls db to get conference list for subprogramChair
 	 */
 	private void subProgramChairConferenceView() {
-		System.out.println("To assign a reviewer, first select a conference from the list below:\n");
+		System.out.println("Select a conference from the list below:\n");
 
 		int conferenceChoice;
 		TreeMap<UUID, Conference> conferenceMap = new ConferenceDatabase().getAllConferences();
@@ -585,40 +585,40 @@ public class UI extends Observable implements Observer{
 		for (int i = 0; i < listOfConferences.length; i++) {
 
 			System.out.println("" + (i + 1) + " - " + listOfConferences[i].getMyName());
-			
+
 		}
-		
+
 		System.out.print("Please enter choice: ");
-		
+
 		while (!myScanner.hasNextInt()) {
-			
+
 			myScanner.next();
 			System.out.println("Invalid choice, please select from the options displayed");
 			System.out.print("Please enter choice: ");
-			
+
 		}
-		
+
 		conferenceChoice = myScanner.nextInt();
-		
+
 		while (conferenceChoice < 1 || conferenceChoice > listOfConferences.length) {
-			
+
 			System.out.println("Invalid choice, please select from the options displayed");
 			System.out.print("Please enter choice: ");
-			
+
 			while (!myScanner.hasNextInt()) {
-				
+
 				myScanner.next();
 				System.out.println("Invalid choice, please select from the options displayed");
 				System.out.print("Please enter choice: ");
-				
+
 			}
-			
+
 			conferenceChoice = myScanner.nextInt();
-			
+
 		}
-		
+
 		mySelectedConference =  new ConferenceDatabase().getSingleConference(listOfConferences[conferenceChoice - 1].getMyID());
-				
+
 		setChanged();
 		notifyObservers(listOfConferences[conferenceChoice - 1]);
 		setChanged();
@@ -632,6 +632,30 @@ public class UI extends Observable implements Observer{
 	 * Walks User through the process of selecting conference, manuscript, and reviewer then sends info to controller
 	 */
 	private void subProgramChairAssignReviewerView() {
+		int reviewerChoice;
+		System.out.println("You chose to assign a Reviewer");
+
+		Reviewer[] reviewerArray = mySelectedConference.getPastReviewers().toArray(new Reviewer[mySelectedConference.getPastReviewers().size()]);
+		
+		for (int i = 0; i < reviewerArray.length; i++) {
+
+			System.out.println("" + (i + 1) + " - " + reviewerArray[i].getUsername());
+
+		}
+		
+		System.out.println("Please choose one from the list above:");
+		
+		reviewerChoice = myScanner.nextInt()-1;
+		
+		mySelectedReviewer = reviewerArray[reviewerChoice];
+		
+		System.out.println(mySelectedReviewer.getUsername());
+		
+		setChanged();
+		notifyObservers(mySelectedReviewer);
+		
+		
+		
 		//make a call to database to get myAssignedConferences for SPC
 		//display index and conference title
 		//take users input and store it
