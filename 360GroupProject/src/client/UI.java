@@ -586,7 +586,7 @@ public class UI extends Observable implements Observer{
 	private void subProgramChairManuscriptsView() {
 		int manuscriptChoice = 0;
 		ArrayList<Manuscript> manuscriptList = (ArrayList<Manuscript>) myAccount.getMySubprogramChair().getManuscripts();
-		System.out.println("Choose a Manuscript!");
+		System.out.println("Choose a Manuscript");
 		//System.out.println(new ManuscriptDatabase().getAllManuscripts().size());
 		//System.out.println(manuscriptList.size());
 		for (int i = 0; i < manuscriptList.size(); i++) {
