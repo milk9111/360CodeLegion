@@ -3,6 +3,7 @@ import model.AccountDatabase;
 import model.Author;
 import model.Conference;
 import model.Manuscript;
+import model.ManuscriptDatabase;
 import model.Reviewer;
 import model.User;
 
@@ -33,6 +34,7 @@ public class AuthorTest {
 	private Author myCoAuthor;
 	private Conference myConference;
 	private AccountDatabase myAccountDatabase;
+	private ManuscriptDatabase myManuscriptDatabase;
 	// ID of Authors
 	private ArrayList<UUID> myListOfAuthors;
 	// Key: Account ID, Value: Account Obj
@@ -45,7 +47,9 @@ public class AuthorTest {
 	@Before
 	public void setUp() {
 		myAccountDatabase = new AccountDatabase();
+		myManuscriptDatabase = new ManuscriptDatabase();
 		myAccountDatabase.createEmptySerializedAccountList();
+		myManuscriptDatabase.createEmptySerializedManuscriptList();
 		myAccount = new Account("Chase");
 		myCoAuthAccount = new Account("Steven");
 		myConference = new Conference("Alchemy Conference", new Date(), new Date());
@@ -55,6 +59,28 @@ public class AuthorTest {
 		myListOfAccountAuthors = new TreeMap<UUID, Account>();
 	}
 
+	
+	@Test
+	public void  addManuscript_withValidManuscript_shouldSaveToDB() {
+		// init user with Author and save to DB
+		this.myAccountDatabase.saveNewAccountToDatabase(myAccount);
+		myAccount.addAuthorRoleToAccount(myAuthor);
+		
+		assertTrue("account's author ID should be equal to temp author", myAccount.getMyAuthor().getMyID().equals(myAuthor.getMyID()));
+		
+		// init manuscript
+		Manuscript validManuscript = new Manuscript("All is gone", new Date(), myAuthor, new File("/C:/serializedModel/testFile.txt"));
+		try {
+			myAuthor.addManuscript(myConference, validManuscript);
+			
+			ArrayList<Manuscript> savedManuList = this.myManuscriptDatabase.getManuscriptsBelongingToAuthor(myAuthor);
+			assertTrue("Returned Manuscript should be 1, indicating the new manuscript was saved", savedManuList.size() > 0);
+		} catch (Exception e) {
+			e.printStackTrace();
+			assertTrue("No error message should exist", e.getMessage() == null);
+		}
+	}
+	
 	/**
 	 * @author Casey Anderson
 	 * Test to add review to an Author.

@@ -101,7 +101,7 @@ public class SubprogramChair extends User implements Serializable {
      * @return
      */
     public HashMap<UUID, HashSet<UUID>> getMyAssignedManuscriptsMap() {
-    	return this.getMyAssignedManuscriptsMap();
+    	return (HashMap<UUID, HashSet<UUID>>) this.myAssignedManuscripts;
     }
 
     /**

@@ -90,12 +90,10 @@ public class AccountDatabase implements Serializable {
 	public Account saveNewAccountToDatabase(Account theAccount) {
 		TreeMap<UUID, Account> accountList = deserializeAccountList();
 
-		boolean isUsernameUnique = isUsernameInListValid(accountList, theAccount.getMyUsername());
-	    if(isUsernameUnique) {
-	    	System.out.println("here");
+		boolean usernameExists = doesUsernameExistInDB(accountList, theAccount.getMyUsername());
+	    if(!usernameExists) {
 	    	accountList.put(theAccount.getMyID(), theAccount);
 	    	saveAccountListToDatabase(accountList);
-
 	    } else {
 	    	System.out.println("Username is invalid");
 	    }
@@ -128,19 +126,16 @@ public class AccountDatabase implements Serializable {
 	 * @param theUsername the Account
 	 * @return
 	 */
-	public boolean isUsernameInListValid(TreeMap<UUID, Account> theAccountList, String theUsername) {
-		boolean UsernameIsUnique = true;
-		System.out.println("user name is valid");
+	public boolean doesUsernameExistInDB(TreeMap<UUID, Account> theAccountList, String theUsername) {
+		boolean usernameExistsInDB = false;
 		for (Account aAccountToCompare : theAccountList.values()) {
 			System.out.println(aAccountToCompare.getMyUsername());
 			System.out.println(theUsername);
 			if (theUsername.equals(aAccountToCompare.getMyUsername())) {
-				UsernameIsUnique = false;
+				usernameExistsInDB = true;
 			}
 		}
-		System.out.println(UsernameIsUnique);
-		System.out.println();
-		return UsernameIsUnique;
+		return usernameExistsInDB;
 	}
 	
 	/**

@@ -181,8 +181,12 @@ public class Author extends User implements Serializable {
 	 * @return An Integer representing how many manuscripts the Author has already submitted.
 	 */
 	public int getNumberOfManuscriptsSubmitted(Conference theConference) {
-		
-		return myManuscriptList.get(theConference.getMyID()).size();
+		int returnSize = 0;
+		if(myManuscriptList.get(theConference.getMyID()) != null) {
+			returnSize = myManuscriptList.get(theConference.getMyID()).size();
+		}
+
+		return returnSize;
 	
 	}
 	
