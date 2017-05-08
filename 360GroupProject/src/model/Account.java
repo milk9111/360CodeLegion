@@ -51,7 +51,7 @@ public class Account implements Serializable {
     }
     
 
-    public Author getMyAuthorList() {
+    public Author getMyAuthor() {
         return this.myAuthor;
     }
 
