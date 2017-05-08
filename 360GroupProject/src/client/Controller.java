@@ -143,7 +143,7 @@ public class Controller extends Observable implements Observer {
 								//System.out.println("in submit manuscript inner");
 								//System.out.println(theNextState);
 								manuscriptToSubmit = makeManuscript(pieces);
-								
+								System.out.println(myCurrentConference);
 								try {
 									if (myAccount.doesAuthorAssociatedWithConferenceExist(myCurrentConference)) {
 										(myAccount.getAuthorAssociatedWithConference(myCurrentConference)).addManuscript(myCurrentConference, manuscriptToSubmit);
@@ -180,8 +180,10 @@ public class Controller extends Observable implements Observer {
 								TreeMap<UUID, Conference> currentConferenceList = this.myConferenceDatabase.deserializeConferenceList();
 								//System.out.println(currentConferenceList.values());
 								//System.out.println(myAccount.getAllConferencesAssociatedWithMyAuthorList(currentConferenceList));
+								System.out.println(myCurrentConference.getMyName());
 								myCurrentConference = findConference(theNextState, 
 										myAccount.getAllConferencesAssociatedWithMyAuthorList(currentConferenceList));
+								System.out.println(myCurrentConference.getMyName());
 								//System.out.println("This is the current conference: " + myCurrentConference);
 								myCurrentState = AUTHOR + USER_OPTIONS;
 								setChanged();
@@ -301,7 +303,11 @@ public class Controller extends Observable implements Observer {
 	 * @version 5/6/2017
 	 */
     private Conference findConference(String theNextState, List<Conference> conferenceList) {
+    	System.out.println(conferenceList.size());
+    	System.out.println();
 	    for(Conference c: conferenceList){
+	    	System.out.println(c.getMyName());
+	    	System.out.println(theNextState);
 	        if(theNextState.contains(c.getMyName())){
 	            return c;
             }
@@ -386,9 +392,9 @@ public class Controller extends Observable implements Observer {
 	 */
 	public void setConference (Conference theNewConference) {
 		if (!myConferenceDatabase.isConferenceInListUnique(myConferenceDatabase.getAllConferences(), theNewConference)) {
-			//System.out.println("Found an old conference");
+			System.out.println("Found an old conference");
 			myCurrentConference = theNewConference;
-			//System.out.println(myCurrentConference.getMyName());
+			System.out.println(myCurrentConference.getMyName());
 		} else {
 			//System.out.println("made a new conference");
 			myConferenceDatabase.saveConferenceToDatabase(theNewConference);

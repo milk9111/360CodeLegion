@@ -76,7 +76,6 @@ public class Account implements Serializable {
      */
     public boolean doesAuthorAssociatedWithConferenceExist(Conference theConference) {
     	boolean isAuthorAssociated = false;
-    	
     	isAuthorAssociated = this.myAuthor.isConferenceAssociatedWithAuthor(theConference);
     	
     	return isAuthorAssociated;
