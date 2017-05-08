@@ -51,8 +51,17 @@ public class AccountTest {
 	 * Test method for {@link model.Account#addAuthorRoleToAccount(model.Author)}.
 	 */
 	@Test
-	public void testAddAuthorRoleToAccount() {
-		fail("Not yet implemented");
+	public void testAddAuthorRoleToAccount_forValidAuthor_shouldSucceed() {
+		Author newAuth = new Author(myConference);
+		myAccountDatabase.saveNewAccountToDatabase(myAccount);
+		myAccount.addAuthorRoleToAccount(newAuth);
+		
+		// check if account's author is updated
+		assertTrue(myAccount.getMyAuthor().getMyID().equals(newAuth.getMyID()));
+
+		// retreieve account from DB and compare authors
+		Account acctFromDB = myAccountDatabase.getAllAccounts().get(myAccount.getMyID());
+		assertTrue(acctFromDB.getMyAuthor().getMyID().equals(newAuth.getMyID()));
 	}
 
 	/**
@@ -92,7 +101,7 @@ public class AccountTest {
 		
 		// save conferences to database
 		for(Conference aConf : confList) {
-			this.myAccount.addSubprogramChairRoleToAccount(new SubprogramChair(aConf), aConf);
+			this.myAccount.addSubprogramChairRoleToAccount(new SubprogramChair(aConf));
 			this.myConferenceDatabase.saveConferenceToDatabase(aConf);
 		}
 		
