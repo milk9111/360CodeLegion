@@ -21,6 +21,7 @@ import model.ConferenceDatabase;
 import model.Manuscript;
 import model.ManuscriptDatabase;
 import model.Reviewer;
+import model.SubprogramChair;
 
 /**
  * 
@@ -223,6 +224,9 @@ public class UI extends Observable implements Observer{
 				case(Controller.ASSIGN_MANUSCRIPT):
 					
 					subProgramChairManuscriptsView();
+					break;
+				case(Controller.LIST_MANUSCRIPT_VIEW):
+					subProgramChairAssignedManuscriptsView();
 					break;
 
 				}	
@@ -618,12 +622,50 @@ public class UI extends Observable implements Observer{
 			manuscriptChoice = myScanner.nextInt();
 
 		}
-		System.out.println((manuscriptList.get(manuscriptChoice - 1).getTitle()));
+		//System.out.println((manuscriptList.get(manuscriptChoice - 1).getTitle()));
 		setChanged();
 		notifyObservers("ASSIGN_MANUSCRIPT," + manuscriptList.get(manuscriptChoice - 1).getMyID());
 	}
 	
 	
+	private void subProgramChairAssignedManuscriptsView() {
+			System.out.println("Manuscript List Page: ");
+			ArrayList<Manuscript> manuscriptList = myAccount.getMySubprogramChair().getManuscripts();
+			SubprogramChair spcForThisAccount = myAccount.getMySubprogramChair();
+			System.out.println("Number of Manuscripts submitted - " + manuscriptList.size());
+
+			for (int i = 0; i < manuscriptList.size(); i++) {
+
+				System.out.print("" + (i + 1) + ". " + manuscriptList.get(i).getTitle() + " -> ");
+				 printReviewers(spcForThisAccount.getReviewerListForManuscript(i));
+
+			}
+
+			System.out.println("Please enter \"1\" to go back to Subprogram Chair main page");
+			System.out.print("Please enter choice: ");
+			myUserChoice = myScanner.next();
+
+			if (myUserChoice.equals("1")) {
+				setChanged();
+				notifyObservers(NOTIFY_CONTROLLER_TO_CHANGE_TO_SUBPROGRAM_CHAIR_MAIN_VIEW);
+			}
+
+			else {
+
+				System.out.println("Invalid choice, please select from the options displayed");
+				AuthorListOfManuscriptsView();
+
+			}
+	}
+	
+	
+	private void printReviewers (List<Reviewer> theReviewers) {
+		System.out.print("{" + theReviewers.get(0));
+		for (int i = 1; i < theReviewers.size(); i++) {
+			System.out.print(" " + theReviewers.get(i));
+		}
+		System.out.print("}\n");
+	}
 
 	/**
 	 * Calls db to get conference list for subprogramChair

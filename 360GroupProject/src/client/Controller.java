@@ -62,7 +62,7 @@ public class Controller extends Observable implements Observer {
 		myAccount = new Account(null);
 		myCurrentConference = new Conference(null, null, null, null);
 		myCurrentManuscript = new Manuscript();
-		myCurrentReviewer = new Reviewer(null, null, null);
+		myCurrentReviewer = new Reviewer("", null);
 		myAccountDatabase = new AccountDatabase();
 		myAccountDatabase.createEmptySerializedAccountList();
 		myManuscriptDatabase = new ManuscriptDatabase();
@@ -242,7 +242,12 @@ public class Controller extends Observable implements Observer {
 	                    	UUID key = UUID.fromString(pieces[1]);
 	                    	//System.out.println(key.toString());
 	                    	myCurrentReviewer.assignManuscript(myManuscriptDatabase.getAllManuscripts().get(key));
+	                    	myAccount.getMySubprogramChair().addReviewer(myCurrentReviewer, myAccount.getMySubprogramChair()
+	                    			.findManuscriptPos(myManuscriptDatabase.getAllManuscripts().get(key)));
+	                    	myCurrentState = SUBPROGRAM_CHAIR + LIST_MANUSCRIPT_VIEW;
 	                    	//System.out.println(myCurrentReviewer.getAssignedManuscriptList().get(0).getTitle());
+	                    	setChanged();
+	                    	notifyObservers(myCurrentState);
 	                    	break;
 	                    case LIST_CONFERENCE_VIEW:
 	                    	//TreeMap<UUID, Conference> currentConferenceList = this.myConferenceDatabase.deserializeConferenceList();

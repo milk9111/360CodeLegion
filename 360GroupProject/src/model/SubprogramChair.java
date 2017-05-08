@@ -30,6 +30,14 @@ public class SubprogramChair extends User implements Serializable {
      * @author Connor Lundberg
      */
     private ArrayList<Manuscript> myManuscripts;
+    
+    /**
+     * This follows the same logic as above. I don't understand the map, so this
+     * is simple a list of lists because a manuscript can have more than one reviewer.
+     * 
+     * @author Connor Lundberg
+     */
+    private ArrayList<ArrayList<Reviewer>> myReviewers;
 
 
     /**
@@ -77,6 +85,51 @@ public class SubprogramChair extends User implements Serializable {
      */
     public ArrayList<Manuscript> getManuscripts () {
     	return myManuscripts;
+    }
+    
+    
+    /**
+     * Adds a reviewer to the reviewers list given the specified manuscript list position.
+     * 
+     * @param theReviewer The reviewer to add
+     * @param theManuscriptListPos The position in the assigned manuscripts list
+     * @author Connor Lundberg
+     * @version 5/8/2017
+     */
+    public void addReviewer (Reviewer theReviewer, int theManuscriptListPos) {
+    	myReviewers.get(theManuscriptListPos).add(theReviewer);
+    }
+    
+    
+    /**
+     * Returns the reviewer list for the specified manuscript list position. This is
+     * assuming the position provided is within the ArrayList.
+     * 
+     * @param theManuscriptListPos The manuscript reviewers position to retrieve
+     * @return The manuscript reviewers
+     * @author Connor Lundberg
+     * @version 5/8/2017
+     */
+    public ArrayList<Reviewer> getReviewerListForManuscript (int theManuscriptListPos) {
+    	return myReviewers.get(theManuscriptListPos);
+    }
+    
+    
+    /**
+     * Finds the position of the manuscript inside the assigned manuscripts list if it's
+     * there.
+     * 
+     * @param theManuscriptToFind The requested manuscript
+     * @return The manuscript position in the list, -1 otherwise.
+     */
+    public int findManuscriptPos (Manuscript theManuscriptToFind) {
+    	int manuscriptPos = -1;
+    	for (int i = 0; i < myManuscripts.size(); i++) {
+    		if (myManuscripts.get(i).getMyID().equals(theManuscriptToFind.getMyID())) {
+    			manuscriptPos = i;
+    		}
+    	}
+    	return manuscriptPos;
     }
     
     /**
