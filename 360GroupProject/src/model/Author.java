@@ -134,6 +134,8 @@ public class Author extends User implements Serializable {
 			// iterate through all valid accoutns and check for an existing conference key
 			for(Account anAcct : validAccts) {
 				if(anAcct.getMyAuthor().doesConferenceKeyExistForMyManuscriptList(theConference)) {
+					
+					System.out.println("Saving Manuscript to DB and Updating Account in DB...");
 					anAcct.getMyAuthor().addManuscriptExistingConferenceToManuscriptList(theManuscript, theConference);
 					theAccountDatabase.updateAndSaveAccountToDatabase(anAcct);
 					theManuscriptDatabase.saveManuscriptToDatabase(theManuscript);
