@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.UUID;
@@ -200,10 +201,33 @@ public class AccountDatabase implements Serializable {
 	      }
 	   }
 	
+	/**
+	 * Returns a list of all accounts with a Reviewer object initiated
+	 * @return
+	 */
+	public ArrayList<Reviewer> getListOfAllReviewers() {
+		ArrayList<Reviewer> listToReturn = new ArrayList<Reviewer>();
+		TreeMap<UUID, Account> accountList = deserializeAccountList();
+		// check for empty db of accounts
+		if(accountList.size() == 0) {
+			return null;
+		}
+		
+		for(Account anAcct : accountList.values()) {
+			if(anAcct.getMyReviewer() != null) {
+				listToReturn.add(anAcct.getMyReviewer());
+			}
+		}
+		
+		return listToReturn;
+		
+	}
+	
 	public void printContents() {
 		TreeMap<UUID, Account> currentList = deserializeAccountList();
 		for (Map.Entry<UUID, Account> entry : currentList.entrySet()) {
 		     System.out.println("ID: " + entry.getKey() + ". Value: " + entry.getValue().getMyUsername());
 		}
 	}
+	
 }

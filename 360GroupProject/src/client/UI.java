@@ -128,7 +128,7 @@ public class UI extends Observable implements Observer{
 	 */
 	public void changeState(int theState) {
 		//test print
-		System.out.println("UI changeState: theState:" + theState);
+	//	System.out.println("UI changeState: theState:" + theState);
 
 		if (theState == Controller.LOG_IN_STATE){
 			login();
@@ -668,21 +668,12 @@ public class UI extends Observable implements Observer{
 		System.out.println("You selected " + mySelectedReviewer.getUsername());
 	//	setChanged();
 	//	notifyObservers(mySelectedReviewer.getUsername());
-		setChanged();
-		notifyObservers("LIST_REVIEWERS_VIEW" + "," + mySelectedReviewer.getUsername() );
+	//	setChanged();
+//	notifyObservers("LIST_MANUSCRIPT_VIEW" + "," + mySelectedReviewer.getUsername() );
 		
 		
 		
-		//make a call to database to get myAssignedConferences for SPC
-		//display index and conference title
-		//take users input and store it
-		//call database to get manuscripts for the stored conference
-		//display manuscripts
-		//take manuscript and store it
-		//call database for list of reviewers
-		//display reviewers
-		//take reviewer and store it
-		//send stored values to controller
+
 
 	}
 

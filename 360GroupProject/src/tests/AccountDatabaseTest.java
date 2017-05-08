@@ -1,5 +1,6 @@
 import static org.junit.Assert.*;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.TreeMap;
@@ -14,6 +15,8 @@ import model.Account;
 import model.AccountDatabase;
 import model.Author;
 import model.Conference;
+import model.Manuscript;
+import model.Reviewer;
 
 /**
  * 
@@ -26,6 +29,7 @@ import model.Conference;
 public class AccountDatabaseTest {
 
 	private AccountDatabase myAccountDatabase;
+	private Conference myConference;
 	
 	/**
 	 * @throws java.lang.Exception
@@ -34,6 +38,7 @@ public class AccountDatabaseTest {
 	public void setUp() throws Exception {
 		myAccountDatabase = new AccountDatabase();
 		myAccountDatabase.createEmptySerializedAccountList();
+		this.myConference = new Conference("RSA", new Date(), new Date());
 	}
 
 	/**
@@ -45,6 +50,43 @@ public class AccountDatabaseTest {
 		
 		assertTrue(validList instanceof TreeMap);
 		assertTrue(validList.size() == 0);
+	}
+	
+	@Test
+	public void getListOfAllReviewers_forDBWithReviewers_shouldReturnReviewers() {
+		// init and save accounts to db
+		Account newAcctA = new Account("Ryan");
+		Account newAcctB = new Account("Paul");
+		Account newAcctC = new Account("Steve");
+		
+		myAccountDatabase.saveNewAccountToDatabase(newAcctA);
+		myAccountDatabase.saveNewAccountToDatabase(newAcctB);
+		myAccountDatabase.saveNewAccountToDatabase(newAcctC);
+		
+		// init manuscripts and their authors
+		newAcctA.addAuthorRoleToAccount(new Author(this.myConference));
+		newAcctB.addAuthorRoleToAccount(new Author(this.myConference));
+		newAcctC.addAuthorRoleToAccount(new Author(this.myConference));
+		
+		Manuscript newManuA = new Manuscript("Manu a title", new Date(), newAcctA.getMyAuthor(), new File(""));
+		Manuscript newManuB = new Manuscript("Manu b title", new Date(), newAcctB.getMyAuthor(), new File(""));
+		Manuscript newManuC = new Manuscript("Manu c title", new Date(), newAcctC.getMyAuthor(), new File(""));
+		
+		// add reviewers to user and save them
+		Reviewer newReviewA = new Reviewer(newManuA, this.myConference);
+		Reviewer newReviewB = new Reviewer(newManuB, this.myConference);
+		Reviewer newReviewC = new Reviewer(newManuC, this.myConference);
+
+		newAcctA.setReviewer(newReviewA);
+		newAcctB.setReviewer(newReviewB);
+		newAcctC.setReviewer(newReviewC);
+		
+		
+		ArrayList<Reviewer> allReviewersList = myAccountDatabase.getListOfAllReviewers();
+		assertTrue(allReviewersList.size() == 3);
+		
+		newAcctA = myAccountDatabase.deserializeAccountList().get(newAcctA.getMyID());
+		assertTrue(newAcctA.getMyReviewer().getMyID().equals(newReviewA.getMyID()));
 	}
 
 	/**
