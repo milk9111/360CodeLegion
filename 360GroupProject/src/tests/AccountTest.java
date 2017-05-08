@@ -119,7 +119,7 @@ public class AccountTest {
 		}
 		
 		// save account to database
-		this.myAccountDatabase.saveAccountToDatabase(this.myAccount);
+		this.myAccountDatabase.saveNewAccountToDatabase(this.myAccount);
 		
 		// retrieve updated lists from database
 		TreeMap<UUID, Conference> confDBList = this.myConferenceDatabase.deserializeConferenceList();

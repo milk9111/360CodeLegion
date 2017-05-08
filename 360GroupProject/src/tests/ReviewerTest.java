@@ -101,7 +101,11 @@ public class ReviewerTest {
 
 		assertTrue("assignManuscript method should return true.", myTestReviewer.assignManuscript(myTestManuscript));
 		
+<<<<<<< HEAD
 		assertEquals("A successful assignment should increase assignedManuscriptList from 0 to 1", myTestReviewer.getMyAssignedManuscriptsAndConferenceList().size(), 1);
+=======
+		assertEquals("A successful assignment should increase assignedManuscriptList from 1 to 2", myTestReviewer.getMyAssignedManuscriptsAndConferenceList().size(), 2);
+>>>>>>> 9549e557d4925f820fcd682d7530c6605a3ab170
 
 	}
 	
@@ -117,12 +121,20 @@ public class ReviewerTest {
 		myTestManuscript.setAuthors(myAuthorList);
 		myManuscriptList.clear();
 		myManuscriptList.add(0, myTestManuscript);
+<<<<<<< HEAD
 		myTestReviewer = new Reviewer("Roger Ebert", new ArrayList<Conference>());
 		myTestReviewer.assignManuscript(myTestManuscript);
 		
 		assertFalse("Reviewer cannot be assigned a paper when is an author", myTestReviewer.assignManuscript(myTestManuscript));
 		
 		assertEquals("Reviewer AssignedManuscriptList should stay at 0",myTestReviewer.getMyAssignedManuscriptsAndConferenceList().size(), 0);
+=======
+		myTestReviewer = new Reviewer("Roger Ebert", (ArrayList<Conference>) myEmptyConferenceList);
+		
+		assertFalse("Reviewer cannot be assigned a paper when is an author", myTestReviewer.assignManuscript(myTestManuscript));
+		
+		assertEquals("Reviewer AssignedManuscriptList should stay at 1",myTestReviewer.getMyAssignedManuscriptsAndConferenceList().size(), 1);
+>>>>>>> 9549e557d4925f820fcd682d7530c6605a3ab170
 		
 	}
 	
@@ -137,12 +149,19 @@ public class ReviewerTest {
 		myTestManuscript.setAuthors(myAuthorList);
 		myManuscriptList.clear();
 		myManuscriptList.add(0, myTestManuscript);
+<<<<<<< HEAD
 //		myTestReviewer = new Reviewer("Roger Ebert", myEmptyConferenceList, myManuscriptList);
 		myTestReviewer = new Reviewer("Roger Ebert", new ArrayList<Conference>());
 		myTestReviewer.assignManuscript(myTestManuscript);
 
 		assertFalse("Reviewer cannot be assigned a paper when is an author", myTestReviewer.assignManuscript(myTestManuscript));
 		assertEquals(myTestReviewer.getMyAssignedManuscriptsAndConferenceList().size(), 0);
+=======
+		myTestReviewer = new Reviewer("Roger Ebert", (ArrayList<Conference>) myEmptyConferenceList);
+
+		assertFalse("Reviewer cannot be assigned a paper when is an author", myTestReviewer.assignManuscript(myTestManuscript));
+		assertEquals(myTestReviewer.getMyAssignedManuscriptsAndConferenceList().size(), 1);
+>>>>>>> 9549e557d4925f820fcd682d7530c6605a3ab170
 	}
 	
 	/**
@@ -154,10 +173,14 @@ public class ReviewerTest {
 		
 		myManuscriptList.add(myTestManuscript);
 
+<<<<<<< HEAD
 //		myTestReviewer = new Reviewer("Roger Ebert", myEmptyConferenceList, myManuscriptList);
 		
 		myTestReviewer = new Reviewer("Roger Ebert", new ArrayList<Conference>());
 		myTestReviewer.assignManuscript(myTestManuscript);
+=======
+		myTestReviewer = new Reviewer("Roger Ebert", (ArrayList<Conference>) myEmptyConferenceList);
+>>>>>>> 9549e557d4925f820fcd682d7530c6605a3ab170
 
 		assertTrue("Should add to assigned Man List" , myTestReviewer.assignManuscript(myTestManuscript));
 		assertEquals("Reviewer AssignedManuscriptList should stay at 1", myTestReviewer.getMyAssignedManuscriptsAndConferenceList().size(), 3);

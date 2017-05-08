@@ -39,7 +39,7 @@ public class ManuscriptTest {
 		String title = "Aerodynamics of a Hamburger";
 		Date date = new Date();
 		
-		myPaper = new Manuscript(title, date, reviews, authors, new File(""));
+		myPaper = new Manuscript(title, date, reviews, authors, new File(""), null);
 	}
 	
 
