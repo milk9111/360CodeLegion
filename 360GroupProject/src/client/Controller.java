@@ -150,26 +150,32 @@ public class Controller extends Observable implements Observer {
 								try {
 									if (myAccount.doesAuthorAssociatedWithConferenceExist(myCurrentConference)) {
 										(myAccount.getMyAuthor()).addManuscript(myCurrentConference, manuscriptToSubmit);
+										myCurrentConference.submitManuscript(manuscriptToSubmit);
+										myManuscriptDatabase.saveManuscriptToDatabase(manuscriptToSubmit);
 									} else {
 										//System.out.println(myAccount.getAuthorAssociatedWithConference(myCurrentConference).getMyAssociatedConference());
 										//System.out.println(myCurrentConference);
 										//System.out.println("else entered");
 										myAccount.addAuthorRoleToAccount(new Author(myCurrentConference));
 										(myAccount.getMyAuthor()).addManuscript(myCurrentConference, manuscriptToSubmit);
+										myCurrentConference.submitManuscript(manuscriptToSubmit);
+										myManuscriptDatabase.saveManuscriptToDatabase(manuscriptToSubmit);
 									}
 									
 								} catch (Exception e) {
-									e.printStackTrace();
+									myCurrentState = FAIL_AUTHOR_HAS_TO_MANY_MANUSCRIPTS;
+									setChanged();
+									notifyObservers(myCurrentState);
+									break;
 								}
 								
-								myCurrentConference.submitManuscript(manuscriptToSubmit);
-								myManuscriptDatabase.saveManuscriptToDatabase(manuscriptToSubmit);
 								
-								System.out.println(myManuscriptDatabase.getAllManuscripts().size());
-								System.out.println(myManuscriptDatabase.getManuscriptsBelongingToAuthor(myAccount.getMyAuthor()).size());
-								for (Manuscript m : myManuscriptDatabase.getManuscriptsBelongingToAuthor(myAccount.getMyAuthor())) {
-									System.out.println(m.getTitle());
-								}
+								
+								//System.out.println(myManuscriptDatabase.getAllManuscripts().size());
+								//System.out.println(myManuscriptDatabase.getManuscriptsBelongingToAuthor(myAccount.getMyAuthor()).size());
+								//for (Manuscript m : myManuscriptDatabase.getManuscriptsBelongingToAuthor(myAccount.getMyAuthor())) {
+									//System.out.println(m.getTitle());
+								//}
 								myCurrentState = AUTHOR + LIST_MANUSCRIPT_VIEW;
 								setChanged();
 								notifyObservers(myCurrentState);
