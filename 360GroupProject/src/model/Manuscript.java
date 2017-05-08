@@ -283,6 +283,7 @@ public class Manuscript implements Serializable {
 		boolean authorBelongsToManuscript = false;
 		
 		for(UUID anAuthorID : this.myAuthorsIDs) {
+			// System.out.println(theAuthor);
 			if(anAuthorID.equals(theAuthor.getMyID())) {
 				authorBelongsToManuscript = true;
 			}

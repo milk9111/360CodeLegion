@@ -100,8 +100,8 @@ public class SubprogramChair extends User implements Serializable {
      * @version 5/8/2017
      */
     public void addReviewer (Reviewer theReviewer, int theManuscriptListPos) {
-    	System.out.println(myReviewers == null);
-    	System.out.println(myReviewers.get(theManuscriptListPos) == null);
+//    	System.out.println(myReviewers == null);
+//    	System.out.println(myReviewers.get(theManuscriptListPos) == null);
     	myReviewers.get(theManuscriptListPos).add(theReviewer);
     }
     
@@ -134,7 +134,7 @@ public class SubprogramChair extends User implements Serializable {
     			manuscriptPos = i;
     		}
     	}
-    	System.out.println(manuscriptPos);
+    	// System.out.println(manuscriptPos);
     	return manuscriptPos;
     }
     

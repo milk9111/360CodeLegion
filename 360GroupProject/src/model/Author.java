@@ -157,7 +157,8 @@ public class Author extends User implements Serializable {
 		ArrayList<Account> returnList = new ArrayList<Account>();
 		
 		for(Account anAcct : theAccountList) {
-			if(theManuscript.doesAuthorBelongToManuscript(anAcct.getMyAuthor())) {
+			if(anAcct.getMyAuthor() == null) {
+			} else if(theManuscript.doesAuthorBelongToManuscript(anAcct.getMyAuthor())) {
 				returnList.add(anAcct);
 			}
 		}

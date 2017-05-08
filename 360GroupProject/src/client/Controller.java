@@ -140,11 +140,20 @@ public class Controller extends Observable implements Observer {
 							Manuscript manuscriptToSubmit;
 							if(pieces[0].equals(UI.NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_SUBMIT_MANUSCRIPT_VIEW)){
 								manuscriptToSubmit = makeManuscript(pieces);
+								ArrayList<Manuscript> manuscriptListToTest = new ManuscriptDatabase().getManuscriptsBelongingToAuthor(myAccount.getMyAuthor());	
+
 								// handle case where paper is past submission deadline
 								if(manuscriptToSubmit == null) {
 									myCurrentState = AUTHOR;
 									// TODO: Refactor this error message to print via its own separate view
 									System.out.println("\nToo Late. The Manuscript was submitted past the submission deadline");
+									setChanged();
+									notifyObservers(myCurrentState);
+									break;
+								// handle max limitcase
+								} else if(manuscriptListToTest.size() >= 5) {
+									myCurrentState = AUTHOR;
+									System.out.println("\nMax limit of Manuscripts Hit. Cannot submit more than 5 manuscripts per conference");
 									setChanged();
 									notifyObservers(myCurrentState);
 									break;

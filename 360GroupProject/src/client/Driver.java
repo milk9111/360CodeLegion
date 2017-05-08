@@ -40,7 +40,7 @@ public class Driver {
 		
 		Conference confPastSubmissionDate = new Conference("Conference of Days Gone Past", new Date("4/9/2017"), new Date("4/9/2017"), reviewers1);
 		
-		Account author1 = new Account("Kal-El");
+		Account author1 = new Account("busrule_1b");
 		author1.addAuthorRoleToAccount(new Author("Kal-El", conference1));
 		Account author2 = new Account("Mr. Mackey");
 		author2.addAuthorRoleToAccount(new Author("Mr. Mackey", conference2));
@@ -85,7 +85,76 @@ public class Driver {
 		fsm.setConference(conference1);
 		//System.out.println(reviewers1);
 		//System.out.println(reviewers2);
+		
+		// BusinessRule 1B: An author is limited to 5 manuscript submissions as author or co-author per conference
+		
+		// using same conference for all rows of bus rule
+		Conference conf_1b = 
+				new Conference("Conference of business rule 1b", new Date("5/9/2017"), new Date("7/15/2018"));
+		
+		cdb.saveConferenceToDatabase(conf_1b);
 
+
+		// bus rule accounts
+		Account busRule_1b_1 = new Account("busRule1b_1");
+		adb.saveNewAccountToDatabase(busRule_1b_1);
+		busRule_1b_1.addAuthorRoleToAccount(new Author("busRule1b_1", conf_1b));
+		Account busRule_1b_2 = new Account("busRule1b_2");
+		adb.saveNewAccountToDatabase(busRule_1b_2);
+		Account busRule_1b_3 = new Account("busRule1b_3");
+		adb.saveNewAccountToDatabase(busRule_1b_3);
+		Account busRule_1b_4 = new Account("busRule1b_4");
+		adb.saveNewAccountToDatabase(busRule_1b_4);
+		Account busRule_1b_5 = new Account("busRule1b_5");
+		adb.saveNewAccountToDatabase(busRule_1b_5);
+		Account busRule_1b_6 = new Account("busRule1b_6");
+		adb.saveNewAccountToDatabase(busRule_1b_6);
+		
+		// init and save author roles
+		busRule_1b_2.addAuthorRoleToAccount(new Author(conf_1b));
+		busRule_1b_3.addAuthorRoleToAccount(new Author(conf_1b));
+		busRule_1b_4.addAuthorRoleToAccount(new Author(conf_1b));
+		busRule_1b_5.addAuthorRoleToAccount(new Author(conf_1b));
+		busRule_1b_6.addAuthorRoleToAccount(new Author(conf_1b));
+		
+		// list of authors
+		ArrayList<UUID> authList_busRule_1b = new ArrayList<UUID>();
+		authList_busRule_1b.add(busRule_1b_1.getMyID());
+		authList_busRule_1b.add(busRule_1b_2.getMyID());
+		authList_busRule_1b.add(busRule_1b_3.getMyID());
+
+		Manuscript manu_1b_1 = new Manuscript("Is Krypton Really Hope?", new Date(), authorList1, conf_1b);
+		mdb.saveManuscriptToDatabase(manu_1b_1);
+		Manuscript manu_1b_2 = new Manuscript("Is Red Really Dead?", new Date(), authorList1, conf_1b);
+		mdb.saveManuscriptToDatabase(manu_1b_2);
+		Manuscript manu_1b_3 = new Manuscript("Is Green Really Shed?", new Date(), authorList1, conf_1b);
+		mdb.saveManuscriptToDatabase(manu_1b_3);
+//		Manuscript manu_1b_4 = new Manuscript("Is Mead Really Kead?", new Date(), authorList1, conf_1b);
+//		mdb.saveManuscriptToDatabase(manu_1b_4);
+
+		// bus rule 1B row 1:
+		
+		try {
+			busRule_1b_1.getMyAuthor().addManuscript(conf_1b, manu_1b_1);
+			conf_1b.submitManuscript(manu_1b_1);
+			busRule_1b_1.getMyAuthor().addManuscript(conf_1b, manu_1b_2);
+			conf_1b.submitManuscript(manu_1b_2);
+			busRule_1b_1.getMyAuthor().addManuscript(conf_1b, manu_1b_3);
+			conf_1b.submitManuscript(manu_1b_3);
+//			busRule_1b_1.getMyAuthor().addManuscript(conf_1b, manu_1b_4);
+//			conf_1b.submitManuscript(manu_1b_4);
+			adb.updateAndSaveAccountToDatabase(busRule_1b_1);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		for(Account theAcct : adb.getAllAccounts().values()) {
+			System.out.println(theAcct.getMyUsername());
+			if(theAcct.getMyAuthor() != null) {
+				System.out.println(theAcct.getMyAuthor().getNumberOfManuscriptsSubmitted(conf_1b));
+			}
+		}
 		
 		fsm.startProgram ();
 	}
