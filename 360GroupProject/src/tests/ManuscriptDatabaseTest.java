@@ -43,7 +43,7 @@ public class ManuscriptDatabaseTest {
 	 */
 	@Test
 	public void testGetAllManuscripts() {
-		Manuscript validManuscript = new Manuscript("Study of the Sciences", new Date(), new ArrayList<UUID>());
+		Manuscript validManuscript = new Manuscript("Study of the Sciences", new Date(), new ArrayList<UUID>(), null);
 		myManuscriptDatabase.saveManuscriptToDatabase(validManuscript);
 		
 		TreeMap<UUID, Manuscript> validList = myManuscriptDatabase.getAllManuscripts();
@@ -54,7 +54,7 @@ public class ManuscriptDatabaseTest {
 	
 	@Test
 	public void saveManuscriptToDatabase_forValidManuscript_shouldSucceed() {
-		Manuscript validManuscript = new Manuscript("Study of the Sciences", new Date(), new ArrayList<UUID>());
+		Manuscript validManuscript = new Manuscript("Study of the Sciences", new Date(), new ArrayList<UUID>(), null);
 		myManuscriptDatabase.saveManuscriptToDatabase(validManuscript);
 
 		TreeMap<UUID, Manuscript> validList = myManuscriptDatabase.deserializeManuscriptList();
@@ -83,9 +83,9 @@ public class ManuscriptDatabaseTest {
 		Account userAccount = new Account("RyanTran");
 		Conference primaryConference = new Conference("Education of Electronics", new Date(), new Date());
 		Author authorRole = new Author(primaryConference);
-		Manuscript manuA = new Manuscript("Alpha script", new Date(), authorRole, new File(""));
-		Manuscript manuB = new Manuscript("Beta script", new Date(), authorRole, new File(""));
-		Manuscript manuC = new Manuscript("Charlie script", new Date(), authorRole, new File(""));
+		Manuscript manuA = new Manuscript("Alpha script", new Date(), authorRole, new File(""), null);
+		Manuscript manuB = new Manuscript("Beta script", new Date(), authorRole, new File(""), null);
+		Manuscript manuC = new Manuscript("Charlie script", new Date(), authorRole, new File(""), null);
 		
 		myManuscriptDatabase.saveManuscriptToDatabase(manuA);
 		myManuscriptDatabase.saveManuscriptToDatabase(manuB);
