@@ -594,9 +594,6 @@ public class UI extends Observable implements Observer{
 			System.out.println("" + (i + 1) + " - " + manuscriptList.get(i).getTitle());
 
 		}
-		//make a call to database to get myAssignedManuscripts list from SPC
-		//display index + 1 and Manuscript title 
-		//will take the users input (a digit) and get the title at that index, then send the title as a string to controller
 		System.out.print("Please enter choice: ");
 		while (!myScanner.hasNextInt()) {
 			myScanner.next();
