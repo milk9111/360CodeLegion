@@ -53,6 +53,7 @@ public class Account implements Serializable {
 
     /**
      * Adds a single author role to the account
+     * preconditions: account is already in the database when calling this
      * @param theAuthor The author to add to the account's authors list
      */
     public void addAuthorRoleToAccount(Author theAuthor) {
