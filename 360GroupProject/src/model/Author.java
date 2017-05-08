@@ -79,19 +79,6 @@ public class Author extends User implements Serializable {
 	
 	}
 	
-	/**
-	 * Method to create a new Manuscript.
-	 * @param theTitle The title of the manuscript to be created.
-	 * @param theSubmittedDate The date the Manuscript is being submitted on.
-	 * @param theReviews A map of Reviewers attached to manuscript.
-	 * @param theAuthors A List of the Authors who are submitting the manuscript.
-	 * @return The Manuscript containing all the new information.
-	 */
-	public Manuscript createManuscript(String theTitle, Date theSubmittedDate, HashMap<Reviewer, String> theReviews, ArrayList<UUID> theAuthorsIDs) {
-		
-		return new Manuscript(theTitle, theSubmittedDate, theReviews, theAuthorsIDs, new File("")) ;
-	
-	}
 	
 	/**
 	 * Method to return Review list of Authors Manuscripts.

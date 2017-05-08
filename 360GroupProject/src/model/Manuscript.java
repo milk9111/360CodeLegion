@@ -30,6 +30,7 @@ public class Manuscript implements Serializable {
 	private Date mySubmittedDate;
 	private String myTitle;
 	private File myFilePath;
+	private UUID myConference;
 	
 	
 	/**
@@ -42,20 +43,22 @@ public class Manuscript implements Serializable {
 	 * @version 5/6/2017
 	 */
 	public Manuscript (String theTitle, Date theSubmittedDate, HashMap<Reviewer, String> theReviews,
-			ArrayList<UUID> theAuthorsIDs,File theFilePath) {
+			ArrayList<UUID> theAuthorsIDs,File theFilePath, Conference theConference) {
 		myID = UUID.randomUUID();
 		myReviews = (HashMap<Reviewer, String>) theReviews.clone();
 		this.myAuthorsIDs = (ArrayList<UUID>) theAuthorsIDs.clone();
 		mySubmittedDate = theSubmittedDate;
 		myTitle = theTitle;
 		myFilePath = theFilePath;
+		this.myConference = theConference.getMyID();
 	}
 	
-	public Manuscript(String theTitle, Date theSubmittedDate, ArrayList<UUID> theAuthorsIDs) {
+	public Manuscript(String theTitle, Date theSubmittedDate, ArrayList<UUID> theAuthorsIDs, Conference theConference) {
 		myID = UUID.randomUUID();
 		myTitle = theTitle;
 		mySubmittedDate = theSubmittedDate;
 		myAuthorsIDs = theAuthorsIDs;
+		this.myConference = theConference.getMyID();
 	}
 	
 	/**
@@ -65,7 +68,7 @@ public class Manuscript implements Serializable {
 	 * @param theSubmittedDate submission date
 	 * @param theAuthor Author to add to author list for manuscript
 	 */
-	public Manuscript(String theTitle, Date theSubmittedDate, Author theAuthor, File theFilePath) {
+	public Manuscript(String theTitle, Date theSubmittedDate, Author theAuthor, File theFilePath, Conference theConference) {
 		myID = UUID.randomUUID();
 		myTitle = theTitle;
 		mySubmittedDate = theSubmittedDate;
@@ -75,6 +78,9 @@ public class Manuscript implements Serializable {
 		ArrayList<UUID> authorIDList = new ArrayList<UUID>();
 		authorIDList.add(theAuthor.getMyID());
 		myAuthorsIDs = authorIDList;
+		
+		
+		this.myConference = theConference.getMyID();
 	}
 	
 	
@@ -90,6 +96,7 @@ public class Manuscript implements Serializable {
 		myAuthorsIDs = new ArrayList<UUID> ();
 		mySubmittedDate = new Date ();
 		myFilePath = new File("");
+		this.myConference = null;
 	}
 	
 	/**
@@ -282,6 +289,23 @@ public class Manuscript implements Serializable {
 		}
 		
 		return authorBelongsToManuscript;
+	}
+	
+	
+	/**
+	 * Set's the conference id for the manuscript to the given conf
+	 * @param theConference
+	 */
+	public void setConference(Conference theConference) {
+		this.myConference = theConference.getMyID();
+	}
+	
+	/**
+	 * Gets manuscript's Conference ID
+	 * @return
+	 */
+	public UUID getConferenceID() {
+		return this.myConference;
 	}
 }
 

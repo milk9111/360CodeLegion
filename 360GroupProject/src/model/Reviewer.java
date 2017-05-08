@@ -43,6 +43,12 @@ public class Reviewer extends User implements Serializable {
 		
 	}
 	
+	public Reviewer(Manuscript theAssignedManuscript, Conference theConference) {
+		super(theConference);
+		this.myAssignedManuscriptList = new ArrayList<Manuscript>();
+		this.myAssignedManuscriptList.add(theAssignedManuscript);
+	}
+	
 	/**
 	 * Assign a new manuscript to this reviewer.
 	 * Checks for business rules.  Returns an error message if fails.  

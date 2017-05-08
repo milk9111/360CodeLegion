@@ -128,6 +128,30 @@ public class ManuscriptDatabase implements Serializable {
 		return returnListOfManuscripts;
 		
 	}
+	
+	/**
+	 * Returns a list of manuscripts belonging to the spc for a specific conference.
+	 * returns null if no manuscripts in DB
+	 * @param theSubChair
+	 * @param theConference
+	 * @return
+	 */
+	public ArrayList<Manuscript> getManuscriptsBelongingtoSubprogramChairForConference(SubprogramChair theSubChair, Conference theConference) {
+		TreeMap<UUID, Manuscript> allManuscripts = this.getAllManuscripts();
+		ArrayList<Manuscript> returnListOfManuscripts = new ArrayList<Manuscript>();
+		
+		if(allManuscripts.isEmpty()) {
+			return null;
+		}
+		
+		for(Manuscript aManu : allManuscripts.values()) {
+			if(aManu.getConferenceID().equals(theConference.getMyID())) {
+				returnListOfManuscripts.add(aManu);
+			}
+		}
+		
+		return returnListOfManuscripts;
+	}
 
 	/**
 	 * This method will accept an account and save it to the serialized account list, updating
