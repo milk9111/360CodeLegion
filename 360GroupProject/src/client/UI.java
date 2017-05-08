@@ -457,7 +457,7 @@ public class UI extends Observable implements Observer{
 			
 		}
 		
-		System.out.println("Please enter \"1\" to go back to Athors main page");
+		System.out.println("Please enter \"1\" to go back to Authors main page");
 		myUserChoice = myScanner.next();
 		
 		if (myUserChoice.equals("1")) {
