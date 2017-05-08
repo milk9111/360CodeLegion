@@ -127,6 +127,10 @@ public abstract class User implements Serializable {
 		return this.myAccountDatabase;
 	}
 	
+	public ManuscriptDatabase getMyManuscriptDatabase() {
+		return this.myManuscriptDatabase;
+	}
+	
 	public Conference getMyAssociatedConference() {
 		return this.myAssociatedConference;
 	}
