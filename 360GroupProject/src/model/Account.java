@@ -56,7 +56,17 @@ public class Account implements Serializable {
      * @param theAuthor The author to add to the account's authors list
      */
     public void addAuthorRoleToAccount(Author theAuthor) {
+<<<<<<< HEAD
+
+    	//System.out.println(theAuthor.getMyID());
+    	//System.out.println(theAuthor.getMyAssociatedConference());
+        this.myAuthors.put(theAuthor.getMyAssociatedConference().getMyID(), theAuthor);
+
+        this.myAuthor = theAuthor;
+
+=======
        this.myAuthor = theAuthor;
+>>>>>>> b550676266f5e1fb94fc6c9aa159eb0a46c56f7a
     }
     
     public HashSet<UUID> getManuscriptsOfAccountAssociatedWithConference(Conference theConference) {
@@ -76,6 +86,16 @@ public class Account implements Serializable {
      */
     public boolean doesAuthorAssociatedWithConferenceExist(Conference theConference) {
     	boolean isAuthorAssociated = false;
+<<<<<<< HEAD
+    	System.out.println(theConference);
+    	for(Author anAuthor : this.myAuthors.values()) {
+    		if(anAuthor.getMyAssociatedConference().getMyID().equals(theConference.getMyID())) {
+    			isAuthorAssociated = true;
+    		}
+    	}
+    	
+=======
+>>>>>>> b550676266f5e1fb94fc6c9aa159eb0a46c56f7a
     	isAuthorAssociated = this.myAuthor.isConferenceAssociatedWithAuthor(theConference);
     	
     	return isAuthorAssociated;
