@@ -62,7 +62,7 @@ public class Controller extends Observable implements Observer {
 		myAccount = new Account(null);
 		myCurrentConference = new Conference(null, null, null, null);
 		myCurrentManuscript = new Manuscript();
-		myCurrentReviewer = new Reviewer(null, null);
+		myCurrentReviewer = new Reviewer(null, null, null);
 		myAccountDatabase = new AccountDatabase();
 		myAccountDatabase.createEmptySerializedAccountList();
 		myManuscriptDatabase = new ManuscriptDatabase();
@@ -359,6 +359,7 @@ public class Controller extends Observable implements Observer {
 		returnManuscript.setTitle(thePieces[1]);
 		returnManuscript.setFilePath(new File(thePieces[2]));
 		returnManuscript.setSubmittedDate(new Date());
+		returnManuscript.setConference(this.myCurrentConference);
 		//returnManuscript.addAuthor(myAccount.getMyAuthor());
 		
 		//Adds the remaining Authors in the list.

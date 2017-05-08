@@ -68,9 +68,9 @@ public class AccountDatabaseTest {
 		newAcctB.addAuthorRoleToAccount(new Author(this.myConference));
 		newAcctC.addAuthorRoleToAccount(new Author(this.myConference));
 		
-		Manuscript newManuA = new Manuscript("Manu a title", new Date(), newAcctA.getMyAuthor(), new File(""));
-		Manuscript newManuB = new Manuscript("Manu b title", new Date(), newAcctB.getMyAuthor(), new File(""));
-		Manuscript newManuC = new Manuscript("Manu c title", new Date(), newAcctC.getMyAuthor(), new File(""));
+		Manuscript newManuA = new Manuscript("Manu a title", new Date(), newAcctA.getMyAuthor(), new File(""), myConference);
+		Manuscript newManuB = new Manuscript("Manu b title", new Date(), newAcctB.getMyAuthor(), new File(""), myConference);
+		Manuscript newManuC = new Manuscript("Manu c title", new Date(), newAcctC.getMyAuthor(), new File(""), myConference);
 		
 		// add reviewers to user and save them
 		Reviewer newReviewA = new Reviewer(newManuA, this.myConference);
@@ -95,7 +95,7 @@ public class AccountDatabaseTest {
 	@Test
 	public void testSaveAccountToDatabase_forAValidAccount_shouldSaveToDatabase() {
 		Account validAccount = new Account("Ryan");
-		myAccountDatabase.saveAccountToDatabase(validAccount);
+		myAccountDatabase.saveNewAccountToDatabase(validAccount);
 
 		TreeMap<UUID, Account> validList = myAccountDatabase.deserializeAccountList();
 		assertTrue("list size should only be 1 and have only 1 Account saved", validList.size() == 1);
@@ -107,8 +107,8 @@ public class AccountDatabaseTest {
 		Account validAccount = new Account("Ryan");
 		Account invalidAccount = new Account("Ryan");
 
-		myAccountDatabase.saveAccountToDatabase(validAccount);
-		myAccountDatabase.saveAccountToDatabase(invalidAccount);
+		myAccountDatabase.saveNewAccountToDatabase(validAccount);
+		myAccountDatabase.saveNewAccountToDatabase(invalidAccount);
 
 		TreeMap<UUID, Account> validList = myAccountDatabase.deserializeAccountList();
 		assertTrue(validList.size() == 1);
@@ -137,7 +137,7 @@ public class AccountDatabaseTest {
 		
 		// add single account to list
 		Account validAccount = new Account("Ryan");
-		myAccountDatabase.saveAccountToDatabase(validAccount);
+		myAccountDatabase.saveNewAccountToDatabase(validAccount);
 		
 		TreeMap<UUID, Account> validList = myAccountDatabase.deserializeAccountList();
 		assertTrue(validList.size() == 1);
@@ -159,7 +159,7 @@ public class AccountDatabaseTest {
 	public void doesAccountExistWithinDatabase_forExistingAccount_shouldExist() {
 		// add single account to list
 		Account validAccount = new Account("Ryan");
-		myAccountDatabase.saveAccountToDatabase(validAccount);
+		myAccountDatabase.saveNewAccountToDatabase(validAccount);
 		
 		TreeMap<UUID, Account> validList = myAccountDatabase.deserializeAccountList();
 		assertTrue(validList.size() == 1);
@@ -171,7 +171,7 @@ public class AccountDatabaseTest {
 		// add single account to list
 		Account validAccount = new Account("Ryan");
 		Account invalidAccount = new Account("acctNotInDB");
-		myAccountDatabase.saveAccountToDatabase(validAccount);
+		myAccountDatabase.saveNewAccountToDatabase(validAccount);
 		
 		TreeMap<UUID, Account> validList = myAccountDatabase.deserializeAccountList();
 		assertTrue(validList.size() == 1);
