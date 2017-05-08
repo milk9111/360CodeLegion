@@ -130,8 +130,8 @@ public class AccountDatabase implements Serializable {
 	public boolean doesUsernameExistInDB(TreeMap<UUID, Account> theAccountList, String theUsername) {
 		boolean usernameExistsInDB = false;
 		for (Account aAccountToCompare : theAccountList.values()) {
-			System.out.println(aAccountToCompare.getMyUsername());
-			System.out.println(theUsername);
+			//System.out.println(aAccountToCompare.getMyUsername());
+			//System.out.println(theUsername);
 			if (theUsername.equals(aAccountToCompare.getMyUsername())) {
 				usernameExistsInDB = true;
 			}

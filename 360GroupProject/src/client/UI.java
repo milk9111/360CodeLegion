@@ -4,14 +4,18 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.UUID;
 
 import model.Account;
+import model.AccountDatabase;
 import model.Conference;
 import model.ConferenceDatabase;
 import model.Manuscript;
@@ -73,7 +77,15 @@ public class UI extends Observable implements Observer{
 		System.out.print("Please enter a user name to log in: ");
 		myUserName = myScanner.next();
 		System.out.println();
-		myAccount = new Account(myUserName);
+		if (new AccountDatabase().doesUsernameExistInDB(new AccountDatabase().getAllAccounts(), myUserName)) {
+			//System.out.println("in here");
+			myAccount = new AccountDatabase().getAccountByUsername(new AccountDatabase().getAllAccounts(), myUserName);
+		} else {
+			myAccount = new Account (myUserName);
+		}
+		
+		//System.out.println(myAccount.getMyID());
+
 		setChanged();
 		notifyObservers(myAccount);
 		setChanged();
@@ -189,7 +201,7 @@ public class UI extends Observable implements Observer{
 
 		else if (theState >= 20){
 			//test print
-			System.out.println("In SPC block of changeState:");
+			//System.out.println("In SPC block of changeState:");
 			
 			setUserType("Subprogram Chair");
 			displayHeader();
@@ -210,7 +222,7 @@ public class UI extends Observable implements Observer{
 					subProgramChairAssignReviewerView(); 
 					break;
 
-				case(Controller.LIST_MANUSCRIPT_VIEW):
+				case(Controller.ASSIGN_MANUSCRIPT):
 					
 					subProgramChairManuscriptsView();
 					break;
@@ -570,7 +582,11 @@ public class UI extends Observable implements Observer{
 	}
 
 	private void subProgramChairManuscriptsView() {
-		ArrayList<Manuscript> manuscriptList = new ManuscriptDatabase().getManuscriptsBelongingToAuthor(myAccount.getMyAuthor());
+		int manuscriptChoice = 0;
+		ArrayList<Manuscript> manuscriptList = (ArrayList<Manuscript>) myAccount.getMySubprogramChair().getManuscripts();
+		System.out.println("Choose a Manuscript!");
+		//System.out.println(new ManuscriptDatabase().getAllManuscripts().size());
+		//System.out.println(manuscriptList.size());
 		for (int i = 0; i < manuscriptList.size(); i++) {
 
 			System.out.println("" + (i + 1) + " - " + manuscriptList.get(i).getTitle());
@@ -578,9 +594,38 @@ public class UI extends Observable implements Observer{
 		}
 		//make a call to database to get myAssignedManuscripts list from SPC
 		//display index + 1 and Manuscript title 
-		//will take the users input (a digit) and get the title at that index, then send the title as a string to controller 
+		//will take the users input (a digit) and get the title at that index, then send the title as a string to controller
+		System.out.print("Please enter choice: ");
+		while (!myScanner.hasNextInt()) {
+			myScanner.next();
+			System.out.println("Invalid choice, please select from the options displayed");
+			System.out.print("Please enter choice: ");
+		}
+		
+		manuscriptChoice = myScanner.nextInt();
+		
+		while (manuscriptChoice < 1 || manuscriptChoice > manuscriptList.size()) {
 
+			System.out.println("Invalid choice, please select from the options displayed");
+			System.out.print("Please enter choice: ");
+
+			while (!myScanner.hasNextInt()) {
+
+				myScanner.next();
+				System.out.println("Invalid choice, please select from the options displayed");
+				System.out.print("Please enter choice: ");
+
+			}
+
+			manuscriptChoice = myScanner.nextInt();
+
+		}
+		System.out.println((manuscriptList.get(manuscriptChoice - 1).getTitle()));
+		setChanged();
+		notifyObservers("ASSIGN_MANUSCRIPT," + manuscriptList.get(manuscriptChoice - 1).getMyID());
 	}
+	
+	
 
 	/**
 	 * Calls db to get conference list for subprogramChair
@@ -664,12 +709,6 @@ public class UI extends Observable implements Observer{
 		notifyObservers(mySelectedReviewer.getUsername());
 //		setChanged();
 //		notifyObservers("LIST_MANUSCRIPT_VIEW" + "," + mySelectedReviewer.getUsername() );
-
-		//System.out.println("You selected " + mySelectedReviewer.getUsername());
-		String s = "LIST_MANUSCRIPT_VIEW," + mySelectedReviewer.getMyID();
-		//System.out.println(s);
-		setChanged();
-		notifyObservers(s);
 	//	setChanged();
 	//	notifyObservers(mySelectedReviewer.getUsername());
 	//	setChanged();

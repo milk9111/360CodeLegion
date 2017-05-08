@@ -23,6 +23,13 @@ public class SubprogramChair extends User implements Serializable {
      * List manuscripts assigned to the subprogram chair
      */
     private Map<UUID, HashSet<UUID>> myAssignedManuscripts;
+    
+    /**
+     * List of assigned manuscripts because I have no idea how the map works.
+     * 
+     * @author Connor Lundberg
+     */
+    private ArrayList<Manuscript> myManuscripts;
 
 
     /**
@@ -32,6 +39,7 @@ public class SubprogramChair extends User implements Serializable {
     public SubprogramChair(String theUsername, Conference theConference) {
     	super(theUsername, theConference);
         this.myAssignedManuscripts = new HashMap<UUID, HashSet<UUID>>();
+        this.myManuscripts = new ArrayList<Manuscript>();
         super.myConferenceList = new ArrayList<Conference>();
     }
     
@@ -42,7 +50,33 @@ public class SubprogramChair extends User implements Serializable {
     public SubprogramChair(Conference theConference) {
     	super(theConference);
     	this.myAssignedManuscripts = new HashMap<UUID, HashSet<UUID>>();
+    	this.myManuscripts = new ArrayList<Manuscript>();
         super.myConferenceList = new ArrayList<Conference>();
+    }
+    
+    
+    /**
+     * Assigns the Manuscript to the Manuscripts list.
+     * 
+     * @param theManuscript The Manuscript being added.
+     * @author Connor Lundberg
+     * @version 5/8/2017
+     */
+    public void assignManuscriptToSubChair (Manuscript theManuscript) {
+    	myManuscripts.add(theManuscript);
+    }
+    
+    
+    /**
+     * Returns the myManuscripts ArrayList. Again, just using it because
+     * I don't want to fight the Map.
+     * 
+     * @return The array list
+     * @author Connor Lundberg
+     * @version 5/8/2017
+     */
+    public ArrayList<Manuscript> getManuscripts () {
+    	return myManuscripts;
     }
     
     /**
