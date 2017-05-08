@@ -287,11 +287,11 @@ public class Controller extends Observable implements Observer {
 	 * @version 5/6/2017
 	 */
     private Conference findConference(String theNextState, List<Conference> conferenceList) {
-    	System.out.println(conferenceList.size());
-    	System.out.println();
+    	//System.out.println(conferenceList.size());
+    	//System.out.println();
 	    for(Conference c: conferenceList){
-	    	System.out.println(c.getMyName());
-	    	System.out.println(theNextState);
+	    //	System.out.println(c.getMyName());
+	    //	System.out.println(theNextState);
 	        if(theNextState.contains(c.getMyName())){
 	            return c;
             }
