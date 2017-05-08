@@ -189,7 +189,7 @@ public class UI extends Observable implements Observer{
 
 		else if (theState >= 20){
 			//test print
-			System.out.println("In SPC block of changeState:");
+	//		System.out.println("In SPC block of changeState:");
 			
 			setUserType("Subprogram Chair");
 			displayHeader();
@@ -666,10 +666,9 @@ public class UI extends Observable implements Observer{
 //		notifyObservers("LIST_MANUSCRIPT_VIEW" + "," + mySelectedReviewer.getUsername() );
 
 		//System.out.println("You selected " + mySelectedReviewer.getUsername());
-		String s = "LIST_MANUSCRIPT_VIEW," + mySelectedReviewer.getMyID();
-		//System.out.println(s);
-		setChanged();
-		notifyObservers(s);
+//		String s = "LIST_MANUSCRIPT_VIEW," + mySelectedReviewer.getMyID();
+//		setChanged();
+//		notifyObservers(s);
 	//	setChanged();
 	//	notifyObservers(mySelectedReviewer.getUsername());
 	//	setChanged();

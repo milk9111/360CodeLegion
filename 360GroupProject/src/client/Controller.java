@@ -454,7 +454,7 @@ public class Controller extends Observable implements Observer {
 		}
 		//System.out.println("setting Account");
 	//	myConferenceDatabase.updateAndSaveConferenceToDatabase(myCurrentConference);
-		System.out.println(myCurrentConference.getMyName());
+	//	System.out.println(myCurrentConference.getMyName());
 		
 		////System.out.println("at end: " + myCurrentConference);
 	}
