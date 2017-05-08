@@ -143,6 +143,24 @@ public class UI extends Observable implements Observer{
 		
 		}
 
+		else if (theState == FAIL_AUTHOR_HAS_TO_MANY_MANUSCRIPTS) {
+			
+			authorHasToManySubmittedManuscriptsErrorView();
+		
+		}
+
+		else if (theState == FAIL_SUBMITED_PAST_DEADLINE) {
+			
+			ManuscriptDeadLinePastErrorView();
+		
+		}
+
+		else if (theState == FAIL_REVIEWER_IS_AUTHOR_ON_MANUSCRIPT) {
+			
+			ReviewerIsAuthorErrorView();
+		
+		}
+
 		else if (theState >=0 && theState < 10) {
 
 			setUserType(NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_MAIN_VIEW);
@@ -427,7 +445,7 @@ public class UI extends Observable implements Observer{
 	 */
 	private void AuthorListOfManuscriptsView() {
 		
-		int manuscriptChoice;
+		//int manuscriptChoice;
 		System.out.println("Manuscript List Page");
 		System.out.println(myAccount.getMyID());
 		System.out.println(myAccount.getMyAuthor());
