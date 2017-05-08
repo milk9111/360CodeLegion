@@ -128,7 +128,7 @@ public class UI extends Observable implements Observer{
 	 */
 	public void changeState(int theState) {
 		//test print
-	//	System.out.println("UI changeState: theState:" + theState);
+//		System.out.println("UI changeState: theState:" + theState);
 
 		if (theState == Controller.LOG_IN_STATE){
 			login();
@@ -523,7 +523,12 @@ public class UI extends Observable implements Observer{
 
 		}
 
-		mySelectedConference = listOfConferences[conferenceChoice - 1];
+		//
+		//mySelectedConference =  new ConferenceDatabase().getSingleConference(listOfConferences[conferenceChoice - 1].getMyID());
+
+
+		mySelectedConference =  new ConferenceDatabase().getSingleConference(listOfConferences[conferenceChoice - 1].getMyID());	
+		//mySelectedConference = listOfConferences[conferenceChoice - 1];
 		setChanged();
 		notifyObservers(listOfConferences[conferenceChoice - 1]);
 		setChanged();
@@ -627,7 +632,7 @@ public class UI extends Observable implements Observer{
 		setChanged();
 		notifyObservers(listOfConferences[conferenceChoice - 1]);
 		setChanged();
-		notifyObservers("LIST_CONFERENCE_VIEW" + "," + listOfConferences[conferenceChoice - 1].getMyName());
+		notifyObservers(NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_CONFERENCE_LIST_VIEW + "," + listOfConferences[conferenceChoice - 1].getMyName());
 
 
 
@@ -639,8 +644,6 @@ public class UI extends Observable implements Observer{
 	private void subProgramChairAssignReviewerView() {
 		int reviewerChoice;
 		System.out.println("You chose to assign a Reviewer");
-		System.out.println(mySelectedConference == null);
-		System.out.println(mySelectedConference.getPastReviewers() == null);
 		Reviewer[] reviewerArray = mySelectedConference.getPastReviewers().toArray(new Reviewer[mySelectedConference.getPastReviewers().size()]);
 		
 		for (int i = 0; i < reviewerArray.length; i++) {
@@ -655,11 +658,22 @@ public class UI extends Observable implements Observer{
 		
 		mySelectedReviewer = reviewerArray[reviewerChoice];
 		
+
 		System.out.println("You selected " + mySelectedReviewer.getUsername());
-//		setChanged();
-//		notifyObservers(mySelectedReviewer.getUsername());
+		setChanged();
+		notifyObservers(mySelectedReviewer.getUsername());
 //		setChanged();
 //		notifyObservers("LIST_MANUSCRIPT_VIEW" + "," + mySelectedReviewer.getUsername() );
+
+		//System.out.println("You selected " + mySelectedReviewer.getUsername());
+		String s = "LIST_MANUSCRIPT_VIEW," + mySelectedReviewer.getMyID();
+		//System.out.println(s);
+		setChanged();
+		notifyObservers(s);
+	//	setChanged();
+	//	notifyObservers(mySelectedReviewer.getUsername());
+	//	setChanged();
+//	notifyObservers("LIST_MANUSCRIPT_VIEW" + "," + mySelectedReviewer.getUsername() );
 		
 		
 		

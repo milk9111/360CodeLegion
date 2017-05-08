@@ -147,9 +147,8 @@ public class Controller extends Observable implements Observer {
 									}
 									
 								} catch (Exception e) {
-<<<<<<< HEAD
 									e.printStackTrace();
-								}*/							
+								}	*/						
 								
 								myCurrentConference.submitManuscript(manuscriptToSubmit);
 								myManuscriptDatabase.saveManuscriptToDatabase(manuscriptToSubmit);
@@ -219,21 +218,28 @@ public class Controller extends Observable implements Observer {
 					}
 					break;
 				case SUBPROGRAM_CHAIR:
-					
+					//System.out.println(theNextState);
 					switch (myCurrentState % 10){
 	                    case ASSIGN_REVIEWER:
+	                    	//System.out.println("before");
+	                    	System.out.println(theNextState);
+	                    	//System.out.println("after");
+	                    	System.out.println(myCurrentConference == null);
+	                    	System.out.println(myCurrentConference.getPastReviewers() == null);
 							myCurrentReviewer = findReviewer(theNextState, myCurrentConference.getPastReviewers());
-							
+							System.out.println(myCurrentReviewer.getUsername());
 	                        myCurrentState = SUBPROGRAM_CHAIR + ASSIGN_MANUSCRIPT;
 	                        setChanged();
 							notifyObservers(myCurrentState);
 	                        break;
 	                    case ASSIGN_MANUSCRIPT:
+	                    	UUID key = UUID.fromString(pieces[1]);
+	                    	myCurrentReviewer.assignManuscript(myManuscriptDatabase.getAllManuscripts().get(key));
 	                    	break;
 	                    case LIST_CONFERENCE_VIEW:
-	                    	TreeMap<UUID, Conference> currentConferenceList = this.myConferenceDatabase.deserializeConferenceList();
-							myCurrentConference = findConference(theNextState,
-									myAccount.getAllConferencesAssociatedWithMySubprogramChairList(currentConferenceList));
+	                    	//TreeMap<UUID, Conference> currentConferenceList = this.myConferenceDatabase.deserializeConferenceList();
+							//myCurrentConference = findConference(theNextState,
+							//		myAccount.getAllConferencesAssociatedWithMySubprogramChairList(currentConferenceList));
 							
 							myCurrentState = SUBPROGRAM_CHAIR + USER_OPTIONS;
 							setChanged();
@@ -334,6 +340,8 @@ public class Controller extends Observable implements Observer {
 	 * @version 5/6/2017
 	 */
     private Reviewer findReviewer(String theNextState, List<Reviewer> pastReviewers) {
+    	System.out.println("above");
+    	System.out.println(theNextState);
 		for(Reviewer r: pastReviewers){
 			if(theNextState.contains(r.getUsername())){
 				return r;
@@ -438,14 +446,14 @@ public class Controller extends Observable implements Observer {
 	 */
 	public void setConference (Conference theNewConference) {
 		if (!myConferenceDatabase.isConferenceInListUnique(myConferenceDatabase.getAllConferences(), theNewConference)) {
-			////System.out.println("Found an old conference");
 			myCurrentConference = theNewConference;
-			////System.out.println(myCurrentConference.getMyName());
 		} else {
-			////System.out.println("made a new conference");
 			myConferenceDatabase.saveConferenceToDatabase(theNewConference);
 			myCurrentConference = theNewConference;
 		}
+		//System.out.println("setting Account");
+	//	myConferenceDatabase.updateAndSaveConferenceToDatabase(myCurrentConference);
+		System.out.println(myCurrentConference.getMyName());
 		
 		////System.out.println("at end: " + myCurrentConference);
 	}
@@ -467,6 +475,7 @@ public class Controller extends Observable implements Observer {
 		////System.out.println("received something in update");
 		////System.out.println(myCurrentConference);
 		if (arg1 instanceof String) {
+			System.out.println(arg1 == null);
 			changeState ((String) arg1);
 		} else if (arg1 instanceof Account) {
 			setAccount((Account) arg1);
