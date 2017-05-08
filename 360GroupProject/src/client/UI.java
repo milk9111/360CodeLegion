@@ -528,11 +528,6 @@ public class UI extends Observable implements Observer{
 
 		}
 
-		//
-		//mySelectedConference =  new ConferenceDatabase().getSingleConference(listOfConferences[conferenceChoice - 1].getMyID());
-
-
-		//mySelectedConference =  new ConferenceDatabase().getSingleConference(listOfConferences[conferenceChoice - 1].getMyID());	
 		mySelectedConference = listOfConferences[conferenceChoice - 1];
 		setChanged();
 		notifyObservers(listOfConferences[conferenceChoice - 1]);
@@ -666,10 +661,10 @@ public class UI extends Observable implements Observer{
 		mySelectedReviewer = reviewerArray[reviewerChoice];
 		
 		System.out.println("You selected " + mySelectedReviewer.getUsername());
-	//	setChanged();
-	//	notifyObservers(mySelectedReviewer.getUsername());
-	//	setChanged();
-//	notifyObservers("LIST_MANUSCRIPT_VIEW" + "," + mySelectedReviewer.getUsername() );
+//		setChanged();
+//		notifyObservers(mySelectedReviewer.getUsername());
+//		setChanged();
+//		notifyObservers("LIST_MANUSCRIPT_VIEW" + "," + mySelectedReviewer.getUsername() );
 		
 		
 		
