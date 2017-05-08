@@ -64,11 +64,19 @@ public class Reviewer extends User implements Serializable {
 		
 		//separate these tests and throw exceptions
 		//also need to add a check for if this reviewer is already assigned to this manuscript.
-		if ((isReviewerAnAuthor(theManuscript) == true) || (isOverReviewLimit() == true) ) {
+		if ((isReviewerAnAuthor(theManuscript) == true) || (isOverReviewLimit(theManuscript.getConferenceID()) == true) ) {
 			wasAssigned = false;			
 
 		} else {
-			myAssignedManuscriptList.add(theManuscript);
+			HashSet<UUID> currentManuList = this.myConferencesAndAssignedManuscriptsList.get(theManuscript.getConferenceID());
+			currentManuList.add(theManuscript.getMyID());
+			// save manuscript to DB
+			new ManuscriptDatabase().saveManuscriptToDatabase(theManuscript);
+			// add manuscript to associated conference of manuscript and save to DB, save account to DB as well
+			this.myConferencesAndAssignedManuscriptsList.put(theManuscript.getConferenceID(), currentManuList);
+			Account updatedAcct = new AccountDatabase().getAccountByReviewer(this);
+			updatedAcct.setReviewer(this);
+			wasAssigned = true;
 		}
 		
 		return wasAssigned;
@@ -79,9 +87,9 @@ public class Reviewer extends User implements Serializable {
 	 * @author Morgan Blackmore
 	 * @return true if over limit.
 	 */
-	private boolean isOverReviewLimit(Conference theConference) {
+	private boolean isOverReviewLimit(UUID theConferenceID) {
 		boolean isOver = false;
-		if (this.myConferencesAndAssignedManuscriptsList.get(theConference.getMyID()).size() >= MAX_REVIEWS) {
+		if (this.myConferencesAndAssignedManuscriptsList.get(theConferenceID).size() >= MAX_REVIEWS) {
 			isOver = true;
 		} 
 		

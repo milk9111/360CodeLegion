@@ -223,6 +223,26 @@ public class AccountDatabase implements Serializable {
 		
 	}
 	
+	/**
+	 * Gets an account by their reviewer
+	 * @param theReviewer
+	 * @return
+	 */
+	public Account getAccountByReviewer(Reviewer theReviewer) {
+		Account returnAccount = null;
+		TreeMap<UUID, Account> accountList = deserializeAccountList();
+
+		for(Account anAcct : accountList.values()) {
+			if(anAcct.getMyReviewer() != null) {
+				if(anAcct.getMyReviewer().getMyID().equals(theReviewer.getMyID())) {
+					returnAccount = anAcct;
+				}
+			}
+		}
+		
+		return returnAccount;
+	}
+	
 	public void printContents() {
 		TreeMap<UUID, Account> currentList = deserializeAccountList();
 		for (Map.Entry<UUID, Account> entry : currentList.entrySet()) {
