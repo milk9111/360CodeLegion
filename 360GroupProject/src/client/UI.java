@@ -248,10 +248,11 @@ public class UI extends Observable implements Observer{
 	 */
 	private void AuthorView() {
 
-		System.out.println("Author Main Page:");
+		System.out.println("Author Main Page:\n");
 		System.out.println("1 - Submit new Manuscript.");
 		System.out.println("2 - View currently submitted Manuscripts.");
 		System.out.println("3 - View current list of Conferences.");
+		System.out.print("Please enter choice: ");
 		myUserChoice = myScanner.next();
 
 		if (myUserChoice.equals("1")) {
@@ -299,24 +300,24 @@ public class UI extends Observable implements Observer{
 		String moreAuthors = "";
 		List<String> listOfAuthors = new ArrayList<String>();
 		String ManuscriptFilePath;
-		System.out.println("Manuscript Submission Page");
-		System.out.println("Please enter title of Manuscript: ");
+		System.out.println("Manuscript Submission Page: \n");
+		System.out.print("Please enter title of Manuscript: ");
 		manuscriptTile = myScanner.next();
 
 		while (!moreAuthors.equals("0")) {
 
-			System.out.println("Please Enter name of Author or CoAuthor for Manuscript or \"0\" when done: ");
+			System.out.print("Please Enter name of Author or CoAuthor for Manuscript or \"0\" when done: ");
 			moreAuthors = myScanner.next();
 
 			if (!moreAuthors.equals("0")) {
 
-				listOfAuthors.add(myScanner.next());
+				listOfAuthors.add(moreAuthors);
 
 			} 
 
 		}
 
-		System.out.println("Please Enter file path of Manuscript: ");
+		System.out.print("Please Enter file path of Manuscript: ");
 		ManuscriptFilePath = myScanner.next();	
 
 		for (int i = 0; i < listOfAuthors.size(); i++) {
