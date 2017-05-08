@@ -429,7 +429,7 @@ public class UI extends Observable implements Observer{
 	private void AuthorListOfManuscriptsView() {
 		
 		//int manuscriptChoice;
-		System.out.println("Manuscript List Page");
+		System.out.println("Manuscript List Page: ");
 		System.out.println(myAccount.getMyID());
 		System.out.println(myAccount.getMyAuthor());
 		ArrayList<Manuscript> manuscriptList = new ManuscriptDatabase().getManuscriptsBelongingToAuthor(myAccount.getMyAuthor());
