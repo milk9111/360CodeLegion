@@ -112,11 +112,12 @@ public class Author extends User implements Serializable {
 		AccountDatabase theAccountDatabase = new AccountDatabase();
 		ManuscriptDatabase theManuscriptDatabase = new ManuscriptDatabase();
 		TreeMap<UUID, Account> theAccountList = theAccountDatabase.deserializeAccountList();
-		
 		if (!isAuthorAtManuscriptLimit(theConference, theManuscript, theAccountList)) {
 			// After confirming none of the authors(author and coauthors) are at the max limit
 			
 			ArrayList<Account> validAccts = getAllAccountsWithAuthorsBelongingToManuscript(new ArrayList<Account>(theAccountList.values()), theManuscript);
+			
+			
 			
 			// iterate through all valid accoutns and check for an existing conference key
 			for(Account anAcct : validAccts) {
@@ -127,8 +128,10 @@ public class Author extends User implements Serializable {
 					theAccountDatabase.updateAndSaveAccountToDatabase(anAcct);
 					theManuscriptDatabase.saveManuscriptToDatabase(theManuscript);
 				} else {
+
 					// if author does NOT have the given conference as an existing key then make a new one
 					anAcct.getMyAuthor().addManuscriptWithNewConferenceToManuscriptList(theManuscript, theConference);
+					theAccountDatabase.updateAndSaveAccountToDatabase(anAcct);
 					new ManuscriptDatabase().saveManuscriptToDatabase(theManuscript);
 				}
 			}
