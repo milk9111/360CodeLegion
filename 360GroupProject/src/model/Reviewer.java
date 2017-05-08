@@ -71,20 +71,33 @@ public class Reviewer extends User implements Serializable {
 		
 		//separate these tests and throw exceptions
 		//also need to add a check for if this reviewer is already assigned to this manuscript.
-		if ((isReviewerAnAuthor(theManuscript) != true) || (isOverReviewLimit(theManuscript.getConferenceID()) == true) ) {
+		if ((isReviewerAnAuthor(theManuscript) != true) || (isOverReviewLimit(theManuscript.getConferenceID()) == true)) {
 			wasAssigned = false;			
-
 		} else {
-			HashSet<UUID> currentManuList = this.myConferencesAndAssignedManuscriptsList.get(theManuscript.getConferenceID());
-			// TODO: check if manuscript already exists within list
-			currentManuList.add(theManuscript.getMyID());
-			// save manuscript to DB
-			new ManuscriptDatabase().saveManuscriptToDatabase(theManuscript);
-			// add manuscript to associated conference of manuscript and save to DB, save account to DB as well
-			this.myConferencesAndAssignedManuscriptsList.put(theManuscript.getConferenceID(), currentManuList);
-			Account updatedAcct = new AccountDatabase().getAccountByReviewer(this);
-			updatedAcct.setReviewer(this);
-			wasAssigned = true;
+			if(isReviewerAssignedToConference(theManuscript.getConferenceID()) == false) {
+				HashSet<UUID> currentManuList = this.myConferencesAndAssignedManuscriptsList.get(theManuscript.getConferenceID());
+				// TODO: check if manuscript already exists within list
+				currentManuList.add(theManuscript.getMyID());
+				// save manuscript to DB
+				new ManuscriptDatabase().saveManuscriptToDatabase(theManuscript);
+				// add manuscript to associated conference of manuscript and save to DB, save account to DB as well
+				this.myConferencesAndAssignedManuscriptsList.put(theManuscript.getConferenceID(), currentManuList);
+				Account updatedAcct = new AccountDatabase().getAccountByReviewer(this);
+				updatedAcct.setReviewer(this);
+				wasAssigned = true;
+
+			} else {
+				HashSet<UUID> newManuList = new HashSet<UUID>();
+				newManuList.add(theManuscript.getMyID());
+				// save manuscript to DB
+				new ManuscriptDatabase().saveManuscriptToDatabase(theManuscript);
+				// add manuscript to associated conference of manuscript and save to DB, save account to DB as well
+				this.myConferencesAndAssignedManuscriptsList.put(theManuscript.getConferenceID(), newManuList);
+				Account updatedAcct = new AccountDatabase().getAccountByReviewer(this);
+				updatedAcct.setReviewer(this);
+				wasAssigned = true;
+
+			}
 		}
 		
 		return wasAssigned;
@@ -97,11 +110,16 @@ public class Reviewer extends User implements Serializable {
 	 */
 	private boolean isOverReviewLimit(UUID theConferenceID) {
 		System.out.println("over limit");
+		// check to see if conference exists within reviewer list of confs or not
+		if(this.isReviewerAssignedToConference(theConferenceID)) {
+			return false;
+		}
+
 		boolean isOver = false;
 		if (this.myConferencesAndAssignedManuscriptsList.get(theConferenceID).size() >= MAX_REVIEWS) {
 			isOver = true;
 		} 
-		
+		System.out.println(isOver);
 		return isOver;
 	}
 	
@@ -136,7 +154,9 @@ public class Reviewer extends User implements Serializable {
 		
 	}
 	
-
+	public boolean isReviewerAssignedToConference(UUID theConfID) {
+		return this.myConferencesAndAssignedManuscriptsList.containsKey(theConfID);
+	}
 
 	public TreeMap<UUID, HashSet<UUID>> getMyAssignedManuscriptsAndConferenceList() {
 		return this.myConferencesAndAssignedManuscriptsList;
