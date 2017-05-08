@@ -120,7 +120,7 @@ public class Controller extends Observable implements Observer {
 							break;
 						case "SUBPROGRAM_CHAIR":
 							//System.out.println("in subprogram chair");
-							myAccount.addSubprogramChairRoleToAccount(new SubprogramChair(myCurrentConference), myCurrentConference);
+							myAccount.addSubprogramChairRoleToAccount(new SubprogramChair(myCurrentConference));
 							myCurrentState = SUBPROGRAM_CHAIR;
 							break;
 					}
