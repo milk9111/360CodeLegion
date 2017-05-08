@@ -45,7 +45,7 @@ public class Conference implements Serializable {
         this.mySubmissionDeadline = theSubmissionDeadline;
         this.myName = theName;
         
-        System.out.println("is past reviewers null? " + (myPastReviewers == null));
+        //System.out.println("is past reviewers null? " + (myPastReviewers == null));
     }
     
     /**
@@ -99,11 +99,11 @@ public class Conference implements Serializable {
      * @return The list of past reviewers
      */
     public List<Reviewer> getPastReviewers() {
-    	System.out.println("here");
-    	System.out.println(myPastReviewers == null);
-    	for (Reviewer r : myPastReviewers) {
+    	//System.out.println("here");
+    	//System.out.println(myPastReviewers == null);
+    	/*for (Reviewer r : myPastReviewers) {
     		System.out.println(r.getUsername());
-    	}
+    	}*/
         return myPastReviewers;
     }
 
