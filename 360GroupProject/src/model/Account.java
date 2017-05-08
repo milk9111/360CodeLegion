@@ -57,6 +57,7 @@ public class Account implements Serializable {
      */
     public void addAuthorRoleToAccount(Author theAuthor) {
        this.myAuthor = theAuthor;
+       new AccountDatabase().saveAccountToDatabase(this);
     }
     
     public HashSet<UUID> getManuscriptsOfAccountAssociatedWithConference(Conference theConference) {
