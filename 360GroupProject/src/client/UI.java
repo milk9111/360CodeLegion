@@ -529,8 +529,6 @@ public class UI extends Observable implements Observer{
 
 	}
 
-
-
 	private void subProgramChairManuscriptsView() {
 		//make a call to database to get myAssignedManuscripts list from SPC
 		//display index + 1 and Manuscript title 
@@ -568,8 +566,6 @@ public class UI extends Observable implements Observer{
 		//display reviewers
 		//take reviewer and store it
 		//send stored values to controller
-
-
 
 	}
 
