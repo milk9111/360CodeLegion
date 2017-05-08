@@ -42,6 +42,8 @@ public abstract class User implements Serializable {
 	 */
 	private Conference myAssociatedConference;
 	
+	private AccountDatabase myAccountDatabase;
+	
 	/**
 	 * Constructor for the User. 
 	 * @param theUserName The chosen user name.
@@ -51,6 +53,7 @@ public abstract class User implements Serializable {
 		myID = UUID.randomUUID();
 		MyUserName = theUserName;
 		myConferenceList = theConferenceList;
+		this.myAccountDatabase = new AccountDatabase();
 	}
 
 	/**
@@ -114,6 +117,10 @@ public abstract class User implements Serializable {
 	 */
 	public UUID getMyID() {
 		return myID;
+	}
+	
+	public AccountDatabase getMyAccountDatabase() {
+		return this.myAccountDatabase;
 	}
 	
 	public Conference getMyAssociatedConference() {

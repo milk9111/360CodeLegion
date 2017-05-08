@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -34,7 +35,7 @@ public class ManuscriptTest {
 	@Before
 	public void setUp() throws Exception {
 		HashMap<Reviewer, String> reviews = new HashMap<Reviewer, String> ();
-		ArrayList<Author> authors = new ArrayList<Author> ();
+		ArrayList<UUID> authors = new ArrayList<UUID>();
 		String title = "Aerodynamics of a Hamburger";
 		Date date = new Date();
 		
@@ -98,7 +99,7 @@ public class ManuscriptTest {
 		
 		myPaper.addAuthor(testAuthor);
 		
-		assertTrue ("The Manuscript contained the added author", myPaper.getAuthors().contains(testAuthor));
+		assertTrue ("The Manuscript contained the added author", myPaper.getAuthors().contains(testAuthor.getMyID()));
 	}
 	
 	
@@ -112,8 +113,8 @@ public class ManuscriptTest {
 	@Test
 	public void getAuthors_TestGetAuthorsForNullValues () {
 		assert (myPaper.getAuthors() != null);
-		for (Author au : myPaper.getAuthors()) 
-			assertEquals (au instanceof Author, true);
+		for (UUID au : myPaper.getAuthors()) 
+			assertEquals (au instanceof UUID, true);
 	}
 	
 	
@@ -169,7 +170,6 @@ public class ManuscriptTest {
 		
 		assertEquals(testPaper.getTitle(), myPaper.getTitle());
 	}*/
-	
 
 }
 

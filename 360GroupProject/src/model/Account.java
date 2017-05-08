@@ -17,11 +17,7 @@ public class Account implements Serializable {
 	// that way, a user can have a user type for multiple conferneces
     private Author myAuthor;
     
-    /**
-     * Map of Key: Conference Ids, Value: Reviewer Object
-     * Map representing relationship between a user being a reviewer to a conference
-     */
-    private TreeMap<UUID, Reviewer> myReviewers;
+    private Reviewer myReviewer;
     
     private ConferenceDatabase myConferenceDatabase;
     
@@ -37,15 +33,15 @@ public class Account implements Serializable {
     	this.myID = UUID.randomUUID();
     	this.myUsername = theUsername;
         this.myAuthor = null;
-        this.myReviewers = new TreeMap<UUID, Reviewer>();
+        this.myReviewer = null;
         this.mySubprogramChairs = new TreeMap<UUID, SubprogramChair>();
         this.myConferenceDatabase = new ConferenceDatabase();
     }
     
-    public Account(Author theAuthor, TreeMap<UUID, Reviewer> theReviewers, TreeMap<UUID, SubprogramChair> theSubprogramChairs) {
+    public Account(Author theAuthor, Reviewer theReviewer, TreeMap<UUID, SubprogramChair> theSubprogramChairs) {
     	this.myID = UUID.randomUUID();
         this.myAuthor = theAuthor;
-        this.myReviewers = theReviewers;
+        this.myReviewer = theReviewer;
         this.mySubprogramChairs = theSubprogramChairs;
         this.myConferenceDatabase = new ConferenceDatabase();
     }
@@ -60,6 +56,7 @@ public class Account implements Serializable {
      * @param theAuthor The author to add to the account's authors list
      */
     public void addAuthorRoleToAccount(Author theAuthor) {
+<<<<<<< HEAD
 
     	//System.out.println(theAuthor.getMyID());
     	//System.out.println(theAuthor.getMyAssociatedConference());
@@ -67,6 +64,9 @@ public class Account implements Serializable {
 
         this.myAuthor = theAuthor;
 
+=======
+       this.myAuthor = theAuthor;
+>>>>>>> b550676266f5e1fb94fc6c9aa159eb0a46c56f7a
     }
     
     public HashSet<UUID> getManuscriptsOfAccountAssociatedWithConference(Conference theConference) {
@@ -86,6 +86,7 @@ public class Account implements Serializable {
      */
     public boolean doesAuthorAssociatedWithConferenceExist(Conference theConference) {
     	boolean isAuthorAssociated = false;
+<<<<<<< HEAD
     	System.out.println(theConference);
     	for(Author anAuthor : this.myAuthors.values()) {
     		if(anAuthor.getMyAssociatedConference().getMyID().equals(theConference.getMyID())) {
@@ -93,6 +94,8 @@ public class Account implements Serializable {
     		}
     	}
     	
+=======
+>>>>>>> b550676266f5e1fb94fc6c9aa159eb0a46c56f7a
     	isAuthorAssociated = this.myAuthor.isConferenceAssociatedWithAuthor(theConference);
     	
     	return isAuthorAssociated;
@@ -163,15 +166,15 @@ public class Account implements Serializable {
 
 
     /**
-     * Gets account's list of reviewer user types
+     * Gets account's reviewer
      * @return a treemap of reviewers, and their conference id keys
      */
-    public TreeMap<UUID, Reviewer> getMyReviewers() {
-        return myReviewers;
+    public Reviewer getMyReviewer() {
+        return this.myReviewer;
     }
 
-    public void addReviewerRoleToAccount(Reviewer theReviewer, Conference theConference) {
-    	this.myReviewers.put(theConference.getMyID(), theReviewer);
+    public void setReviewer(Reviewer theReviewer) {
+    	this.myReviewer = theReviewer;
     }
     
     public String getMyUsername() {
