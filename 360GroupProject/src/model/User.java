@@ -41,10 +41,7 @@ public abstract class User implements Serializable {
 	 * associated with a conference
 	 */
 	private Conference myAssociatedConference;
-	
-	private AccountDatabase myAccountDatabase;
-	
-	private ManuscriptDatabase myManuscriptDatabase;
+
 	
 	/**
 	 * Constructor for the User. 
@@ -55,8 +52,6 @@ public abstract class User implements Serializable {
 		myID = UUID.randomUUID();
 		MyUserName = theUserName;
 		myConferenceList = theConferenceList;
-		this.myAccountDatabase = new AccountDatabase();
-		this.myManuscriptDatabase = new ManuscriptDatabase();
 	}
 
 	/**
@@ -67,7 +62,6 @@ public abstract class User implements Serializable {
 		myID = UUID.randomUUID();
 		MyUserName = theUserName;
 		myAssociatedConference = theConference;
-		this.myManuscriptDatabase = new ManuscriptDatabase();
 	}
 	
 	/**
@@ -80,7 +74,6 @@ public abstract class User implements Serializable {
 	public User(Conference theConference) {
 		myID = UUID.randomUUID();
 		myAssociatedConference = theConference;
-		this.myManuscriptDatabase = new ManuscriptDatabase();
 	}
 	
 	/**
@@ -121,14 +114,6 @@ public abstract class User implements Serializable {
 	 */
 	public UUID getMyID() {
 		return myID;
-	}
-	
-	public AccountDatabase getMyAccountDatabase() {
-		return this.myAccountDatabase;
-	}
-	
-	public ManuscriptDatabase getMyManuscriptDatabase() {
-		return this.myManuscriptDatabase;
 	}
 	
 	public Conference getMyAssociatedConference() {

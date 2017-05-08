@@ -94,7 +94,7 @@ public class Reviewer extends User implements Serializable {
 	private boolean isReviewerAnAuthor(Manuscript theManuscript) {
 		boolean isAuthor = false;
 
-		TreeMap<UUID, Account> acctList = super.getMyAccountDatabase().deserializeAccountList();
+		TreeMap<UUID, Account> acctList = new AccountDatabase().deserializeAccountList();
 		ArrayList<Account> validAccountList = new ArrayList<Account>();
 		
 		

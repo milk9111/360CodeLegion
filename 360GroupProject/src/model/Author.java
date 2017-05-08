@@ -142,7 +142,7 @@ public class Author extends User implements Serializable {
 				} else {
 					// if author does NOT have the given conference as an existing key then make a new one
 					anAcct.getMyAuthor().addManuscriptWithNewConferenceToManuscriptList(theManuscript, theConference);
-					super.getMyManuscriptDatabase().saveManuscriptToDatabase(theManuscript);
+					new ManuscriptDatabase().saveManuscriptToDatabase(theManuscript);
 				}
 			}
 
