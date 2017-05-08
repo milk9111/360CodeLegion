@@ -142,7 +142,7 @@ public class Controller extends Observable implements Observer {
 							//System.out.println("in submit manuscript");
 	                        Manuscript manuscriptToSubmit;
 	                        //System.out.println(pieces[0]);
-							if(pieces[0].equals("Submit Manuscript")){
+							if(pieces[0].equals(UI.NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_SUBMIT_MANUSCRIPT_VIEW)){
 								//System.out.println("in submit manuscript inner");
 								//System.out.println(theNextState);
 								manuscriptToSubmit = makeManuscript(pieces);
@@ -177,14 +177,14 @@ public class Controller extends Observable implements Observer {
 	
 							break;
 						case LIST_MANUSCRIPT_VIEW:
-							if (pieces[0].equals("List Manuscript View")) {
+							if (pieces[0].equals(UI.NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_MANUSCRIPT_LIST_VIEW)) {
 								myCurrentState = AUTHOR + USER_OPTIONS;
 								setChanged();
 								notifyObservers(myCurrentState);
 							}
 							break;
 						case LIST_CONFERENCE_VIEW:
-							if (pieces[0].equals("List Conference View")) {
+							if (pieces[0].equals(UI.NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_CONFERENCE_LIST_VIEW)) {
 								//TreeMap<UUID, Conference> currentConferenceList = this.myConferenceDatabase.deserializeConferenceList();
 								//System.out.println(currentConferenceList.values());
 								//System.out.println(myAccount.getAllConferencesAssociatedWithMyAuthorList(currentConferenceList));
@@ -200,13 +200,13 @@ public class Controller extends Observable implements Observer {
 							break;
 						case USER_OPTIONS:
 							switch (pieces[0]) {
-	                    	case "SUBMIT_MANUSCRIPT":
+	                    	case UI.NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_SUBMIT_MANUSCRIPT_VIEW:
 	                    		myCurrentState = AUTHOR + SUBMIT_MANUSCRIPT;
 	                    		break;
-	                    	case "LIST_MANUSCRIPT_VIEW":
+	                    	case UI.NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_MANUSCRIPT_LIST_VIEW:
 	                    		myCurrentState = AUTHOR + LIST_MANUSCRIPT_VIEW;
 	                    		break;
-	                    	case "LIST_CONFERENCE_VIEW":
+	                    	case UI.NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_CONFERENCE_LIST_VIEW:
 	                    		myCurrentState = AUTHOR + LIST_CONFERENCE_VIEW;
 	                    		break;
 							}
@@ -273,7 +273,7 @@ public class Controller extends Observable implements Observer {
 					break;
 			}
 		}
-		
+
 		myAccountDatabase.updateAndSaveAccountToDatabase(myAccount);	/*final save of the account at the end of the state.*/
 	}
 	
