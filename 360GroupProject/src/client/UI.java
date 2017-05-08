@@ -31,13 +31,17 @@ public class UI extends Observable implements Observer{
 	public static final String NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_SUBMIT_MANUSCRIPT_VIEW = "SUBMIT_MANUSCRIPT";
 	public static final String NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_MANUSCRIPT_LIST_VIEW = "LIST_MANUSCRIPT_VIEW";
 	public static final String NOTIFY_CONTROLLER_TO_CHANGE_TO_AUTHOR_MAIN_VIEW = "AUTHOR";
+	public static final String NOTIFY_CONTROLLER_TO_CHANGE_TO_SUBPROGRAM_CHAIR_MAIN_VIEW = "SUBPROGRAM_CHAIR";
+	public static final String NOTIFY_CONTROLLER_TO_CHANGE_TO_SUBPROGRAM_CHAIR_ASSIGN_REVIEWER_VIEW = "ASSIGN_REVIEWER";
 
 	private String myUserType;
 	private String myUserName;
 	private Scanner myScanner;
 	private String myUserChoice;
 	private Account myAccount;
-
+	private Conference mySelectedConference;
+	private Manuscript mySelectedManuscript;
+	
 	public UI() {
 		
 		myUserType = "";
@@ -56,8 +60,8 @@ public class UI extends Observable implements Observer{
 	 */
 	private void login() {
 		
-		System.out.println("Loggin Page:");
-		System.out.print("\nPlease enter user name to log in: ");
+
+		System.out.print("\nPlease enter a user name to log in: ");
 		myUserName = myScanner.next();
 		System.out.println();
 		myAccount = new Account(myUserName);
@@ -429,7 +433,7 @@ public class UI extends Observable implements Observer{
 	private void AuthorListOfManuscriptsView() {
 		
 		//int manuscriptChoice;
-		System.out.println("Manuscript List Page");
+		System.out.println("Manuscript List Page: ");
 		System.out.println(myAccount.getMyID());
 		System.out.println(myAccount.getMyAuthor());
 		ArrayList<Manuscript> manuscriptList = new ManuscriptDatabase().getManuscriptsBelongingToAuthor(myAccount.getMyAuthor());
@@ -509,7 +513,9 @@ public class UI extends Observable implements Observer{
 			conferenceChoice = myScanner.nextInt();
 			
 		}
-		
+		//
+		mySelectedConference =  new ConferenceDatabase().getSingleConference(listOfConferences[conferenceChoice - 1].getMyID());
+				
 		setChanged();
 		notifyObservers(listOfConferences[conferenceChoice - 1]);
 		setChanged();
@@ -573,10 +579,7 @@ public class UI extends Observable implements Observer{
 		System.out.println("To assign a reviewer, first select a conference from the list below:\n");
 		
 		ListOfConferenceView();
-		//make a call to database to get myAssignedConferences for SPC
-		//display index and conference title
-		//will take the users input (a digit) and get the title at that index, then send the title as a string to controller
-		//Should take user to next menu-Conference View 
+
 
 	}
 
