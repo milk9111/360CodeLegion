@@ -140,7 +140,8 @@ public class ControllerTest {
 	@Test
 	public void changeState_testChangeStateForCorrectAuthorUserOptionsStateChangeWithSubmitManuscript () {
 		myPracticeController.setState(Controller.AUTHOR+Controller.USER_OPTIONS);
-		myControllerTestHelper.makeChange("Submit Manuscript");
+		myControllerTestHelper.makeChange("SUBMIT_MANUSCRIPT");
+		System.out.println(myPracticeController.getState() + ", " + Controller.AUTHOR+Controller.SUBMIT_MANUSCRIPT);
 		assertEquals(myPracticeController.getState(), Controller.AUTHOR+Controller.SUBMIT_MANUSCRIPT);
 	}
 	
