@@ -122,68 +122,49 @@ public class Author extends User implements Serializable {
 	 * @throws illegalArgumentException
 	 */
 	public void addManuscript(Conference theConference, Manuscript theManuscript, TreeMap<UUID, Account> theAccountList) throws Exception {	
-		ArrayList<Account> acctsWithAuthorsBelongingToConf = new ArrayList<Account>();
-		
 		if (!isAuthorAtManuscriptLimit(theConference, theManuscript, theAccountList)) {
+			// After confirming none of the authors(author and coauthors) are at the max limit
 			
-			// iterate through all accounts and create a list of accounts with authors connected to the
-			// passed in conference
-			for(Account theAcct : theAccountList.values()) {
-				// check if an account has an author associated with the passed in conference
-				// if true, add that account to a relevant list
-				if(theAcct.getMyAuthorList().containsKey(theConference.getMyID())) {
-					acctsWithAuthorsBelongingToConf.add(theAcct);
+			ArrayList<Account> validAccts = getAllAccountsWithAuthorsBelongingToManuscript(new ArrayList<Account>(theAccountList.values()), theManuscript);
+			
+			// iterate through all valid accoutns and check for an existing conference key
+			for(Account anAcct : validAccts) {
+				if(anAcct.getMyAuthor().doesConferenceKeyExistForMyManuscriptList(theConference)) {
+					anAcct.getMyAuthor().addManuscriptExistingConferenceToManuscriptList(theManuscript, theConference);
+					super.getMyAccountDatabase().updateAndSaveAccountToDatabase(anAcct);
+				} else {
+					// if author does NOT have the given conference as an existing key then make a new one
+					anAcct.getMyAuthor().addManuscriptWithNewConferenceToManuscriptList(theManuscript, theConference);
 				}
 			}
-			
-			// Iterate through each Author attached to the manuscript to be submitted
-			for (int i = 0; i < theManuscript.getAuthors().size(); i++) {			
-				
-				// If the author already has manuscripts in general, already submitted to the passed in conference
-				// parameter then the new manuscript to be submitted will be appended onto that list with the conference
-				// as the key
-				for(Account aAcct : acctsWithAuthorsBelongingToConf) {
-					Author authorOfAcct = (Author) aAcct.getMyAuthorList().get(theConference.getMyID());
 
-					// checks if the current iteration's account's author matches a manuscript author
-					if(theManuscript.getAuthors().contains(authorOfAcct.getMyID())) {
-
-						// after confirming that the account's author is included within the manuscript's list of authors
-						// Check if the author has already submitted any manuscripts to the passed in conference.
-						// If they have, then append the submitted manuscript to the end of their manuscript list
-						// where the current conference is the key
-						if(authorOfAcct.getManuscriptMap().containsKey(theConference.getMyID())) {
-							// Adds the manuscript's ID to..
-							// the account -> author role linked to conference argument ->
-							// author's manuscript map -> manuscript mapping with conference argument as key -> hashset of
-							// given argument's manuscripts 
-							authorOfAcct.getManuscriptMap().get(theConference.getMyID()).add(theManuscript.getMyID());
-							
-							// update account with changed author
-							aAcct.addAuthorRoleToAccount(authorOfAcct);
-							
-							System.out.println(aAcct);
-							
-							// save Account to database
-							new AccountDatabase().updateAndSaveAccountToDatabase(aAcct);
-							
-							// TODO: Save manuscript ID to conference as well
-						} else {
-							HashSet<UUID> manuHashList = new HashSet<UUID>();
-							manuHashList.add(theManuscript.getMyID());
-							authorOfAcct.getManuscriptMap().put(theConference.getMyID(), manuHashList);
-						}
-					}
-				}
-				
-			}
-			
-		} else {
+			} else {
 			
 			throw new IllegalArgumentException("Author or CoAuthor already has " + MAX_MANUSCRIPT_ALLOWED + " Manuscripts");
 			
 		}
 		
+	}
+	
+	
+	/**
+	 * Returns a list of accounts that are an author of the given manuscript's list of authors
+	 * @param theAccountList
+	 * @param theManuscript
+	 * @return
+	 */
+	public ArrayList<Account> getAllAccountsWithAuthorsBelongingToManuscript(ArrayList<Account> theAccountList,
+			Manuscript theManuscript) {
+		
+		ArrayList<Account> returnList = new ArrayList<Account>();
+		
+		for(Account anAcct : theAccountList) {
+			if(theManuscript.doesAuthorBelongToManuscript(anAcct.getMyAuthor())) {
+				returnList.add(anAcct);
+			}
+		}
+		
+		return returnList;
 	}
 	
 	/**
@@ -198,6 +179,49 @@ public class Author extends User implements Serializable {
 	}
 	
 	/**
+	 * Returns a boolean indicating whether or not the manuscript list for the author already has a conference key
+	 * matching the passed in one.
+	 * @param theConference
+	 * @return
+	 */
+	public boolean doesConferenceKeyExistForMyManuscriptList(Conference theConference) {
+		boolean doesKeyExist = false;
+		
+		if(this.myManuscriptList.containsKey(theConference.getMyID())) {
+			doesKeyExist = true;
+		}
+		
+		return doesKeyExist;
+	}
+	
+	
+	/**
+	 * Adds a conference key/manuscript to a new key/value pair for the author's manuscript list
+	 * @param theManuscript
+	 * @param theConference
+	 */
+	public void addManuscriptWithNewConferenceToManuscriptList(Manuscript theManuscript, Conference theConference) {
+		HashSet<UUID> manuList = new HashSet<UUID>();
+		manuList.add(theManuscript.getMyID());
+
+		this.myManuscriptList.put(theConference.getMyID(), manuList);
+	}
+	
+	/**
+	 * Adds a Conference Key/Manuscript to an existing conference key/manuscript list pair
+	 * @param theManuscript
+	 * @param theConference
+	 */
+	public void addManuscriptExistingConferenceToManuscriptList(Manuscript theManuscript, Conference theConference) {
+		// add new manuscript to existing list of manuscript ids
+		HashSet<UUID> manuList = this.myManuscriptList.get(theConference.getMyID());
+		manuList.add(theManuscript.getMyID());
+		
+		// add newly changed manuscript list to existing conference key/manuscript list pair
+		this.myManuscriptList.put(theConference.getMyID(), manuList);
+	}
+	
+	/**
 	 * Private helper method to return the internal map of Manuscripts and Conferences they are submitted to.
 	 * @return A Map with the value of A List of Manuscripts and the key the Conference they are submitted to.
 	 */
@@ -205,6 +229,7 @@ public class Author extends User implements Serializable {
 		return myManuscriptList;
 		
 	}
+	
 	
 	/**
 	 * A helper method to determine if any Author that is attached to the Manuscript has already submitted 5 Manuscripts.

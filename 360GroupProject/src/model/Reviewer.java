@@ -3,6 +3,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 import java.util.UUID;
 
 /**
@@ -92,16 +93,26 @@ public class Reviewer extends User {
 	private boolean isReviewerAnAuthor(Manuscript theManuscript) {
 		boolean isAuthor = false;
 
+		TreeMap<UUID, Account> acctList = super.getMyAccountDatabase().deserializeAccountList();
+		ArrayList<Account> validAccountList = new ArrayList<Account>();
+		
+		
 		String reviewerName = getUsername();
 		List<UUID> authorlist = theManuscript.getAuthors();
 		
-	
-		// TODO: fix this error 
-		for (int i = 0; i < authorlist.size(); i++) {
-			if (authorlist.get(i).getUsername().equals(reviewerName)) {
+		for(Account anAcct : acctList.values()) {
+			if(anAcct.getMyReviewer().getMyID().equals(this.getMyID())) {
+				validAccountList.add(anAcct);
+			}
+		}
+		
+		for(Account anAcct : validAccountList) {
+			if(theManuscript.doesAuthorBelongToManuscript(anAcct.getMyAuthor())) {
 				isAuthor = true;
 			}
 		}
+
+
 		return isAuthor;
 		
 	}
