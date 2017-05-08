@@ -359,6 +359,7 @@ public class UI extends Observable implements Observer{
 		System.out.println("Sorry one of the current Authors has the maximum allowed number of manuscripts");
 		System.out.println("1 - to go back to Manuscript Submission Page");
 		System.out.println("2 - to go back to Author Main Page");
+		System.out.print("Please enter choice: ");
 		myUserChoice = myScanner.next();
 
 		if (myUserChoice.equals("1")) {
@@ -394,6 +395,7 @@ public class UI extends Observable implements Observer{
 
 		System.out.println("Sorry The Manuscript Dead Line has already past");
 		System.out.println("1 - to go back to Author Main Page");
+		System.out.print("Please enter choice: ");
 		myUserChoice = myScanner.next();
 
 		if (myUserChoice.equals("1")) {
@@ -423,6 +425,7 @@ public class UI extends Observable implements Observer{
 		System.out.println("Reviewer Not Assigned - because Reviewer is Author on Manuscript being assigned");
 		System.out.println("1 - to go back to Assign a Reviewer Page");
 		System.out.println("2 - to go back to SubProgram Chair Main Page");	
+		System.out.print("Please enter choice: ");
 		myUserChoice = myScanner.next();
 
 		if (myUserChoice.equals("1")) {
@@ -457,8 +460,6 @@ public class UI extends Observable implements Observer{
 
 		//int manuscriptChoice;
 		System.out.println("Manuscript List Page: ");
-		System.out.println(myAccount.getMyID());
-		System.out.println(myAccount.getMyAuthor());
 		ArrayList<Manuscript> manuscriptList = new ManuscriptDatabase().getManuscriptsBelongingToAuthor(myAccount.getMyAuthor());	
 		System.out.println("Number of Manuscripts submitted - " + manuscriptList.size());
 
