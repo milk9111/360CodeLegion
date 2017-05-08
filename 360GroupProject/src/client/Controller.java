@@ -362,21 +362,22 @@ public class Controller extends Observable implements Observer {
 		for (int i = 4; i < thePieces.length; i++) {
 
 			// Validate each username against the account database to see if a user already exists with that username
-			boolean usernameDoesNotExist = this.myAccountDatabase.doesUsernameExistInDB(currentAcctList, thePieces[i]);
+			boolean usernameDoesExist = this.myAccountDatabase.doesUsernameExistInDB(currentAcctList, thePieces[i]);
 			
-			if(usernameDoesNotExist) {
-				Account newAccount = new Account(thePieces[i]);
-				this.myAccountDatabase.saveNewAccountToDatabase(newAccount);
-				Author newAuthor = new Author(thePieces[i], this.myCurrentConference);
-				newAccount.addAuthorRoleToAccount(newAuthor);
-				returnManuscript.addAuthor(newAuthor);
-			} else {
+			if(usernameDoesExist) {
 				System.out.println("in here");
 				Author existingAuthor = this.myAccountDatabase.getAccountByUsername(currentAcctList, thePieces[i]).getMyAuthor();
 				returnManuscript.addAuthor(existingAuthor);
 				System.out.println(existingAuthor.getMyID());
 				System.out.println(myAccount.getMyAuthor().getMyID());
 				System.out.println();
+			} else {
+				System.out.println("or here");
+				Account newAccount = new Account(thePieces[i]);
+				this.myAccountDatabase.saveNewAccountToDatabase(newAccount);
+				Author newAuthor = new Author(thePieces[i], this.myCurrentConference);
+				newAccount.addAuthorRoleToAccount(newAuthor);
+				returnManuscript.addAuthor(newAuthor);
 			}
 		}
 		
