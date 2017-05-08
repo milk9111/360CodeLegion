@@ -18,7 +18,7 @@ import model.Account;
  * This class will hold fields and methods representing interaction with the Account database
  * which is persisted as a serialized object
  */
-public class AccountDatabase implements Serializable {
+public class AccountDatabase {
 
 	private TreeMap<UUID, Account> myAccountList;
 	

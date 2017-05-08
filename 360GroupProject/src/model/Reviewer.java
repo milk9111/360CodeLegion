@@ -45,6 +45,13 @@ public class Reviewer extends User implements Serializable {
 		this.myConferencesAndAssignedManuscriptsList.put(theConference.getMyID(), listOfManuIDs);
 	}
 	
+	public Reviewer(Conference theConference) {
+		super(theConference);
+		this.myConferencesAndAssignedManuscriptsList = new TreeMap<UUID, HashSet<UUID>>();
+		HashSet<UUID> listOfManuIDs = new HashSet<UUID>();
+		this.myConferencesAndAssignedManuscriptsList.put(theConference.getMyID(), listOfManuIDs);
+	}
+	
 	/**
 	 * Assign a new manuscript to this reviewer.
 	 * Checks for business rules.  Returns an error message if fails.  
@@ -64,11 +71,12 @@ public class Reviewer extends User implements Serializable {
 		
 		//separate these tests and throw exceptions
 		//also need to add a check for if this reviewer is already assigned to this manuscript.
-		if ((isReviewerAnAuthor(theManuscript) == true) || (isOverReviewLimit(theManuscript.getConferenceID()) == true) ) {
+		if ((isReviewerAnAuthor(theManuscript) != true) || (isOverReviewLimit(theManuscript.getConferenceID()) == true) ) {
 			wasAssigned = false;			
 
 		} else {
 			HashSet<UUID> currentManuList = this.myConferencesAndAssignedManuscriptsList.get(theManuscript.getConferenceID());
+			// TODO: check if manuscript already exists within list
 			currentManuList.add(theManuscript.getMyID());
 			// save manuscript to DB
 			new ManuscriptDatabase().saveManuscriptToDatabase(theManuscript);
