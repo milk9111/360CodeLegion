@@ -2,6 +2,8 @@ package model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.UUID;
 
@@ -13,18 +15,15 @@ public class Account implements Serializable {
 
 	// TODO: change theses to lists and add conference ids to each user type
 	// that way, a user can have a user type for multiple conferneces
-	/**
-	 * Map of Key: Conference Ids, Value: Author Object
-	 * An account can be an author to multiple conferences so this list represents 
-	 * that multi conference relationship with one author object per author role for a conference
-	 */
-    private TreeMap<UUID, Author> myAuthors;
+    private Author myAuthor;
     
     /**
      * Map of Key: Conference Ids, Value: Reviewer Object
      * Map representing relationship between a user being a reviewer to a conference
      */
     private TreeMap<UUID, Reviewer> myReviewers;
+    
+    private ConferenceDatabase myConferenceDatabase;
     
     /**
      * Map of Key: Conference Ids, Value: Subprogram Chair Object
@@ -37,21 +36,23 @@ public class Account implements Serializable {
     public Account(String theUsername) {
     	this.myID = UUID.randomUUID();
     	this.myUsername = theUsername;
-        this.myAuthors = new TreeMap<UUID, Author>();
+        this.myAuthor = null;
         this.myReviewers = new TreeMap<UUID, Reviewer>();
         this.mySubprogramChairs = new TreeMap<UUID, SubprogramChair>();
+        this.myConferenceDatabase = new ConferenceDatabase();
     }
     
-    public Account(TreeMap<UUID, Author> theAuthors, TreeMap<UUID, Reviewer> theReviewers, TreeMap<UUID, SubprogramChair> theSubprogramChairs) {
+    public Account(Author theAuthor, TreeMap<UUID, Reviewer> theReviewers, TreeMap<UUID, SubprogramChair> theSubprogramChairs) {
     	this.myID = UUID.randomUUID();
-        this.myAuthors = theAuthors;
+        this.myAuthor = theAuthor;
         this.myReviewers = theReviewers;
         this.mySubprogramChairs = theSubprogramChairs;
+        this.myConferenceDatabase = new ConferenceDatabase();
     }
     
 
-    public TreeMap<UUID, Author> getMyAuthorList() {
-        return this.myAuthors;
+    public Author getMyAuthor() {
+        return this.myAuthor;
     }
 
     /**
@@ -59,36 +60,28 @@ public class Account implements Serializable {
      * @param theAuthor The author to add to the account's authors list
      */
     public void addAuthorRoleToAccount(Author theAuthor) {
-        this.myAuthors.put(theAuthor.getMyAssociatedConference().getMyID(), theAuthor);
-    }
-        
-    /**
-     * Returns the author associated with the conference parameter
-     * @param theConference conference who's id we are checking to see if the author belongs to it
-     * @return An Author object belonging to the given conference
-     * preconditions: Assumes the an author associated with the given conference exists, use
-     * doesAuthorAssociatedWithConferenceExists
-     */
-    public Author getAuthorAssociatedWithConference(Conference theConference) {
-    	return this.myAuthors.get(theConference.getMyID());
+       this.myAuthor = theAuthor;
     }
     
+    public HashSet<UUID> getManuscriptsOfAccountAssociatedWithConference(Conference theConference) {
+    	HashSet<UUID> returnHash = null;
+    	
+    	returnHash = this.myAuthor.getManuscriptsAssociatedWithConference(theConference);
+    	
+    	return returnHash;
+    }
     /**
      * Returns true or false depending on whether or not the the account has an author
      * that belongs to the given conference
      * @param theAuthor author to check if one exists within the user's myAuthors that also belongs
      * to the given conference
      * @param theConference Conference to check 
-     * @return
+     * @return boolean
      */
     public boolean doesAuthorAssociatedWithConferenceExist(Conference theConference) {
     	boolean isAuthorAssociated = false;
     	
-    	for(Author anAuthor : this.myAuthors.values()) {
-    		if(anAuthor.getMyAssociatedConference().getMyID().equals(theConference.getMyID())) {
-    			isAuthorAssociated = true;
-    		}
-    	}
+    	isAuthorAssociated = this.myAuthor.isConferenceAssociatedWithAuthor(theConference);
     	
     	return isAuthorAssociated;
     }
@@ -118,14 +111,23 @@ public class Account implements Serializable {
     	return returnList;
     }
     
+    
+    /**
+     * Returns a list of conferences associated with this account's author roles
+     * @param theConfList
+     * @return
+     */
     public ArrayList<Conference> getAllConferencesAssociatedWithMyAuthorList(TreeMap<UUID, Conference> theConfList) {
     	ArrayList<Conference> returnList = new ArrayList<Conference>();
-    	for(UUID aConferenceID : this.myAuthors.keySet()) {
-    		if(theConfList.containsKey(aConferenceID)) {
-    			returnList.add(theConfList.get(aConferenceID));
+    	Set<UUID> listOfConfIds = this.myAuthor.getMyListOfConferenceIDs();
+    	
+    	for(UUID confID : listOfConfIds) {
+    		Conference singleConf = this.myConferenceDatabase.getSingleConference(confID);
+    		if(singleConf != null) {
+    			returnList.add(singleConf);
     		}
     	}
-    	
+    	    	
     	return returnList;
     }
 

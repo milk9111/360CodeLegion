@@ -82,7 +82,6 @@ public class AuthorTest {
 		Conference conference = new Conference("RSA", date, date, reviewerList);
 		myAccount.addAuthorRoleToAccount(myAuthor);
 
-		assertTrue(myAccount.getMyAuthorList().size() > 0);
 		myAccountDatabase.saveAccountToDatabase(myAccount);
 		this.myListOfAccountAuthors.put(myAccount.getMyID(), myAccount);
 		
@@ -104,7 +103,7 @@ public class AuthorTest {
 		TreeMap<UUID, Account> allAccts = new AccountDatabase().getAllAccounts();
 		assertTrue(allAccts.size() > 0);
 		//myAuthor = new AccountDatabase().getAllAccounts().get(myAccount.getMyID()).getAuthorAssociatedWithConference(conference);
-		assertTrue("ManuScript was not added to list properly", myAuthor.getManuscript(conference).contains(fithManuscript.getMyID()));
+		assertTrue("ManuScript was not added to list properly", myAuthor.getManuscriptsAssociatedWithConference(conference).contains(fithManuscript.getMyID()));
 	}
 	
 	/**

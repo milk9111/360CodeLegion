@@ -7,7 +7,7 @@
 360GroupProject/.project
 360GroupProject/.classpath
 .classpath
-lib/
+lib
 
 # Created by https://www.gitignore.io/api/osx,eclipse,intellij,intellij+iml
 

@@ -152,6 +152,19 @@ public class ConferenceDatabase {
 			i.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Returns a single conference object based on passed in ID
+	 * @param theConfID
+	 * @return conference returns conference object is possible, null otherwise
+	 */
+	public Conference getSingleConference(UUID theConfID) {
+		Conference confToReturn = null;
+		
+		confToReturn = this.deserializeConferenceList().get(theConfID);
+		
+		return confToReturn;
+	}
 
 
 

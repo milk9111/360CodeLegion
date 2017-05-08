@@ -96,6 +96,7 @@ public class Reviewer extends User {
 		List<UUID> authorlist = theManuscript.getAuthors();
 		
 	
+		// TODO: fix this error 
 		for (int i = 0; i < authorlist.size(); i++) {
 			if (authorlist.get(i).getUsername().equals(reviewerName)) {
 				isAuthor = true;
