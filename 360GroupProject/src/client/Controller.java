@@ -342,7 +342,7 @@ public class Controller extends Observable implements Observer {
 		for (int i = 4; i < thePieces.length; i++) {
 
 			// Validate each username against the account database to see if a user already exists with that username
-			boolean usernameDoesNotExist = this.myAccountDatabase.isUsernameInListValid(currentAcctList, thePieces[i]);
+			boolean usernameDoesNotExist = this.myAccountDatabase.doesUsernameExistInDB(currentAcctList, thePieces[i]);
 			
 			if(usernameDoesNotExist) {
 				Account newAccount = new Account(thePieces[i]);
@@ -380,7 +380,7 @@ public class Controller extends Observable implements Observer {
 	 * @version 5/6/2017
 	 */
 	private void setAccount (Account theNewAccount) {
-		if (myAccountDatabase.isUsernameInListValid(myAccountDatabase.getAllAccounts(), theNewAccount.getMyUsername())) {
+		if (myAccountDatabase.doesUsernameExistInDB(myAccountDatabase.getAllAccounts(), theNewAccount.getMyUsername())) {
 			myAccount = theNewAccount;
 		} else {
 			myAccountDatabase.saveNewAccountToDatabase(theNewAccount);
