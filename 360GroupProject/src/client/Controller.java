@@ -357,6 +357,7 @@ public class Controller extends Observable implements Observer {
 	 * @version 5/6/2017
 	 */
 	private Manuscript makeManuscript (String[] thePieces) {
+		TreeMap<UUID, Account> currentAcctList = this.myAccountDatabase.getAllAccounts();
 		Manuscript returnManuscript = new Manuscript();
 		
 		returnManuscript.setTitle(thePieces[1]);
@@ -366,7 +367,16 @@ public class Controller extends Observable implements Observer {
 		
 		//Adds the remaining Authors in the list.
 		for (int i = 4; i < thePieces.length; i++) {
-			returnManuscript.addAuthor(new Author(thePieces[i], myCurrentConference));
+
+			// Validate each username against the account database to see if a user already exists with that username
+			boolean usernameDoesNotExist = this.myAccountDatabase.isUsernameInListValid(currentAcctList, thePieces[i]);
+			
+			if(usernameDoesNotExist) {
+				returnManuscript.addAuthor(new Author(thePieces[i], myCurrentConference));
+			} else {
+				Author existingAuthor = this.myAccountDatabase.getAccountByUsername(currentAcctList, thePieces[i]).getMyAuthor();
+				returnManuscript.addAuthor(existingAuthor);
+			}
 		}
 		
 		return returnManuscript;

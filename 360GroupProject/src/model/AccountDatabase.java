@@ -50,7 +50,6 @@ public class AccountDatabase implements Serializable {
 	 * @return an account associated with the passed in username
 	 */
 	public Account getAccountByUsername(TreeMap<UUID, Account> theAccountList, String theUsername) {
-		TreeMap<UUID, Account> mapToReturn = deserializeAccountList();
 		Account accountToReturn = null;
 
 		for (Account aAccountToCompare : theAccountList.values()) {

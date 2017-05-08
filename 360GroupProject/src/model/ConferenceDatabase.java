@@ -49,7 +49,7 @@ public class ConferenceDatabase implements Serializable {
 			saveConferenceListToDatabase(conferenceList);
 
 		} else {
-			System.out.println("Username is invalid");
+			System.out.println("Conference name is not unique");
 		}
 
 		return null;
