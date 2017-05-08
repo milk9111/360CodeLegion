@@ -3,7 +3,6 @@ package client;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Observable;
@@ -12,14 +11,11 @@ import java.util.Scanner;
 import java.util.TreeMap;
 import java.util.UUID;
 
-//import javafx.beans.InvalidationListener;
 import model.Account;
-import model.Author;
 import model.Conference;
 import model.ConferenceDatabase;
 import model.Manuscript;
 import model.ManuscriptDatabase;
-import model.User;
 
 /**
  * 
