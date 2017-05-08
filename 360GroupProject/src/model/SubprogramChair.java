@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
@@ -13,7 +14,7 @@ import java.util.UUID;
  * @date 4/28/17
  * @version 1.0
  */
-public class SubprogramChair extends User {
+public class SubprogramChair extends User implements Serializable {
 
     /**
      * List manuscripts assigned to the subprogram chair

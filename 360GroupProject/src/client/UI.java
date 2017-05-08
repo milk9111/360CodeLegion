@@ -12,7 +12,7 @@ import java.util.Scanner;
 import java.util.TreeMap;
 import java.util.UUID;
 
-import javafx.beans.InvalidationListener;
+//import javafx.beans.InvalidationListener;
 import model.Account;
 import model.Author;
 import model.Conference;
