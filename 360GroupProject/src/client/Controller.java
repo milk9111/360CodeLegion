@@ -17,6 +17,9 @@ import model.*;
 public class Controller extends Observable implements Observer {
 
 	//View States
+	public static final int FAIL_REVIEWER_IS_AUTHOR_ON_MANUSCRIPT= -5;
+	public static final int FAIL_SUBMITED_PAST_DEADLINE = -4;
+	public static final int FAIL_AUTHOR_HAS_TO_MANY_MANUSCRIPTS = -3;
     public static final int LOG_IN_STATE = -2;
     public static final int CHOOSE_USER = -1;
 	public static final int AUTHOR = 0;
