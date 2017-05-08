@@ -178,11 +178,11 @@ public class Controller extends Observable implements Observer {
 						case LIST_CONFERENCE_VIEW:
 							if (pieces[0].equals("List Conference View")) {
 								TreeMap<UUID, Conference> currentConferenceList = this.myConferenceDatabase.deserializeConferenceList();
-								//System.out.println(currentConferenceList.values());
+								System.out.println(currentConferenceList.values());
 								//System.out.println(myAccount.getAllConferencesAssociatedWithMyAuthorList(currentConferenceList));
 								System.out.println(myCurrentConference.getMyName());
-								myCurrentConference = findConference(theNextState, 
-										myAccount.getAllConferencesAssociatedWithMyAuthorList(currentConferenceList));
+								//myCurrentConference = findConference(theNextState, 
+										//myAccount.getAllConferencesAssociatedWithMyAuthorList(currentConferenceList));
 								System.out.println(myCurrentConference.getMyName());
 								//System.out.println("This is the current conference: " + myCurrentConference);
 								myCurrentState = AUTHOR + USER_OPTIONS;
