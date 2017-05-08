@@ -38,6 +38,7 @@ public class Driver {
 		reviewers1.add(new Reviewer("Ben Grimm", null));
 		Conference conference1 = new Conference("National Heroes Without Borders Conference", new Date("5/9/2017"), new Date("5/9/2017"), reviewers1);
 		
+		Conference confPastSubmissionDate = new Conference("Conference of Days Gone Past", new Date("4/9/2017"), new Date("4/9/2017"), reviewers1);
 		
 		Account author1 = new Account("Kal-El");
 		author1.addAuthorRoleToAccount(new Author("Kal-El", conference1));
@@ -74,6 +75,7 @@ public class Driver {
 		
 		cdb.saveConferenceToDatabase(conference1);
 		cdb.saveConferenceToDatabase(conference2);
+		cdb.saveConferenceToDatabase(confPastSubmissionDate);
 		
 		mdb.saveManuscriptToDatabase(manu1);
 		mdb.saveManuscriptToDatabase(manu2);

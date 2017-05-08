@@ -127,7 +127,7 @@ public class Conference implements Serializable {
      * validates whether we are within the submission deadline for a conference.
      * @return true if we are before the deadline, false otherwise.
      */
-    private boolean isWithinSubmissionDeadline(){
+    public boolean isWithinSubmissionDeadline(){
         return mySubmissionDeadline.after(Calendar.getInstance().getTime());
     }
 

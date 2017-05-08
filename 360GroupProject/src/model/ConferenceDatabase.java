@@ -49,7 +49,8 @@ public class ConferenceDatabase implements Serializable {
 			saveConferenceListToDatabase(conferenceList);
 
 		} else {
-			System.out.println("Conference name is not unique");
+			// TODO: save/update conference?
+			//System.out.println("Conference name is not unique");
 		}
 
 		return null;
