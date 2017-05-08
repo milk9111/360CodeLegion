@@ -145,7 +145,7 @@ public class Controller extends Observable implements Observer {
 								manuscriptToSubmit = makeManuscript(pieces);
 								
 								try {
-									if (myAccount.doesAutorAssociatedWithConferenceExist(myCurrentConference)) {
+									if (myAccount.doesAuthorAssociatedWithConferenceExist(myCurrentConference)) {
 										(myAccount.getAuthorAssociatedWithConference(myCurrentConference)).addManuscript(myCurrentConference, manuscriptToSubmit);
 									} else {
 										//System.out.println(myAccount.getAuthorAssociatedWithConference(myCurrentConference).getMyAssociatedConference());
