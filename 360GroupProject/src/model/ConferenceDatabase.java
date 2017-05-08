@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.TreeMap;
 import java.util.UUID;
 
@@ -12,7 +13,7 @@ import java.util.UUID;
  * @author Ryan Tran
  *
  */
-public class ConferenceDatabase {
+public class ConferenceDatabase implements Serializable {
 
 	private TreeMap<UUID, Conference> myConferenceList;
 	
