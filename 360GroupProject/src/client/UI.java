@@ -42,17 +42,16 @@ public class UI extends Observable implements Observer{
 	private Account myAccount;
 	private Conference mySelectedConference;
 	private Manuscript mySelectedManuscript;
-<<<<<<< HEAD
+
 	private Reviewer mySelectedReviewer;
 
-=======
+
 	
 	/**
 	 * Constructor for UI class to initialize fields.
 	 * 
 	 * @author Casey Anderson
 	 */
->>>>>>> ae6b12611e77fcd832b43b6abf27cfe38f045f51
 	public UI() {
 
 		myUserType = "";
@@ -447,13 +446,13 @@ public class UI extends Observable implements Observer{
 		System.out.println(myAccount.getMyID());
 		System.out.println(myAccount.getMyAuthor());
 		ArrayList<Manuscript> manuscriptList = new ManuscriptDatabase().getManuscriptsBelongingToAuthor(myAccount.getMyAuthor());
-<<<<<<< HEAD
+
 
 		System.out.println("size of manu list" + manuscriptList.size());
-=======
+
 		
 		System.out.println("Number of Manuscripts submitted - " + manuscriptList.size());
->>>>>>> ae6b12611e77fcd832b43b6abf27cfe38f045f51
+
 		for (int i = 0; i < manuscriptList.size(); i++) {
 
 			System.out.println("" + (i + 1) + ". " + manuscriptList.get(i).getTitle());
@@ -528,14 +527,12 @@ public class UI extends Observable implements Observer{
 			conferenceChoice = myScanner.nextInt();
 
 		}
-<<<<<<< HEAD
+
 		//
 		mySelectedConference =  new ConferenceDatabase().getSingleConference(listOfConferences[conferenceChoice - 1].getMyID());
 
-=======
-	
+
 		mySelectedConference =  new ConferenceDatabase().getSingleConference(listOfConferences[conferenceChoice - 1].getMyID());				
->>>>>>> ae6b12611e77fcd832b43b6abf27cfe38f045f51
 		setChanged();
 		notifyObservers(listOfConferences[conferenceChoice - 1]);
 		setChanged();
