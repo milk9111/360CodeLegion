@@ -162,6 +162,11 @@ public class Controller extends Observable implements Observer {
 								myCurrentConference.submitManuscript(manuscriptToSubmit);
 								myManuscriptDatabase.saveManuscriptToDatabase(manuscriptToSubmit);
 								
+								System.out.println(myManuscriptDatabase.getAllManuscripts().size());
+								System.out.println(myManuscriptDatabase.getManuscriptsBelongingToAuthor(myAccount.getMyAuthor()).size());
+								for (Manuscript m : myManuscriptDatabase.getManuscriptsBelongingToAuthor(myAccount.getMyAuthor())) {
+									System.out.println(m.getTitle());
+								}
 								myCurrentState = AUTHOR + LIST_MANUSCRIPT_VIEW;
 								setChanged();
 								notifyObservers(myCurrentState);
@@ -195,7 +200,10 @@ public class Controller extends Observable implements Observer {
 	                    	case "SUBMIT_MANUSCRIPT":
 	                    		myCurrentState = AUTHOR + SUBMIT_MANUSCRIPT;
 	                    		break;
-	                    	case "Go Back":
+	                    	case "LIST_MANUSCRIPT_VIEW":
+	                    		myCurrentState = AUTHOR + LIST_MANUSCRIPT_VIEW;
+	                    		break;
+	                    	case "LIST_CONFERENCE_VIEW":
 	                    		myCurrentState = AUTHOR + LIST_CONFERENCE_VIEW;
 	                    		break;
 							}
@@ -351,6 +359,7 @@ public class Controller extends Observable implements Observer {
 		returnManuscript.setTitle(thePieces[1]);
 		returnManuscript.setFilePath(new File(thePieces[2]));
 		returnManuscript.setSubmittedDate(new Date());
+		returnManuscript.addAuthor(myAccount.getMyAuthor());
 		
 		//Adds the remaining Authors in the list.
 		for (int i = 4; i < thePieces.length; i++) {
