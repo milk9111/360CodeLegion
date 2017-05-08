@@ -575,8 +575,53 @@ public class UI extends Observable implements Observer{
 	 */
 	private void subProgramChairConferenceView() {
 		System.out.println("To assign a reviewer, first select a conference from the list below:\n");
+
+		int conferenceChoice;
+		TreeMap<UUID, Conference> conferenceMap = new ConferenceDatabase().getAllConferences();
+		Conference[] listOfConferences = conferenceMap.values().toArray(new Conference[conferenceMap.values().size()]);
+
+		for (int i = 0; i < listOfConferences.length; i++) {
+
+			System.out.println("" + (i + 1) + " - " + listOfConferences[i].getMyName());
+			
+		}
 		
-		ListOfConferenceView();
+		System.out.print("Please enter choice: ");
+		
+		while (!myScanner.hasNextInt()) {
+			
+			myScanner.next();
+			System.out.println("Invalid choice, please select from the options displayed");
+			System.out.print("Please enter choice: ");
+			
+		}
+		
+		conferenceChoice = myScanner.nextInt();
+		
+		while (conferenceChoice < 1 || conferenceChoice > listOfConferences.length) {
+			
+			System.out.println("Invalid choice, please select from the options displayed");
+			System.out.print("Please enter choice: ");
+			
+			while (!myScanner.hasNextInt()) {
+				
+				myScanner.next();
+				System.out.println("Invalid choice, please select from the options displayed");
+				System.out.print("Please enter choice: ");
+				
+			}
+			
+			conferenceChoice = myScanner.nextInt();
+			
+		}
+		
+		mySelectedConference =  new ConferenceDatabase().getSingleConference(listOfConferences[conferenceChoice - 1].getMyID());
+				
+		setChanged();
+		notifyObservers(listOfConferences[conferenceChoice - 1]);
+		setChanged();
+		notifyObservers("LIST_CONFERENCE_VIEW" + "," + listOfConferences[conferenceChoice - 1].getMyName());
+
 
 
 	}
