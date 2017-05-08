@@ -121,7 +121,9 @@ public class Author extends User implements Serializable {
 	 * @param theManuscript The manuscript to be added to Conference.
 	 * @throws illegalArgumentException
 	 */
-	public void addManuscript(Conference theConference, Manuscript theManuscript, TreeMap<UUID, Account> theAccountList) throws Exception {	
+	public void addManuscript(Conference theConference, Manuscript theManuscript) throws Exception {	
+		TreeMap<UUID, Account> theAccountList = super.getMyAccountDatabase().deserializeAccountList();
+		
 		if (!isAuthorAtManuscriptLimit(theConference, theManuscript, theAccountList)) {
 			// After confirming none of the authors(author and coauthors) are at the max limit
 			
