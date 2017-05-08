@@ -27,6 +27,9 @@ public class UI extends Observable implements Observer{
 
 
 	//View States
+	public static final int FAIL_REVIEWER_IS_AUTHOR_ON_MANUSCRIPT= -5;
+	public static final int FAIL_SUBMITED_PAST_DEADLINE = -4;
+	public static final int FAIL_AUTHOR_HAS_TO_MANY_MANUSCRIPTS = -3;
 	public static final int LOG_IN_STATE = -2;
 	public static final int CHOOSE_USER = -1;
 
@@ -35,6 +38,8 @@ public class UI extends Observable implements Observer{
 	public static final int SUBPROGRAM_CHAIR = 20;
 
 	//Action States
+	public static final String SUBMIT_MANUSCRIPT_TO_CONTROLLER = "SUBMIT_MANUSCRIPT";
+	public static final String VIEW_MANUSCRIPT_FROM_CONTROLLER = "LIST_MANUSCRIPT_VIEW";
 	public static final int SUBMIT_MANUSCRIPT = 1;
 	public static final int LIST_MANUSCRIPT_VIEW = 2;
 	public static final int LIST_CONFERENCE_VIEW = 3;
@@ -328,7 +333,7 @@ public class UI extends Observable implements Observer{
 		if (myUserChoice.equals("1")) {
 
 			setChanged();
-			notifyObservers("SUBMIT_MANUSCRIPT");
+			notifyObservers(SUBMIT_MANUSCRIPT_TO_CONTROLLER);
 
 		}
 
@@ -427,13 +432,13 @@ public class UI extends Observable implements Observer{
 		
 		for (int i = 0; i < manuscriptList.size(); i++) {
 			
-			System.out.println("" + (i + 1) + " - " + manuscriptList.get(i).getTitle());
+			System.out.println("" + (i + 1) + ". " + manuscriptList.get(i).getTitle());
 			
 		}
 		
-		manuscriptChoice = myScanner.nextInt();
-		setChanged();
-		notifyObservers(manuscriptList.get(manuscriptChoice - 1));
+		//manuscriptChoice = myScanner.nextInt();
+		//setChanged();
+		//notifyObservers(manuscriptList.get(manuscriptChoice - 1));
 		
 	}
 
